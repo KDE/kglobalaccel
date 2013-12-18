@@ -31,9 +31,9 @@
 
 #include <QtDBus/QDBusConnectionInterface>
 
-const QKeySequence sequenceA = QKeySequence(Qt::SHIFT + Qt::META + Qt::CTRL + Qt::ALT + Qt::Key_F28 );
+const QKeySequence sequenceA = QKeySequence(Qt::SHIFT + Qt::META + Qt::CTRL + Qt::ALT + Qt::Key_F28);
 const QKeySequence sequenceB = QKeySequence(Qt::Key_F29);
-const QKeySequence sequenceC = QKeySequence(Qt::SHIFT + Qt::META + Qt::CTRL + Qt::Key_F28 );
+const QKeySequence sequenceC = QKeySequence(Qt::SHIFT + Qt::META + Qt::CTRL + Qt::Key_F28);
 const QKeySequence sequenceD = QKeySequence(Qt::META + Qt::ALT + Qt::Key_F30);
 const QKeySequence sequenceE = QKeySequence(Qt::META + Qt::Key_F29);
 const QKeySequence sequenceF = QKeySequence(Qt::META + Qt::Key_F27);
@@ -43,14 +43,14 @@ const QKeySequence sequenceF = QKeySequence(Qt::META + Qt::Key_F27);
    applications' shortcuts. */
 
 //we need a GUI so that the implementation can grab keys
-QTEST_MAIN( KGlobalShortcutTest)
+QTEST_MAIN(KGlobalShortcutTest)
 
 void KGlobalShortcutTest::initTestCase()
 {
     QStandardPaths::enableTestMode(true);
     m_daemonInstalled = true;
 
-    QDBusConnectionInterface* bus = QDBusConnection::sessionBus().interface();
+    QDBusConnectionInterface *bus = QDBusConnection::sessionBus().interface();
     if (!bus->isServiceRegistered(QStringLiteral("org.kde.kglobalaccel"))) {
         QDBusReply<void> reply = bus->startService(QStringLiteral("org.kde.kglobalaccel"));
         if (!reply.isValid()) {
@@ -91,13 +91,13 @@ void KGlobalShortcutTest::setupTest(QString id)
     KGlobalAccel::self()->setDefaultShortcut(m_actionB, QList<QKeySequence>(), KGlobalAccel::NoAutoloading);
 }
 
-
 void KGlobalShortcutTest::testSetShortcut()
 {
     setupTest("testSetShortcut");
 
-    if (!m_daemonInstalled)
+    if (!m_daemonInstalled) {
         QSKIP("kglobalaccel not installed");
+    }
 
     // Just ensure that the desired values are set for both actions
     QList<QKeySequence> cutA;
@@ -117,8 +117,9 @@ void KGlobalShortcutTest::testFindActionByKey()
 {
     // Skip this. The above testcase hasn't changed the actions
     setupTest("testFindActionByKey");
-    if (!m_daemonInstalled)
+    if (!m_daemonInstalled) {
         QSKIP("kglobalaccel not installed");
+    }
 
     QList<KGlobalShortcutInfo> actionId = KGlobalAccel::self()->getGlobalShortcutsByKey(sequenceB);
     QCOMPARE(actionId.size(), 1);
@@ -147,8 +148,9 @@ void KGlobalShortcutTest::testChangeShortcut()
     // Skip this. The above testcase hasn't changed the actions
     setupTest("testChangeShortcut");
 
-    if (!m_daemonInstalled)
+    if (!m_daemonInstalled) {
         QSKIP("kglobalaccel not installed");
+    }
     // Change the shortcut
     KGlobalAccel::self()->setShortcut(m_actionA, QList<QKeySequence>() << sequenceC, KGlobalAccel::NoAutoloading);
     // Ensure that the change is active
@@ -181,8 +183,9 @@ void KGlobalShortcutTest::testChangeShortcut()
 void KGlobalShortcutTest::testStealShortcut()
 {
     setupTest("testStealShortcut");
-    if (!m_daemonInstalled)
+    if (!m_daemonInstalled) {
         QSKIP("kglobalaccel not installed");
+    }
 
     // Steal a shortcut from an action. First ensure the initial state is
     // correct
@@ -199,12 +202,12 @@ void KGlobalShortcutTest::testStealShortcut()
     QVERIFY(shortcuts.first().isEmpty());
 }
 
-
 void KGlobalShortcutTest::testSaveRestore()
 {
     setupTest("testSaveRestore");
-    if (!m_daemonInstalled)
+    if (!m_daemonInstalled) {
         QSKIP("kglobalaccel not installed");
+    }
 
     //It /would be nice/ to test persistent storage. That is not so easy...
     QList<QKeySequence> cutA = KGlobalAccel::self()->shortcut(m_actionA);
@@ -227,14 +230,13 @@ void KGlobalShortcutTest::testSaveRestore()
     m_actionA = new QAction("Text For Action A", this);
     m_actionA->setObjectName("Action A:testSaveRestore");
     KGlobalAccel::self()->setShortcut(m_actionA, QList<QKeySequence>() << QKeySequence()
-                                                                       << (cutA.isEmpty() ? QKeySequence() : cutA.first()));
+                                      << (cutA.isEmpty() ? QKeySequence() : cutA.first()));
     QCOMPARE(KGlobalAccel::self()->shortcut(m_actionA), cutA);
 
 }
 
 // Duplicated again!
-enum actionIdFields
-{
+enum actionIdFields {
     ComponentUnique = 0,
     ActionUnique = 1,
     ComponentFriendly = 2,
@@ -244,8 +246,9 @@ enum actionIdFields
 void KGlobalShortcutTest::testListActions()
 {
     setupTest("testListActions");
-    if (!m_daemonInstalled)
+    if (!m_daemonInstalled) {
         QSKIP("kglobalaccel not installed");
+    }
 
     // As in kdebase/workspace/kcontrol/keys/globalshortcuts.cpp
     KGlobalAccel *kga = KGlobalAccel::self();
@@ -304,12 +307,12 @@ void KGlobalShortcutTest::testComponentAssignment()
     }
 }
 
-
 void KGlobalShortcutTest::testConfigurationActions()
 {
     setupTest("testConfigurationActions");
-    if (!m_daemonInstalled)
+    if (!m_daemonInstalled) {
         QSKIP("kglobalaccel not installed");
+    }
 
     // Create a configuration action
     QAction cfg_action("Text For Action A", NULL);
@@ -382,8 +385,9 @@ void KGlobalShortcutTest::testForgetGlobalShortcut()
     // Ensure that forgetGlobalShortcut can be called on any action.
     QAction a("Test", NULL);
     KGlobalAccel::self()->removeAllShortcuts(&a);
-    if (!m_daemonInstalled)
+    if (!m_daemonInstalled) {
         QSKIP("kglobalaccel not installed");
+    }
 
     // We forget these two shortcuts and check that the component is gone
     // after that. If not it can mean the forgetGlobalShortcut() call is
@@ -402,5 +406,4 @@ void KGlobalShortcutTest::testForgetGlobalShortcut()
     QVERIFY(!components.contains(componentId));
 #endif
 }
-
 

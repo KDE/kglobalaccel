@@ -32,23 +32,21 @@
 #include "kglobalaccel_interface.h"
 #include "kglobalaccel_component_interface.h"
 
-enum SetShortcutFlag
-    {
-    SetPresent =2,
+enum SetShortcutFlag {
+    SetPresent = 2,
     NoAutoloading = 4,
     IsDefault = 8
-    };
-
+};
 
 class KGlobalAccelPrivate
 {
 public:
     enum ShortcutType {
-      /// The shortcut will immediately become active but may be reset to "default".
-      ActiveShortcut = 0x1,
-      /// The shortcut is a default shortcut - it becomes active when somebody decides to
-      /// reset shortcuts to default.
-      DefaultShortcut = 0x2
+        /// The shortcut will immediately become active but may be reset to "default".
+        ActiveShortcut = 0x1,
+        /// The shortcut is a default shortcut - it becomes active when somebody decides to
+        /// reset shortcuts to default.
+        DefaultShortcut = 0x2
     };
 
     Q_DECLARE_FLAGS(ShortcutTypes, ShortcutType)
@@ -56,7 +54,7 @@ public:
         SetInactive = 0,    ///< Forget the action in this class and mark it as not present in the KDED module
         UnRegister          ///< Remove any trace of the action in this class and in the KDED module
     };
-    KGlobalAccelPrivate(KGlobalAccel*);
+    KGlobalAccelPrivate(KGlobalAccel *);
 
     ///Propagate any shortcut changes to the KDED module that does the bookkeeping
     ///and the key grabbing.
@@ -65,7 +63,7 @@ public:
     ///Register the action in this class and in the KDED module
     bool doRegister(QAction *action);   //"register" is a C keyword :p
     ///cf. the RemoveAction enum
-    void remove (QAction *action, Removal r);
+    void remove(QAction *action, Removal r);
 
     //"private" helpers
     QString componentUniqueForAction(const QAction *action);
@@ -75,9 +73,9 @@ public:
     QList<QKeySequence> shortcutFromIntList(const QList<int> &list);
 
     //private slot implementations
-    void _k_invokeAction(const QString &, const QString &,qlonglong);
-    void _k_shortcutGotChanged(const QStringList&, const QList<int>&);
-    void _k_serviceOwnerChanged(const QString& name, const QString& oldOwner, const QString& newOwner);
+    void _k_invokeAction(const QString &, const QString &, qlonglong);
+    void _k_shortcutGotChanged(const QStringList &, const QList<int> &);
+    void _k_serviceOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner);
     void reRegisterAll();
 
     //for all actions with (isEnabled() && globalShortcutAllowed())
@@ -98,8 +96,8 @@ public:
 
     //! The components the application is using
     QHash<QString, org::kde::kglobalaccel::Component *> components;
-    QMap<const QAction*, QList<QKeySequence> > actionDefaultShortcuts;
-    QMap<const QAction*, QList<QKeySequence> > actionShortcuts;
+    QMap<const QAction *, QList<QKeySequence> > actionDefaultShortcuts;
+    QMap<const QAction *, QList<QKeySequence> > actionShortcuts;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(KGlobalAccelPrivate::ShortcutTypes)

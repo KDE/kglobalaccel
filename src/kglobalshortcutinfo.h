@@ -25,15 +25,13 @@
 #include <QKeySequence>
 #include <QtDBus/QDBusArgument>
 
-
 class KGlobalShortcutInfoPrivate;
-
 
 /**
  * @author Michael Jansen <kde@michael-jansen.biz>
  */
 class KGLOBALACCEL_EXPORT KGlobalShortcutInfo : public QObject
-    {
+{
     Q_OBJECT
 
     Q_CLASSINFO("D-Bus Interface", "org.kde.kglobalaccel.KShortcutInfo")
@@ -58,7 +56,7 @@ public:
 
     ~KGlobalShortcutInfo();
 
-    KGlobalShortcutInfo& operator= (const KGlobalShortcutInfo& rhs);
+    KGlobalShortcutInfo &operator= (const KGlobalShortcutInfo &rhs);
 
     QString contextFriendlyName() const;
 
@@ -81,21 +79,20 @@ private:
     friend class GlobalShortcut;
 
     friend KGLOBALACCEL_EXPORT const QDBusArgument &operator>> (
-            const QDBusArgument &argument,
-            KGlobalShortcutInfo &shortcut);
+        const QDBusArgument &argument,
+        KGlobalShortcutInfo &shortcut);
 
     //! Implementation details
     KGlobalShortcutInfoPrivate *d;
 };
 
 KGLOBALACCEL_EXPORT QDBusArgument &operator<< (
-        QDBusArgument &argument,
-        const KGlobalShortcutInfo &shortcut);
+    QDBusArgument &argument,
+    const KGlobalShortcutInfo &shortcut);
 
 KGLOBALACCEL_EXPORT const QDBusArgument &operator>> (
-        const QDBusArgument &argument,
-        KGlobalShortcutInfo &shortcut);
-
+    const QDBusArgument &argument,
+    KGlobalShortcutInfo &shortcut);
 
 Q_DECLARE_METATYPE(KGlobalShortcutInfo)
 

@@ -25,8 +25,8 @@
 #include "kglobalshortcutinfo.h"
 
 class KGlobalShortcutInfoPrivate
-    {
-    public:
+{
+public:
     QString contextUniqueName;
     QString contextFriendlyName;
     QString componentUniqueName;
@@ -35,7 +35,7 @@ class KGlobalShortcutInfoPrivate
     QString friendlyName;
     QList<QKeySequence> keys;
     QList<QKeySequence> defaultKeys;
-    };
+};
 
 #endif /* #ifndef KGLOBALSHORTCUTINFO_P_H */
 

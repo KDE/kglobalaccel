@@ -46,8 +46,8 @@ private Q_SLOTS:
 
 public:
 
-    KGlobalShortcutTest() : m_actionA(0) ,m_actionB(0)
-        {}
+    KGlobalShortcutTest() : m_actionA(0), m_actionB(0)
+    {}
 
 private:
     void setupTest(QString id);

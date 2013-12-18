@@ -52,19 +52,18 @@ public:
      * An enum about global shortcut setter semantics
      */
     enum GlobalShortcutLoading {
-      /// Look up the action in global settings (using its main component's name and text())
-      /// and set the shortcut as saved there.
-      /// @see setGlobalShortcut()
-      Autoloading = 0x0,
-      /// Prevent autoloading of saved global shortcut for action
-      NoAutoloading = 0x4
+        /// Look up the action in global settings (using its main component's name and text())
+        /// and set the shortcut as saved there.
+        /// @see setGlobalShortcut()
+        Autoloading = 0x0,
+        /// Prevent autoloading of saved global shortcut for action
+        NoAutoloading = 0x4
     };
 
     /**
      * Index for actionId QStringLists
      */
-    enum actionIdFields
-    {
+    enum actionIdFields {
         ComponentUnique = 0,        //!< Components Unique Name (ID)
         ActionUnique = 1,           //!< Actions Unique Name(ID)
         ComponentFriendly = 2,      //!< Components Friendly Translated Name
@@ -97,9 +96,9 @@ public:
      * @since 4.2
      */
     static void activateGlobalShortcutContext(
-            const QString &contextUnique,
-            const QString &contextFriendly,
-            const QString &programName);
+        const QString &contextUnique,
+        const QString &contextFriendly,
+        const QString &programName);
 
     /**
      * Clean the shortcuts for component @a componentUnique.
@@ -124,7 +123,6 @@ public:
      * all previously acquired information with care.
      */
     static bool cleanComponent(const QString &componentUnique);
-
 
     /**
      * Check if @a component is active.
@@ -154,8 +152,8 @@ public:
      * @since 4.2
      */
     static bool isGlobalShortcutAvailable(
-            const QKeySequence &seq,
-            const QString &component = QString());
+        const QKeySequence &seq,
+        const QString &component = QString());
 
     /**
      * Show a messagebox to inform the user that a global shortcut is already occupied,
@@ -167,9 +165,9 @@ public:
      * @since 4.2
      */
     static bool promptStealShortcutSystemwide(
-            QWidget *parent,
-            const QList<KGlobalShortcutInfo> &shortcuts,
-            const QKeySequence &seq);
+        QWidget *parent,
+        const QList<KGlobalShortcutInfo> &shortcuts,
+        const QKeySequence &seq);
 
     /**
      * Assign a default global shortcut for a given QAction.
@@ -338,13 +336,13 @@ private:
     ~KGlobalAccel();
 
     //! get component @p componentUnique
-    OrgKdeKglobalaccelComponentInterface* getComponent(const QString &componentUnique);
+    OrgKdeKglobalaccelComponentInterface *getComponent(const QString &componentUnique);
 
     class KGlobalAccelPrivate *const d;
 
     Q_PRIVATE_SLOT(d, void _k_invokeAction(const QString &, const QString &, qlonglong))
-    Q_PRIVATE_SLOT(d, void _k_shortcutGotChanged(const QStringList&, const QList<int>&))
-    Q_PRIVATE_SLOT(d, void _k_serviceOwnerChanged(const QString&, const QString&, const QString&))
+    Q_PRIVATE_SLOT(d, void _k_shortcutGotChanged(const QStringList &, const QList<int> &))
+    Q_PRIVATE_SLOT(d, void _k_serviceOwnerChanged(const QString &, const QString &, const QString &))
 
     friend class KGlobalAccelSingleton;
 };

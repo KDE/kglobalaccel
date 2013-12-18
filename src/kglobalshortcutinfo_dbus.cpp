@@ -19,10 +19,8 @@
 #include "kglobalshortcutinfo.h"
 #include "kglobalshortcutinfo_p.h"
 
-
-
 QDBusArgument &operator<< (QDBusArgument &argument, const KGlobalShortcutInfo &shortcut)
-    {
+{
     argument.beginStructure();
     argument << shortcut.uniqueName()
              << shortcut.friendlyName()
@@ -31,24 +29,21 @@ QDBusArgument &operator<< (QDBusArgument &argument, const KGlobalShortcutInfo &s
              << shortcut.contextUniqueName()
              << shortcut.contextFriendlyName();
     argument.beginArray(qMetaTypeId<int>());
-    Q_FOREACH(const QKeySequence &key, shortcut.keys())
-        {
+    Q_FOREACH (const QKeySequence &key, shortcut.keys()) {
         argument << key[0];
-        }
+    }
     argument.endArray();
     argument.beginArray(qMetaTypeId<int>());
-    Q_FOREACH(const QKeySequence &key, shortcut.defaultKeys())
-        {
+    Q_FOREACH (const QKeySequence &key, shortcut.defaultKeys()) {
         argument << key[0];
-        }
+    }
     argument.endArray();
     argument.endStructure();
     return argument;
-    }
-
+}
 
 const QDBusArgument &operator>> (const QDBusArgument &argument, KGlobalShortcutInfo &shortcut)
-    {
+{
     argument.beginStructure();
     argument >> shortcut.d->uniqueName
              >> shortcut.d->friendlyName
@@ -57,22 +52,20 @@ const QDBusArgument &operator>> (const QDBusArgument &argument, KGlobalShortcutI
              >> shortcut.d->contextUniqueName
              >> shortcut.d->contextFriendlyName;
     argument.beginArray();
-    while (!argument.atEnd())
-        {
+    while (!argument.atEnd()) {
         int key;
         argument >> key;
         shortcut.d->keys.append(QKeySequence(key));
-        }
+    }
     argument.endArray();
     argument.beginArray();
-    while (!argument.atEnd())
-        {
+    while (!argument.atEnd()) {
         int key;
         argument >> key;
         shortcut.d->defaultKeys.append(QKeySequence(key));
-        }
+    }
     argument.endArray();
     argument.endStructure();
     return argument;
-    }
+}
 
