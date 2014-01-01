@@ -20,6 +20,8 @@ add_library(KF5GlobalAccel ${kglobalaccel_SRCS})
 generate_export_header(KF5GlobalAccel BASE_NAME KGlobalAccel)
 add_library(KF5::GlobalAccel ALIAS KF5GlobalAccel)
 
+target_include_directories(KF5GlobalAccel INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/kglobalaccel>" "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/KGlobalAccel>")
+
 target_link_libraries(KF5GlobalAccel
 PUBLIC
     Qt5::DBus
@@ -33,11 +35,19 @@ set_target_properties(KF5GlobalAccel PROPERTIES VERSION   ${KGLOBALACCEL_VERSION
                                                 EXPORT_NAME "GlobalAccel"
 )
 
+ecm_generate_headers(
+  KGlobalAccel
+  KGlobalShortcutInfo
+
+  MODULE_NAME KGlobalAccel
+  REQUIRED_HEADERS KGlobalAccel_HEADERS
+)
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/KGlobalAccel DESTINATION ${INCLUDE_INSTALL_DIR} COMPONENT Devel)
+
 install(TARGETS KF5GlobalAccel EXPORT KF5GlobalAccelTargets ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
-  kglobalaccel.h
-  kglobalshortcutinfo.h
   ${CMAKE_CURRENT_BINARY_DIR}/kglobalaccel_export.h
-  DESTINATION ${INCLUDE_INSTALL_DIR} COMPONENT Devel
+  ${KGlobalAccel_HEADERS}
+  DESTINATION ${INCLUDE_INSTALL_DIR}/kglobalaccel COMPONENT Devel
 )
