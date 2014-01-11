@@ -26,9 +26,14 @@ target_link_libraries(KF5GlobalAccel
 PUBLIC
     Qt5::DBus
     Qt5::Widgets
-PRIVATE
-    Qt5::X11Extras
 )
+
+if(HAVE_X11)
+    target_link_libraries(KF5GlobalAccel
+    PRIVATE
+        Qt5::X11Extras
+    )
+endif()
 
 set_target_properties(KF5GlobalAccel PROPERTIES VERSION   ${KGLOBALACCEL_VERSION_STRING}
                                                 SOVERSION ${KGLOBALACCEL_SOVERSION}
