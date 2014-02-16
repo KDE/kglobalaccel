@@ -40,14 +40,13 @@ set_target_properties(KF5GlobalAccel PROPERTIES VERSION   ${KGLOBALACCEL_VERSION
                                                 EXPORT_NAME "GlobalAccel"
 )
 
-ecm_generate_headers(
+ecm_generate_headers(KGlobalAccel_HEADERS
+  HEADER_NAMES
   KGlobalAccel
   KGlobalShortcutInfo
 
-  MODULE_NAME KGlobalAccel
   REQUIRED_HEADERS KGlobalAccel_HEADERS
 )
-install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/KGlobalAccel DESTINATION ${INCLUDE_INSTALL_DIR} COMPONENT Devel)
 
 install(TARGETS KF5GlobalAccel EXPORT KF5GlobalAccelTargets ${INSTALL_TARGETS_DEFAULT_ARGS})
 
