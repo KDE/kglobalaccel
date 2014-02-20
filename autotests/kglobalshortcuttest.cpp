@@ -24,10 +24,11 @@
 #include <qdbusinterface.h>
 #include <QTest>
 #include <QAction>
+#include <QThread>
 #include <kglobalaccel.h>
 #include <qstandardpaths.h>
 
-#include <unistd.h>
+#include <qplatformdefs.h>
 
 #include <QtDBus/QDBusConnectionInterface>
 
@@ -373,7 +374,7 @@ void KGlobalShortcutTest::testNotification()
 
     // kglobalacceld collects registrations and shows the together. Give it
     // time to kick in.
-    sleep(2);
+    QThread::sleep(2);
 
     KGlobalAccel::self()->removeAllShortcuts(action);
 }
@@ -396,7 +397,7 @@ void KGlobalShortcutTest::testForgetGlobalShortcut()
     KGlobalAccel::self()->removeAllShortcuts(m_actionB);
     KGlobalAccel::self()->removeAllShortcuts(m_actionA);
     // kglobalaccel writes asynchronous.
-    sleep(1);
+    QThread::sleep(1);
 
     KGlobalAccel *kga = KGlobalAccel::self();
 #ifndef KDE_NO_DEPRECATED
