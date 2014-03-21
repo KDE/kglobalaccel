@@ -24,12 +24,12 @@
     </method>
     <method name="allShortcutInfos">
       <arg type="a(ssssssaiai)" direction="out"/>
-      <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="QList&lt;KGlobalShortcutInfo&gt;"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QList&lt;KGlobalShortcutInfo&gt;"/>
       <arg name="context" type="s" direction="in"/>
     </method>
     <method name="allShortcutInfos">
       <arg type="a(ssssssaiai)" direction="out"/>
-      <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="QList&lt;KGlobalShortcutInfo&gt;"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QList&lt;KGlobalShortcutInfo&gt;"/>
     </method>
     <method name="getShortcutContexts">
       <arg type="as" direction="out"/>
