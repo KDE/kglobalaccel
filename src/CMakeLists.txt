@@ -4,6 +4,7 @@ set(kglobalaccel_SRCS
   kglobalaccel.cpp
   kglobalshortcutinfo.cpp
   kglobalshortcutinfo_dbus.cpp
+  ${kglobalaccel_QM_LOADER}
 )
 
 set(kglobalaccel_xml ${CMAKE_CURRENT_SOURCE_DIR}/org.kde.KGlobalAccel.xml)
