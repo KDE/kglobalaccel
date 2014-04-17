@@ -1,6 +1,6 @@
 configure_file(config-kglobalaccel.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kglobalaccel.h )
 
-ecm_create_qm_loader(kglobalaccel_QM_LOADER kglobalaccel5)
+ecm_create_qm_loader(kglobalaccel_QM_LOADER kglobalaccel5_qt)
 
 set(kglobalaccel_SRCS
   kglobalaccel.cpp
