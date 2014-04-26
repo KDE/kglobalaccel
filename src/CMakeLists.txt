@@ -23,7 +23,7 @@ add_library(KF5GlobalAccel ${kglobalaccel_SRCS})
 generate_export_header(KF5GlobalAccel BASE_NAME KGlobalAccel)
 add_library(KF5::GlobalAccel ALIAS KF5GlobalAccel)
 
-target_include_directories(KF5GlobalAccel INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/KGlobalAccel>")
+target_include_directories(KF5GlobalAccel INTERFACE "$<INSTALL_INTERFACE:${KF5_INCLUDE_INSTALL_DIR}/KGlobalAccel>")
 
 target_link_libraries(KF5GlobalAccel
 PUBLIC
@@ -51,12 +51,12 @@ ecm_generate_headers(KGlobalAccel_HEADERS
   REQUIRED_HEADERS KGlobalAccel_HEADERS
 )
 
-install(TARGETS KF5GlobalAccel EXPORT KF5GlobalAccelTargets ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS KF5GlobalAccel EXPORT KF5GlobalAccelTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kglobalaccel_export.h
   ${KGlobalAccel_HEADERS}
-  DESTINATION ${INCLUDE_INSTALL_DIR}/KGlobalAccel COMPONENT Devel
+  DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KGlobalAccel COMPONENT Devel
 )
 
 include(ECMGeneratePriFile)
