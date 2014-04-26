@@ -1,1 +1,10 @@
+maintainer: graesslin
+description: Add support for global workspace shortcuts
 tier: 1
+type: integration
+platforms:
+    - name: Linux
+      note: Functional only with Plasma Workspaces
+portingAid: false
+deprecated: false
+release: true
