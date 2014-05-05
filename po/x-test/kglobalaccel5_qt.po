@@ -1,0 +1,65 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: kglobalaccel5_qt\n"
+"PO-Revision-Date: 2014-04-28 09:02+0000\n"
+"Last-Translator: transxx.py program <null@kde.org>\n"
+"Language-Team: KDE Test Language <kde-i18n-doc@kde.org>\n"
+"Language: x-test\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Qt-Contexts: true\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../home/scripty/prod/git-unstable/frameworks_kglobalaccel/src/kglobalaccel.cpp:508
+msgctxt "KGlobalAccel|"
+msgid "Conflict with Global Shortcut"
+msgstr "xxConflict with Global Shortcutxx"
+
+#: ../../home/scripty/prod/git-unstable/frameworks_kglobalaccel/src/kglobalaccel.cpp:509
+#, qt-format
+msgctxt "KGlobalAccel|"
+msgid ""
+"The '%1' key combination has already been allocated to the global action "
+"\"%2\" in %3.\n"
+"Do you want to reassign it from that action to the current one?"
+msgstr ""
+"xxThe '%1' key combination has already been allocated to the global action "
+"\"%2\" in %3.\n"
+"Do you want to reassign it from that action to the current one?xx"
+
+#: ../../home/scripty/prod/git-unstable/frameworks_kglobalaccel/src/kglobalaccel.cpp:518
+#: ../../home/scripty/prod/git-unstable/frameworks_kglobalaccel/src/kglobalaccel.cpp:562
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "xxReassignxx"
+
+#: ../../home/scripty/prod/git-unstable/frameworks_kglobalaccel/src/kglobalaccel.cpp:540
+#, qt-format
+msgctxt "KGlobalAccel|"
+msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgstr ""
+"xxThe '%1' key combination is registered by application %2 for action %3:xx"
+
+#: ../../home/scripty/prod/git-unstable/frameworks_kglobalaccel/src/kglobalaccel.cpp:547
+#, qt-format
+msgctxt "KGlobalAccel|"
+msgid "In context '%1' for action '%2'\n"
+msgstr ""
+"xxIn context '%1' for action '%2'\n"
+"xx\n"
+
+#: ../../home/scripty/prod/git-unstable/frameworks_kglobalaccel/src/kglobalaccel.cpp:551
+#, qt-format
+msgctxt "KGlobalAccel|"
+msgid ""
+"The '%1' key combination is registered by application %2.\n"
+"%3"
+msgstr ""
+"xxThe '%1' key combination is registered by application %2.\n"
+"%3xx"
+
+#: ../../home/scripty/prod/git-unstable/frameworks_kglobalaccel/src/kglobalaccel.cpp:557
+msgctxt "KGlobalAccel|"
+msgid "Conflict With Registered Global Shortcut"
+msgstr "xxConflict With Registered Global Shortcutxx"
