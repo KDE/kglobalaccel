@@ -667,5 +667,16 @@ bool KGlobalAccel::eventFilter(QObject *watched, QEvent *event)
     return QObject::eventFilter(watched, event);
 }
 
+bool KGlobalAccel::setGlobalShortcut(QAction *action, const QList<QKeySequence> &shortcut)
+{
+    KGlobalAccel *g = KGlobalAccel::self();
+    return g->setShortcut(action, shortcut) && g->setDefaultShortcut(action, shortcut);
+}
+
+bool KGlobalAccel::setGlobalShortcut(QAction *action, const QKeySequence &shortcut)
+{
+    return KGlobalAccel::setGlobalShortcut(action, QList<QKeySequence>() << shortcut);
+}
+
 #include "moc_kglobalaccel.cpp"
 

@@ -219,6 +219,30 @@ public:
     bool setShortcut(QAction *action, const QList<QKeySequence> &shortcut, GlobalShortcutLoading loadFlag = Autoloading);
 
     /**
+     * Convenient method to set both active and default shortcut.
+     *
+     * If more control for loading the shortcuts is needed use the variants offering more control.
+     *
+     * @sa setShortcut
+     * @sa setDefaultShortcut
+     * @since 5.0
+     **/
+    static bool setGlobalShortcut(QAction *action, const QList<QKeySequence> &shortcut);
+
+    /**
+     * Convenient method to set both active and default shortcut.
+     *
+     * This method is suited for the case that only one shortcut is to be configured.
+     *
+     * If more control for loading the shortcuts is needed use the variants offering more control.
+     *
+     * @sa setShortcut
+     * @sa setDefaultShortcut
+     * @since 5.0
+     **/
+    static bool setGlobalShortcut(QAction *action, const QKeySequence &shortcut);
+
+    /**
      * Get the global default shortcut for this action, if one exists. Global shortcuts
      * allow your actions to respond to accellerators independently of the focused window.
      * Unlike regular shortcuts, the application's window does not need focus
