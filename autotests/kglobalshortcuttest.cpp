@@ -83,11 +83,15 @@ void KGlobalShortcutTest::setupTest(QString id)
 
     m_actionA = new QAction("Text For Action A", this);
     m_actionA->setObjectName("Action A:" + id);
+    m_actionA->setProperty("componentName", "qttest");
+    m_actionA->setProperty("componentDisplayName", "KDE Test Program");
     KGlobalAccel::self()->setShortcut(m_actionA, QList<QKeySequence>() << sequenceA << sequenceB, KGlobalAccel::NoAutoloading);
     KGlobalAccel::self()->setDefaultShortcut(m_actionA, QList<QKeySequence>() << sequenceA << sequenceB, KGlobalAccel::NoAutoloading);
 
     m_actionB = new QAction("Text For Action B", this);
     m_actionB->setObjectName("Action B:" + id);
+    m_actionB->setProperty("componentName", "qttest");
+    m_actionA->setProperty("componentDisplayName", "KDE Test Program");
     KGlobalAccel::self()->setShortcut(m_actionB, QList<QKeySequence>(), KGlobalAccel::NoAutoloading);
     KGlobalAccel::self()->setDefaultShortcut(m_actionB, QList<QKeySequence>(), KGlobalAccel::NoAutoloading);
 }
@@ -218,6 +222,8 @@ void KGlobalShortcutTest::testSaveRestore()
     // Recreate it
     m_actionA = new QAction("Text For Action A", this);
     m_actionA->setObjectName("Action A:testSaveRestore");
+    m_actionA->setProperty("componentName", "qttest");
+    m_actionA->setProperty("componentDisplayName", "KDE Test Program");
 
     // Now it's empty
     QVERIFY(KGlobalAccel::self()->shortcut(m_actionA).isEmpty());
@@ -230,6 +236,8 @@ void KGlobalShortcutTest::testSaveRestore()
     delete m_actionA;
     m_actionA = new QAction("Text For Action A", this);
     m_actionA->setObjectName("Action A:testSaveRestore");
+    m_actionA->setProperty("componentName", "qttest");
+    m_actionA->setProperty("componentDisplayName", "KDE Test Program");
     KGlobalAccel::self()->setShortcut(m_actionA, QList<QKeySequence>() << QKeySequence()
                                       << (cutA.isEmpty() ? QKeySequence() : cutA.first()));
     QCOMPARE(KGlobalAccel::self()->shortcut(m_actionA), cutA);
@@ -319,6 +327,8 @@ void KGlobalShortcutTest::testConfigurationActions()
     QAction cfg_action("Text For Action A", NULL);
     cfg_action.setObjectName("Action A:testConfigurationActions");
     cfg_action.setProperty("isConfigurationAction", true);
+    cfg_action.setProperty("componentName", "qttest");
+    cfg_action.setProperty("componentDisplayName", "KDE Test Program");
     KGlobalAccel::self()->setShortcut(&cfg_action, QList<QKeySequence>());
 
     // Check that the configuration action has the correct shortcuts
