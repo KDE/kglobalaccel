@@ -315,6 +315,7 @@ void KGlobalAccelPrivate::updateGlobalShortcut(QAction *action,
         if (scResult != activeShortcut) {
             // If kglobalaccel returned a shortcut that differs from the one we
             // sent, use that one. There must have been clashes or some other problem.
+            actionShortcuts.insert(action, scResult);
             emit q->globalShortcutChanged(action, scResult.isEmpty() ? QKeySequence() : scResult.first());
         }
     }
