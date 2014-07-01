@@ -431,7 +431,9 @@ void KGlobalAccelPrivate::_k_shortcutGotChanged(const QStringList &actionId,
         return;
     }
 
-    emit q->globalShortcutChanged(action, keys.isEmpty() ? QKeySequence() : shortcutFromIntList(keys).first());
+    const QList<QKeySequence> shortcuts = shortcutFromIntList(keys);
+    actionShortcuts.insert(action, shortcuts);
+    emit q->globalShortcutChanged(action, keys.isEmpty() ? QKeySequence() : shortcuts.first());
 }
 
 void KGlobalAccelPrivate::_k_serviceOwnerChanged(const QString &name, const QString &oldOwner,

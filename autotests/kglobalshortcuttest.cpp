@@ -202,7 +202,7 @@ void KGlobalShortcutTest::testStealShortcut()
     KGlobalAccel::stealShortcutSystemwide(sequenceA);
     //let DBus do its thing in case it happens asynchronously
     QTest::qWait(200);
-    QList<QKeySequence> shortcuts = KGlobalAccel::self()->shortcut(m_actionB);
+    QList<QKeySequence> shortcuts = KGlobalAccel::self()->shortcut(m_actionA);
     QVERIFY(!shortcuts.isEmpty());
     QVERIFY(shortcuts.first().isEmpty());
 }
