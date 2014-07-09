@@ -283,7 +283,7 @@ public:
      *
      * @deprecated
      */
-#ifndef KDE_NO_DEPRECATED
+#ifndef KGLOBALACCEL_NO_DEPRECATED
     KGLOBALACCEL_DEPRECATED bool isEnabled() const;
 #endif
 
@@ -292,7 +292,7 @@ public:
      *
      * @deprecated
      */
-#ifndef KDE_NO_DEPRECATED
+#ifndef KGLOBALACCEL_NO_DEPRECATED
     KGLOBALACCEL_DEPRECATED void setEnabled(bool enabled);
 #endif
 
@@ -302,7 +302,7 @@ public:
      *
      * @deprecated
      */
-#ifndef KDE_NO_DEPRECATED
+#ifndef KGLOBALACCEL_NO_DEPRECATED
     KGLOBALACCEL_DEPRECATED QList<QStringList> allMainComponents();
 #endif
 
@@ -311,7 +311,7 @@ public:
      *
      * @deprecated
      */
-#ifndef KDE_NO_DEPRECATED
+#ifndef KGLOBALACCEL_NO_DEPRECATED
     KGLOBALACCEL_DEPRECATED QList<QStringList> allActionsForComponent(const QStringList &actionId);
 #endif
 
@@ -320,7 +320,7 @@ public:
      *
      * @deprecated
      */
-#ifndef KDE_NO_DEPRECATED
+#ifndef KGLOBALACCEL_NO_DEPRECATED
     KGLOBALACCEL_DEPRECATED static QStringList findActionNameSystemwide(const QKeySequence &seq);
 #endif
 
@@ -329,7 +329,7 @@ public:
      *
      * @deprecated
      */
-#ifndef KDE_NO_DEPRECATED
+#ifndef KGLOBALACCEL_NO_DEPRECATED
     KGLOBALACCEL_DEPRECATED static bool promptStealShortcutSystemwide(QWidget *parent, const QStringList &actionIdentifier, const QKeySequence &seq);
 #endif
 

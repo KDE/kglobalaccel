@@ -95,7 +95,7 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
 
 KGlobalAccelPrivate::KGlobalAccelPrivate(KGlobalAccel *q)
     :
-#ifndef KDE_NO_DEPRECATED
+#ifndef KGLOBALACCEL_NO_DEPRECATED
     enabled(true),
 #endif
     iface(QStringLiteral("org.kde.kglobalaccel"), QStringLiteral("/kglobalaccel"), QDBusConnection::sessionBus()),
@@ -170,7 +170,7 @@ bool KGlobalAccel::isComponentActive(const QString &componentUnique)
     return component->isActive();
 }
 
-#ifndef KDE_NO_DEPRECATED
+#ifndef KGLOBALACCEL_NO_DEPRECATED
 bool KGlobalAccel::isEnabled() const
 {
     return d->enabled;
@@ -182,7 +182,7 @@ org::kde::kglobalaccel::Component *KGlobalAccel::getComponent(const QString &com
     return d->getComponent(componentUnique);
 }
 
-#ifndef KDE_NO_DEPRECATED
+#ifndef KGLOBALACCEL_NO_DEPRECATED
 void KGlobalAccel::setEnabled(bool enabled)
 {
     d->enabled = enabled;
@@ -468,14 +468,14 @@ void KGlobalAccelPrivate::reRegisterAll()
     }
 }
 
-#ifndef KDE_NO_DEPRECATED
+#ifndef KGLOBALACCEL_NO_DEPRECATED
 QList<QStringList> KGlobalAccel::allMainComponents()
 {
     return d->iface.allMainComponents();
 }
 #endif
 
-#ifndef KDE_NO_DEPRECATED
+#ifndef KGLOBALACCEL_NO_DEPRECATED
 QList<QStringList> KGlobalAccel::allActionsForComponent(const QStringList &actionId)
 {
     return d->iface.allActionsForComponent(actionId);
@@ -483,7 +483,7 @@ QList<QStringList> KGlobalAccel::allActionsForComponent(const QStringList &actio
 #endif
 
 //static
-#ifndef KDE_NO_DEPRECATED
+#ifndef KGLOBALACCEL_NO_DEPRECATED
 QStringList KGlobalAccel::findActionNameSystemwide(const QKeySequence &seq)
 {
     return self()->d->iface.action(seq[0]);
@@ -501,7 +501,7 @@ bool KGlobalAccel::isGlobalShortcutAvailable(const QKeySequence &seq, const QStr
 }
 
 //static
-#ifndef KDE_NO_DEPRECATED
+#ifndef KGLOBALACCEL_NO_DEPRECATED
 bool KGlobalAccel::promptStealShortcutSystemwide(QWidget *parent, const QStringList &actionIdentifier,
         const QKeySequence &seq)
 {
