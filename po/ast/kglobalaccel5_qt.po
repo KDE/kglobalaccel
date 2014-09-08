@@ -1,0 +1,85 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kdelibs4-1\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2014-03-23 01:50+0000\n"
+"PO-Revision-Date: 2012-12-28 17:14+0100\n"
+"Last-Translator: ivarela <ivarela@ubuntu.com>\n"
+"Language-Team: asturian <kde-i18n-doc@kde.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: asturian\n"
+
+#: kglobalaccel.cpp:511
+#, fuzzy
+#| msgid "Conflict with Global Shortcut"
+msgctxt "KGlobalAccel|"
+msgid "Conflict with Global Shortcut"
+msgstr "Engarradiella con accesu rápidu global"
+
+#: kglobalaccel.cpp:512
+#, fuzzy, qt-format
+#| msgid ""
+#| "The '%1' key combination has already been allocated to the global action "
+#| "\"%2\" in %3.\n"
+#| "Do you want to reassign it from that action to the current one?"
+msgctxt "KGlobalAccel|"
+msgid ""
+"The '%1' key combination has already been allocated to the global action "
+"\"%2\" in %3.\n"
+"Do you want to reassign it from that action to the current one?"
+msgstr ""
+"La combinación de tecles «%1» yá ta asignada a l'aición global «%2» en %3.\n"
+"¿Quier reasignala d'esa aición a l'aición actual?"
+
+#: kglobalaccel.cpp:521 kglobalaccel.cpp:565
+#, fuzzy
+#| msgid "Reassign"
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "Reasignar"
+
+#: kglobalaccel.cpp:543
+#, fuzzy, qt-format
+#| msgid ""
+#| "The '%1' key combination is registered by application %2 for action %3:"
+msgctxt "KGlobalAccel|"
+msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgstr ""
+"La combinación de tecles «%1» ta rexistrada pola aplicación %2 pa l'aición "
+"%3:"
+
+#: kglobalaccel.cpp:550
+#, fuzzy, qt-format
+#| msgid "In context '%1' for action '%2'\n"
+msgctxt "KGlobalAccel|"
+msgid "In context '%1' for action '%2'\n"
+msgstr "Nel contestu «%1» pa l'aición «%2»\n"
+
+#: kglobalaccel.cpp:554
+#, fuzzy, qt-format
+#| msgid ""
+#| "The '%1' key combination is registered by application %2.\n"
+#| "%3"
+msgctxt "KGlobalAccel|"
+msgid ""
+"The '%1' key combination is registered by application %2.\n"
+"%3"
+msgstr ""
+"La combinación de tecles «%1» ta rexistrada pola aplicación %2.\n"
+"%3"
+
+#: kglobalaccel.cpp:560
+#, fuzzy
+#| msgid "Conflict With Registered Global Shortcut"
+msgctxt "KGlobalAccel|"
+msgid "Conflict With Registered Global Shortcut"
+msgstr "Conflictu con un accesu rápidu global rexistráu"
