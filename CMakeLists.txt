@@ -15,6 +15,7 @@ include(ECMGenerateHeaders)
 include(ECMPoQmTools)
 
 set(KF5_VERSION "5.6.0") # handled by release scripts
+set(KF5_DEP_VERSION "5.6.0") # handled by release scripts
 
 ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX KGLOBALACCEL
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kglobalaccel_version.h"
@@ -29,11 +30,28 @@ include(KDEInstallDirs)
 include(KDEFrameworkCompilerSettings)
 include(KDECMakeSettings)
 
+# Dependencies of runtime component
+find_package(KF5Config ${KF5_DEP_VERSION} REQUIRED)
+find_package(KF5CoreAddons ${KF5_DEP_VERSION} REQUIRED)
+find_package(KF5Crash ${KF5_DEP_VERSION} REQUIRED)
+find_package(KF5DBusAddons ${KF5_DEP_VERSION} REQUIRED)
+find_package(KF5I18n ${KF5_DEP_VERSION} REQUIRED)
+find_package(KF5WindowSystem ${KF5_DEP_VERSION} REQUIRED)
+
+find_package(XCB MODULE COMPONENTS XCB KEYSYMS)
+set_package_properties(XCB PROPERTIES DESCRIPTION "X protocol C-language Binding"
+                       URL "http://xcb.freedesktop.org"
+                       TYPE OPTIONAL
+                      )
+
 if (NOT APPLE)
     find_package(X11)
 endif()
-set(HAVE_X11 ${X11_FOUND})
-if(HAVE_X11)
+
+set(HAVE_X11 0)
+
+if(X11_FOUND AND XCB_XCB_FOUND)
+    set(HAVE_X11 1)
     find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED X11Extras)
 endif()
 
