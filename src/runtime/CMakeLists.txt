@@ -16,10 +16,10 @@ set(kglobalaccel_SRCS
 if (${XCB_XCB_FOUND} AND ${XCB_KEYSYMS_FOUND})
   set( kglobalaccel_SRCS ${kglobalaccel_SRCS} kglobalaccel_x11.cpp )
 endif()
-if ( Q_WS_MAC )
+if ( Q_OS_OSX )
   set( kglobalaccel_SRCS ${kglobalaccel_SRCS} kglobalaccel_mac.cpp )
 endif ()
-if ( Q_WS_WIN )
+if ( Q_OS_WIN )
   set( kglobalaccel_SRCS ${kglobalaccel_SRCS} kglobalaccel_win.cpp )
 endif ()
 
@@ -40,7 +40,7 @@ if (${XCB_XCB_FOUND} AND ${XCB_KEYSYMS_FOUND})
     target_link_libraries(kglobalaccel5 Qt5::X11Extras XCB::XCB XCB::KEYSYMS)
 endif()
 
-if(Q_WS_MAC)
+if( Q_OS_OSX )
    target_link_libraries(kglobalaccel5 ${CARBON_LIBRARY})
 endif()
 
