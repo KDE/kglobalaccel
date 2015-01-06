@@ -1,4 +1,4 @@
-add_definitions(-DTRANSLATION_DOMAIN=\"kglobalaccel\")
+add_definitions(-DTRANSLATION_DOMAIN=\"kglobalaccel5\")
 remove_definitions(-DQT_NO_CAST_FROM_BYTEARRAY)
 remove_definitions(-DQT_NO_CAST_FROM_ASCII)
 
