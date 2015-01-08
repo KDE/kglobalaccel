@@ -16,7 +16,7 @@ set(kglobalaccel_SRCS
 if (${XCB_XCB_FOUND} AND ${XCB_KEYSYMS_FOUND})
   set( kglobalaccel_SRCS ${kglobalaccel_SRCS} kglobalaccel_x11.cpp )
 endif()
-if ( Q_OS_OSX )
+if ( APPLE )
   set( kglobalaccel_SRCS ${kglobalaccel_SRCS} kglobalaccel_mac.cpp )
 endif ()
 if ( Q_OS_WIN )
