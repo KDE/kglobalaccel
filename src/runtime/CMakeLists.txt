@@ -40,7 +40,8 @@ if (${XCB_XCB_FOUND} AND ${XCB_KEYSYMS_FOUND})
     target_link_libraries(kglobalaccel5 Qt5::X11Extras XCB::XCB XCB::KEYSYMS)
 endif()
 
-if( Q_OS_OSX )
+if( APPLE )
+   FIND_LIBRARY(CARBON_LIBRARY Carbon)
    target_link_libraries(kglobalaccel5 ${CARBON_LIBRARY})
 endif()
 
