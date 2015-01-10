@@ -12,18 +12,18 @@ set(kglobalaccel_SRCS
 set(kglobalaccel_xml ${CMAKE_CURRENT_SOURCE_DIR}/org.kde.KGlobalAccel.xml)
 set_source_files_properties(${kglobalaccel_xml} PROPERTIES INCLUDE "kglobalshortcutinfo_p.h")
 qt5_add_dbus_interface(kglobalaccel_SRCS ${kglobalaccel_xml} kglobalaccel_interface )
-install(FILES ${kglobalaccel_xml} DESTINATION ${DBUS_INTERFACES_INSTALL_DIR} RENAME kf5_org.kde.KGlobalAccel.xml)
+install(FILES ${kglobalaccel_xml} DESTINATION ${KDE_INSTALL_DBUSINTERFACEDIR} RENAME kf5_org.kde.KGlobalAccel.xml)
 
 set(kglobalaccel_component_xml ${CMAKE_CURRENT_SOURCE_DIR}/org.kde.kglobalaccel.Component.xml)
 set_source_files_properties(${kglobalaccel_component_xml} PROPERTIES INCLUDE "kglobalshortcutinfo_p.h")
 qt5_add_dbus_interface(kglobalaccel_SRCS ${kglobalaccel_component_xml} kglobalaccel_component_interface )
-install(FILES ${kglobalaccel_component_xml} DESTINATION ${DBUS_INTERFACES_INSTALL_DIR} RENAME kf5_org.kde.kglobalaccel.Component.xml)
+install(FILES ${kglobalaccel_component_xml} DESTINATION ${KDE_INSTALL_DBUSINTERFACEDIR} RENAME kf5_org.kde.kglobalaccel.Component.xml)
 
 add_library(KF5GlobalAccel ${kglobalaccel_SRCS})
 generate_export_header(KF5GlobalAccel BASE_NAME KGlobalAccel)
 add_library(KF5::GlobalAccel ALIAS KF5GlobalAccel)
 
-target_include_directories(KF5GlobalAccel INTERFACE "$<INSTALL_INTERFACE:${KF5_INCLUDE_INSTALL_DIR}/KGlobalAccel>")
+target_include_directories(KF5GlobalAccel INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/KGlobalAccel>")
 
 target_link_libraries(KF5GlobalAccel
 PUBLIC
@@ -56,11 +56,11 @@ install(TARGETS KF5GlobalAccel EXPORT KF5GlobalAccelTargets ${KF5_INSTALL_TARGET
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kglobalaccel_export.h
   ${KGlobalAccel_HEADERS}
-  DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KGlobalAccel COMPONENT Devel
+  DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KGlobalAccel COMPONENT Devel
 )
 
 include(ECMGeneratePriFile)
-ecm_generate_pri_file(BASE_NAME KGlobalAccel LIB_NAME KF5GlobalAccel DEPS "dbus widgets" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KF5_INCLUDE_INSTALL_DIR}/KGlobalAccel)
+ecm_generate_pri_file(BASE_NAME KGlobalAccel LIB_NAME KF5GlobalAccel DEPS "dbus widgets" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF5}/KGlobalAccel)
 install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
 
 add_subdirectory(runtime)

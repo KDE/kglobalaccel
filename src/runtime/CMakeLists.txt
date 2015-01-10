@@ -47,9 +47,9 @@ endif()
 
 # Install application and configuration
 install( TARGETS kglobalaccel5 ${KF5_INSTALL_TARGETS_DEFAULT_ARGS} )
-install( FILES kglobalaccel.desktop  DESTINATION ${SERVICES_INSTALL_DIR} RENAME kglobalaccel5.desktop)
+install( FILES kglobalaccel.desktop  DESTINATION ${KDE_INSTALL_KSERVICES5DIR} RENAME kglobalaccel5.desktop)
 
 configure_file(org.kde.kglobalaccel.service.in
                ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kglobalaccel.service)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kglobalaccel.service
-        DESTINATION ${DBUS_SERVICES_INSTALL_DIR})
+        DESTINATION ${KDE_INSTALL_DBUSSERVICEDIR})
