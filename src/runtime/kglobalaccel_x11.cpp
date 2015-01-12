@@ -80,6 +80,13 @@ KGlobalAccelImpl::~KGlobalAccelImpl()
 
 bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
 {
+    //grabKey is called during shutdown
+    //shutdown might be due to the X server being killed
+    //if so, fail immediately before trying to make other xcb calls
+    if (!QX11Info::connection() || xcb_connection_has_error(QX11Info::connection())) {
+        return false;
+    }
+
     if (!m_keySymbols) {
         return false;
     }
