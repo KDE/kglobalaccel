@@ -80,6 +80,5 @@ bool KGlobalAccelImpl::winEvent( MSG * message, long * result )
     return false;
 }
 
-#include "kglobalaccel_win.moc"
 
 #endif // Q_OS_WIN

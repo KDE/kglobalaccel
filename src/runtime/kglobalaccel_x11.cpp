@@ -299,4 +299,3 @@ void KGlobalAccelImpl::syncX()
     free(value);
 }
 
-#include "kglobalaccel_x11.moc"
