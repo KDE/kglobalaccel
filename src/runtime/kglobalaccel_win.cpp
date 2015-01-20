@@ -27,7 +27,6 @@
 #include "kglobalaccel.h"
 #include "globalshortcutsregistry.h"
 
-#include <kapplication.h>
 #include <QDebug>
 
 #include <windows.h>
@@ -40,7 +39,7 @@ KGlobalAccelImpl::KGlobalAccelImpl(GlobalShortcutsRegistry* owner)
 bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
 {
     if( !keyQt ) {
-        kWarning(125) << "Tried to grab key with null code.";
+        qWarning() << "Tried to grab key with null code.";
         return false;
     }
 
@@ -52,9 +51,9 @@ bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
     ATOM id = GlobalAddAtom(MAKEINTATOM(keyQt));
     bool b;
     if (grab) {
-        b = RegisterHotKey(winId(), id, keyModW, keyCodeW);
+        b = RegisterHotKey(reinterpret_cast<HWND>(winId()), id, keyModW, keyCodeW);
     } else {
-        b = UnregisterHotKey(winId(), id);
+        b = UnregisterHotKey(reinterpret_cast<HWND>(winId()), id);
     }
 
     return b;
