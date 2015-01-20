@@ -53,7 +53,7 @@ extern "C" Q_DECL_EXPORT int main(int argc, char **argv)
     // registering the app with the session manager. We remove the address to make sure we do not
     // get a hang on kglobalaccel restart (kglobalaccel tries to register with ksmserver,
     // ksmserver tries to register with kglobalaccel).
-    unsetenv( "SESSION_MANAGER" );
+    qunsetenv( "SESSION_MANAGER" );
 
     QApplication app(argc, argv);
     KAboutData aboutdata(
@@ -82,7 +82,9 @@ extern "C" Q_DECL_EXPORT int main(int argc, char **argv)
     // Stop gracefully
     ::signal(SIGINT, sighandler);
     ::signal(SIGTERM, sighandler);
+#ifndef Q_OS_WIN
     ::signal(SIGHUP, sighandler);
+#endif
 
     // Restart on a crash
     KCrash::setFlags(KCrash::AutoRestart);

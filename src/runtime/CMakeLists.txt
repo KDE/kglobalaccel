@@ -19,7 +19,7 @@ endif()
 if ( APPLE )
   set( kglobalaccel_SRCS ${kglobalaccel_SRCS} kglobalaccel_mac.cpp )
 endif ()
-if ( Q_OS_WIN )
+if ( WIN32 )
   set( kglobalaccel_SRCS ${kglobalaccel_SRCS} kglobalaccel_win.cpp )
 endif ()
 
