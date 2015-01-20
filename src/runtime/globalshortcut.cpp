@@ -18,7 +18,9 @@
 
 #include "globalshortcut.h"
 
+#ifdef __GNUC__
 #warning Remove private header kglobalshortcutinfo_p.once this kglobalaccel daemon is merged with the kglobalaccel framework
+#endif
 #include "kglobalshortcutinfo_p.h"
 
 #include "component.h"
