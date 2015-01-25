@@ -59,7 +59,7 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
     QDBusReply<QDBusObjectPath> reply = kglobalaccel.getComponent(componentUnique);
     if (!reply.isValid()) {
 
-        if (reply.error().name() == QStringLiteral("org.kde.kglobalaccel.NoSuchComponent")) {
+        if (reply.error().name() == QLatin1String("org.kde.kglobalaccel.NoSuchComponent")) {
             // No problem. The component doesn't exists. That's normal
             return NULL;
         }
@@ -204,7 +204,7 @@ KGlobalAccel *KGlobalAccel::self()
 
 bool KGlobalAccelPrivate::doRegister(QAction *action)
 {
-    if (!action || action->objectName().isEmpty() || action->objectName().startsWith(QStringLiteral("unnamed-"))) {
+    if (!action || action->objectName().isEmpty() || action->objectName().startsWith(QLatin1String("unnamed-"))) {
         qWarning() << "Attempt to set global shortcut for action without objectName()."
                    " Read the setGlobalShortcut() documentation.";
         return false;
@@ -441,7 +441,7 @@ void KGlobalAccelPrivate::_k_serviceOwnerChanged(const QString &name, const QStr
         const QString &newOwner)
 {
     Q_UNUSED(oldOwner);
-    if (name == QStringLiteral("org.kde.kglobalaccel") && !newOwner.isEmpty()) {
+    if (name == QLatin1String("org.kde.kglobalaccel") && !newOwner.isEmpty()) {
         // kglobalaccel was restarted
         qDebug() << "detected kglobalaccel restarting, re-registering all shortcut keys";
         reRegisterAll();

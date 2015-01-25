@@ -57,16 +57,16 @@ extern "C" Q_DECL_EXPORT int main(int argc, char **argv)
 
     QApplication app(argc, argv);
     KAboutData aboutdata(
-            "kglobalaccel",
+            QStringLiteral("kglobalaccel"),
             i18n("KDE Global Shortcuts Service"),
-            "0.2",
+            QStringLiteral("0.2"),
             i18n("KDE Global Shortcuts Service"),
             KAboutLicense::LGPL,
             i18n("(C) 2007-2009  Andreas Hartmetz, Michael Jansen"));
     aboutdata.addAuthor(i18n("Andreas Hartmetz"),i18n("Maintainer"),"ahartmetz@gmail.com");
     aboutdata.addAuthor(i18n("Michael Jansen"),i18n("Maintainer"),"kde@michael-jansen.biz");
 
-    app.setWindowIcon(QIcon::fromTheme("kglobalaccel"));
+    app.setWindowIcon(QIcon::fromTheme(QStringLiteral("kglobalaccel")));
     KAboutData::setApplicationData(aboutdata);
 
     // check if kglobalaccel is disabled

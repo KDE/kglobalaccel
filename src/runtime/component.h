@@ -61,10 +61,10 @@ public:
     void activateShortcuts();
 
     //! Returns all shortcuts in context @context
-    QList<GlobalShortcut *> allShortcuts(const QString &context = "default") const;
+    QList<GlobalShortcut *> allShortcuts(const QString &context = QStringLiteral("default")) const;
 
     //! Creates the new global shortcut context @p context
-    bool createGlobalShortcutContext(const QString &context, const QString &friendlyName="");
+    bool createGlobalShortcutContext(const QString &context, const QString &friendlyName=QString());
 
     //! Return the current context
     GlobalShortcutContext* currentContext();
@@ -95,7 +95,7 @@ public:
     //! searched.
     GlobalShortcut *getShortcutByName(
             const QString &uniqueName,
-            const QString &context = "default") const;
+            const QString &context = QStringLiteral("default")) const;
 
     /**
      * Check if @a key is available for component @p component

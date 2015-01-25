@@ -62,7 +62,7 @@ struct KGlobalAccelDPrivate
 
     void splitComponent(QString &component, QString &context) const
         {
-        context = "default";
+        context = QStringLiteral("default");
         if (component.indexOf('|')!=-1)
             {
             QStringList tmp = component.split('|');
@@ -164,9 +164,9 @@ GlobalShortcut *KGlobalAccelDPrivate::addAction(const QStringList &actionId)
 
     QString componentUnique = actionId.at(KGlobalAccel::ComponentUnique);
 
-    QString contextUnique = "default";
+    QString contextUnique = QStringLiteral("default");
 
-    if (componentUnique.indexOf("|")!=-1) {
+    if (componentUnique.indexOf('|')!=-1) {
         QStringList tmp = componentUnique.split('|');
         Q_ASSERT(tmp.size()==2);
         componentUnique = tmp.at(0);
@@ -224,7 +224,7 @@ bool KGlobalAccelD::init()
     }
 
     if (!QDBusConnection::sessionBus().registerObject(
-            QLatin1String("/kglobalaccel"),
+            QStringLiteral("/kglobalaccel"),
             this,
             QDBusConnection::ExportScriptableContents)) {
         qWarning() << "Failed to register object kglobalaccel in org.kde.kglobalaccel";

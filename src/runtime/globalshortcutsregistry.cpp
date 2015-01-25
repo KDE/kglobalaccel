@@ -262,7 +262,7 @@ void GlobalShortcutsRegistry::loadSettings()
         Q_FOREACH(const QString& context, configGroup.groupList())
             {
             // Skip the friendly name group
-            if (context=="Friendly Name") continue;
+            if (context==QLatin1String("Friendly Name")) continue;
 
             KConfigGroup contextGroup(&configGroup, context);
             QString contextFriendlyName = contextGroup.readEntry("_k_friendly_name");

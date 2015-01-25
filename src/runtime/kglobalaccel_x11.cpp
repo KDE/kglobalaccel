@@ -182,7 +182,7 @@ bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
 
 bool KGlobalAccelImpl::nativeEventFilter(const QByteArray &eventType, void *message, long *)
 {
-    if (eventType != QByteArrayLiteral("xcb_generic_event_t")) {
+    if (eventType != "xcb_generic_event_t") {
         return false;
     }
     xcb_generic_event_t *event = reinterpret_cast<xcb_generic_event_t*>(message);
@@ -285,7 +285,7 @@ bool KGlobalAccelImpl::x11KeyPress(xcb_key_press_event_t *pEvent)
 
 void KGlobalAccelImpl::setEnabled( bool enable )
 {
-    if (enable && qApp->platformName() == QByteArrayLiteral("xcb")) {
+    if (enable && qApp->platformName() == QLatin1String("xcb")) {
         qApp->installNativeEventFilter(this);
     } else {
         qApp->removeNativeEventFilter(this);

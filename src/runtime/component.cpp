@@ -35,7 +35,7 @@
 static QList<int> keysFromString(const QString &str)
 {
     QList<int> ret;
-    if (str == "none") {
+    if (str == QLatin1String("none")) {
         return ret;
     }
     const QStringList strList = str.split('\t');
@@ -52,7 +52,7 @@ static QList<int> keysFromString(const QString &str)
 static QString stringFromKeys(const QList<int> &keys)
 {
     if (keys.isEmpty()) {
-        return "none";
+        return QStringLiteral("none");
     }
     QString ret;
     foreach (int key, keys) {
@@ -82,8 +82,9 @@ Component::Component(
         _registry->addComponent(this);
         }
 
-    createGlobalShortcutContext("default", "Default Context");
-    _current = _contexts.value("default");
+    QString DEFAULT=QStringLiteral("default");
+    createGlobalShortcutContext(DEFAULT, QStringLiteral("Default Context"));
+    _current = _contexts.value(DEFAULT);
     }
 
 
@@ -222,8 +223,8 @@ void Component::deactivateShortcuts(bool temporarily)
     Q_FOREACH (GlobalShortcut *shortcut, _current->_actions)
         {
         if (temporarily
-                && uniqueName() == "kwin"
-                && shortcut->uniqueName() == "Block Global Shortcuts")
+                && uniqueName() == QLatin1String("kwin")
+                && shortcut->uniqueName() == QLatin1String("Block Global Shortcuts"))
             {
             continue;
             }
@@ -452,7 +453,7 @@ void Component::writeSettings(KConfigGroup& configGroup) const
         {
         KConfigGroup contextGroup;
 
-        if (context->uniqueName() == "default")
+        if (context->uniqueName() == QLatin1String("default"))
             {
             contextGroup = configGroup;
             // Write the friendly name
