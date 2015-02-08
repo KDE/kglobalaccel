@@ -1,0 +1,43 @@
+# Frederik Schwarzer <schwarzer@kde.org>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kglobalaccel\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2014-09-09 10:29+0000\n"
+"PO-Revision-Date: 2010-04-10 14:14+0200\n"
+"Last-Translator: Panagiotis Papadopoulos <pano_90@gmx.net>\n"
+"Language-Team: German <kde-i18n-de@kde.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 1.0\n"
+
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Frederik Schwarzer"
+
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "schwarzer@kde.org"
+
+#: main.cpp:61 main.cpp:63
+msgid "KDE Global Shortcuts Service"
+msgstr "KDE Globale Tastenkürzel"
+
+#: main.cpp:65
+msgid "(C) 2007-2009  Andreas Hartmetz, Michael Jansen"
+msgstr "© 2007–2009 Andreas Hartmetz, Michael Jansen"
+
+#: main.cpp:66
+msgid "Andreas Hartmetz"
+msgstr "Andreas Hartmetz"
+
+#: main.cpp:66 main.cpp:67
+msgid "Maintainer"
+msgstr "Betreuer"
+
+#: main.cpp:67
+msgid "Michael Jansen"
+msgstr "Michael Jansen"
