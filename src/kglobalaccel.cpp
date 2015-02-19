@@ -419,9 +419,8 @@ void KGlobalAccelPrivate::_k_invokeAction(
             QX11Info::setAppUserTime(timestamp);
         }
     }
-#else
-    Q_UNUSED(timestamp);
 #endif
+    action->setProperty("org.kde.kglobalaccel.activationTimestamp", timestamp);
 
     action->trigger();
 }
