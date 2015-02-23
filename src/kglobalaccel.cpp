@@ -411,11 +411,13 @@ void KGlobalAccelPrivate::_k_invokeAction(
     // TODO The 100%-correct solution should probably be handling this action
     // in the proper place in relation to the X events queue in order to avoid
     // the possibility of wrong ordering of user events.
-    if (_k_timestampCompare(timestamp, QX11Info::appTime()) > 0) {
-        QX11Info::setAppTime(timestamp);
-    }
-    if (_k_timestampCompare(timestamp, QX11Info::appUserTime()) > 0) {
-        QX11Info::setAppUserTime(timestamp);
+    if (QX11Info::isPlatformX11()) {
+        if (_k_timestampCompare(timestamp, QX11Info::appTime()) > 0) {
+            QX11Info::setAppTime(timestamp);
+        }
+        if (_k_timestampCompare(timestamp, QX11Info::appUserTime()) > 0) {
+            QX11Info::setAppUserTime(timestamp);
+        }
     }
 #else
     Q_UNUSED(timestamp);
