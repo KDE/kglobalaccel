@@ -58,7 +58,7 @@ public:
 	/// Enable/disable all shortcuts. There will not be any grabbed shortcuts at this point.
 	void setEnabled(bool);
 
-        virtual bool nativeEventFilter(const QByteArray &eventType, void *message, long *) Q_DECL_OVERRIDE;
+        bool nativeEventFilter(const QByteArray &eventType, void *message, long *) Q_DECL_OVERRIDE;
 
         static void syncX();
 
