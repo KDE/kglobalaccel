@@ -1,0 +1,47 @@
+# translation of kglobalaccel.po to Bulgarian
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Yasen Pramatarov <yasen@lindeas.com>, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kglobalaccel\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2014-09-09 10:29+0000\n"
+"PO-Revision-Date: 2010-06-26 12:46+0300\n"
+"Last-Translator: Yasen Pramatarov <yasen@lindeas.com>\n"
+"Language-Team: Bulgarian <dict@fsa-bg.org>\n"
+"Language: bg\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Ясен Праматаров"
+
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "yasen@lindeas.com"
+
+#: main.cpp:61 main.cpp:63
+msgid "KDE Global Shortcuts Service"
+msgstr "Бързи клавиши за KDE"
+
+#: main.cpp:65
+msgid "(C) 2007-2009  Andreas Hartmetz, Michael Jansen"
+msgstr "(C) 2007-2009  Andreas Hartmetz, Michael Jansen"
+
+#: main.cpp:66
+msgid "Andreas Hartmetz"
+msgstr "Andreas Hartmetz"
+
+#: main.cpp:66 main.cpp:67
+msgid "Maintainer"
+msgstr "Поддръжка"
+
+#: main.cpp:67
+msgid "Michael Jansen"
+msgstr "Michael Jansen"
