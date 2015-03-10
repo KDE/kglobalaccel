@@ -26,7 +26,6 @@
 #include <QtCore/QStringList>
 #include <QKeySequence>
 #include <QList>
-#include <QWidget>
 
 #include "kglobalaccel.h"
 #include "kglobalaccel_interface.h"
@@ -81,7 +80,6 @@ public:
     //for all actions with (isEnabled() && globalShortcutAllowed())
     QMultiHash<QString, QAction *> nameToAction;
     QSet<QAction *> actions;
-    QWidget actionsWidget; // Used to know when an action is deleted (via event filter)
 
     bool enabled;
 

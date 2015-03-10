@@ -30,7 +30,6 @@
 #include <QList>
 
 class QAction;
-class QWidget;
 class OrgKdeKglobalaccelComponentInterface;
 
 /**
@@ -334,6 +333,7 @@ public:
 #endif
 
     /**
+     * TODO KF6 remove
      * @internal
      */
     bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;

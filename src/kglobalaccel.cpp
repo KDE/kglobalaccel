@@ -115,8 +115,6 @@ KGlobalAccelPrivate::KGlobalAccelPrivate(KGlobalAccel *q)
             q);
     q->connect(watcher, SIGNAL(serviceOwnerChanged(QString,QString,QString)),
                q, SLOT(_k_serviceOwnerChanged(QString,QString,QString)));
-
-    actionsWidget.setObjectName(QStringLiteral("KGlobalAccel/actionsWidget"));
 }
 
 KGlobalAccel::KGlobalAccel()
@@ -129,8 +127,6 @@ KGlobalAccel::KGlobalAccel()
 
     connect(&d->iface, SIGNAL(yourShortcutGotChanged(QStringList,QList<int>)),
             SLOT(_k_shortcutGotChanged(QStringList,QList<int>)));
-
-    d->actionsWidget.installEventFilter(this);
 }
 
 KGlobalAccel::~KGlobalAccel()
@@ -219,8 +215,14 @@ bool KGlobalAccelPrivate::doRegister(QAction *action)
 
     nameToAction.insertMulti(actionId.at(KGlobalAccel::ActionUnique), action);
     actions.insert(action);
-    actionsWidget.addAction(action);
     iface.doRegister(actionId);
+
+    QObject::connect(action, &QObject::destroyed, [this, action](QObject *) {
+        if (actions.contains(action) && (actionShortcuts.contains(action) || actionDefaultShortcuts.contains(action))) {
+            remove(action, KGlobalAccelPrivate::SetInactive);
+        }
+    });
+
     return true;
 }
 
@@ -239,7 +241,6 @@ void KGlobalAccelPrivate::remove(QAction *action, Removal removal)
 
     nameToAction.remove(actionId.at(KGlobalAccel::ActionUnique), action);
     actions.remove(action);
-    actionsWidget.removeAction(action);
 
     if (removal == UnRegister) {
         // Complete removal of the shortcut is requested
@@ -462,7 +463,6 @@ void KGlobalAccelPrivate::reRegisterAll()
     nameToAction.clear();
     actions.clear();
     Q_FOREACH (QAction *const action, allActions) {
-        actionsWidget.removeAction(action);
         if (doRegister(action)) {
             updateGlobalShortcut(action, ActiveShortcut, KGlobalAccel::Autoloading);
         }
@@ -654,20 +654,6 @@ bool KGlobalAccel::hasShortcut(const QAction *action) const
 
 bool KGlobalAccel::eventFilter(QObject *watched, QEvent *event)
 {
-    // A bit of a hack, but we add all the known actions to actionsWidget
-    // in order to be notified when they get deleted as we'll get an ActionRemoved
-    // event first.
-    // Using the destroyed() signal wouldn't cut it as the action would be just
-    // a QObject at that point and we'd miss some fields to do our job.
-
-    if (watched == &d->actionsWidget && event->type() == QEvent::ActionRemoved) {
-        QActionEvent *e = static_cast<QActionEvent *>(event);
-        QAction *action = e->action();
-        if (d->actions.contains(action) && hasShortcut(action)) {
-            d->remove(action, KGlobalAccelPrivate::SetInactive);
-        }
-    }
-
     return QObject::eventFilter(watched, event);
 }
 
