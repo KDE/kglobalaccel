@@ -32,6 +32,7 @@ class KGlobalShortcutTest : public QObject
 private Q_SLOTS:
     void initTestCase();
     void testSetShortcut();
+    void testActivateShortcut();
     void testFindActionByKey();
     void testChangeShortcut();
     void testStealShortcut();

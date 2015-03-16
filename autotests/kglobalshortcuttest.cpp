@@ -22,6 +22,7 @@
 
 #include "kglobalshortcuttest.h"
 #include <qdbusinterface.h>
+#include <QSignalSpy>
 #include <QTest>
 #include <QAction>
 #include <QThread>
@@ -32,7 +33,16 @@
 
 #include <QtDBus/QDBusConnectionInterface>
 
-const QKeySequence sequenceA = QKeySequence(Qt::SHIFT + Qt::META + Qt::CTRL + Qt::ALT + Qt::Key_F28);
+#ifdef HAVE_XCB_XTEST
+#include <QX11Info>
+#define XK_MISCELLANY
+#define XK_XKB_KEYS
+#include <X11/keysymdef.h>
+#include <xcb/xcb_keysyms.h>
+#include <xcb/xtest.h>
+#endif
+
+const QKeySequence sequenceA = QKeySequence(Qt::SHIFT + Qt::META + Qt::CTRL + Qt::ALT + Qt::Key_F12);
 const QKeySequence sequenceB = QKeySequence(Qt::Key_F29);
 const QKeySequence sequenceC = QKeySequence(Qt::SHIFT + Qt::META + Qt::CTRL + Qt::Key_F28);
 const QKeySequence sequenceD = QKeySequence(Qt::META + Qt::ALT + Qt::Key_F30);
@@ -112,6 +122,57 @@ void KGlobalShortcutTest::testSetShortcut()
 
     QVERIFY(KGlobalAccel::self()->shortcut(m_actionB).isEmpty());
     QVERIFY(KGlobalAccel::self()->defaultShortcut(m_actionB).isEmpty());
+}
+
+void KGlobalShortcutTest::testActivateShortcut()
+{
+#ifdef HAVE_XCB_XTEST
+    if (!QX11Info::isPlatformX11()) {
+        QSKIP("This test can only be run on platform xcb");
+    }
+
+    setupTest("testActivateShortcut");
+    if (!m_daemonInstalled) {
+        QSKIP("kglobalaccel not installed");
+    }
+    QSignalSpy actionASpy(m_actionA, SIGNAL(triggered(bool)));
+    QVERIFY(actionASpy.isValid());
+
+    xcb_connection_t *c = QX11Info::connection();
+    xcb_window_t w = QX11Info::appRootWindow();
+
+    xcb_key_symbols_t *syms = xcb_key_symbols_alloc(c);
+    auto getCode = [syms] (int code) {
+        xcb_keycode_t *keyCodes = xcb_key_symbols_get_keycode(syms, code);
+        const xcb_keycode_t ret = keyCodes[0];
+        free(keyCodes);
+        return ret;
+    };
+    const xcb_keycode_t shift = getCode(XK_Shift_L);
+    const xcb_keycode_t meta = getCode(XK_Super_L);
+    const xcb_keycode_t control = getCode(XK_Control_L);
+    const xcb_keycode_t alt = getCode(XK_Alt_L);
+    const xcb_keycode_t f12 = getCode(XK_F12);
+    xcb_key_symbols_free(syms);
+
+    xcb_test_fake_input(c, XCB_KEY_PRESS, meta,    XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
+    xcb_test_fake_input(c, XCB_KEY_PRESS, control, XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
+    xcb_test_fake_input(c, XCB_KEY_PRESS, alt,     XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
+    xcb_test_fake_input(c, XCB_KEY_PRESS, shift,   XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
+    xcb_test_fake_input(c, XCB_KEY_PRESS, f12,     XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
+
+    xcb_test_fake_input(c, XCB_KEY_RELEASE, f12,     XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
+    xcb_test_fake_input(c, XCB_KEY_RELEASE, shift,   XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
+    xcb_test_fake_input(c, XCB_KEY_RELEASE, meta,    XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
+    xcb_test_fake_input(c, XCB_KEY_RELEASE, control, XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
+    xcb_test_fake_input(c, XCB_KEY_RELEASE, alt,     XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
+    xcb_flush(c);
+
+    QVERIFY(actionASpy.wait());
+    QCOMPARE(actionASpy.count(), 1);
+#else
+    QSKIP("This test requires to be compiled with XCB-XTEST");
+#endif
 }
 
 // Current state
