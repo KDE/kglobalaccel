@@ -42,16 +42,21 @@
 #include <xcb/xtest.h>
 #endif
 
+/*
+ * NOTE
+ * ----
+ * These tests could be better. They don't include actually triggering actions,
+ * and we just choose very improbable shortcuts to avoid conflicts with real
+ * applications' shortcuts.
+ *
+*/
+
 const QKeySequence sequenceA = QKeySequence(Qt::SHIFT + Qt::META + Qt::CTRL + Qt::ALT + Qt::Key_F12);
 const QKeySequence sequenceB = QKeySequence(Qt::Key_F29);
 const QKeySequence sequenceC = QKeySequence(Qt::SHIFT + Qt::META + Qt::CTRL + Qt::Key_F28);
 const QKeySequence sequenceD = QKeySequence(Qt::META + Qt::ALT + Qt::Key_F30);
 const QKeySequence sequenceE = QKeySequence(Qt::META + Qt::Key_F29);
 const QKeySequence sequenceF = QKeySequence(Qt::META + Qt::Key_F27);
-
-/* These tests could be better. They don't include actually triggering actions,
-   and we just choose very improbable shortcuts to avoid conflicts with real
-   applications' shortcuts. */
 
 //we need a GUI so that the implementation can grab keys
 QTEST_MAIN(KGlobalShortcutTest)
@@ -70,8 +75,24 @@ void KGlobalShortcutTest::initTestCase()
     }
 }
 
-void KGlobalShortcutTest::setupTest(QString id)
+/**
+ * NOTE: This method alters a KDE config file in your home directory.
+ *
+ * KDE4: ~/.kde4/share/config/kglobalshortcutsrc
+ * KF5: ~/.config/kglobalshortcutsrc
+ *
+ * At least on KDE4 this file cannot be modified by hand if the Plasma session
+ * is running. So in case you have to clean the file of spurious entries
+ * (e.g. because of broken or failing test cases)
+ * you have to logout from Plasma.
+ *
+ * The following sections are created and normally removed automatically:
+ * [qttest]
+ */
+void KGlobalShortcutTest::setupTest(const QString& id)
 {
+    QString componentName = "qttest";
+
     if (m_actionA) {
         KGlobalAccel::self()->removeAllShortcuts(m_actionA);
         delete m_actionA;
@@ -87,20 +108,20 @@ void KGlobalShortcutTest::setupTest(QString id)
 #ifndef KGLOBALACCEL_NO_DEPRECATED
     QList<QStringList> components = kga->allMainComponents();
     QStringList componentId;
-    componentId << "qttest" << QString() << "KDE Test Program" << QString();
+    componentId << componentName << QString() << "KDE Test Program" << QString();
     // QVERIFY(!components.contains(componentId));
 #endif
 
     m_actionA = new QAction("Text For Action A", this);
     m_actionA->setObjectName("Action A:" + id);
-    m_actionA->setProperty("componentName", "qttest");
+    m_actionA->setProperty("componentName", componentName);
     m_actionA->setProperty("componentDisplayName", "KDE Test Program");
     KGlobalAccel::self()->setShortcut(m_actionA, QList<QKeySequence>() << sequenceA << sequenceB, KGlobalAccel::NoAutoloading);
     KGlobalAccel::self()->setDefaultShortcut(m_actionA, QList<QKeySequence>() << sequenceA << sequenceB, KGlobalAccel::NoAutoloading);
 
     m_actionB = new QAction("Text For Action B", this);
     m_actionB->setObjectName("Action B:" + id);
-    m_actionB->setProperty("componentName", "qttest");
+    m_actionB->setProperty("componentName", componentName);
     m_actionA->setProperty("componentDisplayName", "KDE Test Program");
     KGlobalAccel::self()->setShortcut(m_actionB, QList<QKeySequence>(), KGlobalAccel::NoAutoloading);
     KGlobalAccel::self()->setDefaultShortcut(m_actionB, QList<QKeySequence>(), KGlobalAccel::NoAutoloading);
@@ -117,6 +138,7 @@ void KGlobalShortcutTest::testSetShortcut()
     // Just ensure that the desired values are set for both actions
     QList<QKeySequence> cutA;
     cutA << sequenceA << sequenceB;
+
     QCOMPARE(KGlobalAccel::self()->shortcut(m_actionA), cutA);
     QCOMPARE(KGlobalAccel::self()->defaultShortcut(m_actionA), cutA);
 
@@ -333,8 +355,10 @@ void KGlobalShortcutTest::testListActions()
 #ifndef KGLOBALACCEL_NO_DEPRECATED
     QList<QStringList> actions = kga->allActionsForComponent(componentId);
     QVERIFY(!actions.isEmpty());
-    QStringList actionIdA; actionIdA << "qttest" << "Action A:testListActions" << "KDE Test Program" << "Text For Action A";
-    QStringList actionIdB; actionIdB << "qttest" << "Action B:testListActions" << "KDE Test Program" << "Text For Action B";
+    QStringList actionIdA;
+    actionIdA << "qttest" << "Action A:testListActions" << "KDE Test Program" << "Text For Action A";
+    QStringList actionIdB;
+    actionIdB << "qttest" << "Action B:testListActions" << "KDE Test Program" << "Text For Action B";
     //qDebug() << actions;
     QVERIFY(actions.contains(actionIdA));
     QVERIFY(actions.contains(actionIdB));
@@ -450,6 +474,22 @@ void KGlobalShortcutTest::testNotification()
     KGlobalAccel::self()->removeAllShortcuts(action);
 }
 
+void KGlobalShortcutTest::testGetGlobalShortcut()
+{
+    setupTest("testLoadShortcutFromGlobalSettings"); // cleanup see testForgetGlobalShortcut
+    if (!m_daemonInstalled) {
+        QSKIP("kglobalaccel not installed");
+    }
+
+    // retrieve shortcut list
+    auto shortcutList = KGlobalAccel::self()->globalShortcut("qttest", "Action A:testLoadShortcutFromGlobalSettings");
+    QCOMPARE(shortcutList.count(), 2); // see setupTest
+
+    // test for a real shortcut:
+//     shortcutList = KGlobalAccel::self()->shortcut("kwin", "Kill Window");
+//     QCOMPARE(shortcutList.count(), 1);
+}
+
 void KGlobalShortcutTest::testForgetGlobalShortcut()
 {
     setupTest("testForgetGlobalShortcut");
@@ -478,4 +518,5 @@ void KGlobalShortcutTest::testForgetGlobalShortcut()
     QVERIFY(!components.contains(componentId));
 #endif
 }
+
 

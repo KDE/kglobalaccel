@@ -41,9 +41,13 @@ private Q_SLOTS:
     void testComponentAssignment();
     void testConfigurationActions();
     void testNotification();
+
+    void testGetGlobalShortcut();
+
     // This has to be the last before forgetGlobalShortcut
     void testOverrideMainComponentData();
-    void testForgetGlobalShortcut();
+
+    void testForgetGlobalShortcut(); // clean global config altered by setupTest
 
 public:
 
@@ -51,7 +55,7 @@ public:
     {}
 
 private:
-    void setupTest(QString id);
+    void setupTest(const QString& id);
 
     QAction *m_actionA;
     QAction *m_actionB;

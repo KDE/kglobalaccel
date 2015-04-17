@@ -57,7 +57,8 @@ public:
 
     ///Propagate any shortcut changes to the KDED module that does the bookkeeping
     ///and the key grabbing.
-    void updateGlobalShortcut(QAction *action, ShortcutTypes actionFlags, KGlobalAccel::GlobalShortcutLoading globalFlags);
+    ///@todo KF6
+    void updateGlobalShortcut(/*const would be better*/QAction* action, KGlobalAccelPrivate::ShortcutTypes actionFlags, KGlobalAccel::GlobalShortcutLoading globalFlags);
 
     ///Register the action in this class and in the KDED module
     bool doRegister(QAction *action);   //"register" is a C keyword :p

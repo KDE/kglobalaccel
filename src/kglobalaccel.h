@@ -258,10 +258,22 @@ public:
      * Unlike regular shortcuts, the application's window does not need focus
      * for them to be activated.
      *
+     * @note that this method only works together with setShortcut() because the action pointer
+     * is used to retrieve the result. If you would like to retrieve the shortcut as stored
+     * in the global settings, use the globalShortcut(componentName, actionId) instead.
+     *
      * @sa setShortcut()
      * @since 5.0
      */
     QList<QKeySequence> shortcut(const QAction *action) const;
+
+    /**
+     * Retrieves the shortcut as defined in global settings by
+     * componentName (e.g. "kwin") and actionId (e.g. "Kill Window").
+     *
+     * @since 5.10
+     */
+    QList<QKeySequence> globalShortcut(const QString& componentName, const QString& actionId) const;
 
     /**
      * Unregister and remove all defined global shortcuts for the given action.
@@ -349,8 +361,10 @@ Q_SIGNALS:
      * @see setGlobalShortcut
      * @see setDefaultShortcut
      * @since 5.0
+     *
+     * @todo KF6: add const to the QAction parameter
      */
-    void globalShortcutChanged(QAction *action, const QKeySequence &seq);
+    void globalShortcutChanged(/*const would be better*/QAction *action, const QKeySequence &seq);
 
 private:
     /// Creates a new KGlobalAccel object

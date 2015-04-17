@@ -261,9 +261,9 @@ void KGlobalAccelPrivate::remove(QAction *action, Removal removal)
     actionShortcuts.remove(action);
 }
 
-void KGlobalAccelPrivate::updateGlobalShortcut(QAction *action,
-        ShortcutTypes actionFlags,
-        KGlobalAccel::GlobalShortcutLoading globalFlags)
+void KGlobalAccelPrivate::updateGlobalShortcut(/*const would be better*/QAction* action,
+                                               ShortcutTypes actionFlags,
+                                               KGlobalAccel::GlobalShortcutLoading globalFlags)
 {
     // No action or no objectname -> Do nothing
     if (!action || action->objectName().isEmpty()) {
@@ -640,6 +640,19 @@ QList<QKeySequence> KGlobalAccel::defaultShortcut(const QAction *action) const
 QList<QKeySequence> KGlobalAccel::shortcut(const QAction *action) const
 {
     return d->actionShortcuts.value(action);
+}
+
+QList<QKeySequence> KGlobalAccel::globalShortcut(const QString& componentName, const QString& actionId) const
+{
+    // see also d->updateGlobalShortcut(action, KGlobalAccelPrivate::ActiveShortcut, KGlobalAccel::Autoloading);
+
+    // how componentName and actionId map to QAction, e.g:
+    // action->setProperty("componentName", "kwin");
+    // action->setObjectName("Kill Window");
+
+    const QList<int> result = self()->d->iface.shortcut({ componentName, actionId, QLatin1String(""), QLatin1String("") });
+    const QList<QKeySequence> scResult(d->shortcutFromIntList(result));
+    return scResult;
 }
 
 void KGlobalAccel::removeAllShortcuts(QAction *action)
