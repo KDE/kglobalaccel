@@ -650,7 +650,7 @@ QList<QKeySequence> KGlobalAccel::globalShortcut(const QString& componentName, c
     // action->setProperty("componentName", "kwin");
     // action->setObjectName("Kill Window");
 
-    const QList<int> result = self()->d->iface.shortcut({ componentName, actionId, QLatin1String(""), QLatin1String("") });
+    const QList<int> result = self()->d->iface.shortcut({ componentName, actionId, QString(), QString() });
     const QList<QKeySequence> scResult(d->shortcutFromIntList(result));
     return scResult;
 }
