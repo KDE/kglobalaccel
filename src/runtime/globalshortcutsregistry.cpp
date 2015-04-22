@@ -21,6 +21,7 @@
 #include "globalshortcut.h"
 #include "globalshortcutcontext.h"
 #include <config-kglobalaccel.h>
+#include "logging_p.h"
 
 #include <QDebug>
 #include <KLocalizedString>
@@ -189,20 +190,20 @@ bool GlobalShortcutsRegistry::keyPressed(int keyQt)
         // ALT+PRINT is SYSREQ on my keyboard. So we grab something we think
         // is ALT+PRINT but symXToKeyQt and modXToQt make ALT+SYSREQ of it
         // when pressed (correctly). We can't match that.
-        qDebug() << "Got unknown key" << QKeySequence(keyQt).toString();
+        qCDebug(KGLOBALACCELD) << "Got unknown key" << QKeySequence(keyQt).toString();
 
         // In production mode just do nothing.
         return false;
         }
     else if (!shortcut->isActive())
         {
-        qDebug() << "Got inactive key" << QKeySequence(keyQt).toString();
+        qCDebug(KGLOBALACCELD) << "Got inactive key" << QKeySequence(keyQt).toString();
 
         // In production mode just do nothing.
         return false;
         }
 
-    qDebug() << QKeySequence(keyQt).toString() << "=" << shortcut->uniqueName();
+    qCDebug(KGLOBALACCELD) << QKeySequence(keyQt).toString() << "=" << shortcut->uniqueName();
 
     QStringList data(shortcut->context()->component()->uniqueName());
     data.append(shortcut->uniqueName());
@@ -228,7 +229,7 @@ void GlobalShortcutsRegistry::loadSettings()
     {
     foreach (const QString &groupName, _config.groupList())
         {
-        qDebug() << "Loading group " << groupName;
+        qCDebug(KGLOBALACCELD) << "Loading group " << groupName;
 
         Q_ASSERT(groupName.indexOf('\x1d')==-1);
 
@@ -288,17 +289,17 @@ bool GlobalShortcutsRegistry::registerKey(int key, GlobalShortcut *shortcut)
     {
     if (key == 0)
         {
-        qDebug() << shortcut->uniqueName() << ": Key '" << QKeySequence(key).toString()
+        qCDebug(KGLOBALACCELD) << shortcut->uniqueName() << ": Key '" << QKeySequence(key).toString()
                  << "' already taken by " << _active_keys.value(key)->uniqueName() << ".";
         return false;
         }
     else if (_active_keys.value(key))
         {
-        qDebug() << shortcut->uniqueName() << ": Attempt to register key 0.";
+        qCDebug(KGLOBALACCELD) << shortcut->uniqueName() << ": Attempt to register key 0.";
         return false;
         }
 
-    qDebug() << "Registering key" << QKeySequence(key).toString() << "for"
+    qCDebug(KGLOBALACCELD) << "Registering key" << QKeySequence(key).toString() << "for"
              << shortcut->context()->component()->uniqueName() << ":" << shortcut->uniqueName();
 
     _active_keys.insert(key, shortcut);
@@ -340,7 +341,7 @@ bool GlobalShortcutsRegistry::unregisterKey(int key, GlobalShortcut *shortcut)
         return false;
         }
 
-    qDebug() << "Unregistering key" << QKeySequence(key).toString() << "for"
+    qCDebug(KGLOBALACCELD) << "Unregistering key" << QKeySequence(key).toString() << "for"
              << shortcut->context()->component()->uniqueName() << ":" << shortcut->uniqueName();
 
     _manager->grabKey(key, false);

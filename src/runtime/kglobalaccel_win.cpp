@@ -26,6 +26,7 @@
 
 #include "kglobalaccel.h"
 #include "globalshortcutsregistry.h"
+#include "logging_p.h"
 
 #include <QDebug>
 
@@ -39,7 +40,7 @@ KGlobalAccelImpl::KGlobalAccelImpl(GlobalShortcutsRegistry* owner)
 bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
 {
     if( !keyQt ) {
-        qWarning() << "Tried to grab key with null code.";
+        qCWarning(KGLOBALACCELD) << "Tried to grab key with null code.";
         return false;
     }
 

@@ -29,6 +29,7 @@
 
 #include "globalshortcutsregistry.h"
 #include "kkeyserver.h"
+#include "logging_p.h"
 
 OSStatus hotKeyEventHandler(EventHandlerCallRef inHandlerCallRef, EventRef inEvent, void * inUserData)
 {
@@ -36,14 +37,14 @@ OSStatus hotKeyEventHandler(EventHandlerCallRef inHandlerCallRef, EventRef inEve
     if (eventKind == kEventRawKeyDown) {
         UInt32 keycode;
         if (GetEventParameter(inEvent, kEventParamKeyCode, typeUInt32, NULL, sizeof(keycode), NULL, &keycode) != noErr) {
-            qWarning() << "Error retrieving keycode parameter from event";
+            qCWarning(KGLOBALACCELD) << "Error retrieving keycode parameter from event";
         }
-        qDebug() << " key down, keycode = " << keycode;
+        qCDebug(KGLOBALACCELD) << " key down, keycode = " << keycode;
     } else if (eventKind == kEventHotKeyPressed) {
         KGlobalAccelImpl* impl = static_cast<KGlobalAccelImpl *>(inUserData);
         EventHotKeyID hotkey;
         if (GetEventParameter(inEvent, kEventParamDirectObject, typeEventHotKeyID, NULL, sizeof(hotkey), NULL, &hotkey) != noErr) {
-            qWarning() << "Error retrieving hotkey parameter from event";
+            qCWarning(KGLOBALACCELD) << "Error retrieving hotkey parameter from event";
             return eventNotHandledErr;
         }
         // Typecasts necesary to prevent a warning from gcc
@@ -72,7 +73,7 @@ KGlobalAccelImpl::KGlobalAccelImpl(GlobalShortcutsRegistry* owner)
         CFNotificationCenterAddObserver(CFNotificationCenterGetDistributedCenter(), this, layoutChanged, str, NULL, CFNotificationSuspensionBehaviorHold);
         CFRelease(str);
     } else {
-        qWarning() << "Couldn't create CFString to register for keyboard notifications";
+        qCWarning(KGLOBALACCELD) << "Couldn't create CFString to register for keyboard notifications";
     }
 }
 
@@ -86,15 +87,15 @@ KGlobalAccelImpl::~KGlobalAccelImpl()
 bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
 {
     if (grab) {
-        qDebug() << "Grabbing key " << keyQt;
+        qCDebug(KGLOBALACCELD) << "Grabbing key " << keyQt;
         QList<uint> keyCodes;
         uint mod;
         KKeyServer::keyQtToCodeMac( keyQt, keyCodes );
         KKeyServer::keyQtToModMac( keyQt, mod );
         
-        qDebug() << "keyQt: " << keyQt << " mod: " << mod;
+        qCDebug(KGLOBALACCELD) << "keyQt: " << keyQt << " mod: " << mod;
         foreach (uint keyCode, keyCodes) {
-            qDebug() << "  keyCode: " << keyCode;
+            qCDebug(KGLOBALACCELD) << "  keyCode: " << keyCode;
         }
         
         EventHotKeyID ehkid;
@@ -104,17 +105,17 @@ bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
         foreach (uint keyCode, keyCodes) {
             EventHotKeyRef ref;
             if (RegisterEventHotKey(keyCode, mod, ehkid, m_eventTarget, 0, &ref) != noErr) {
-                qWarning() << "RegisterEventHotKey failed!";
+                qCWarning(KGLOBALACCELD) << "RegisterEventHotKey failed!";
             }
             hotkeys.append(ref);
         }
         refs->insert(keyQt, hotkeys);
     } else {
-        qDebug() << "Ungrabbing key " << keyQt;
-        if (refs->count(keyQt) == 0) qWarning() << "Trying to ungrab a key thas is not grabbed";
+        qCDebug(KGLOBALACCELD) << "Ungrabbing key " << keyQt;
+        if (refs->count(keyQt) == 0) qCWarning(KGLOBALACCELD) << "Trying to ungrab a key thas is not grabbed";
         foreach (const EventHotKeyRef &ref, refs->value(keyQt)) {
             if (UnregisterEventHotKey(ref) != noErr) {
-                qWarning() << "UnregisterEventHotKey should not fail!";
+                qCWarning(KGLOBALACCELD) << "UnregisterEventHotKey should not fail!";
             }
         }
         refs->remove(keyQt);
@@ -126,10 +127,10 @@ void KGlobalAccelImpl::setEnabled(bool enable)
 {
     if (enable) {
         if (InstallEventHandler(m_eventTarget, m_eventHandler, 1, m_eventType, this, &m_curHandler) != noErr)
-            qWarning() << "InstallEventHandler failed!";
+            qCWarning(KGLOBALACCELD) << "InstallEventHandler failed!";
     } else {
         if (RemoveEventHandler(m_curHandler) != noErr)
-            qWarning() << "RemoveEventHandler failed!";
+            qCWarning(KGLOBALACCELD) << "RemoveEventHandler failed!";
     }
 }
 

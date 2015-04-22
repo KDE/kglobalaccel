@@ -20,6 +20,7 @@
   */
 
 #include "kglobalacceld.h"
+#include "logging_p.h"
 
 #include <kcrash.h>
 #include <KAboutData>
@@ -71,7 +72,7 @@ extern "C" Q_DECL_EXPORT int main(int argc, char **argv)
 
     // check if kglobalaccel is disabled
     if (!isEnabled()) {
-        qDebug() << "kglobalaccel is disabled!";
+        qCDebug(KGLOBALACCELD) << "kglobalaccel is disabled!";
         return 0;
     }
 

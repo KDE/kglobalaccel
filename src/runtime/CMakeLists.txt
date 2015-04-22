@@ -9,6 +9,7 @@ set(kglobalaccel_SRCS
     main.cpp
     kglobalacceld.cpp
     component.cpp
+    logging.cpp
     globalshortcut.cpp
     globalshortcutsregistry.cpp
     globalshortcutcontext.cpp)

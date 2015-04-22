@@ -20,6 +20,7 @@
 
 #include "kglobalaccel_x11.h"
 
+#include "logging_p.h"
 #include "globalshortcutsregistry.h"
 #include "kkeyserver.h"
 #include <netwm.h>
@@ -54,7 +55,7 @@ static void calculateGrabMasks()
 			KKeyServer::modXNumLock() |
 			KKeyServer::modXScrollLock() |
 			KKeyServer::modXModeSwitch();
-	//qDebug() << "g_keyModMaskXAccel = " << g_keyModMaskXAccel
+	//qCDebug(KGLOBALACCELD) << "g_keyModMaskXAccel = " << g_keyModMaskXAccel
 	//	<< "g_keyModMaskXOnOrOff = " << g_keyModMaskXOnOrOff << endl;
 }
 
@@ -91,7 +92,7 @@ bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
         return false;
     }
 	if( !keyQt ) {
-        qDebug() << "Tried to grab key with null code.";
+        qCDebug(KGLOBALACCELD) << "Tried to grab key with null code.";
 		return false;
 	}
 
@@ -100,13 +101,13 @@ bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
 
 	// Resolve the modifier
 	if( !KKeyServer::keyQtToModX(keyQt, &keyModX) ) {
-		qDebug() << "keyQt (0x" << hex << keyQt << ") failed to resolve to x11 modifier";
+		qCDebug(KGLOBALACCELD) << "keyQt (0x" << hex << keyQt << ") failed to resolve to x11 modifier";
 		return false;
 	}
 
 	// Resolve the X symbol
 	if( !KKeyServer::keyQtToSymX(keyQt, (int *)&keySymX) ) {
-		qDebug() << "keyQt (0x" << hex << keyQt << ") failed to resolve to x11 keycode";
+		qCDebug(KGLOBALACCELD) << "keyQt (0x" << hex << keyQt << ") failed to resolve to x11 keycode";
 		return false;
 	}
 
@@ -124,14 +125,14 @@ bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
 	    keySymX != xcb_key_symbols_get_keysym(m_keySymbols, keyCodeX, 0) &&
 	    keySymX == xcb_key_symbols_get_keysym(m_keySymbols, keyCodeX, 1) )
 	{
-		qDebug() << "adding shift to the grab";
+		qCDebug(KGLOBALACCELD) << "adding shift to the grab";
 		keyModX |= KKeyServer::modXShift();
 	}
 
 	keyModX &= g_keyModMaskXAccel; // Get rid of any non-relevant bits in mod
 
 	if( !keyCodeX ) {
-		qDebug() << "keyQt (0x" << hex << keyQt << ") was resolved to x11 keycode 0";
+		qCDebug(KGLOBALACCELD) << "keyQt (0x" << hex << keyQt << ") was resolved to x11 keycode 0";
 		return false;
 	}
 
@@ -169,7 +170,7 @@ bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
                 }
             }
 		if( failed ) {
-			qDebug() << "grab failed!\n";
+			qCDebug(KGLOBALACCELD) << "grab failed!\n";
 			for( uint m = 0; m <= 0xff; m++ ) {
 				if(( m & keyModMaskX ) == 0 )
                                     xcb_ungrab_key(QX11Info::connection(), keyCodeX, QX11Info::appRootWindow(), keyModX | m);
@@ -189,13 +190,13 @@ bool KGlobalAccelImpl::nativeEventFilter(const QByteArray &eventType, void *mess
     const uint8_t responseType = event->response_type & ~0x80;
     switch (responseType) {
         case XCB_MAPPING_NOTIFY:
-            qDebug() << "Got XMappingNotify event";
+            qCDebug(KGLOBALACCELD) << "Got XMappingNotify event";
             xcb_refresh_keyboard_mapping(m_keySymbols, reinterpret_cast<xcb_mapping_notify_event_t*>(event));
             x11MappingNotify();
             return true;
 
         case XCB_KEY_PRESS:
-            qDebug() << "Got XKeyPress event";
+            qCDebug(KGLOBALACCELD) << "Got XKeyPress event";
             return x11KeyPress(reinterpret_cast<xcb_key_press_event_t*>(event));
 
         default:
@@ -228,7 +229,7 @@ void KGlobalAccelImpl::x11MappingNotify()
 bool KGlobalAccelImpl::x11KeyPress(xcb_key_press_event_t *pEvent)
 {
 	if (QWidget::keyboardGrabber() || QApplication::activePopupWidget()) {
-		qWarning() << "kglobalacceld should be popup and keyboard grabbing free!";
+		qCWarning(KGLOBALACCELD) << "kglobalacceld should be popup and keyboard grabbing free!";
 	}
 
 	// Keyboard needs to be ungrabed after XGrabKey() activates the grab,
@@ -270,7 +271,7 @@ bool KGlobalAccelImpl::x11KeyPress(xcb_key_press_event_t *pEvent)
 	KKeyServer::modXToQt(keyModX, &keyModQt);
 
 	if( keyModQt & Qt::SHIFT && !KKeyServer::isShiftAsModifierAllowed( keyCodeQt ) ) {
-		qDebug() << "removing shift modifier";
+		qCDebug(KGLOBALACCELD) << "removing shift modifier";
 		keyModQt &= ~Qt::SHIFT;
 	}
 
