@@ -22,41 +22,62 @@
 #include "globalshortcutcontext.h"
 #include <config-kglobalaccel.h>
 #include "logging_p.h"
+#include "kglobalaccel_interface.h"
 
+#include <QGuiApplication>
 #include <QDebug>
+#include <QJsonArray>
+#include <KPluginLoader>
+#include <KPluginMetaData>
 
 #include <QKeySequence>
 #include <QDBusConnection>
 
-#if HAVE_X11
-#include "kglobalaccel_x11.h"
-#elif defined(Q_OS_OSX)
-#include "kglobalaccel_mac.h"
-#elif defined(Q_OS_WIN)
-#include "kglobalaccel_win.h"
-#endif
+static KGlobalAccelInterface *loadPlugin(GlobalShortcutsRegistry *parent)
+{
+    const QVector<KPluginMetaData> candidates = KPluginLoader::findPlugins(QStringLiteral("org.kde.kglobalaccel5.platforms"));
+    foreach (const KPluginMetaData &candidate, candidates) {
+        const QJsonArray platforms = candidate.rawData().value(QStringLiteral("platforms")).toArray();
+        for (auto it = platforms.begin(); it != platforms.end(); ++it) {
+            if (QString::compare(QGuiApplication::platformName(), (*it).toString(), Qt::CaseInsensitive) == 0) {
+                KGlobalAccelInterface *interface = qobject_cast< KGlobalAccelInterface* >(candidate.instantiate());
+                if (interface) {
+                    qCDebug(KGLOBALACCELD) << "Loaded plugin" << candidate.fileName() << "for platform" << QGuiApplication::platformName();
+                    interface->setRegistry(parent);
+                    return interface;
+                }
+            }
+        }
+    }
+    qCWarning(KGLOBALACCELD) << "Could not find any platform plugin";
+    return Q_NULLPTR;
+}
 
 GlobalShortcutsRegistry::GlobalShortcutsRegistry()
     :   QObject()
         ,_active_keys()
         ,_components()
-        ,_manager(new KGlobalAccelImpl(this))
+        ,_manager(loadPlugin(this))
         ,_config("kglobalshortcutsrc", KConfig::SimpleConfig)
     {
-    _manager->setEnabled(true);
+    if (_manager) {
+        _manager->setEnabled(true);
+    }
     }
 
 
 GlobalShortcutsRegistry::~GlobalShortcutsRegistry()
     {
-    _manager->setEnabled(false);
+    if (_manager) {
+        _manager->setEnabled(false);
 
-    // Ungrab all keys. We don't go over GlobalShortcuts because
-    // GlobalShortcutsRegistry::self() doesn't work anymore.
-    Q_FOREACH (const int key, _active_keys.keys())
-        {
-        _manager->grabKey(key, false);
-        }
+        // Ungrab all keys. We don't go over GlobalShortcuts because
+        // GlobalShortcutsRegistry::self() doesn't work anymore.
+        Q_FOREACH (const int key, _active_keys.keys())
+            {
+            _manager->grabKey(key, false);
+            }
+    }
     _active_keys.clear();
     }
 
@@ -209,13 +230,13 @@ bool GlobalShortcutsRegistry::keyPressed(int keyQt)
     data.append(shortcut->context()->component()->friendlyName());
     data.append(shortcut->friendlyName());
 
-#if HAVE_X11
     // Make sure kglobalacceld has ungrabbed the keyboard after receiving the
     // keypress, otherwise actions in application that try to grab the
     // keyboard (e.g. in kwin) may fail to do so. There is still a small race
     // condition with this being out-of-process.
-    KGlobalAccelImpl::syncX();
-#endif
+    if (_manager) {
+        _manager->syncWindowingSystem();
+    }
 
     // 1st Invoke the action
     shortcut->context()->component()->emitGlobalShortcutPressed( *shortcut );
@@ -286,6 +307,9 @@ void GlobalShortcutsRegistry::grabKeys()
 
 bool GlobalShortcutsRegistry::registerKey(int key, GlobalShortcut *shortcut)
     {
+    if (!_manager) {
+        return false;
+    }
     if (key == 0)
         {
         qCDebug(KGLOBALACCELD) << shortcut->uniqueName() << ": Key '" << QKeySequence(key).toString()
@@ -306,7 +330,7 @@ bool GlobalShortcutsRegistry::registerKey(int key, GlobalShortcut *shortcut)
     }
 
 
-void GlobalShortcutsRegistry::setAccelManager(KGlobalAccelImpl *manager)
+void GlobalShortcutsRegistry::setAccelManager(KGlobalAccelInterface *manager)
     {
     _manager = manager;
     }
@@ -334,6 +358,9 @@ void GlobalShortcutsRegistry::ungrabKeys()
 
 bool GlobalShortcutsRegistry::unregisterKey(int key, GlobalShortcut *shortcut)
     {
+    if (!_manager) {
+        return false;
+    }
     if (_active_keys.value(key)!=shortcut)
         {
         // The shortcut doesn't own the key or the key isn't grabbed

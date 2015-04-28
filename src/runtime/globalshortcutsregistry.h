@@ -26,7 +26,7 @@
 
 
 class GlobalShortcut;
-class KGlobalAccelImpl;
+class KGlobalAccelInterface;
 
 namespace KdeDGlobalAccel
     {
@@ -126,7 +126,7 @@ public:
 
     bool registerKey(int key, GlobalShortcut *shortcut);
 
-    void setAccelManager(KGlobalAccelImpl *manager);
+    void setAccelManager(KGlobalAccelInterface *manager);
 
     void setDBusPath(const QDBusObjectPath &path);
 
@@ -149,7 +149,7 @@ public Q_SLOTS:
 private:
 
     friend class KdeDGlobalAccel::Component;
-    friend class KGlobalAccelImpl;
+    friend class KGlobalAccelInterface;
 
     KdeDGlobalAccel::Component *addComponent(KdeDGlobalAccel::Component *component);
     KdeDGlobalAccel::Component *takeComponent(KdeDGlobalAccel::Component *component);
@@ -161,7 +161,7 @@ private:
     QHash<int, GlobalShortcut*> _active_keys;
     QHash<QString, KdeDGlobalAccel::Component *> _components;
 
-    KGlobalAccelImpl *_manager;
+    KGlobalAccelInterface *_manager;
 
     mutable KConfig _config;
 

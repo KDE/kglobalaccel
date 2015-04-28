@@ -21,7 +21,6 @@
 #include "kglobalaccel_x11.h"
 
 #include "logging_p.h"
-#include "globalshortcutsregistry.h"
 #include "kkeyserver.h"
 #include <netwm.h>
 
@@ -61,9 +60,8 @@ static void calculateGrabMasks()
 
 //----------------------------------------------------
 
-KGlobalAccelImpl::KGlobalAccelImpl(GlobalShortcutsRegistry *owner)
-    : QObject(owner)
-    , m_owner(owner)
+KGlobalAccelImpl::KGlobalAccelImpl(QObject *parent)
+    : KGlobalAccelInterface(parent)
     , m_keySymbols(Q_NULLPTR)
 {
 	calculateGrabMasks();
@@ -218,12 +216,12 @@ void KGlobalAccelImpl::x11MappingNotify()
 	// store the keys as qt keycodes and use KKeyServer to map them to x11 key
 	// codes. After calling KKeyServer::initializeMods() they could map to
 	// different keycodes.
-	m_owner->ungrabKeys();
+	ungrabKeys();
 
 	KKeyServer::initializeMods();
 	calculateGrabMasks();
 
-	m_owner->grabKeys();
+	grabKeys();
 }
 
 bool KGlobalAccelImpl::x11KeyPress(xcb_key_press_event_t *pEvent)
@@ -281,7 +279,7 @@ bool KGlobalAccelImpl::x11KeyPress(xcb_key_press_event_t *pEvent)
     if (NET::timestampCompare(pEvent->time, QX11Info::appTime()) > 0) {
         QX11Info::setAppTime(pEvent->time);
     }
-	return m_owner->keyPressed(keyQt);
+	return keyPressed(keyQt);
 }
 
 void KGlobalAccelImpl::setEnabled( bool enable )

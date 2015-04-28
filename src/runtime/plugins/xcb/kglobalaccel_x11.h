@@ -20,24 +20,27 @@
 #ifndef _KGLOBALACCEL_X11_H
 #define _KGLOBALACCEL_X11_H
 
+#include "../../kglobalaccel_interface.h"
+
 #include <QObject>
 #include <QAbstractNativeEventFilter>
 
 struct xcb_key_press_event_t;
 typedef struct _XCBKeySymbols xcb_key_symbols_t;
-class GlobalShortcutsRegistry;
 /**
  * @internal
  *
  * The KGlobalAccel private class handles grabbing of global keys,
  * and notification of when these keys are pressed.
  */
-class KGlobalAccelImpl : public QObject, public QAbstractNativeEventFilter
+class KGlobalAccelImpl : public KGlobalAccelInterface, public QAbstractNativeEventFilter
 {
 	Q_OBJECT
+    Q_PLUGIN_METADATA(IID "org.kde.kglobalaccel5.KGlobalAccelInterface" FILE "xcb.json")
+    Q_INTERFACES(KGlobalAccelInterface)
 
 public:
-    KGlobalAccelImpl( GlobalShortcutsRegistry *owner);
+    KGlobalAccelImpl(QObject *parent = 0);
     virtual ~KGlobalAccelImpl();
 
 public:
@@ -53,10 +56,10 @@ public:
 	 *
 	 * \return true if successful, otherwise false.
 	 */
-	bool grabKey(int key, bool grab);
+	bool grabKey(int key, bool grab) Q_DECL_OVERRIDE;
 	
 	/// Enable/disable all shortcuts. There will not be any grabbed shortcuts at this point.
-	void setEnabled(bool);
+	void setEnabled(bool) Q_DECL_OVERRIDE;
 
         bool nativeEventFilter(const QByteArray &eventType, void *message, long *) Q_DECL_OVERRIDE;
 
@@ -73,7 +76,6 @@ private:
 	void x11MappingNotify();
         bool x11KeyPress(xcb_key_press_event_t *event);
 	
-    GlobalShortcutsRegistry *m_owner;
     xcb_key_symbols_t *m_keySymbols;
 };
 

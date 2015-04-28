@@ -22,6 +22,8 @@
 #ifndef KGLOBALACCELD_H
 #define KGLOBALACCELD_H
 
+#include <kf5globalaccelprivate_export.h>
+
 #include <kglobalshortcutinfo.h>
 
 #include <QtCore/QStringList>
@@ -33,7 +35,7 @@ struct KGlobalAccelDPrivate;
 /**
  * @todo get rid of all of those QStringList parameters.
  */
-class KGlobalAccelD : public QObject, protected QDBusContext
+class KF5GLOBALACCELPRIVATE_EXPORT KGlobalAccelD : public QObject, protected QDBusContext
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.kde.KGlobalAccel")

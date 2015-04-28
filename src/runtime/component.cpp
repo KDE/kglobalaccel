@@ -23,13 +23,13 @@
 #include "globalshortcutsregistry.h"
 #include "logging_p.h"
 #include <config-kglobalaccel.h>
+#include "kglobalaccel_interface.h"
 
 #include <QDebug>
 #include <QtCore/QStringList>
 #include <QKeySequence>
 
 #if HAVE_X11
-#include "kglobalaccel_x11.h"
 #include <QX11Info>
 #endif
 
@@ -243,7 +243,9 @@ void Component::emitGlobalShortcutPressed( const GlobalShortcut &shortcut )
     // keypress, otherwise actions in application that try to grab the
     // keyboard (e.g. in kwin) may fail to do so. There is still a small race
     // condition with this being out-of-process.
-    KGlobalAccelImpl::syncX();
+    if (_registry->_manager) {
+        _registry->_manager->syncWindowingSystem();
+    }
 #else
     long timestamp = 0;
 #endif
