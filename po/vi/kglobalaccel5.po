@@ -1,0 +1,46 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Lê Hoàng Phương <herophuong93@gmail.com>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2015-04-23 08:43+0000\n"
+"PO-Revision-Date: 2011-12-27 21:02+0700\n"
+"Last-Translator: Lê Hoàng Phương <herophuong93@gmail.com>\n"
+"Language-Team: Vietnamese <kde-i18n-vi@kde.org>\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Lê Hoàng Phương"
+
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "herophuong93@gmail.com"
+
+#: main.cpp:62 main.cpp:64
+msgid "KDE Global Shortcuts Service"
+msgstr "Dịch vụ phím tắt hệ thống KDE"
+
+#: main.cpp:66
+msgid "(C) 2007-2009  Andreas Hartmetz, Michael Jansen"
+msgstr "(C) 2007-2009  Andreas Hartmetz, Michael Jansen"
+
+#: main.cpp:67
+msgid "Andreas Hartmetz"
+msgstr "Andreas Hartmetz"
+
+#: main.cpp:67 main.cpp:68
+msgid "Maintainer"
+msgstr "Người duy trì"
+
+#: main.cpp:68
+msgid "Michael Jansen"
+msgstr "Michael Jansen"

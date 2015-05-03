@@ -1,0 +1,48 @@
+# Translation of kglobalaccel.po to Euskara/Basque (eu).
+# Copyright (C) 2011-2014, Free Software Foundation, Inc.
+# This file is distributed under the same license as the kde-runtime package.
+#
+# Iñigo Salvador Azurmendi <xalba@euskalnet.net>, 2011, 2014.
+# Hizkuntza Politikarako Sailburuordetza <hizpol@ej-gv.es>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: kglobalaccel\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2015-04-23 08:43+0000\n"
+"PO-Revision-Date: 2014-02-16 21:28+0100\n"
+"Last-Translator: Iñigo Salvador Azurmendi <xalba@euskalnet.net>\n"
+"Language-Team: Basque <kde-i18n-doc@kde.org>\n"
+"Language: eu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.5\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Iñigo Salvador Azurmendi,Hizkuntza Politikarako Sailburuordetza"
+
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "xalba@euskalnet.net,hizpol@ej-gv.es"
+
+#: main.cpp:62 main.cpp:64
+msgid "KDE Global Shortcuts Service"
+msgstr "KDEren laster-tekla globalen zerbitzua"
+
+#: main.cpp:66
+msgid "(C) 2007-2009  Andreas Hartmetz, Michael Jansen"
+msgstr "(C) 2007-2009 Andreas Hartmetz, Michael Jansen"
+
+#: main.cpp:67
+msgid "Andreas Hartmetz"
+msgstr "Andreas Hartmetz"
+
+#: main.cpp:67 main.cpp:68
+msgid "Maintainer"
+msgstr "Arduraduna"
+
+#: main.cpp:68
+msgid "Michael Jansen"
+msgstr "Michael Jansen"
