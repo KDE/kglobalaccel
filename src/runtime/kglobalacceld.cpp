@@ -33,7 +33,6 @@
 #include <QtDBus/QDBusMetaType>
 #include <QtDBus/QDBusObjectPath>
 
-#include <KLocalizedString>
 #include "kglobalaccel.h"
 #include <QDebug>
 

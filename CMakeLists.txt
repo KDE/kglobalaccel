@@ -35,7 +35,6 @@ find_package(KF5Config ${KF5_DEP_VERSION} REQUIRED)
 find_package(KF5CoreAddons ${KF5_DEP_VERSION} REQUIRED)
 find_package(KF5Crash ${KF5_DEP_VERSION} REQUIRED)
 find_package(KF5DBusAddons ${KF5_DEP_VERSION} REQUIRED)
-find_package(KF5I18n ${KF5_DEP_VERSION} REQUIRED)
 find_package(KF5WindowSystem ${KF5_DEP_VERSION} REQUIRED)
 
 # no X11 stuff on mac

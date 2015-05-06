@@ -1,6 +1,7 @@
-add_definitions(-DTRANSLATION_DOMAIN=\"kglobalaccel5\")
 remove_definitions(-DQT_NO_CAST_FROM_BYTEARRAY)
 remove_definitions(-DQT_NO_CAST_FROM_ASCII)
+
+ecm_create_qm_loader(kglobalaccel_QM_LOADER kglobalaccel5_qt)
 
 ###############################################################################
 ### KDED Global Accel Daemon
@@ -12,7 +13,8 @@ set(kglobalaccel_SRCS
     logging.cpp
     globalshortcut.cpp
     globalshortcutsregistry.cpp
-    globalshortcutcontext.cpp)
+    globalshortcutcontext.cpp
+    ${kglobalaccel_QM_LOADER})
 
 if (${XCB_XCB_FOUND} AND ${XCB_KEYSYMS_FOUND})
   set( kglobalaccel_SRCS ${kglobalaccel_SRCS} kglobalaccel_x11.cpp )
@@ -30,7 +32,6 @@ add_executable(kglobalaccel5 ${kglobalaccel_SRCS} )
 target_link_libraries(kglobalaccel5
    Qt5::DBus
    KF5::GlobalAccel
-   KF5::I18n
    KF5::WindowSystem # KKeyServer
    KF5::DBusAddons   # KDBusService
    KF5::CoreAddons   # KAboutData

@@ -24,7 +24,6 @@
 
 #include <kcrash.h>
 #include <KAboutData>
-#include <KLocalizedString>
 #include <KDBusService>
 #include <QDebug>
 #include <QApplication>
@@ -59,13 +58,13 @@ extern "C" Q_DECL_EXPORT int main(int argc, char **argv)
     QApplication app(argc, argv);
     KAboutData aboutdata(
             QStringLiteral("kglobalaccel"),
-            i18n("KDE Global Shortcuts Service"),
+            QObject::tr("KDE Global Shortcuts Service"),
             QStringLiteral("0.2"),
-            i18n("KDE Global Shortcuts Service"),
+            QObject::tr("KDE Global Shortcuts Service"),
             KAboutLicense::LGPL,
-            i18n("(C) 2007-2009  Andreas Hartmetz, Michael Jansen"));
-    aboutdata.addAuthor(i18n("Andreas Hartmetz"),i18n("Maintainer"),"ahartmetz@gmail.com");
-    aboutdata.addAuthor(i18n("Michael Jansen"),i18n("Maintainer"),"kde@michael-jansen.biz");
+            "(C) 2007-2009  Andreas Hartmetz, Michael Jansen");
+    aboutdata.addAuthor("Andreas Hartmetz", QObject::tr("Maintainer"), "ahartmetz@gmail.com");
+    aboutdata.addAuthor("Michael Jansen", QObject::tr("Maintainer"), "kde@michael-jansen.biz");
 
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("kglobalaccel")));
     KAboutData::setApplicationData(aboutdata);

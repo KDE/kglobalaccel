@@ -24,7 +24,6 @@
 #include "logging_p.h"
 
 #include <QDebug>
-#include <KLocalizedString>
 
 #include <QKeySequence>
 #include <QDBusConnection>
