@@ -28,6 +28,7 @@
 #include <QAction>
 #include <QActionEvent>
 #include <QDebug>
+#include <QGuiApplication>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QtDBus/QDBusInterface>
@@ -371,7 +372,14 @@ QString KGlobalAccelPrivate::componentUniqueForAction(const QAction *action)
 
 QString KGlobalAccelPrivate::componentFriendlyForAction(const QAction *action)
 {
-    return action->property("componentDisplayName").toString();
+    QString property = action->property("componentDisplayName").toString();
+    if (!property.isEmpty()) {
+        return property;
+    }
+    if (!QGuiApplication::applicationDisplayName().isEmpty()) {
+        return QGuiApplication::applicationDisplayName();
+    }
+    return QCoreApplication::applicationName();
 }
 
 #if HAVE_X11
