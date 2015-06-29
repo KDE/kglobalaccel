@@ -210,20 +210,26 @@ bool GlobalShortcutsRegistry::keyPressed(int keyQt)
         // ALT+PRINT is SYSREQ on my keyboard. So we grab something we think
         // is ALT+PRINT but symXToKeyQt and modXToQt make ALT+SYSREQ of it
         // when pressed (correctly). We can't match that.
+#ifdef KDEDGLOBALACCEL_TRACE
         qCDebug(KGLOBALACCELD) << "Got unknown key" << QKeySequence(keyQt).toString();
+#endif
 
         // In production mode just do nothing.
         return false;
         }
     else if (!shortcut->isActive())
         {
+#ifdef KDEDGLOBALACCEL_TRACE
         qCDebug(KGLOBALACCELD) << "Got inactive key" << QKeySequence(keyQt).toString();
+#endif
 
         // In production mode just do nothing.
         return false;
         }
 
+#ifdef KDEDGLOBALACCEL_TRACE
     qCDebug(KGLOBALACCELD) << QKeySequence(keyQt).toString() << "=" << shortcut->uniqueName();
+#endif
 
     QStringList data(shortcut->context()->component()->uniqueName());
     data.append(shortcut->uniqueName());

@@ -194,7 +194,9 @@ bool KGlobalAccelImpl::nativeEventFilter(const QByteArray &eventType, void *mess
             return true;
 
         case XCB_KEY_PRESS:
+#ifdef KDEDGLOBALACCEL_TRACE
             qCDebug(KGLOBALACCELD) << "Got XKeyPress event";
+#endif
             return x11KeyPress(reinterpret_cast<xcb_key_press_event_t*>(event));
 
         default:
@@ -269,7 +271,9 @@ bool KGlobalAccelImpl::x11KeyPress(xcb_key_press_event_t *pEvent)
 	KKeyServer::modXToQt(keyModX, &keyModQt);
 
 	if( keyModQt & Qt::SHIFT && !KKeyServer::isShiftAsModifierAllowed( keyCodeQt ) ) {
+#ifdef KDEDGLOBALACCEL_TRACE
 		qCDebug(KGLOBALACCELD) << "removing shift modifier";
+#endif
 		keyModQt &= ~Qt::SHIFT;
 	}
 
