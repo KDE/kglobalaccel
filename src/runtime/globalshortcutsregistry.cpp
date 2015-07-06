@@ -36,13 +36,17 @@
 static KGlobalAccelInterface *loadPlugin(GlobalShortcutsRegistry *parent)
 {
     const QVector<KPluginMetaData> candidates = KPluginLoader::findPlugins(QStringLiteral("org.kde.kglobalaccel5.platforms"));
+    QString platformName = QString::fromLocal8Bit(qgetenv("KGLOBALACCELD_PLATFORM"));
+    if (platformName.isEmpty()) {
+        platformName = QGuiApplication::platformName();
+    }
     foreach (const KPluginMetaData &candidate, candidates) {
         const QJsonArray platforms = candidate.rawData().value(QStringLiteral("platforms")).toArray();
         for (auto it = platforms.begin(); it != platforms.end(); ++it) {
-            if (QString::compare(QGuiApplication::platformName(), (*it).toString(), Qt::CaseInsensitive) == 0) {
+            if (QString::compare(platformName, (*it).toString(), Qt::CaseInsensitive) == 0) {
                 KGlobalAccelInterface *interface = qobject_cast< KGlobalAccelInterface* >(candidate.instantiate());
                 if (interface) {
-                    qCDebug(KGLOBALACCELD) << "Loaded plugin" << candidate.fileName() << "for platform" << QGuiApplication::platformName();
+                    qCDebug(KGLOBALACCELD) << "Loaded plugin" << candidate.fileName() << "for platform" << platformName;
                     interface->setRegistry(parent);
                     return interface;
                 }
