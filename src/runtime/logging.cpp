@@ -18,4 +18,10 @@ You should have received a copy of the GNU Lesser General Public
 License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 *********************************************************************/
 #include "logging_p.h"
-Q_LOGGING_CATEGORY(KGLOBALACCELD, "kglobalaccel-runtime");
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+// logging category for this framework, default: log stuff >= warning
+Q_LOGGING_CATEGORY(KGLOBALACCELD, "kglobalaccel-runtime", QtWarningMsg)
+#else
+Q_LOGGING_CATEGORY(KGLOBALACCELD, "kglobalaccel-runtime")
+#endif
