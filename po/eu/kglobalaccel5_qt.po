@@ -1,0 +1,103 @@
+# translation of kdelibs4.po to Euskara/Basque (eu)
+# KDE: EUSKERA TRANSLATION
+# Copyright (C) 1999,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011, Free Software Foundation, Inc.
+#
+# Marcos <marcos@euskalgnu.org>, 2002,2003, 2004, 2005.
+# Ion Gaztañaga <igaztanaga@gmail.com>, 2005.
+# marcos <marcos@euskalgnu.org>, 2006, 2007, 2008, 2009, 2010.
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2009.
+# Iñigo Salvador Azurmendi <xalba@euskalnet.net>, 2010, 2011, 2012, 2013, 2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: kdelibs4\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2014-03-23 01:50+0000\n"
+"PO-Revision-Date: 2014-03-02 19:49+0100\n"
+"Last-Translator: Iñigo Salvador Azurmendi <xalba@euskalnet.net>\n"
+"Language-Team: Basque <kde-i18n-doc@kde.org>\n"
+"Language: eu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.5\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Qt-Contexts: true\n"
+
+#: kglobalaccel.cpp:520
+#, fuzzy
+#| msgid "Conflict with Global Shortcut"
+msgctxt "KGlobalAccel|"
+msgid "Conflict with Global Shortcut"
+msgstr "Lasterbide globalekin gatazkan"
+
+#: kglobalaccel.cpp:521
+#, fuzzy, qt-format
+#| msgid ""
+#| "The '%1' key combination has already been allocated to the global action "
+#| "\"%2\" in %3.\n"
+#| "Do you want to reassign it from that action to the current one?"
+msgctxt "KGlobalAccel|"
+msgid ""
+"The '%1' key combination has already been allocated to the global action "
+"\"%2\" in %3.\n"
+"Do you want to reassign it from that action to the current one?"
+msgstr ""
+"'%1' tekla-konbinazioa jadanik \"%2\" ekintza globalarekin lotuta dago "
+"\"%3\"-(e)n.\n"
+"Dagoen tekla-konbinazioa unekoarekin lotzea nahi duzu?"
+
+#: kglobalaccel.cpp:530 kglobalaccel.cpp:574
+#, fuzzy
+#| msgid "Reassign"
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "Lotu"
+
+#: kglobalaccel.cpp:552
+#, fuzzy, qt-format
+#| msgid ""
+#| "The '%1' key combination is registered by application %2 for action %3:"
+msgctxt "KGlobalAccel|"
+msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgstr ""
+"'%1' tekla konbinazioa %2 aplikazioak erregistratuta dauka %3 "
+"ekintzarentzako:"
+
+#: kglobalaccel.cpp:559
+#, fuzzy, qt-format
+#| msgid "In context '%1' for action '%2'\n"
+msgctxt "KGlobalAccel|"
+msgid "In context '%1' for action '%2'\n"
+msgstr "'%1' testuinguruan '%2' ekintzarentzako\n"
+
+#: kglobalaccel.cpp:563
+#, fuzzy, qt-format
+#| msgid ""
+#| "The '%1' key combination is registered by application %2.\n"
+#| "%3"
+msgctxt "KGlobalAccel|"
+msgid ""
+"The '%1' key combination is registered by application %2.\n"
+"%3"
+msgstr ""
+"'%1' tekla konbinazioa %2 aplikazioak erregistratuta dauka.\n"
+"%3"
+
+#: kglobalaccel.cpp:569
+#, fuzzy
+#| msgid "Conflict With Registered Global Shortcut"
+msgctxt "KGlobalAccel|"
+msgid "Conflict With Registered Global Shortcut"
+msgstr "Erregistratutako lasterbide globalekin gatazkan"
+
+#: runtime/main.cpp:61 runtime/main.cpp:63
+msgctxt "QObject|"
+msgid "KDE Global Shortcuts Service"
+msgstr ""
+
+#: runtime/main.cpp:66 runtime/main.cpp:67
+#, fuzzy
+#| msgid "Maintainer"
+msgctxt "QObject|"
+msgid "Maintainer"
+msgstr "Mantentzailea"

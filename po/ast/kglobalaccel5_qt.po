@@ -1,0 +1,80 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Enol P. <enolp@softastur.org>, 2015.
+msgid ""
+msgstr ""
+"Project-Id-Version: kdelibs4-1\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2014-03-23 01:50+0000\n"
+"PO-Revision-Date: 2015-07-11 16:23+0100\n"
+"Last-Translator: enolp <enolp@softastur.org>\n"
+"Language-Team: Asturian <alminsitradores@softastur.org>\n"
+"Language: ast\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: asturian\n"
+"X-Qt-Contexts: true\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: kglobalaccel.cpp:520
+#, fuzzy
+msgctxt "KGlobalAccel|"
+msgid "Conflict with Global Shortcut"
+msgstr "Conflictu col atayu global"
+
+#: kglobalaccel.cpp:521
+#, qt-format
+msgctxt "KGlobalAccel|"
+msgid ""
+"The '%1' key combination has already been allocated to the global action "
+"\"%2\" in %3.\n"
+"Do you want to reassign it from that action to the current one?"
+msgstr ""
+"La combinación de tecles «%1» yá ta asignada a l'aición global «%2» en %3.\n"
+"¿Quies reasignala dende esa aición a l'actual?"
+
+#: kglobalaccel.cpp:530 kglobalaccel.cpp:574
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "Reasignar"
+
+#: kglobalaccel.cpp:552
+#, qt-format
+msgctxt "KGlobalAccel|"
+msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgstr ""
+"La combinación de tecles «%1» rexistróse pola aplicación %2 pa l'aición %3:"
+
+#: kglobalaccel.cpp:559
+#, qt-format
+msgctxt "KGlobalAccel|"
+msgid "In context '%1' for action '%2'\n"
+msgstr "Nel contestu «%1» pa l'aición «%2»\n"
+
+#: kglobalaccel.cpp:563
+#, qt-format
+msgctxt "KGlobalAccel|"
+msgid ""
+"The '%1' key combination is registered by application %2.\n"
+"%3"
+msgstr ""
+"La combinación de tecles «%1» rexistróse pola aplicación %2.\n"
+"%3"
+
+#: kglobalaccel.cpp:569
+msgctxt "KGlobalAccel|"
+msgid "Conflict With Registered Global Shortcut"
+msgstr "Conflictu col atayu global rexistráu"
+
+#: runtime/main.cpp:61 runtime/main.cpp:63
+msgctxt "QObject|"
+msgid "KDE Global Shortcuts Service"
+msgstr "Serviciu d'atayos globales KDE"
+
+#: runtime/main.cpp:66 runtime/main.cpp:67
+msgctxt "QObject|"
+msgid "Maintainer"
+msgstr "Caltenedor"
