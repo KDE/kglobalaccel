@@ -50,7 +50,7 @@ target_link_libraries(kglobalaccel5
 add_subdirectory(plugins)
 
 # Install application and configuration
-install(TARGETS KF5GlobalAccelPrivate EXPORT KF5GlobalAccelTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS KF5GlobalAccelPrivate EXPORT KF5GlobalAccelTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
 install( TARGETS kglobalaccel5 ${KF5_INSTALL_TARGETS_DEFAULT_ARGS} )
 install( FILES kglobalaccel.desktop  DESTINATION ${KDE_INSTALL_KSERVICES5DIR} RENAME kglobalaccel5.desktop)
 
