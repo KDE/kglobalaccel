@@ -270,10 +270,15 @@ bool KGlobalAccelImpl::x11KeyPress(xcb_key_press_event_t *pEvent)
 	KKeyServer::symXToKeyQt(keySymX, &keyCodeQt);
 	KKeyServer::modXToQt(keyModX, &keyModQt);
 
-	if( keyModQt & Qt::SHIFT && !KKeyServer::isShiftAsModifierAllowed( keyCodeQt ) ) {
+	if ((keyModQt & Qt::SHIFT) && !KKeyServer::isShiftAsModifierAllowed( keyCodeQt ) ) {
 #ifdef KDEDGLOBALACCEL_TRACE
 		qCDebug(KGLOBALACCELD) << "removing shift modifier";
 #endif
+        if (keyCodeQt != Qt::Key_Tab) { // KKeySequenceWidget does not map shift+tab to backtab
+            static const int FirstLevelShift = 1;
+            keySymX = xcb_key_symbols_get_keysym(m_keySymbols, keyCodeX, FirstLevelShift);
+            KKeyServer::symXToKeyQt(keySymX, &keyCodeQt);
+        }
 		keyModQt &= ~Qt::SHIFT;
 	}
 
