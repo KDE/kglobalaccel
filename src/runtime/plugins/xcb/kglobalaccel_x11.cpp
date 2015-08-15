@@ -246,10 +246,9 @@ bool KGlobalAccelImpl::x11KeyPress(xcb_key_press_event_t *pEvent)
 	// If numlock is active and a keypad key is pressed, XOR the SHIFT state.
 	//  e.g., KP_4 => Shift+KP_Left, and Shift+KP_4 => KP_Left.
     if (pEvent->state & KKeyServer::modXNumLock()) {
-        xcb_keysym_t sym = xcb_key_symbols_get_keysym(m_keySymbols, keyCodeX, 0);
 		// If this is a keypad key,
-		if( sym >= XK_KP_Space && sym <= XK_KP_9 ) {
-			switch( sym ) {
+		if( keySymX >= XK_KP_Space && keySymX <= XK_KP_9 ) {
+			switch( keySymX ) {
 
 				// Leave the following keys unaltered
 				// FIXME: The proper solution is to see which keysyms don't change when shifted.
