@@ -113,70 +113,75 @@ bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
     if (!keyCodes) {
         return false;
     }
-    xcb_keycode_t keyCodeX = keyCodes[0];
-    free(keyCodes);
+    int i = 0;
+    bool success = !grab;
+    while (keyCodes[i] != XCB_NO_SYMBOL) {
+        xcb_keycode_t keyCodeX = keyCodes[i++];
 
-	// Check if shift needs to be added to the grab since KKeySequenceWidget
-	// can remove shift for some keys. (all the %&* and such)
-	if( !(keyQt & Qt::SHIFT) &&
-	    !KKeyServer::isShiftAsModifierAllowed( keyQt ) &&
-	    keySymX != xcb_key_symbols_get_keysym(m_keySymbols, keyCodeX, 0) &&
-	    keySymX == xcb_key_symbols_get_keysym(m_keySymbols, keyCodeX, 1) )
-	{
-		qCDebug(KGLOBALACCELD) << "adding shift to the grab";
-		keyModX |= KKeyServer::modXShift();
-	}
+        // Check if shift needs to be added to the grab since KKeySequenceWidget
+        // can remove shift for some keys. (all the %&* and such)
+        if( !(keyQt & Qt::SHIFT) &&
+            !KKeyServer::isShiftAsModifierAllowed( keyQt ) &&
+            keySymX != xcb_key_symbols_get_keysym(m_keySymbols, keyCodeX, 0) &&
+            keySymX == xcb_key_symbols_get_keysym(m_keySymbols, keyCodeX, 1) )
+        {
+            qCDebug(KGLOBALACCELD) << "adding shift to the grab";
+            keyModX |= KKeyServer::modXShift();
+        }
 
-	keyModX &= g_keyModMaskXAccel; // Get rid of any non-relevant bits in mod
+        keyModX &= g_keyModMaskXAccel; // Get rid of any non-relevant bits in mod
 
-	if( !keyCodeX ) {
-		qCDebug(KGLOBALACCELD) << "keyQt (0x" << hex << keyQt << ") was resolved to x11 keycode 0";
-		return false;
-	}
+        if( !keyCodeX ) {
+            qCDebug(KGLOBALACCELD) << "keyQt (0x" << hex << keyQt << ") was resolved to x11 keycode 0";
+            continue;
+        }
 
-	// We'll have to grab 8 key modifier combinations in order to cover all
-	//  combinations of CapsLock, NumLock, ScrollLock.
-	// Does anyone with more X-savvy know how to set a mask on QX11Info::appRootWindow so that
-	//  the irrelevant bits are always ignored and we can just make one XGrabKey
-	//  call per accelerator? -- ellis
-#ifndef NDEBUG
-	QString sDebug = QString("\tcode: 0x%1 state: 0x%2 | ").arg(keyCodeX,0,16).arg(keyModX,0,16);
-#endif
-	uint keyModMaskX = ~g_keyModMaskXOnOrOff;
-        QVector<xcb_void_cookie_t> cookies;
-	for( uint irrelevantBitsMask = 0; irrelevantBitsMask <= 0xff; irrelevantBitsMask++ ) {
-		if( (irrelevantBitsMask & keyModMaskX) == 0 ) {
-#ifndef NDEBUG
-			sDebug += QString("0x%3, ").arg(irrelevantBitsMask, 0, 16);
-#endif
-			if( grab )
-                            cookies << xcb_grab_key_checked(QX11Info::connection(), true,
-                                                            QX11Info::appRootWindow(), keyModX | irrelevantBitsMask,
-                                                            keyCodeX, XCB_GRAB_MODE_ASYNC, XCB_GRAB_MODE_SYNC);
-			else
-                            cookies << xcb_ungrab_key_checked(QX11Info::connection(), keyCodeX,
-                                                              QX11Info::appRootWindow(), keyModX | irrelevantBitsMask);
-		}
-	}
-
-	bool failed = false;
-	if( grab ) {
-            for (int i = 0; i < cookies.size(); ++i) {
-                QScopedPointer<xcb_generic_error_t, QScopedPointerPodDeleter> error(xcb_request_check(QX11Info::connection(), cookies.at(i)));
-                if (!error.isNull()) {
-                    failed = true;
-                }
+        // We'll have to grab 8 key modifier combinations in order to cover all
+        //  combinations of CapsLock, NumLock, ScrollLock.
+        // Does anyone with more X-savvy know how to set a mask on QX11Info::appRootWindow so that
+        //  the irrelevant bits are always ignored and we can just make one XGrabKey
+        //  call per accelerator? -- ellis
+    #ifndef NDEBUG
+        QString sDebug = QString("\tcode: 0x%1 state: 0x%2 | ").arg(keyCodeX,0,16).arg(keyModX,0,16);
+    #endif
+        uint keyModMaskX = ~g_keyModMaskXOnOrOff;
+            QVector<xcb_void_cookie_t> cookies;
+        for( uint irrelevantBitsMask = 0; irrelevantBitsMask <= 0xff; irrelevantBitsMask++ ) {
+            if( (irrelevantBitsMask & keyModMaskX) == 0 ) {
+    #ifndef NDEBUG
+                sDebug += QString("0x%3, ").arg(irrelevantBitsMask, 0, 16);
+    #endif
+                if( grab )
+                    cookies << xcb_grab_key_checked(QX11Info::connection(), true,
+                                                    QX11Info::appRootWindow(), keyModX | irrelevantBitsMask,
+                                                    keyCodeX, XCB_GRAB_MODE_ASYNC, XCB_GRAB_MODE_SYNC);
+                else
+                    cookies << xcb_ungrab_key_checked(QX11Info::connection(), keyCodeX,
+                                                    QX11Info::appRootWindow(), keyModX | irrelevantBitsMask);
             }
-		if( failed ) {
-			qCDebug(KGLOBALACCELD) << "grab failed!\n";
-			for( uint m = 0; m <= 0xff; m++ ) {
-				if(( m & keyModMaskX ) == 0 )
-                                    xcb_ungrab_key(QX11Info::connection(), keyCodeX, QX11Info::appRootWindow(), keyModX | m);
-			}
-		}
-	}
+        }
 
-	return !failed;
+        bool failed = false;
+        if( grab ) {
+                for (int i = 0; i < cookies.size(); ++i) {
+                    QScopedPointer<xcb_generic_error_t, QScopedPointerPodDeleter> error(xcb_request_check(QX11Info::connection(), cookies.at(i)));
+                    if (!error.isNull()) {
+                        failed = true;
+                    }
+                }
+            if( failed ) {
+                qCDebug(KGLOBALACCELD) << "grab failed!\n";
+                for( uint m = 0; m <= 0xff; m++ ) {
+                    if(( m & keyModMaskX ) == 0 )
+                        xcb_ungrab_key(QX11Info::connection(), keyCodeX, QX11Info::appRootWindow(), keyModX | m);
+                }
+            } else {
+                success = true;
+            }
+        }
+    }
+    free(keyCodes);
+	return success;
 }
 
 bool KGlobalAccelImpl::nativeEventFilter(const QByteArray &eventType, void *message, long *)
