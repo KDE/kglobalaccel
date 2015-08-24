@@ -94,28 +94,46 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
     return component;
 }
 
+namespace
+{
+QString serviceName()
+{
+    return QStringLiteral("org.kde.kglobalaccel");
+}
+}
+
 KGlobalAccelPrivate::KGlobalAccelPrivate(KGlobalAccel *q)
     :
 #ifndef KGLOBALACCEL_NO_DEPRECATED
     enabled(true),
 #endif
-    iface(QStringLiteral("org.kde.kglobalaccel"), QStringLiteral("/kglobalaccel"), QDBusConnection::sessionBus()),
-    q(q)
+    q(q),
+    m_iface(Q_NULLPTR)
 {
-    // Make sure kglobalaccel is running. The iface declaration above somehow works anyway.
-    QDBusConnectionInterface *bus = QDBusConnection::sessionBus().interface();
-    if (!bus->isServiceRegistered(QStringLiteral("org.kde.kglobalaccel"))) {
-        QDBusReply<void> reply = bus->startService(QStringLiteral("org.kde.kglobalaccel"));
-        if (!reply.isValid()) {
-            qCritical() << "Couldn't start kglobalaccel from org.kde.kglobalaccel.service:" << reply.error();
-        }
-    }
-    QDBusServiceWatcher *watcher = new QDBusServiceWatcher(iface.service(),
+    QDBusServiceWatcher *watcher = new QDBusServiceWatcher(serviceName(),
             QDBusConnection::sessionBus(),
             QDBusServiceWatcher::WatchForOwnerChange,
             q);
     q->connect(watcher, SIGNAL(serviceOwnerChanged(QString,QString,QString)),
                q, SLOT(_k_serviceOwnerChanged(QString,QString,QString)));
+}
+
+org::kde::KGlobalAccel *KGlobalAccelPrivate::iface()
+{
+    if (!m_iface) {
+        m_iface = new org::kde::KGlobalAccel(serviceName(), QStringLiteral("/kglobalaccel"), QDBusConnection::sessionBus());
+        // Make sure kglobalaccel is running. The iface declaration above somehow works anyway.
+        QDBusConnectionInterface *bus = QDBusConnection::sessionBus().interface();
+        if (!bus->isServiceRegistered(serviceName())) {
+            QDBusReply<void> reply = bus->startService(serviceName());
+            if (!reply.isValid()) {
+                qCritical() << "Couldn't start kglobalaccel from org.kde.kglobalaccel.service:" << reply.error();
+            }
+        }
+        q->connect(m_iface, SIGNAL(yourShortcutGotChanged(QStringList,QList<int>)),
+                SLOT(_k_shortcutGotChanged(QStringList,QList<int>)));
+    }
+    return m_iface;
 }
 
 KGlobalAccel::KGlobalAccel()
@@ -125,9 +143,6 @@ KGlobalAccel::KGlobalAccel()
     qDBusRegisterMetaType<QList<QStringList> >();
     qDBusRegisterMetaType<KGlobalShortcutInfo>();
     qDBusRegisterMetaType<QList<KGlobalShortcutInfo> >();
-
-    connect(&d->iface, SIGNAL(yourShortcutGotChanged(QStringList,QList<int>)),
-            SLOT(_k_shortcutGotChanged(QStringList,QList<int>)));
 }
 
 KGlobalAccel::~KGlobalAccel()
@@ -142,7 +157,7 @@ void KGlobalAccel::activateGlobalShortcutContext(
 {
     Q_UNUSED(contextFriendly);
     // TODO: provide contextFriendly
-    self()->d->iface.activateGlobalShortcutContext(programName, contextUnique);
+    self()->d->iface()->activateGlobalShortcutContext(programName, contextUnique);
 }
 
 // static
@@ -216,7 +231,7 @@ bool KGlobalAccelPrivate::doRegister(QAction *action)
 
     nameToAction.insertMulti(actionId.at(KGlobalAccel::ActionUnique), action);
     actions.insert(action);
-    iface.doRegister(actionId);
+    iface()->doRegister(actionId);
 
     QObject::connect(action, &QObject::destroyed, [this, action](QObject *) {
         if (actions.contains(action) && (actionShortcuts.contains(action) || actionDefaultShortcuts.contains(action))) {
@@ -246,15 +261,15 @@ void KGlobalAccelPrivate::remove(QAction *action, Removal removal)
     if (removal == UnRegister) {
         // Complete removal of the shortcut is requested
         // (forgetGlobalShortcut)
-        iface.unRegister(actionId);
+        iface()->unRegister(actionId);
     } else {
         // If the action is a configurationAction wen only remove it from our
         // internal registry. That happened above.
         if (!action->property("isConfigurationAction").toBool()) {
             // If it's a session shortcut unregister it.
             action->objectName().startsWith(QStringLiteral("_k_session:"))
-            ? iface.unRegister(actionId)
-            : iface.setInactive(actionId);
+            ? iface()->unRegister(actionId)
+            : iface()->setInactive(actionId);
         }
     }
 
@@ -290,7 +305,7 @@ void KGlobalAccelPrivate::updateGlobalShortcut(/*const would be better*/QAction*
         }
 
         // Sets the shortcut, returns the active/real keys
-        const QList<int> result = iface.setShortcut(
+        const QList<int> result = iface()->setShortcut(
                                       actionId,
                                       intListFromShortcut(activeShortcut),
                                       activeSetterFlags);
@@ -312,7 +327,7 @@ void KGlobalAccelPrivate::updateGlobalShortcut(/*const would be better*/QAction*
             // setActiveGlobalShortcutNoEnable - _k_shortcutGotChanged() does it.
             // In practice it's probably better to get the change propagated here without
             // DBus delay as we do below.
-            iface.setForeignShortcut(actionId, result);
+            iface()->setForeignShortcut(actionId, result);
         }
         if (scResult != activeShortcut) {
             // If kglobalaccel returned a shortcut that differs from the one we
@@ -323,7 +338,7 @@ void KGlobalAccelPrivate::updateGlobalShortcut(/*const would be better*/QAction*
     }
 
     if (actionFlags & DefaultShortcut) {
-        iface.setShortcut(actionId, intListFromShortcut(defaultShortcut),
+        iface()->setShortcut(actionId, intListFromShortcut(defaultShortcut),
                           setterFlags | IsDefault);
     }
 }
@@ -480,14 +495,14 @@ void KGlobalAccelPrivate::reRegisterAll()
 #ifndef KGLOBALACCEL_NO_DEPRECATED
 QList<QStringList> KGlobalAccel::allMainComponents()
 {
-    return d->iface.allMainComponents();
+    return d->iface()->allMainComponents();
 }
 #endif
 
 #ifndef KGLOBALACCEL_NO_DEPRECATED
 QList<QStringList> KGlobalAccel::allActionsForComponent(const QStringList &actionId)
 {
-    return d->iface.allActionsForComponent(actionId);
+    return d->iface()->allActionsForComponent(actionId);
 }
 #endif
 
@@ -495,18 +510,18 @@ QList<QStringList> KGlobalAccel::allActionsForComponent(const QStringList &actio
 #ifndef KGLOBALACCEL_NO_DEPRECATED
 QStringList KGlobalAccel::findActionNameSystemwide(const QKeySequence &seq)
 {
-    return self()->d->iface.action(seq[0]);
+    return self()->d->iface()->action(seq[0]);
 }
 #endif
 
 QList<KGlobalShortcutInfo> KGlobalAccel::getGlobalShortcutsByKey(const QKeySequence &seq)
 {
-    return self()->d->iface.getGlobalShortcutsByKey(seq[0]);
+    return self()->d->iface()->getGlobalShortcutsByKey(seq[0]);
 }
 
 bool KGlobalAccel::isGlobalShortcutAvailable(const QKeySequence &seq, const QString &comp)
 {
-    return self()->d->iface.isGlobalShortcutAvailable(seq[0], comp);
+    return self()->d->iface()->isGlobalShortcutAvailable(seq[0], comp);
 }
 
 //static
@@ -581,18 +596,18 @@ bool KGlobalAccel::promptStealShortcutSystemwide(
 void KGlobalAccel::stealShortcutSystemwide(const QKeySequence &seq)
 {
     //get the shortcut, remove seq, and set the new shortcut
-    const QStringList actionId = self()->d->iface.action(seq[0]);
+    const QStringList actionId = self()->d->iface()->action(seq[0]);
     if (actionId.size() < 4) { // not a global shortcut
         return;
     }
-    QList<int> sc = self()->d->iface.shortcut(actionId);
+    QList<int> sc = self()->d->iface()->shortcut(actionId);
 
     for (int i = 0; i < sc.count(); i++)
         if (sc[i] == seq[0]) {
             sc[i] = 0;
         }
 
-    self()->d->iface.setForeignShortcut(actionId, sc);
+    self()->d->iface()->setForeignShortcut(actionId, sc);
 }
 
 bool checkGarbageKeycode(const QList<QKeySequence> &shortcut)
@@ -658,7 +673,7 @@ QList<QKeySequence> KGlobalAccel::globalShortcut(const QString& componentName, c
     // action->setProperty("componentName", "kwin");
     // action->setObjectName("Kill Window");
 
-    const QList<int> result = self()->d->iface.shortcut({ componentName, actionId, QString(), QString() });
+    const QList<int> result = self()->d->iface()->shortcut({ componentName, actionId, QString(), QString() });
     const QList<QKeySequence> scResult(d->shortcutFromIntList(result));
     return scResult;
 }

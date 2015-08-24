@@ -84,7 +84,7 @@ public:
 
     bool enabled;
 
-    org::kde::KGlobalAccel iface;
+    org::kde::KGlobalAccel *iface();
 
     //! Get the component @p componentUnique. If @p remember is true the instance is cached and we
     //! subscribe to signals about changes to the component.
@@ -97,6 +97,9 @@ public:
     QHash<QString, org::kde::kglobalaccel::Component *> components;
     QMap<const QAction *, QList<QKeySequence> > actionDefaultShortcuts;
     QMap<const QAction *, QList<QKeySequence> > actionShortcuts;
+
+private:
+    org::kde::KGlobalAccel *m_iface;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(KGlobalAccelPrivate::ShortcutTypes)
