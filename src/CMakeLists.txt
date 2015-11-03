@@ -1,13 +1,11 @@
 configure_file(config-kglobalaccel.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kglobalaccel.h )
 
-ecm_create_qm_loader(kglobalaccel_QM_LOADER kglobalaccel5_qt)
-
 set(kglobalaccel_SRCS
   kglobalaccel.cpp
   kglobalshortcutinfo.cpp
   kglobalshortcutinfo_dbus.cpp
-  ${kglobalaccel_QM_LOADER}
 )
+ecm_create_qm_loader(kglobalaccel_SRCS kglobalaccel5_qt)
 
 set(kglobalaccel_xml ${CMAKE_CURRENT_SOURCE_DIR}/org.kde.KGlobalAccel.xml)
 set_source_files_properties(${kglobalaccel_xml} PROPERTIES INCLUDE "kglobalshortcutinfo_p.h")

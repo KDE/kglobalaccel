@@ -1,12 +1,10 @@
 remove_definitions(-DQT_NO_CAST_FROM_BYTEARRAY)
 remove_definitions(-DQT_NO_CAST_FROM_ASCII)
 
-ecm_create_qm_loader(kglobalaccel_QM_LOADER kglobalaccel5_qt)
-
 ###############################################################################
 ### KDED Global Accel Daemon
 
-set(kglobalaccel_SRCS
+set(kglobalaccelprivate_SRCS
     kglobalacceld.cpp
     kglobalaccel_interface.cpp
     component.cpp
@@ -14,11 +12,12 @@ set(kglobalaccel_SRCS
     globalshortcut.cpp
     globalshortcutsregistry.cpp
     globalshortcutcontext.cpp
-    ${kglobalaccel_QM_LOADER})
+)
+ecm_create_qm_loader(kglobalaccelprivate_SRCS kglobalaccel5_qt)
 
 configure_file(config-kglobalaccel.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kglobalaccel.h )
 
-add_library(KF5GlobalAccelPrivate ${kglobalaccel_SRCS})
+add_library(KF5GlobalAccelPrivate ${kglobalaccelprivate_SRCS})
 generate_export_header(KF5GlobalAccelPrivate BASE_NAME KF5GlobalAccelPrivate)
 add_library(KF5::GlobalAccelPrivate ALIAS KF5GlobalAccelPrivate)
 
