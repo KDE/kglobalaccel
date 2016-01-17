@@ -124,7 +124,7 @@ org::kde::KGlobalAccel *KGlobalAccelPrivate::iface()
         m_iface = new org::kde::KGlobalAccel(serviceName(), QStringLiteral("/kglobalaccel"), QDBusConnection::sessionBus());
         // Make sure kglobalaccel is running. The iface declaration above somehow works anyway.
         QDBusConnectionInterface *bus = QDBusConnection::sessionBus().interface();
-        if (!bus->isServiceRegistered(serviceName())) {
+        if (bus && !bus->isServiceRegistered(serviceName())) {
             QDBusReply<void> reply = bus->startService(serviceName());
             if (!reply.isValid()) {
                 qCritical() << "Couldn't start kglobalaccel from org.kde.kglobalaccel.service:" << reply.error();
