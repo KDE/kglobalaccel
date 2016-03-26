@@ -240,7 +240,12 @@ bool KGlobalAccelD::init()
 
 KGlobalAccelD::~KGlobalAccelD()
 {
-    GlobalShortcutsRegistry::self()->deactivateShortcuts();
+    GlobalShortcutsRegistry *const reg = GlobalShortcutsRegistry::self();
+    if (d->writeoutTimer.isRunning()) {
+        d->writeoutTimer.stop();
+        reg->writeSettings();
+    }
+    reg->deactivateShortcuts();
     delete d;
 }
 

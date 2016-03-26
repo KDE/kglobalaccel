@@ -37,14 +37,6 @@ static bool isEnabled()
     return true;
 }
 
-
-static void sighandler(int /*sig*/)
-{
-    if (qApp)
-       qApp->quit();
-}
-
-
 extern "C" Q_DECL_EXPORT int main(int argc, char **argv)
 {
     // Disable Session Management the right way (C)
@@ -78,12 +70,8 @@ extern "C" Q_DECL_EXPORT int main(int argc, char **argv)
     KDBusService service(KDBusService::Unique);
 
     app.setQuitOnLastWindowClosed( false );
-
-    // Stop gracefully
-    ::signal(SIGINT, sighandler);
-    ::signal(SIGTERM, sighandler);
-#ifndef Q_OS_WIN
-    ::signal(SIGHUP, sighandler);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
+    QGuiApplication::setFallbackSessionManagementEnabled(false);
 #endif
 
     // Restart on a crash
