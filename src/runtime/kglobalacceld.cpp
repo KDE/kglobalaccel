@@ -241,7 +241,7 @@ bool KGlobalAccelD::init()
 KGlobalAccelD::~KGlobalAccelD()
 {
     GlobalShortcutsRegistry *const reg = GlobalShortcutsRegistry::self();
-    if (d->writeoutTimer.isRunning()) {
+    if (d->writeoutTimer.isActive()) {
         d->writeoutTimer.stop();
         reg->writeSettings();
     }
