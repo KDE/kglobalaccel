@@ -29,8 +29,6 @@
 #include <QApplication>
 #include <QIcon>
 
-#include <signal.h>
-
 static bool isEnabled()
 {
     // TODO: Check if kglobalaccel can be disabled
