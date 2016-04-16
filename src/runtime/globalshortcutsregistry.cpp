@@ -198,7 +198,7 @@ bool GlobalShortcutsRegistry::isShortcutAvailable(
     }
 
 
-Q_GLOBAL_STATIC( GlobalShortcutsRegistry, _self );
+Q_GLOBAL_STATIC( GlobalShortcutsRegistry, _self )
 GlobalShortcutsRegistry * GlobalShortcutsRegistry::self()
 {
     return _self;
