@@ -29,7 +29,7 @@ target_link_libraries(KF5GlobalAccelPrivate
    KF5::WindowSystem # KKeyServer
    KF5::CoreAddons   # KAboutData
    KF5::ConfigCore
-   KF5::Crash)
+)
 
 set_target_properties(KF5GlobalAccelPrivate PROPERTIES VERSION   ${KGLOBALACCEL_VERSION_STRING}
                                                 SOVERSION ${KGLOBALACCEL_SOVERSION}
@@ -44,6 +44,7 @@ add_executable(kglobalaccel5 main.cpp logging.cpp)
 target_link_libraries(kglobalaccel5
     KF5GlobalAccelPrivate
     KF5::DBusAddons   # KDBusService
+    KF5::Crash
     )
 
 add_subdirectory(plugins)
