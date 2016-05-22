@@ -12,3 +12,7 @@ libraries:
  - qmake: KGlobalAccel
    cmake: "KF5::GlobalAccel"
 cmakename: KF5GlobalAccel
+
+public_lib: true
+group: Frameworks
+subgroup: Tier 3
