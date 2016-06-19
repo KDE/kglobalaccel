@@ -26,7 +26,7 @@
 #include <KAboutData>
 #include <KDBusService>
 #include <QDebug>
-#include <QApplication>
+#include <QGuiApplication>
 #include <QIcon>
 
 static bool isEnabled()
@@ -45,7 +45,7 @@ extern "C" Q_DECL_EXPORT int main(int argc, char **argv)
     // ksmserver tries to register with kglobalaccel).
     qunsetenv( "SESSION_MANAGER" );
 
-    QApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
     KAboutData aboutdata(
             QStringLiteral("kglobalaccel"),
             QObject::tr("KDE Global Shortcuts Service"),
