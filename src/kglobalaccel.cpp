@@ -102,6 +102,15 @@ QString serviceName()
 }
 }
 
+void KGlobalAccelPrivate::cleanup()
+{
+    qDeleteAll(components);
+    delete m_iface;
+    m_iface = nullptr;
+    delete m_watcher;
+    m_watcher = nullptr;
+}
+
 KGlobalAccelPrivate::KGlobalAccelPrivate(KGlobalAccel *q)
     :
 #ifndef KGLOBALACCEL_NO_DEPRECATED
@@ -110,11 +119,11 @@ KGlobalAccelPrivate::KGlobalAccelPrivate(KGlobalAccel *q)
     q(q),
     m_iface(Q_NULLPTR)
 {
-    QDBusServiceWatcher *watcher = new QDBusServiceWatcher(serviceName(),
+    m_watcher = new QDBusServiceWatcher(serviceName(),
             QDBusConnection::sessionBus(),
             QDBusServiceWatcher::WatchForOwnerChange,
             q);
-    q->connect(watcher, SIGNAL(serviceOwnerChanged(QString,QString,QString)),
+    q->connect(m_watcher, SIGNAL(serviceOwnerChanged(QString,QString,QString)),
                q, SLOT(_k_serviceOwnerChanged(QString,QString,QString)));
 }
 
@@ -204,10 +213,19 @@ void KGlobalAccel::setEnabled(bool enabled)
 class KGlobalAccelSingleton
 {
 public:
+    KGlobalAccelSingleton();
+
     KGlobalAccel instance;
 };
 
 Q_GLOBAL_STATIC(KGlobalAccelSingleton, s_instance)
+
+KGlobalAccelSingleton::KGlobalAccelSingleton()
+{
+    qAddPostRoutine([]() {
+        s_instance->instance.d->cleanup();
+    });
+}
 
 KGlobalAccel *KGlobalAccel::self()
 {

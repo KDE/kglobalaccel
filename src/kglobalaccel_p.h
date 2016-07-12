@@ -72,6 +72,8 @@ public:
     QList<int> intListFromShortcut(const QList<QKeySequence> &cut);
     QList<QKeySequence> shortcutFromIntList(const QList<int> &list);
 
+    void cleanup();
+
     //private slot implementations
     void _k_invokeAction(const QString &, const QString &, qlonglong);
     void _k_shortcutGotChanged(const QStringList &, const QList<int> &);
@@ -100,6 +102,7 @@ public:
 
 private:
     org::kde::KGlobalAccel *m_iface;
+    QDBusServiceWatcher *m_watcher;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(KGlobalAccelPrivate::ShortcutTypes)
