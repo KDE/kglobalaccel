@@ -174,11 +174,10 @@ bool Component::cleanUp()
             }
         }
 
-    if (changed)
-        {
+    if (changed) {
         _registry->writeSettings();
         // We could be destroyed after this call!
-        }
+    }
 
     return changed;
     }
@@ -354,6 +353,35 @@ bool Component::isShortcutAvailable(
     return true;
     }
 
+GlobalShortcut *Component::registerShortcut(const QString &uniqueName, const QString &friendlyName, const QString &shortcutString, const QString &defaultShortcutString)
+    {
+    // The shortcut will register itself with us
+    GlobalShortcut *shortcut = new GlobalShortcut(
+            uniqueName,
+            friendlyName,
+            currentContext());
+
+    QList<int> keys = keysFromString(shortcutString);
+    shortcut->setDefaultKeys(keysFromString(defaultShortcutString));
+    shortcut->setIsFresh(false);
+
+    Q_FOREACH (int key, keys)
+        {
+        if (key != 0)
+            {
+            if (GlobalShortcutsRegistry::self()->getShortcutByKey(key))
+                {
+                // The shortcut is already used. The config file is
+                // broken. Ignore the request.
+                keys.removeAll(key);
+                qCWarning(KGLOBALACCELD) << "Shortcut found twice in kglobalshortcutsrc."<<key;
+                }
+            }
+        }
+    shortcut->setKeys(keys);
+    return shortcut;
+    }
+
 
 void Component::loadSettings(KConfigGroup &configGroup)
     {
@@ -366,30 +394,10 @@ void Component::loadSettings(KConfigGroup &configGroup)
             continue;
             }
 
-        // The shortcut will register itself with us
-        GlobalShortcut *shortcut = new GlobalShortcut(
-                confKey,
-                entry[2],
-                _current);
-
-        QList<int> keys = keysFromString(entry[0]);
-        shortcut->setDefaultKeys(keysFromString(entry[1]));
-        shortcut->setIsFresh(false);
-
-        Q_FOREACH (int key, keys)
-            {
-            if (key != 0)
-                {
-                if (GlobalShortcutsRegistry::self()->getShortcutByKey(key))
-                    {
-                    // The shortcut is already used. The config file is
-                    // broken. Ignore the request.
-                    keys.removeAll(key);
-                    qCWarning(KGLOBALACCELD) << "Shortcut found twice in kglobalshortcutsrc.";
-                    }
-                }
-            }
-        shortcut->setKeys(keys);
+        GlobalShortcut *shortcut = registerShortcut(confKey, entry[2], entry[0], entry[1]);
+        if (configGroup.name().endsWith(QLatin1String(".desktop"))) {
+            shortcut->setIsPresent(true);
+        }
         }
     }
 

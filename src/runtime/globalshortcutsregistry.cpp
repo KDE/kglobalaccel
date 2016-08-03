@@ -18,17 +18,21 @@
 
 #include "globalshortcutsregistry.h"
 #include "component.h"
+#include "kserviceactioncomponent.h"
 #include "globalshortcut.h"
 #include "globalshortcutcontext.h"
 #include <config-kglobalaccel.h>
 #include "logging_p.h"
 #include "kglobalaccel_interface.h"
 
+#include <QDir>
+#include <QStandardPaths>
 #include <QGuiApplication>
 #include <QDebug>
 #include <QJsonArray>
 #include <KPluginLoader>
 #include <KPluginMetaData>
+#include <KDesktopFile>
 
 #include <QKeySequence>
 #include <QDBusConnection>
@@ -271,23 +275,21 @@ void GlobalShortcutsRegistry::loadSettings()
 
         // We previously stored the friendly name in a separate group. migrate
         // that
-        QString friendlyName;
-        KConfigGroup friendlyGroup(&configGroup, "Friendly Name");
-        if (friendlyGroup.isValid())
-            {
-            friendlyName = friendlyGroup.readEntry("Friendly Name");
-            friendlyGroup.deleteGroup();
-            }
-        else
-            {
-            friendlyName = configGroup.readEntry("_k_friendly_name");
-            }
+        const QString friendlyName = configGroup.readEntry("_k_friendly_name");
 
         // Create the component
-        KdeDGlobalAccel::Component *component = new KdeDGlobalAccel::Component(
+        KdeDGlobalAccel::Component *component = nullptr;
+        if (groupName.endsWith(QLatin1String(".desktop"))) {
+            component = new KdeDGlobalAccel::KServiceActionComponent(
                 groupName,
                 friendlyName,
                 this);
+        } else {
+            component = new KdeDGlobalAccel::Component(
+                    groupName,
+                    friendlyName,
+                    this);
+        }
 
         // Now load the contexts
         Q_FOREACH(const QString& context, configGroup.groupList())
@@ -305,6 +307,33 @@ void GlobalShortcutsRegistry::loadSettings()
         // Load the default context
         component->activateGlobalShortcutContext("default");
         component->loadSettings(configGroup);
+        }
+
+        // Load the configured KServiceActions
+        const QStringList desktopPaths = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("kglobalaccel"), QStandardPaths::LocateDirectory);
+        foreach (const QString &path, desktopPaths) {
+            QDir dir(path);
+            if (!dir.exists()) {
+                continue;
+            }
+            const QStringList patterns = {QStringLiteral("*.desktop")};
+            foreach (const QString &desktopFile, dir.entryList(patterns)) {
+                if (_components.contains(desktopFile)) {
+                    continue;
+                }
+
+                KDesktopFile f(dir.filePath(desktopFile));
+                if (f.noDisplay()) {
+                    continue;
+                }
+
+                KdeDGlobalAccel::KServiceActionComponent *component = new KdeDGlobalAccel::KServiceActionComponent(
+                desktopFile,
+                f.readName(),
+                this);
+                component->activateGlobalShortcutContext(QStringLiteral("default"));
+                component->loadFromService();
+            }
         }
     }
 

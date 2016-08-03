@@ -27,6 +27,7 @@
 #include "globalshortcutcontext.h"
 #include "globalshortcutsregistry.h"
 #include "logging_p.h"
+#include "kserviceactioncomponent.h"
 
 #include <QtCore/QTimer>
 #include <QtCore/QMetaMethod>
@@ -146,14 +147,22 @@ KdeDGlobalAccel::Component *KGlobalAccelDPrivate::component(const QStringList &a
 {
     // Get the component for the action. If we have none create a new one
     KdeDGlobalAccel::Component *component = GlobalShortcutsRegistry::self()->getComponent(actionId.at(KGlobalAccel::ComponentUnique));
-    if (!component)
-        {
-        component = new KdeDGlobalAccel::Component(
-                actionId.at(KGlobalAccel::ComponentUnique),
-                actionId.at(KGlobalAccel::ComponentFriendly),
-                GlobalShortcutsRegistry::self());
-        Q_ASSERT(component);
+    if (!component) {
+        if (actionId.at(KGlobalAccel::ComponentUnique).endsWith(QLatin1String(".desktop"))) {
+            component = new KdeDGlobalAccel::KServiceActionComponent(
+                    actionId.at(KGlobalAccel::ComponentUnique),
+                    actionId.at(KGlobalAccel::ComponentFriendly),
+                    GlobalShortcutsRegistry::self());
+            component->activateGlobalShortcutContext(QStringLiteral("default"));
+            static_cast<KdeDGlobalAccel::KServiceActionComponent *>(component)->loadFromService();
+        } else {
+            component = new KdeDGlobalAccel::Component(
+                    actionId.at(KGlobalAccel::ComponentUnique),
+                    actionId.at(KGlobalAccel::ComponentFriendly),
+                    GlobalShortcutsRegistry::self());
         }
+        Q_ASSERT(component);
+    }
     return component;
 }
 

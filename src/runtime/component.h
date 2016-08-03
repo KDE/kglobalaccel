@@ -118,6 +118,18 @@ public:
 
     void writeSettings(KConfigGroup &config) const;
 
+protected:
+    /**
+     * Create a new globalShortcut by its name
+     * @param uniqueName internal unique name to identify the shortcut
+     * @param friendlyName name for the shortcut to be presented to the user
+     * @param shortcutString string representation of the shortcut, such as "CTRL+S"
+     * @param defaultShortcutString string representation of the default shortcut,
+     *                   such as "CTRL+S", when the user choses to reset to default
+     *                   the keyboard shortcut will return to this one.
+     */
+    GlobalShortcut *registerShortcut(const QString &uniqueName, const QString &friendlyName, const QString &shortcutString, const QString &defaultShortcutString);
+
 public Q_SLOTS:
 
     // For dbus Q_SCRIPTABLE has to be on slots. Scriptable methods are not
@@ -134,7 +146,7 @@ public Q_SLOTS:
      *
      * @return @c true if a change was made, @c false if not.
      */
-    Q_SCRIPTABLE bool cleanUp();
+    Q_SCRIPTABLE virtual bool cleanUp();
 
     /**
      * Check if the component is currently active.
@@ -153,7 +165,7 @@ public Q_SLOTS:
     //! Returns the shortcut contexts available for the component.
     Q_SCRIPTABLE QStringList getShortcutContexts() const;
 
-    void emitGlobalShortcutPressed(const GlobalShortcut &shortcut);
+    virtual void emitGlobalShortcutPressed(const GlobalShortcut &shortcut);
 
     Q_SCRIPTABLE void invokeShortcut(const QString &shortcutName, const QString &context = "default");
 

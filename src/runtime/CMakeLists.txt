@@ -7,6 +7,7 @@ remove_definitions(-DQT_NO_CAST_FROM_ASCII)
 set(kglobalaccelprivate_SRCS
     kglobalacceld.cpp
     kglobalaccel_interface.cpp
+    kserviceactioncomponent.cpp
     component.cpp
     logging.cpp
     globalshortcut.cpp
@@ -29,6 +30,8 @@ target_link_libraries(KF5GlobalAccelPrivate
    KF5::WindowSystem # KKeyServer
    KF5::CoreAddons   # KAboutData
    KF5::ConfigCore
+   KF5::Service
+   KF5::KIOWidgets
 )
 
 set_target_properties(KF5GlobalAccelPrivate PROPERTIES VERSION   ${KGLOBALACCEL_VERSION_STRING}
