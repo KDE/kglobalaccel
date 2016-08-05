@@ -31,7 +31,6 @@ target_link_libraries(KF5GlobalAccelPrivate
    KF5::CoreAddons   # KAboutData
    KF5::ConfigCore
    KF5::Service
-   KF5::KIOWidgets
 )
 
 set_target_properties(KF5GlobalAccelPrivate PROPERTIES VERSION   ${KGLOBALACCEL_VERSION_STRING}

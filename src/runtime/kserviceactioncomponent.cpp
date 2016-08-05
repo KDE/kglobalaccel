@@ -21,11 +21,10 @@
 #include "globalshortcutcontext.h"
 #include "logging_p.h"
 
-#include <KRun>
-
 #include <QDebug>
 #include <QProcess>
 #include <QDir>
+#include <QDBusConnectionInterface>
 
 
 namespace KdeDGlobalAccel {
@@ -46,21 +45,65 @@ KServiceActionComponent::~KServiceActionComponent()
     }
 
 void KServiceActionComponent::emitGlobalShortcutPressed( const GlobalShortcut &shortcut )
-    {
-    if (shortcut.uniqueName() == QStringLiteral("_launch"))
-        {
-        KRun::run(m_desktopFile.desktopGroup().readEntry(QStringLiteral("Exec"), QString()), {}, nullptr);
-        return;
-        }
-    foreach(const QString &action, m_desktopFile.readActions())
-        {
-        if (action == shortcut.uniqueName())
-            {
-            KRun::run(m_desktopFile.actionGroup(action).readEntry(QStringLiteral("Exec"), QString()), {}, nullptr);
+{
+    QDBusConnectionInterface *dbusDaemon = QDBusConnection::sessionBus().interface();
+    const bool klauncherAvailable = dbusDaemon->isServiceRegistered(QStringLiteral("org.kde.klauncher5"));
+
+    //we can't use KRun there as it depends from KIO and would create a circular dep
+    if (shortcut.uniqueName() == QStringLiteral("_launch")) {
+        QStringList parts = m_desktopFile.desktopGroup().readEntry(QStringLiteral("Exec"), QString()).split(QChar(' '));
+        if (parts.isEmpty()) {
             return;
+        }
+        const QString command = parts.first();
+        //sometimes entries have an %u for command line parameters
+        if (parts.last().contains(QChar('%'))) {
+            parts.pop_back();
+        }
+        parts.pop_front();
+
+        if (klauncherAvailable) {
+            QDBusMessage msg = QDBusMessage::createMethodCall(QStringLiteral("org.kde.klauncher5"),
+                                                      QStringLiteral("/KLauncher"),
+                                                      QStringLiteral("org.kde.KLauncher"),
+                                                      QStringLiteral("exec_blind"));
+            msg << command << parts;
+
+            QDBusConnection::sessionBus().asyncCall(msg);
+        } else {
+            QProcess::startDetached(m_desktopFile.desktopGroup().readEntry(QStringLiteral("Exec"), QString()));
+        }
+        return;
+    }
+    foreach (const QString &action, m_desktopFile.readActions()) {
+        if (action == shortcut.uniqueName()) {
+            QStringList parts = m_desktopFile.actionGroup(action).readEntry(QStringLiteral("Exec"), QString()).split(QChar(' '));
+
+            if (parts.isEmpty()) {
+                return;
             }
+            const QString command = parts.first();
+            //sometimes entries have an %u for command line parameters
+            if (parts.last().contains(QChar('%'))) {
+                parts.pop_back();
+            }
+            parts.pop_front();
+
+            if (klauncherAvailable) {
+                QDBusMessage msg = QDBusMessage::createMethodCall(QStringLiteral("org.kde.klauncher5"),
+                                                        QStringLiteral("/KLauncher"),
+                                                        QStringLiteral("org.kde.KLauncher"),
+                                                        QStringLiteral("exec_blind"));
+                msg << command << parts;
+
+                QDBusConnection::sessionBus().asyncCall(msg);
+            } else {
+                QProcess::startDetached(command, parts);
+            }
+            return;
         }
     }
+}
 
 
 
