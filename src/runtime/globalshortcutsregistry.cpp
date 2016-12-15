@@ -66,7 +66,7 @@ GlobalShortcutsRegistry::GlobalShortcutsRegistry()
         ,_active_keys()
         ,_components()
         ,_manager(loadPlugin(this))
-        ,_config("kglobalshortcutsrc", KConfig::SimpleConfig)
+        ,_config(qEnvironmentVariableIsSet("KGLOBALACCEL_TEST_MODE") ? QString() : QStringLiteral("kglobalshortcutsrc"), KConfig::SimpleConfig)
     {
     if (_manager) {
         _manager->setEnabled(true);
