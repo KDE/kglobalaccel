@@ -39,7 +39,6 @@ class KF5GLOBALACCELPRIVATE_EXPORT KGlobalAccelD : public QObject, protected QDB
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.kde.KGlobalAccel")
-    Q_ENUMS(SetShortcutFlag)
 
 public:
 
@@ -49,7 +48,9 @@ public:
         NoAutoloading = 4,
         IsDefault = 8
     };
-    Q_FLAGS(SetShortcutFlags)
+    Q_ENUM(SetShortcutFlag)
+    Q_DECLARE_FLAGS(SetShortcutFlags, SetShortcutFlag)
+    Q_FLAG(SetShortcutFlags)
 
     KGlobalAccelD(QObject* parent = NULL);
     ~KGlobalAccelD();
