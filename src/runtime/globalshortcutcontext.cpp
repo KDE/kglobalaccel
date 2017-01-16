@@ -98,7 +98,7 @@ GlobalShortcut *GlobalShortcutContext::getShortcutByKey(int key) const
             if (sc->keys().contains(key)) return sc;
             }
         }
-    return NULL;
+    return nullptr;
     }
 
 

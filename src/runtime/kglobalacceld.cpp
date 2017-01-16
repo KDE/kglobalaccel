@@ -87,7 +87,7 @@ GlobalShortcut *KGlobalAccelDPrivate::findAction(const QStringList &actionId) co
     if (actionId.size() != 4)
         {
         qCDebug(KGLOBALACCELD) << "Invalid! '" << actionId << "'";
-        return NULL;
+        return nullptr;
         }
 
     return findAction(
@@ -120,12 +120,12 @@ GlobalShortcut *KGlobalAccelDPrivate::findAction(
 #ifdef KDEDGLOBALACCEL_TRACE
         qCDebug(KGLOBALACCELD) << componentUnique << "not found";
 #endif
-        return NULL;
+        return nullptr;
         }
 
     GlobalShortcut *shortcut = component
         ? component->getShortcutByName(shortcutUnique, contextUnique)
-        : NULL;
+        : nullptr;
 
 #ifdef KDEDGLOBALACCEL_TRACE
     if (shortcut)

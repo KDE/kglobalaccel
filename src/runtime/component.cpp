@@ -299,7 +299,7 @@ GlobalShortcut *Component::getShortcutByName(const QString &uniqueName, const QS
     {
     if (!_contexts.value(context))
         {
-        return NULL;
+        return nullptr;
         }
 
     return _contexts.value(context)->_actions.value(uniqueName);

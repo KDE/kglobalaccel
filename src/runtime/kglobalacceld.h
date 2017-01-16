@@ -52,7 +52,7 @@ public:
     Q_DECLARE_FLAGS(SetShortcutFlags, SetShortcutFlag)
     Q_FLAG(SetShortcutFlags)
 
-    KGlobalAccelD(QObject* parent = NULL);
+    KGlobalAccelD(QObject* parent = nullptr);
     ~KGlobalAccelD();
 
     bool init();

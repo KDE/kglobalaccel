@@ -377,7 +377,7 @@ void KGlobalShortcutTest::testComponentAssignment()
      ************************************************************/
     // Action without component name get the global component
     {
-        QAction action("Text For Action A", NULL);
+        QAction action("Text For Action A", nullptr);
         action.setObjectName("Action C");
 
         QCOMPARE(action.property("componentName").toString(), QString());
@@ -389,7 +389,7 @@ void KGlobalShortcutTest::testComponentAssignment()
 
     // Action with component name keeps its component name
     {
-        QAction action("Text for Action C", 0);
+        QAction action("Text for Action C", nullptr);
         action.setObjectName("Action C");
         action.setProperty("componentName", otherComponent);
 
@@ -409,7 +409,7 @@ void KGlobalShortcutTest::testConfigurationActions()
     }
 
     // Create a configuration action
-    QAction cfg_action("Text For Action A", NULL);
+    QAction cfg_action("Text For Action A", nullptr);
     cfg_action.setObjectName("Action A:testConfigurationActions");
     cfg_action.setProperty("isConfigurationAction", true);
     cfg_action.setProperty("componentName", "qttest");
@@ -495,7 +495,7 @@ void KGlobalShortcutTest::testForgetGlobalShortcut()
     setupTest("testForgetGlobalShortcut");
 
     // Ensure that forgetGlobalShortcut can be called on any action.
-    QAction a("Test", NULL);
+    QAction a("Test", nullptr);
     KGlobalAccel::self()->removeAllShortcuts(&a);
     if (!m_daemonInstalled) {
         QSKIP("kglobalaccel not installed");

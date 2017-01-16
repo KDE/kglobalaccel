@@ -52,7 +52,7 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
         QDBusConnection::sessionBus());
     if (!kglobalaccel.isValid()) {
         qDebug() << "Failed to connect to the kglobalaccel daemon" << QDBusConnection::sessionBus().lastError();
-        return NULL;
+        return nullptr;
     }
 
     // Get the path for our component. We have to do that because
@@ -62,12 +62,12 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
 
         if (reply.error().name() == QLatin1String("org.kde.kglobalaccel.NoSuchComponent")) {
             // No problem. The component doesn't exists. That's normal
-            return NULL;
+            return nullptr;
         }
 
         // An unknown error.
         qDebug() << "Failed to get dbus path for component " << componentUnique << reply.error();
-        return NULL;
+        return nullptr;
     }
 
     // Now get the component
@@ -80,7 +80,7 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
     // No component no cleaning
     if (!component->isValid()) {
         qDebug() << "Failed to get component" << componentUnique << QDBusConnection::sessionBus().lastError();
-        return NULL;
+        return nullptr;
     }
 
     if (remember) {
@@ -432,7 +432,7 @@ void KGlobalAccelPrivate::_k_invokeAction(
     const QString &actionUnique,
     qlonglong timestamp)
 {
-    QAction *action = 0;
+    QAction *action = nullptr;
     QList<QAction *> candidates = nameToAction.values(actionUnique);
     Q_FOREACH (QAction *const a, candidates) {
         if (componentUniqueForAction(a) == componentUnique) {

@@ -171,7 +171,7 @@ GlobalShortcut *GlobalShortcutsRegistry::getShortcutByKey(int key) const
         GlobalShortcut *rc = component->getShortcutByKey(key);
         if (rc) return rc;
         }
-    return NULL;
+    return nullptr;
     }
 
 

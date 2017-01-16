@@ -39,7 +39,7 @@ public:
     KServiceActionComponent(
             const QString &serviceStorageId,
             const QString &friendlyName,
-            GlobalShortcutsRegistry *registry = NULL);
+            GlobalShortcutsRegistry *registry = nullptr);
 
     ~KServiceActionComponent();
 

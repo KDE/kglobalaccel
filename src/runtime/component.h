@@ -52,7 +52,7 @@ public:
     Component(
             const QString &uniqueName,
             const QString &friendlyName,
-            GlobalShortcutsRegistry *registry = NULL);
+            GlobalShortcutsRegistry *registry = nullptr);
 
     ~Component();
 

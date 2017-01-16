@@ -40,7 +40,7 @@ class KGlobalAccelImpl : public KGlobalAccelInterface, public QAbstractNativeEve
     Q_INTERFACES(KGlobalAccelInterface)
 
 public:
-    KGlobalAccelImpl(QObject *parent = 0);
+    KGlobalAccelImpl(QObject *parent = nullptr);
     virtual ~KGlobalAccelImpl();
 
 public:
