@@ -62,7 +62,7 @@ static void calculateGrabMasks()
 
 KGlobalAccelImpl::KGlobalAccelImpl(QObject *parent)
     : KGlobalAccelInterface(parent)
-    , m_keySymbols(Q_NULLPTR)
+    , m_keySymbols(nullptr)
 {
 	calculateGrabMasks();
     if (QX11Info::isPlatformX11()) {

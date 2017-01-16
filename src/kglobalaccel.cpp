@@ -117,7 +117,7 @@ KGlobalAccelPrivate::KGlobalAccelPrivate(KGlobalAccel *q)
     enabled(true),
 #endif
     q(q),
-    m_iface(Q_NULLPTR)
+    m_iface(nullptr)
 {
     m_watcher = new QDBusServiceWatcher(serviceName(),
             QDBusConnection::sessionBus(),

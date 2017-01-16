@@ -58,7 +58,7 @@ static KGlobalAccelInterface *loadPlugin(GlobalShortcutsRegistry *parent)
         }
     }
     qCWarning(KGLOBALACCELD) << "Could not find any platform plugin";
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 GlobalShortcutsRegistry::GlobalShortcutsRegistry()
