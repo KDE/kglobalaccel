@@ -28,6 +28,7 @@
 #include <QDebug>
 #include <QGuiApplication>
 #include <QIcon>
+#include <QCommandLineParser>
 
 static bool isEnabled()
 {
@@ -58,6 +59,13 @@ extern "C" Q_DECL_EXPORT int main(int argc, char **argv)
 
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("kglobalaccel")));
     KAboutData::setApplicationData(aboutdata);
+
+    {
+        QCommandLineParser parser;
+        aboutdata.setupCommandLine(&parser);
+        parser.process(app);
+        aboutdata.processCommandLine(&parser);
+    }
 
     // check if kglobalaccel is disabled
     if (!isEnabled()) {
