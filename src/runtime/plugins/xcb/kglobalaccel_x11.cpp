@@ -122,6 +122,7 @@ bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
         // can remove shift for some keys. (all the %&* and such)
         if( !(keyQt & Qt::SHIFT) &&
             !KKeyServer::isShiftAsModifierAllowed( keyQt ) &&
+            !(keyQt & Qt::KeypadModifier) &&
             keySymX != xcb_key_symbols_get_keysym(m_keySymbols, keyCodeX, 0) &&
             keySymX == xcb_key_symbols_get_keysym(m_keySymbols, keyCodeX, 1) )
         {
@@ -243,51 +244,12 @@ bool KGlobalAccelImpl::x11KeyPress(xcb_key_press_event_t *pEvent)
     xcb_ungrab_keyboard(c, XCB_TIME_CURRENT_TIME);
     xcb_flush(c);
 
-    xcb_keycode_t keyCodeX = pEvent->detail;
-    uint16_t keyModX = pEvent->state & (g_keyModMaskXAccel | KKeyServer::MODE_SWITCH);
-
-    xcb_keysym_t keySymX = xcb_key_press_lookup_keysym(m_keySymbols, pEvent, 0);
-
-	// If numlock is active and a keypad key is pressed, XOR the SHIFT state.
-	//  e.g., KP_4 => Shift+KP_Left, and Shift+KP_4 => KP_Left.
-    if (pEvent->state & KKeyServer::modXNumLock()) {
-		// If this is a keypad key,
-		if( keySymX >= XK_KP_Space && keySymX <= XK_KP_9 ) {
-			switch( keySymX ) {
-
-				// Leave the following keys unaltered
-				// FIXME: The proper solution is to see which keysyms don't change when shifted.
-				case XK_KP_Multiply:
-				case XK_KP_Add:
-				case XK_KP_Subtract:
-				case XK_KP_Divide:
-                case XK_KP_Enter:
-					break;
-
-				default:
-					keyModX ^= KKeyServer::modXShift();
-			}
-		}
-	}
-
-	int keyCodeQt;
-	int keyModQt;
-	KKeyServer::symXToKeyQt(keySymX, &keyCodeQt);
-	KKeyServer::modXToQt(keyModX, &keyModQt);
-
-	if ((keyModQt & Qt::SHIFT) && !KKeyServer::isShiftAsModifierAllowed( keyCodeQt ) ) {
-#ifdef KDEDGLOBALACCEL_TRACE
-		qCDebug(KGLOBALACCELD) << "removing shift modifier";
-#endif
-        if (keyCodeQt != Qt::Key_Tab) { // KKeySequenceWidget does not map shift+tab to backtab
-            static const int FirstLevelShift = 1;
-            keySymX = xcb_key_symbols_get_keysym(m_keySymbols, keyCodeX, FirstLevelShift);
-            KKeyServer::symXToKeyQt(keySymX, &keyCodeQt);
-        }
-		keyModQt &= ~Qt::SHIFT;
-	}
-
-	int keyQt = keyCodeQt | keyModQt;
+    int keyQt;
+    if (!KKeyServer::xcbKeyPressEventToQt(pEvent, &keyQt)) {
+        qCWarning(KGLOBALACCELD) << "KKeyServer::xcbKeyPressEventToQt failed";
+        return false;
+    }
+    //qDebug() << "keyQt=" << QString::number(keyQt, 16);
 
 	// All that work for this hey... argh...
     if (NET::timestampCompare(pEvent->time, QX11Info::appTime()) > 0) {
