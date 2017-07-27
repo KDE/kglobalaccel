@@ -42,6 +42,7 @@ if (${XCB_XCB_FOUND})
 endif()
 
 add_executable(kglobalaccel5 main.cpp logging.cpp)
+ecm_mark_nongui_executable(kglobalaccel5)
 target_link_libraries(kglobalaccel5
     KF5GlobalAccelPrivate
     KF5::DBusAddons   # KDBusService

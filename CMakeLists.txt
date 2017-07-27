@@ -18,6 +18,7 @@ include(CMakePackageConfigHelpers)
 include(ECMSetupVersion)
 include(ECMGenerateHeaders)
 include(ECMAddQch)
+include(ECMMarkNonGuiExecutable)
 
 include(ECMPoQmTools)
 
