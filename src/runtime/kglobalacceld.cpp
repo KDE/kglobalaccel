@@ -123,9 +123,7 @@ GlobalShortcut *KGlobalAccelDPrivate::findAction(
         return nullptr;
         }
 
-    GlobalShortcut *shortcut = component
-        ? component->getShortcutByName(shortcutUnique, contextUnique)
-        : nullptr;
+    GlobalShortcut *shortcut = component->getShortcutByName(shortcutUnique, contextUnique);
 
 #ifdef KDEDGLOBALACCEL_TRACE
     if (shortcut)
