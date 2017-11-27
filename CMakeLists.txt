@@ -19,6 +19,7 @@ include(ECMSetupVersion)
 include(ECMGenerateHeaders)
 include(ECMAddQch)
 include(ECMMarkNonGuiExecutable)
+include(ECMQtDeclareLoggingCategory)
 
 include(ECMPoQmTools)
 
@@ -102,4 +103,6 @@ install(EXPORT KF5GlobalAccelTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FI
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kglobalaccel_version.h
         DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5} COMPONENT Devel )
 
+# contains list of debug categories, for kdebugsettings
+install(FILES kglobalaccel.categories DESTINATION ${KDE_INSTALL_CONFDIR})
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)

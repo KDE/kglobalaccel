@@ -22,12 +22,12 @@
 
 #include "kglobalaccel.h"
 #include "kglobalaccel_p.h"
+#include "kglobalaccel_debug.h"
 
 #include <memory>
 
 #include <QAction>
 #include <QActionEvent>
-#include <QDebug>
 #include <QGuiApplication>
 #include <QMessageBox>
 #include <QPushButton>
@@ -51,7 +51,7 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
         QStringLiteral("/kglobalaccel"),
         QDBusConnection::sessionBus());
     if (!kglobalaccel.isValid()) {
-        qDebug() << "Failed to connect to the kglobalaccel daemon" << QDBusConnection::sessionBus().lastError();
+        qCDebug(KGLOBALACCEL_LOG) << "Failed to connect to the kglobalaccel daemon" << QDBusConnection::sessionBus().lastError();
         return nullptr;
     }
 
@@ -66,7 +66,7 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
         }
 
         // An unknown error.
-        qDebug() << "Failed to get dbus path for component " << componentUnique << reply.error();
+        qCDebug(KGLOBALACCEL_LOG) << "Failed to get dbus path for component " << componentUnique << reply.error();
         return nullptr;
     }
 
@@ -79,7 +79,7 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
 
     // No component no cleaning
     if (!component->isValid()) {
-        qDebug() << "Failed to get component" << componentUnique << QDBusConnection::sessionBus().lastError();
+        qCDebug(KGLOBALACCEL_LOG) << "Failed to get component" << componentUnique << QDBusConnection::sessionBus().lastError();
         return nullptr;
     }
 
@@ -486,7 +486,7 @@ void KGlobalAccelPrivate::_k_serviceOwnerChanged(const QString &name, const QStr
     Q_UNUSED(oldOwner);
     if (name == QLatin1String("org.kde.kglobalaccel") && !newOwner.isEmpty()) {
         // kglobalaccel was restarted
-        qDebug() << "detected kglobalaccel restarting, re-registering all shortcut keys";
+        qCDebug(KGLOBALACCEL_LOG) << "detected kglobalaccel restarting, re-registering all shortcut keys";
         reRegisterAll();
     }
 }

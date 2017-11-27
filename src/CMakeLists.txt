@@ -5,6 +5,8 @@ set(kglobalaccel_SRCS
   kglobalshortcutinfo.cpp
   kglobalshortcutinfo_dbus.cpp
 )
+ecm_qt_declare_logging_category(kglobalaccel_SRCS HEADER kglobalaccel_debug.h IDENTIFIER KGLOBALACCEL_LOG CATEGORY_NAME kf5.kglobalaccel)
+
 ecm_create_qm_loader(kglobalaccel_SRCS kglobalaccel5_qt)
 
 set(kglobalaccel_xml ${CMAKE_CURRENT_SOURCE_DIR}/org.kde.KGlobalAccel.xml)
