@@ -114,7 +114,7 @@ void KServiceActionComponent::loadFromService()
 
     QStringList shortcuts = m_desktopFile.desktopGroup().readEntry(QStringLiteral("X-KDE-Shortcuts"), QString()).split(QChar(','));
     if (shortcuts.size() > 0) {
-        shortcutString = shortcuts.join(QChar('\\'));
+        shortcutString = shortcuts.join(QChar('\t'));
     }
 
     GlobalShortcut *shortcut = registerShortcut(QStringLiteral("_launch"), m_desktopFile.readName(), shortcutString, shortcutString);
@@ -125,7 +125,7 @@ void KServiceActionComponent::loadFromService()
         shortcuts = m_desktopFile.actionGroup(action).readEntry(QStringLiteral("X-KDE-Shortcuts"), QString()).split(QChar(','));
         if (shortcuts.size() > 0)
             {
-            shortcutString = shortcuts.join(QChar('\\'));
+            shortcutString = shortcuts.join(QChar('\t'));
             }
 
         GlobalShortcut *shortcut = registerShortcut(action, m_desktopFile.actionGroup(action).readEntry(QStringLiteral("Name")), shortcutString, shortcutString);
