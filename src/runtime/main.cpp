@@ -57,7 +57,6 @@ extern "C" Q_DECL_EXPORT int main(int argc, char **argv)
     aboutdata.addAuthor("Andreas Hartmetz", QObject::tr("Maintainer"), "ahartmetz@gmail.com");
     aboutdata.addAuthor("Michael Jansen", QObject::tr("Maintainer"), "kde@michael-jansen.biz");
 
-    app.setWindowIcon(QIcon::fromTheme(QStringLiteral("kglobalaccel")));
     KAboutData::setApplicationData(aboutdata);
 
     {
