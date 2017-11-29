@@ -75,9 +75,7 @@ extern "C" Q_DECL_EXPORT int main(int argc, char **argv)
     KDBusService service(KDBusService::Unique);
 
     app.setQuitOnLastWindowClosed( false );
-#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
     QGuiApplication::setFallbackSessionManagementEnabled(false);
-#endif
 
     // Restart on a crash
     KCrash::setFlags(KCrash::AutoRestart);
