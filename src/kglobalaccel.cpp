@@ -305,8 +305,6 @@ void KGlobalAccelPrivate::updateGlobalShortcut(/*const would be better*/QAction*
     }
 
     QStringList actionId = makeActionId(action);
-    const QList<QKeySequence> activeShortcut = actionShortcuts.value(action);
-    const QList<QKeySequence> defaultShortcut = actionDefaultShortcuts.value(action);
 
     uint setterFlags = 0;
     if (globalFlags & NoAutoloading) {
@@ -314,6 +312,7 @@ void KGlobalAccelPrivate::updateGlobalShortcut(/*const would be better*/QAction*
     }
 
     if (actionFlags & ActiveShortcut) {
+        const QList<QKeySequence> activeShortcut = actionShortcuts.value(action);
         bool isConfigurationAction = action->property("isConfigurationAction").toBool();
         uint activeSetterFlags = setterFlags;
 
@@ -323,7 +322,7 @@ void KGlobalAccelPrivate::updateGlobalShortcut(/*const would be better*/QAction*
         }
 
         // Sets the shortcut, returns the active/real keys
-        const QList<int> result = iface()->setShortcut(
+        const auto result = iface()->setShortcut(
                                       actionId,
                                       intListFromShortcut(activeShortcut),
                                       activeSetterFlags);
@@ -356,6 +355,7 @@ void KGlobalAccelPrivate::updateGlobalShortcut(/*const would be better*/QAction*
     }
 
     if (actionFlags & DefaultShortcut) {
+        const QList<QKeySequence> defaultShortcut = actionDefaultShortcuts.value(action);
         iface()->setShortcut(actionId, intListFromShortcut(defaultShortcut),
                           setterFlags | IsDefault);
     }
@@ -714,12 +714,28 @@ bool KGlobalAccel::eventFilter(QObject *watched, QEvent *event)
 bool KGlobalAccel::setGlobalShortcut(QAction *action, const QList<QKeySequence> &shortcut)
 {
     KGlobalAccel *g = KGlobalAccel::self();
-    return g->setShortcut(action, shortcut) && g->setDefaultShortcut(action, shortcut);
+    return g->d->setShortcutWithDefault(action, shortcut, Autoloading);
 }
 
 bool KGlobalAccel::setGlobalShortcut(QAction *action, const QKeySequence &shortcut)
 {
     return KGlobalAccel::setGlobalShortcut(action, QList<QKeySequence>() << shortcut);
+}
+
+bool KGlobalAccelPrivate::setShortcutWithDefault(QAction* action, const QList<QKeySequence>& shortcut, KGlobalAccel::GlobalShortcutLoading loadFlag)
+{
+    if (checkGarbageKeycode(shortcut)) {
+        return false;
+    }
+
+    if (!doRegister(action)) {
+        return false;
+    }
+
+    actionDefaultShortcuts.insert(action, shortcut);
+    actionShortcuts.insert(action, shortcut);
+    updateGlobalShortcut(action, KGlobalAccelPrivate::DefaultShortcut | KGlobalAccelPrivate::ActiveShortcut, loadFlag);
+    return true;
 }
 
 #include "moc_kglobalaccel.cpp"

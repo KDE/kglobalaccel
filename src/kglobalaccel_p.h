@@ -100,6 +100,8 @@ public:
     QMap<const QAction *, QList<QKeySequence> > actionDefaultShortcuts;
     QMap<const QAction *, QList<QKeySequence> > actionShortcuts;
 
+    bool setShortcutWithDefault(QAction *action, const QList<QKeySequence> &shortcut, KGlobalAccel::GlobalShortcutLoading loadFlag);
+
 private:
     org::kde::KGlobalAccel *m_iface;
     QDBusServiceWatcher *m_watcher;
