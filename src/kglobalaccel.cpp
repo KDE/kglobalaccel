@@ -41,8 +41,11 @@
 org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QString &componentUnique, bool remember = false)
 {
     // Check if we already have this component
-    if (components.contains(componentUnique)) {
-        return components[componentUnique];
+    {
+        auto component = components.value(componentUnique);
+        if (component) {
+            return component;
+        }
     }
 
     // Connect to the kglobalaccel daemon
