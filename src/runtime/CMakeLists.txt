@@ -63,7 +63,4 @@ install(FILES
   DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KGlobalAccel/private COMPONENT Devel
 )
 
-configure_file(org.kde.kglobalaccel.service.in
-               ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kglobalaccel.service)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kglobalaccel.service
-        DESTINATION ${KDE_INSTALL_DBUSSERVICEDIR})
+kdbusaddons_generate_dbus_service_file(kglobalaccel5 org.kde.kglobalaccel ${KDE_INSTALL_FULL_BINDIR})
