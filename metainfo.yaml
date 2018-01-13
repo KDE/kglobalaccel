@@ -1,4 +1,4 @@
-maintainer: graesslin
+maintainer:
 description: Add support for global workspace shortcuts
 tier: 3
 type: integration
