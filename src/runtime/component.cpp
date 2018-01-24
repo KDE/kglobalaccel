@@ -139,7 +139,6 @@ QList<GlobalShortcut*> Component::allShortcuts(const QString &contextName) const
         }
     else
         {
-        Q_ASSERT(false); // Unknown context
         return QList<GlobalShortcut*> ();
         }
     }
@@ -147,13 +146,10 @@ QList<GlobalShortcut*> Component::allShortcuts(const QString &contextName) const
 
 QList<KGlobalShortcutInfo> Component::allShortcutInfos(const QString &contextName) const
     {
-    QList<KGlobalShortcutInfo> rc;
-
     GlobalShortcutContext *context = _contexts.value(contextName);
     if (!context)
         {
-        Q_ASSERT(false); // Unknown context
-        return rc;
+        return QList<KGlobalShortcutInfo>();
         }
 
     return context->allShortcutInfos();
@@ -252,7 +248,6 @@ void Component::emitGlobalShortcutPressed( const GlobalShortcut &shortcut )
     // Make sure it is one of ours
     if (shortcut.context()->component() != this)
         {
-        Q_ASSERT(shortcut.context()->component() == this);
         // In production mode do nothing
         return;
         }
@@ -425,7 +420,6 @@ QStringList Component::shortcutNames( const QString &contextName) const
     GlobalShortcutContext *context = _contexts.value(contextName);
     if (!context)
         {
-        Q_ASSERT(false); // Unknown context
         return QStringList();
         }
 
