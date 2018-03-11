@@ -20,9 +20,9 @@
 
 #include "ksharedconfig.h"
 
-#include <QtCore/QObject>
-#include <QtCore/QHash>
-#include <QtDBus/QDBusObjectPath>
+#include <QObject>
+#include <QHash>
+#include <QDBusObjectPath>
 
 
 class GlobalShortcut;

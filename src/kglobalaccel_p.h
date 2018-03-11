@@ -22,8 +22,8 @@
 #ifndef KGLOBALACCEL_P_H
 #define KGLOBALACCEL_P_H
 
-#include <QtCore/QHash>
-#include <QtCore/QStringList>
+#include <QHash>
+#include <QStringList>
 #include <QKeySequence>
 #include <QList>
 

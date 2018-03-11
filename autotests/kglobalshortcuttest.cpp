@@ -31,7 +31,7 @@
 
 #include <qplatformdefs.h>
 
-#include <QtDBus/QDBusConnectionInterface>
+#include <QDBusConnectionInterface>
 
 #ifdef HAVE_XCB_XTEST
 #include <QX11Info>

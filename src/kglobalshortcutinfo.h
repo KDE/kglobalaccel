@@ -20,10 +20,10 @@
 
 #include <kglobalaccel_export.h>
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
+#include <QList>
+#include <QObject>
 #include <QKeySequence>
-#include <QtDBus/QDBusArgument>
+#include <QDBusArgument>
 
 class KGlobalShortcutInfoPrivate;
 

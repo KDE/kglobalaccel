@@ -31,8 +31,8 @@
 #include <QGuiApplication>
 #include <QMessageBox>
 #include <QPushButton>
-#include <QtDBus/QDBusInterface>
-#include <QtDBus/QDBusMetaType>
+#include <QDBusInterface>
+#include <QDBusMetaType>
 #include <config-kglobalaccel.h>
 #if HAVE_X11
 #include <QX11Info>

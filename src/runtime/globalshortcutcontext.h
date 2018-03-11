@@ -20,8 +20,8 @@
 
 #include "kglobalshortcutinfo.h"
 
-#include <QtCore/QString>
-#include <QtCore/QHash>
+#include <QString>
+#include <QHash>
 
 namespace KdeDGlobalAccel {
     class Component;

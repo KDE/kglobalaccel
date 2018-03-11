@@ -29,10 +29,10 @@
 #include "logging_p.h"
 #include "kserviceactioncomponent.h"
 
-#include <QtCore/QTimer>
-#include <QtCore/QMetaMethod>
-#include <QtDBus/QDBusMetaType>
-#include <QtDBus/QDBusObjectPath>
+#include <QTimer>
+#include <QMetaMethod>
+#include <QDBusMetaType>
+#include <QDBusObjectPath>
 
 #include "kglobalaccel.h"
 #include <QDebug>

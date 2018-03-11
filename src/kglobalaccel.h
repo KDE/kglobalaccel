@@ -25,7 +25,7 @@
 #include <kglobalaccel_export.h>
 #include "kglobalshortcutinfo.h"
 
-#include <QtCore/QObject>
+#include <QObject>
 #include <QKeySequence>
 #include <QList>
 

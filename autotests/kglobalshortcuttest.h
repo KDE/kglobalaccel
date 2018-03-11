@@ -22,7 +22,7 @@
 #ifndef KGLOBALSHORTCUTTEST_H
 #define KGLOBALSHORTCUTTEST_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class QAction;
 

@@ -26,9 +26,9 @@
 
 #include <kglobalshortcutinfo.h>
 
-#include <QtCore/QStringList>
-#include <QtCore/QList>
-#include <QtDBus/QtDBus>
+#include <QStringList>
+#include <QList>
+#include <QtDBus>
 
 struct KGlobalAccelDPrivate;
 

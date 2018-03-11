@@ -26,7 +26,7 @@
 #include "kglobalaccel_interface.h"
 
 #include <QDebug>
-#include <QtCore/QStringList>
+#include <QStringList>
 #include <QKeySequence>
 
 #if HAVE_X11

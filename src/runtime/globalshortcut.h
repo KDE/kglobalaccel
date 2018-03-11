@@ -20,7 +20,7 @@
 
 #include <KGlobalShortcutInfo>
 
-#include <QtCore/QObject>
+#include <QObject>
 
 
 class GlobalShortcutContext;
