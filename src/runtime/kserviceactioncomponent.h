@@ -41,7 +41,7 @@ public:
             const QString &friendlyName,
             GlobalShortcutsRegistry *registry = nullptr);
 
-    ~KServiceActionComponent();
+    ~KServiceActionComponent() Q_DECL_OVERRIDE;
 
     void loadFromService();
     void emitGlobalShortcutPressed(const GlobalShortcut &shortcut) Q_DECL_OVERRIDE;

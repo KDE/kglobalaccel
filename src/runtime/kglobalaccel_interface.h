@@ -35,7 +35,7 @@ class KF5GLOBALACCELPRIVATE_EXPORT KGlobalAccelInterface : public QObject
     Q_OBJECT
 
 public:
-    KGlobalAccelInterface(QObject *parent);
+    explicit KGlobalAccelInterface(QObject *parent);
     virtual ~KGlobalAccelInterface();
 
 public:
