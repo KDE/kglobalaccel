@@ -41,12 +41,12 @@ public:
             const QString &friendlyName,
             GlobalShortcutsRegistry *registry = nullptr);
 
-    ~KServiceActionComponent() Q_DECL_OVERRIDE;
+    ~KServiceActionComponent() override;
 
     void loadFromService();
-    void emitGlobalShortcutPressed(const GlobalShortcut &shortcut) Q_DECL_OVERRIDE;
+    void emitGlobalShortcutPressed(const GlobalShortcut &shortcut) override;
 
-    bool cleanUp() Q_DECL_OVERRIDE;
+    bool cleanUp() override;
 
 private:
     QString m_serviceStorageId;

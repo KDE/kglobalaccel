@@ -56,12 +56,12 @@ public:
 	 *
 	 * \return true if successful, otherwise false.
 	 */
-	bool grabKey(int key, bool grab) Q_DECL_OVERRIDE;
+	bool grabKey(int key, bool grab) override;
 	
 	/// Enable/disable all shortcuts. There will not be any grabbed shortcuts at this point.
-	void setEnabled(bool) Q_DECL_OVERRIDE;
+	void setEnabled(bool) override;
 
-        bool nativeEventFilter(const QByteArray &eventType, void *message, long *) Q_DECL_OVERRIDE;
+        bool nativeEventFilter(const QByteArray &eventType, void *message, long *) override;
 
         static void syncX();
 

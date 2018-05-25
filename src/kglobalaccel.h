@@ -348,7 +348,7 @@ public:
      * TODO KF6 remove
      * @internal
      */
-    bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
 Q_SIGNALS:
     /**
