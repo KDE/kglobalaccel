@@ -241,8 +241,12 @@ bool KGlobalAccelImpl::x11KeyPress(xcb_key_press_event_t *pEvent)
 	// Keyboard needs to be ungrabed after XGrabKey() activates the grab,
 	// otherwise it becomes frozen.
     xcb_connection_t *c = QX11Info::connection();
-    xcb_ungrab_keyboard(c, XCB_TIME_CURRENT_TIME);
+    xcb_void_cookie_t cookie = xcb_ungrab_keyboard_checked(c, XCB_TIME_CURRENT_TIME);
     xcb_flush(c);
+    // xcb_flush() only makes sure that the ungrab keyboard request has been
+    // sent, but is not enough to make sure that request has been fulfilled. Use
+    // xcb_request_check() to make sure that the request has been processed.
+    xcb_request_check(c, cookie);
 
     int keyQt;
     if (!KKeyServer::xcbKeyPressEventToQt(pEvent, &keyQt)) {
