@@ -81,7 +81,7 @@ public:
     //! Returns the currently active shortcut for key
     GlobalShortcut *getShortcutByKey(int key) const;
 
-    //! Returns the shortcut context @p name or NULL
+    //! Returns the shortcut context @p name or nullptr
     GlobalShortcutContext *shortcutContext(const QString &name);
     GlobalShortcutContext const *shortcutContext(const QString &name) const;
 

@@ -64,7 +64,7 @@ public:
     KdeDGlobalAccel::Component *component();
     KdeDGlobalAccel::Component const *component() const;
 
-    //! Get shortcut for @p key or NULL
+    //! Get shortcut for @p key or nullptr
     GlobalShortcut *getShortcutByKey(int key) const;
 
     //! Remove @p shortcut from the context. The shortcut is not deleted.

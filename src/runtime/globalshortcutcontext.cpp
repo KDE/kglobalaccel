@@ -104,7 +104,7 @@ GlobalShortcut *GlobalShortcutContext::getShortcutByKey(int key) const
 
 GlobalShortcut *GlobalShortcutContext::takeShortcut(GlobalShortcut *shortcut)
     {
-    // Try to take the shortcut. Result could be null if the shortcut doesn't
+    // Try to take the shortcut. Result could be nullptr if the shortcut doesn't
     // belong to this component.
     return _actions.take(shortcut->uniqueName());
     }

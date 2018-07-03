@@ -51,7 +51,7 @@ struct KGlobalAccelDPrivate
     /**
      * Find the action @a shortcutUnique in @a componentUnique.
      *
-     * @return the action or @c null if doesn't exist
+     * @return the action or @c nullptr if doesn't exist
      */
     GlobalShortcut *findAction(
             const QString &componentUnique,
@@ -383,7 +383,7 @@ void KGlobalAccelD::doRegister(const QStringList &actionId)
 #endif
 
     // Check because we would not want to add a action for an invalid
-    // actionId. findAction returns NULL in that case.
+    // actionId. findAction returns nullptr in that case.
     if (actionId.size() < 4) {
         return;
     }
