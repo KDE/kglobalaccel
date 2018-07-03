@@ -5,7 +5,7 @@
     <signal name="yourShortcutGotChanged">
       <arg name="actionId" type="as" direction="out"/>
       <arg name="newKeys" type="ai" direction="out"/>
-      <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="QList&lt;int&gt;"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out1" value="QList&lt;int&gt;"/>
     </signal>
     <method name="allComponents">
       <arg type="ao" direction="out"/>
