@@ -63,7 +63,7 @@ QTEST_MAIN(KGlobalShortcutTest)
 
 void KGlobalShortcutTest::initTestCase()
 {
-    QStandardPaths::enableTestMode(true);
+    QStandardPaths::setTestModeEnabled(true);
     m_daemonInstalled = true;
 
     QDBusConnectionInterface *bus = QDBusConnection::sessionBus().interface();
