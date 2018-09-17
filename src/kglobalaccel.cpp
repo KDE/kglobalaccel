@@ -557,8 +557,9 @@ bool KGlobalAccel::promptStealShortcutSystemwide(QWidget *parent, const QStringL
     QString message = tr("The '%1' key combination has already been allocated "
                          "to the global action \"%2\" in %3.\n"
                          "Do you want to reassign it from that action to the current one?")
-                      .arg(seq.toString(), actionIdentifier.at(KGlobalAccel::ActionFriendly))
-                      .arg(actionIdentifier.at(KGlobalAccel::ComponentFriendly));
+                      .arg(seq.toString(),
+                           actionIdentifier.at(KGlobalAccel::ActionFriendly),
+                           actionIdentifier.at(KGlobalAccel::ComponentFriendly));
 
     QMessageBox box(parent);
     box.setWindowTitle(title);
@@ -586,20 +587,15 @@ bool KGlobalAccel::promptStealShortcutSystemwide(
     QString message;
     if (shortcuts.size() == 1) {
         message = tr("The '%1' key combination is registered by application %2 for action %3:")
-                  .arg(seq.toString())
-                  .arg(component)
-                  .arg(shortcuts[0].friendlyName());
+                  .arg(seq.toString(), component, shortcuts[0].friendlyName());
     } else {
         QString actionList;
         Q_FOREACH (const KGlobalShortcutInfo &info, shortcuts) {
             actionList += tr("In context '%1' for action '%2'\n")
-                          .arg(info.contextFriendlyName())
-                          .arg(info.friendlyName());
+                          .arg(info.contextFriendlyName(), info.friendlyName());
         }
         message = tr("The '%1' key combination is registered by application %2.\n%3")
-                  .arg(seq.toString())
-                  .arg(component)
-                  .arg(actionList);
+                  .arg(seq.toString(), component, actionList);
     }
 
     QString title = tr("Conflict With Registered Global Shortcut");
