@@ -137,7 +137,8 @@ bool KServiceActionComponent::cleanUp()
 {
     qCDebug(KGLOBALACCELD) << "Disabling desktop file";
 
-    for (GlobalShortcut *shortcut : allShortcuts()) {
+    const auto shortcuts = allShortcuts();
+    for (GlobalShortcut *shortcut : shortcuts) {
         shortcut->setIsPresent(false);
     }
 
