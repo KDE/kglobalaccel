@@ -260,11 +260,14 @@ QList<QStringList> KGlobalAccelD::allMainComponents() const
 {
     QList<QStringList> ret;
     QStringList emptyList;
+    emptyList.reserve(4);
     for (int i = 0; i < 4; i++) {
         emptyList.append(QString());
     }
 
-    foreach (const KdeDGlobalAccel::Component *component, GlobalShortcutsRegistry::self()->allMainComponents()) {
+    const auto components = GlobalShortcutsRegistry::self()->allMainComponents();
+    ret.reserve(components.size() * 4);
+    for (const KdeDGlobalAccel::Component *component : components) {
         QStringList actionId(emptyList);
         actionId[KGlobalAccel::ComponentUnique] = component->uniqueName();
         actionId[KGlobalAccel::ComponentFriendly] = component->friendlyName();
