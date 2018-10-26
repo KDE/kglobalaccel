@@ -33,9 +33,13 @@
 #include <X11/keysym.h>
 
 // xcb
+
+// It uses "explicit" as a variable name, which is not allowed in C++
+#define explicit xcb_explicit
 #include <xcb/xcb.h>
 #include <xcb/xcb_keysyms.h>
-
+#include <xcb/xkb.h>
+#undef explicit
 
 // g_keyModMaskXAccel
 //	mask of modifiers which can be used in shortcuts
@@ -63,11 +67,16 @@ static void calculateGrabMasks()
 KGlobalAccelImpl::KGlobalAccelImpl(QObject *parent)
     : KGlobalAccelInterface(parent)
     , m_keySymbols(nullptr)
+    , m_xkb_first_event(0)
 {
+	Q_ASSERT(QX11Info::connection());
+
+	const xcb_query_extension_reply_t *reply = xcb_get_extension_data(QX11Info::connection(), &xcb_xkb_id);
+	if (reply && reply->present) {
+		m_xkb_first_event = reply->first_event;
+	}
+
 	calculateGrabMasks();
-    if (QX11Info::isPlatformX11()) {
-        m_keySymbols = xcb_key_symbols_alloc(QX11Info::connection());
-    }
 }
 
 KGlobalAccelImpl::~KGlobalAccelImpl()
@@ -87,8 +96,12 @@ bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
     }
 
     if (!m_keySymbols) {
-        return false;
+        m_keySymbols = xcb_key_symbols_alloc(QX11Info::connection());
+        if (!m_keySymbols) {
+            return false;
+        }
     }
+
 	if( !keyQt ) {
         qCDebug(KGLOBALACCELD) << "Tried to grab key with null code.";
 		return false;
@@ -192,30 +205,45 @@ bool KGlobalAccelImpl::nativeEventFilter(const QByteArray &eventType, void *mess
     }
     xcb_generic_event_t *event = reinterpret_cast<xcb_generic_event_t*>(message);
     const uint8_t responseType = event->response_type & ~0x80;
-    switch (responseType) {
-        case XCB_MAPPING_NOTIFY:
-            qCDebug(KGLOBALACCELD) << "Got XMappingNotify event";
-            xcb_refresh_keyboard_mapping(m_keySymbols, reinterpret_cast<xcb_mapping_notify_event_t*>(event));
-            x11MappingNotify();
-            return true;
+    if (responseType == XCB_MAPPING_NOTIFY) {
+        x11MappingNotify();
 
-        case XCB_KEY_PRESS:
+        // Make sure to let Qt handle it as well
+        return false;
+    } else if (responseType == XCB_KEY_PRESS) {
 #ifdef KDEDGLOBALACCEL_TRACE
-            qCDebug(KGLOBALACCELD) << "Got XKeyPress event";
+        qCDebug(KGLOBALACCELD) << "Got XKeyPress event";
 #endif
-            return x11KeyPress(reinterpret_cast<xcb_key_press_event_t*>(event));
+        return x11KeyPress(reinterpret_cast<xcb_key_press_event_t*>(event));
+    } else if (m_xkb_first_event && responseType == m_xkb_first_event) {
+        const uint8_t xkbEvent = event->pad0;
+        switch (xkbEvent) {
+            case XCB_XKB_MAP_NOTIFY:
+                x11MappingNotify();
+                break;
+            case XCB_XKB_NEW_KEYBOARD_NOTIFY: {
+                const xcb_xkb_new_keyboard_notify_event_t *ev =
+                    reinterpret_cast<xcb_xkb_new_keyboard_notify_event_t*>(event);
+                if (ev->changed & XCB_XKB_NKN_DETAIL_KEYCODES)
+                    x11MappingNotify();
+                break;
+            }
+            default:
+                break;
+        }
 
-        default:
-            // We get all XEvents. Just ignore them.
-            return false;
+        // Make sure to let Qt handle it as well
+        return false;
+    } else {
+        // We get all XEvents. Just ignore them.
+        return false;
     }
-
-    Q_ASSERT(false);
-    return false;
 }
 
 void KGlobalAccelImpl::x11MappingNotify()
 {
+	qCDebug(KGLOBALACCELD) << "Got XMappingNotify event";
+
 	// Maybe the X modifier map has been changed.
 	// uint oldKeyModMaskXAccel = g_keyModMaskXAccel;
 	// uint oldKeyModMaskXOnOrOff = g_keyModMaskXOnOrOff;
@@ -225,6 +253,12 @@ void KGlobalAccelImpl::x11MappingNotify()
 	// codes. After calling KKeyServer::initializeMods() they could map to
 	// different keycodes.
 	ungrabKeys();
+
+	if (m_keySymbols) {
+		// Force reloading of the keySym mapping
+		xcb_key_symbols_free(m_keySymbols);
+		m_keySymbols = nullptr;
+	}
 
 	KKeyServer::initializeMods();
 	calculateGrabMasks();

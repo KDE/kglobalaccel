@@ -8,6 +8,7 @@ target_link_libraries(KF5GlobalAccelPrivateXcb
     KF5GlobalAccelPrivate
     XCB::XCB
     XCB::KEYSYMS
+    XCB::XKB
 )
 
 install(

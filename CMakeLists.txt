@@ -49,7 +49,7 @@ find_package(KF5WindowSystem ${KF5_DEP_VERSION} REQUIRED)
 
 # no X11 stuff on mac
 if (NOT APPLE)
-    find_package(XCB MODULE COMPONENTS XCB KEYSYMS XTEST)
+    find_package(XCB MODULE COMPONENTS XCB KEYSYMS XTEST XKB)
     set_package_properties(XCB PROPERTIES DESCRIPTION "X protocol C-language Binding"
                        URL "http://xcb.freedesktop.org"
                        TYPE OPTIONAL

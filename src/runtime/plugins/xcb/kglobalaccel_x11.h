@@ -77,6 +77,7 @@ private:
         bool x11KeyPress(xcb_key_press_event_t *event);
 	
     xcb_key_symbols_t *m_keySymbols;
+    uint8_t m_xkb_first_event;
 };
 
 #endif // _KGLOBALACCEL_X11_H
