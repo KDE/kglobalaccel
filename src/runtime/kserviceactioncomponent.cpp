@@ -113,7 +113,7 @@ void KServiceActionComponent::loadFromService()
     QString shortcutString;
 
     QStringList shortcuts = m_desktopFile.desktopGroup().readEntry(QStringLiteral("X-KDE-Shortcuts"), QString()).split(QChar(','));
-    if (shortcuts.size() > 0) {
+    if (!shortcuts.isEmpty()) {
         shortcutString = shortcuts.join(QChar('\t'));
     }
 
@@ -123,7 +123,7 @@ void KServiceActionComponent::loadFromService()
     foreach(const QString &action, m_desktopFile.readActions())
         {
         shortcuts = m_desktopFile.actionGroup(action).readEntry(QStringLiteral("X-KDE-Shortcuts"), QString()).split(QChar(','));
-        if (shortcuts.size() > 0)
+        if (!shortcuts.isEmpty())
             {
             shortcutString = shortcuts.join(QChar('\t'));
             }
