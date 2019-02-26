@@ -75,7 +75,8 @@ void KServiceActionComponent::emitGlobalShortcutPressed( const GlobalShortcut &s
         }
         return;
     }
-    foreach (const QString &action, m_desktopFile.readActions()) {
+    const auto lstActions = m_desktopFile.readActions();
+    for (const QString &action : lstActions) {
         if (action == shortcut.uniqueName()) {
             QStringList parts = m_desktopFile.actionGroup(action).readEntry(QStringLiteral("Exec"), QString()).split(QChar(' '));
 
@@ -119,8 +120,8 @@ void KServiceActionComponent::loadFromService()
 
     GlobalShortcut *shortcut = registerShortcut(QStringLiteral("_launch"), m_desktopFile.readName(), shortcutString, shortcutString);
     shortcut->setIsPresent(true);
-
-    foreach(const QString &action, m_desktopFile.readActions())
+    const auto lstActions = m_desktopFile.readActions();
+    for (const QString &action : lstActions)
         {
         shortcuts = m_desktopFile.actionGroup(action).readEntry(QStringLiteral("X-KDE-Shortcuts"), QString()).split(QChar(','));
         if (!shortcuts.isEmpty())

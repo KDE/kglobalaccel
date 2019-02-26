@@ -49,7 +49,7 @@ void GlobalShortcutContext::addShortcut(GlobalShortcut *shortcut)
 QList<KGlobalShortcutInfo> GlobalShortcutContext::allShortcutInfos() const
     {
     QList<KGlobalShortcutInfo> rc;
-    Q_FOREACH (GlobalShortcut *shortcut, _actions)
+    for (GlobalShortcut *shortcut : qAsConst(_actions))
         {
         rc.append(static_cast<KGlobalShortcutInfo>(*shortcut));
         }
@@ -84,7 +84,7 @@ GlobalShortcut *GlobalShortcutContext::getShortcutByKey(int key) const
     if ((keyMod & Qt::SHIFT) && (keySym == Qt::Key_Backtab ||
         keySym == Qt::Key_Tab))
         {
-        Q_FOREACH(GlobalShortcut *sc, _actions)
+        for (GlobalShortcut *sc : qAsConst(_actions))
             {
             if (sc->keys().contains(keyMod | Qt::Key_Tab) ||
                 sc->keys().contains(keyMod | Qt::Key_Backtab))
@@ -93,7 +93,7 @@ GlobalShortcut *GlobalShortcutContext::getShortcutByKey(int key) const
         }
     else
         {
-        Q_FOREACH(GlobalShortcut *sc, _actions)
+        for (GlobalShortcut *sc : qAsConst(_actions))
             {
             if (sc->keys().contains(key)) return sc;
             }

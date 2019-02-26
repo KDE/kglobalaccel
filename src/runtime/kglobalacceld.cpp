@@ -295,7 +295,8 @@ QList<QStringList> KGlobalAccelD::allActionsForComponent(const QStringList &acti
     partialId.append(component->friendlyName());                      //ComponentFriendly
     partialId.append(QString());                                      //ActionFriendly
 
-    foreach (const GlobalShortcut *const shortcut, component->allShortcuts()) {
+    const auto listShortcuts = component->allShortcuts();
+    for (const GlobalShortcut *const shortcut : listShortcuts) {
         if (shortcut->isFresh()) {
             // isFresh is only an intermediate state, not to be reported outside.
             continue;
@@ -338,8 +339,9 @@ QList<QDBusObjectPath> KGlobalAccelD::allComponents() const
     {
     QList<QDBusObjectPath> allComp;
 
-    Q_FOREACH (const KdeDGlobalAccel::Component *component,
-               GlobalShortcutsRegistry::self()->allMainComponents())
+    const auto lstMainComponents = GlobalShortcutsRegistry::self()->allMainComponents();
+    for (const KdeDGlobalAccel::Component *component :
+               lstMainComponents)
         {
         allComp.append(component->dbusPath());
         }
@@ -435,11 +437,11 @@ QList<KGlobalShortcutInfo> KGlobalAccelD::getGlobalShortcutsByKey(int key) const
 #ifdef KDEDGLOBALACCEL_TRACE
     qCDebug(KGLOBALACCELD) << key;
 #endif
-    QList<GlobalShortcut*> shortcuts =
+    const QList<GlobalShortcut*> shortcuts =
         GlobalShortcutsRegistry::self()->getShortcutsByKey(key);
 
     QList<KGlobalShortcutInfo> rc;
-    Q_FOREACH(const GlobalShortcut *sc, shortcuts)
+    for (const GlobalShortcut *sc : shortcuts)
         {
 #ifdef KDEDGLOBALACCEL_TRACE
     qCDebug(KGLOBALACCELD) << sc->context()->uniqueName() << sc->uniqueName();

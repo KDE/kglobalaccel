@@ -77,11 +77,11 @@ GlobalShortcut::operator KGlobalShortcutInfo () const
     info.d->contextFriendlyName = context()->friendlyName();
     info.d->componentUniqueName = context()->component()->uniqueName();
     info.d->componentFriendlyName = context()->component()->friendlyName();
-    Q_FOREACH (int key, _keys)
+    for (int key : qAsConst(_keys))
         {
         info.d->keys.append(QKeySequence(key));
         }
-    Q_FOREACH (int key, _defaultKeys)
+    for (int key : qAsConst(_defaultKeys))
         {
         info.d->defaultKeys.append(QKeySequence(key));
         }
@@ -181,7 +181,7 @@ void GlobalShortcut::setKeys(const QList<int> newKeys)
 
     _keys = QList<int>();
 
-    Q_FOREACH(int key, newKeys)
+    for(int key : qAsConst(newKeys))
         {
         if (key!=0 && !GlobalShortcutsRegistry::self()->getShortcutByKey(key))
             {
@@ -222,7 +222,7 @@ void GlobalShortcut::setActive()
         return;
         }
 
-    Q_FOREACH( int key, _keys)
+    for( int key : qAsConst(_keys))
         {
         if (key != 0 && !GlobalShortcutsRegistry::self()->registerKey(key, this))
             {
@@ -242,7 +242,7 @@ void GlobalShortcut::setInactive()
         return;
         }
 
-    Q_FOREACH( int key, _keys)
+    for( int key : qAsConst(_keys))
         {
         if (key != 0 && !GlobalShortcutsRegistry::self()->unregisterKey(key, this))
             {

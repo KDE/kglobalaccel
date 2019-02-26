@@ -29,12 +29,12 @@ QDBusArgument &operator<< (QDBusArgument &argument, const KGlobalShortcutInfo &s
              << shortcut.contextUniqueName()
              << shortcut.contextFriendlyName();
     argument.beginArray(qMetaTypeId<int>());
-    Q_FOREACH (const QKeySequence &key, shortcut.keys()) {
+    for (const QKeySequence &key : shortcut.keys()) {
         argument << key[0];
     }
     argument.endArray();
     argument.beginArray(qMetaTypeId<int>());
-    Q_FOREACH (const QKeySequence &key, shortcut.defaultKeys()) {
+    for (const QKeySequence &key : shortcut.defaultKeys()) {
         argument << key[0];
     }
     argument.endArray();

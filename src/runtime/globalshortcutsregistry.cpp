@@ -44,7 +44,7 @@ static KGlobalAccelInterface *loadPlugin(GlobalShortcutsRegistry *parent)
     if (platformName.isEmpty()) {
         platformName = QGuiApplication::platformName();
     }
-    foreach (const KPluginMetaData &candidate, candidates) {
+    for (const KPluginMetaData &candidate : candidates) {
         const QJsonArray platforms = candidate.rawData().value(QStringLiteral("platforms")).toArray();
         for (auto it = platforms.begin(); it != platforms.end(); ++it) {
             if (QString::compare(platformName, (*it).toString(), Qt::CaseInsensitive) == 0) {
@@ -81,7 +81,8 @@ GlobalShortcutsRegistry::~GlobalShortcutsRegistry()
 
         // Ungrab all keys. We don't go over GlobalShortcuts because
         // GlobalShortcutsRegistry::self() doesn't work anymore.
-        Q_FOREACH (const int key, _active_keys.keys())
+        const auto listKeys = _active_keys.keys();
+        for (const int key : listKeys)
             {
             _manager->grabKey(key, false);
             }
@@ -111,7 +112,7 @@ KdeDGlobalAccel::Component *GlobalShortcutsRegistry::addComponent(KdeDGlobalAcce
 
 void GlobalShortcutsRegistry::activateShortcuts()
     {
-    Q_FOREACH (KdeDGlobalAccel::Component *component, _components)
+    for (KdeDGlobalAccel::Component *component : qAsConst(_components))
         {
         component->activateShortcuts();
         }
@@ -126,7 +127,7 @@ QList<KdeDGlobalAccel::Component*> GlobalShortcutsRegistry::allMainComponents() 
 
 void GlobalShortcutsRegistry::clear()
     {
-    Q_FOREACH(KdeDGlobalAccel::Component *component, _components)
+    for (KdeDGlobalAccel::Component *component : qAsConst(_components))
         {
         delete component;
         }
@@ -145,7 +146,7 @@ QDBusObjectPath GlobalShortcutsRegistry::dbusPath() const
 
 void GlobalShortcutsRegistry::deactivateShortcuts(bool temporarily)
     {
-    Q_FOREACH (KdeDGlobalAccel::Component *component, _components)
+    for (KdeDGlobalAccel::Component *component : qAsConst(_components))
         {
         component->deactivateShortcuts(temporarily);
         }
@@ -166,7 +167,7 @@ KdeDGlobalAccel::Component *GlobalShortcutsRegistry::getComponent(const QString 
 
 GlobalShortcut *GlobalShortcutsRegistry::getShortcutByKey(int key) const
     {
-    Q_FOREACH (KdeDGlobalAccel::Component *component, _components)
+    for (KdeDGlobalAccel::Component *component : qAsConst(_components))
         {
         GlobalShortcut *rc = component->getShortcutByKey(key);
         if (rc) return rc;
@@ -179,7 +180,7 @@ QList<GlobalShortcut*> GlobalShortcutsRegistry::getShortcutsByKey(int key) const
     {
     QList<GlobalShortcut *> rc;
 
-    Q_FOREACH (KdeDGlobalAccel::Component *component, _components)
+    for (KdeDGlobalAccel::Component *component : qAsConst(_components))
         {
         rc = component->getShortcutsByKey(key);
         if (!rc.isEmpty()) return rc;
@@ -193,7 +194,7 @@ bool GlobalShortcutsRegistry::isShortcutAvailable(
         const QString &componentName,
         const QString &contextName) const
     {
-    Q_FOREACH (KdeDGlobalAccel::Component *component, _components)
+    for (KdeDGlobalAccel::Component *component : qAsConst(_components))
         {
         if (!component->isShortcutAvailable(shortcut, componentName, contextName))
             return false;
@@ -261,7 +262,8 @@ bool GlobalShortcutsRegistry::keyPressed(int keyQt)
 
 void GlobalShortcutsRegistry::loadSettings()
     {
-    foreach (const QString &groupName, _config.groupList())
+    const auto groupList = _config.groupList();
+    for (const QString &groupName : groupList)
         {
         qCDebug(KGLOBALACCELD) << "Loading group " << groupName;
 
@@ -292,7 +294,8 @@ void GlobalShortcutsRegistry::loadSettings()
         }
 
         // Now load the contexts
-        Q_FOREACH(const QString& context, configGroup.groupList())
+        const auto groupList = configGroup.groupList();
+        for (const QString& context : groupList)
             {
             // Skip the friendly name group
             if (context==QLatin1String("Friendly Name")) continue;
@@ -311,13 +314,14 @@ void GlobalShortcutsRegistry::loadSettings()
 
         // Load the configured KServiceActions
         const QStringList desktopPaths = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("kglobalaccel"), QStandardPaths::LocateDirectory);
-        foreach (const QString &path, desktopPaths) {
+        for (const QString &path : desktopPaths) {
             QDir dir(path);
             if (!dir.exists()) {
                 continue;
             }
             const QStringList patterns = {QStringLiteral("*.desktop")};
-            foreach (const QString &desktopFile, dir.entryList(patterns)) {
+            const auto lstDesktopFiles = dir.entryList(patterns);
+            for (const QString &desktopFile : lstDesktopFiles) {
                 if (_components.contains(desktopFile)) {
                     continue;
                 }
@@ -417,9 +421,10 @@ bool GlobalShortcutsRegistry::unregisterKey(int key, GlobalShortcut *shortcut)
 
 void GlobalShortcutsRegistry::writeSettings() const
     {
-    Q_FOREACH(
-            const KdeDGlobalAccel::Component *component,
-            GlobalShortcutsRegistry::self()->allMainComponents())
+    const auto lst = GlobalShortcutsRegistry::self()->allMainComponents();
+    for (
+            const KdeDGlobalAccel::Component *component : lst
+            )
         {
         KConfigGroup configGroup(&_config, component->uniqueName());
         if (component->allShortcuts().isEmpty())

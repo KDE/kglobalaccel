@@ -379,7 +379,7 @@ QStringList KGlobalAccelPrivate::makeActionId(const QAction *action)
 QList<int> KGlobalAccelPrivate::intListFromShortcut(const QList<QKeySequence> &cut)
 {
     QList<int> ret;
-    Q_FOREACH (const QKeySequence &sequence, cut) {
+    for (const QKeySequence &sequence : cut) {
         ret.append(sequence[0]);
     }
     while (!ret.isEmpty() && ret.last() == 0) {
@@ -391,7 +391,7 @@ QList<int> KGlobalAccelPrivate::intListFromShortcut(const QList<QKeySequence> &c
 QList<QKeySequence> KGlobalAccelPrivate::shortcutFromIntList(const QList<int> &list)
 {
     QList<QKeySequence> ret;
-    Q_FOREACH (int i, list) {
+    for (int i : list) {
         ret.append(i);
     }
     return ret;
@@ -436,8 +436,8 @@ void KGlobalAccelPrivate::_k_invokeAction(
     qlonglong timestamp)
 {
     QAction *action = nullptr;
-    QList<QAction *> candidates = nameToAction.values(actionUnique);
-    Q_FOREACH (QAction *const a, candidates) {
+    const QList<QAction *> candidates = nameToAction.values(actionUnique);
+    for (QAction *const a : candidates) {
         if (componentUniqueForAction(a) == componentUnique) {
             action = a;
         }
@@ -503,10 +503,10 @@ void KGlobalAccelPrivate::reRegisterAll()
     //shortcut was changed but the kded side died before it got the message so
     //autoloading will now assign an old shortcut to the action. Particularly
     //picky apps might assert or misbehave.
-    QSet<QAction *> allActions = actions;
+    const QSet<QAction *> allActions = actions;
     nameToAction.clear();
     actions.clear();
-    Q_FOREACH (QAction *const action, allActions) {
+    for (QAction *const action : allActions) {
         if (doRegister(action)) {
             updateGlobalShortcut(action, ActiveShortcut, KGlobalAccel::Autoloading);
         }
@@ -590,7 +590,7 @@ bool KGlobalAccel::promptStealShortcutSystemwide(
                   .arg(seq.toString(), component, shortcuts[0].friendlyName());
     } else {
         QString actionList;
-        Q_FOREACH (const KGlobalShortcutInfo &info, shortcuts) {
+        for (const KGlobalShortcutInfo &info : shortcuts) {
             actionList += tr("In context '%1' for action '%2'\n")
                           .arg(info.contextFriendlyName(), info.friendlyName());
         }
@@ -631,7 +631,7 @@ bool checkGarbageKeycode(const QList<QKeySequence> &shortcut)
 {
     // protect against garbage keycode -1 that Qt sometimes produces for exotic keys;
     // at the moment (~mid 2008) Multimedia PlayPause is one of those keys.
-    Q_FOREACH (const QKeySequence &sequence, shortcut) {
+    for (const QKeySequence &sequence : shortcut) {
         for (int i = 0; i < 4; i++) {
             if (sequence[i] == -1) {
                 qWarning() << "Encountered garbage keycode (keycode = -1) in input, not doing anything.";
