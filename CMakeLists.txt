@@ -64,7 +64,7 @@ if(X11_FOUND AND XCB_XCB_FOUND)
     set(HAVE_X11 1)
     find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED X11Extras)
 endif()
-
+#add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x060000)
 # Subdirectories
 if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/po")
     ecm_install_po_files_as_qm(po)
