@@ -158,7 +158,7 @@ QList<KGlobalShortcutInfo> Component::allShortcutInfos(const QString &contextNam
 
 bool Component::cleanUp()
     {
-    bool changed = false;;
+    bool changed = false;
 
     for (GlobalShortcut *shortcut : qAsConst(_current->_actions))
         {
