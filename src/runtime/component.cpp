@@ -330,7 +330,8 @@ bool Component::isShortcutAvailable(
     // context
     if (component==uniqueName())
         {
-        for (GlobalShortcut *sc : qAsConst(shortcutContext(context)->_actions))
+        const auto actions = shortcutContext(context)->_actions;
+        for (GlobalShortcut *sc : actions)
             {
             if (sc->keys().contains(key)) return false;
             }
