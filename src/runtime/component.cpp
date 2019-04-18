@@ -160,7 +160,8 @@ bool Component::cleanUp()
     {
     bool changed = false;
 
-    for (GlobalShortcut *shortcut : qAsConst(_current->_actions))
+    const auto actions = _current->_actions;
+    for (GlobalShortcut *shortcut : actions)
         {
         qCDebug(KGLOBALACCELD) << _current->_actions.size();
         if (!shortcut->isPresent())
