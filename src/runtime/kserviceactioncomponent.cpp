@@ -21,9 +21,7 @@
 #include "globalshortcutcontext.h"
 #include "logging_p.h"
 
-#include <QDebug>
 #include <QProcess>
-#include <QDir>
 #include <QDBusConnectionInterface>
 
 

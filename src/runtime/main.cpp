@@ -25,9 +25,7 @@
 #include <kcrash.h>
 #include <KAboutData>
 #include <KDBusService>
-#include <QDebug>
 #include <QGuiApplication>
-#include <QIcon>
 #include <QCommandLineParser>
 
 static bool isEnabled()

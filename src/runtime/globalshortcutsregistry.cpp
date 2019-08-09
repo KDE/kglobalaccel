@@ -28,7 +28,6 @@
 #include <QDir>
 #include <QStandardPaths>
 #include <QGuiApplication>
-#include <QDebug>
 #include <QJsonArray>
 #include <KPluginLoader>
 #include <KPluginMetaData>

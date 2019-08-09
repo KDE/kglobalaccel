@@ -19,7 +19,6 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 *********************************************************************/
 #ifndef KGLOBALACCELD_LOGGING_P_H
 #define KGLOBALACCELD_LOGGING_P_H
-#include <QDebug>
 #include <QLoggingCategory>
 Q_DECLARE_LOGGING_CATEGORY(KGLOBALACCELD)
 

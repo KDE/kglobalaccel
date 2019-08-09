@@ -28,7 +28,6 @@
 #include "globalshortcutsregistry.h"
 #include "logging_p.h"
 
-#include <QDebug>
 
 #include <QKeySequence>
 

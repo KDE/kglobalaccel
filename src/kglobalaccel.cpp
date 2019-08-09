@@ -27,11 +27,9 @@
 #include <memory>
 
 #include <QAction>
-#include <QActionEvent>
 #include <QGuiApplication>
 #include <QMessageBox>
 #include <QPushButton>
-#include <QDBusInterface>
 #include <QDBusMetaType>
 #include <config-kglobalaccel.h>
 #if HAVE_X11

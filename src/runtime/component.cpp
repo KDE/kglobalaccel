@@ -25,7 +25,6 @@
 #include <config-kglobalaccel.h>
 #include "kglobalaccel_interface.h"
 
-#include <QDebug>
 #include <QStringList>
 #include <QKeySequence>
 

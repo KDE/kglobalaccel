@@ -35,7 +35,6 @@
 #include <QDBusObjectPath>
 
 #include "kglobalaccel.h"
-#include <QDebug>
 
 
 struct KGlobalAccelDPrivate
