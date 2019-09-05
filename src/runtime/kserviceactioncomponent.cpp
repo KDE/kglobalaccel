@@ -48,7 +48,7 @@ void KServiceActionComponent::emitGlobalShortcutPressed( const GlobalShortcut &s
     const bool klauncherAvailable = dbusDaemon->isServiceRegistered(QStringLiteral("org.kde.klauncher5"));
 
     //we can't use KRun there as it depends from KIO and would create a circular dep
-    if (shortcut.uniqueName() == QStringLiteral("_launch")) {
+    if (shortcut.uniqueName() == QLatin1String("_launch")) {
         QStringList parts = m_desktopFile.desktopGroup().readEntry(QStringLiteral("Exec"), QString()).split(QChar(' '));
         if (parts.isEmpty()) {
             return;
