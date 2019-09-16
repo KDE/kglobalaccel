@@ -72,6 +72,8 @@ if(BUILD_QCH)
         LINK_QCHS
             Qt5Widgets_QCH
             Qt5DBus_QCH
+        INCLUDE_DIRS
+            ${CMAKE_CURRENT_BINARY_DIR}
         BLANK_MACROS
             KGLOBALACCEL_EXPORT
             KGLOBALACCEL_DEPRECATED
