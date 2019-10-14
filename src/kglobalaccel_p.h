@@ -84,7 +84,9 @@ public:
     QMultiHash<QString, QAction *> nameToAction;
     QSet<QAction *> actions;
 
+#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(4, 4)
     bool enabled;
+#endif
 
     org::kde::KGlobalAccel *iface();
 

@@ -20,8 +20,15 @@ qt5_add_dbus_interface(kglobalaccel_SRCS ${kglobalaccel_component_xml} kglobalac
 install(FILES ${kglobalaccel_component_xml} DESTINATION ${KDE_INSTALL_DBUSINTERFACEDIR} RENAME kf5_org.kde.kglobalaccel.Component.xml)
 
 add_library(KF5GlobalAccel ${kglobalaccel_SRCS})
-generate_export_header(KF5GlobalAccel BASE_NAME KGlobalAccel)
 add_library(KF5::GlobalAccel ALIAS KF5GlobalAccel)
+ecm_generate_export_header(KF5GlobalAccel
+    BASE_NAME KGlobalAccel
+    # GROUP_BASE_NAME KF <- enable once all of KF modules use ecm_generate_export_header
+    VERSION ${KF5_VERSION}
+    DEPRECATED_BASE_VERSION 0
+    DEPRECATION_VERSIONS 4.2 4.4 5.9
+    EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
+)
 
 target_include_directories(KF5GlobalAccel INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/KGlobalAccel>")
 

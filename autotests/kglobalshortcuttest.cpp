@@ -104,8 +104,8 @@ void KGlobalShortcutTest::setupTest(const QString& id)
     }
 
     // Ensure that the previous test did cleanup correctly
+#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(4, 2)
     KGlobalAccel *kga = KGlobalAccel::self();
-#ifndef KGLOBALACCEL_NO_DEPRECATED
     QList<QStringList> components = kga->allMainComponents();
     QStringList componentId;
     componentId << componentName << QString() << "KDE Test Program" << QString();
@@ -343,8 +343,8 @@ void KGlobalShortcutTest::testListActions()
     }
 
     // As in kdebase/workspace/kcontrol/keys/globalshortcuts.cpp
+#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(4, 2)
     KGlobalAccel *kga = KGlobalAccel::self();
-#ifndef KGLOBALACCEL_NO_DEPRECATED
     QList<QStringList> components = kga->allMainComponents();
     //qDebug() << components;
     QStringList componentId;
@@ -352,7 +352,7 @@ void KGlobalShortcutTest::testListActions()
     QVERIFY(components.contains(componentId));
 #endif
 
-#ifndef KGLOBALACCEL_NO_DEPRECATED
+#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(4, 2)
     QList<QStringList> actions = kga->allActionsForComponent(componentId);
     QVERIFY(!actions.isEmpty());
     QStringList actionIdA;
@@ -510,8 +510,8 @@ void KGlobalShortcutTest::testForgetGlobalShortcut()
     // kglobalaccel writes asynchronous.
     QThread::sleep(1);
 
+#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(4, 2)
     KGlobalAccel *kga = KGlobalAccel::self();
-#ifndef KGLOBALACCEL_NO_DEPRECATED
     QList<QStringList> components = kga->allMainComponents();
     QStringList componentId;
     componentId << "qttest" << QString() << "KDE Test Program" << QString();

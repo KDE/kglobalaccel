@@ -114,7 +114,7 @@ void KGlobalAccelPrivate::cleanup()
 
 KGlobalAccelPrivate::KGlobalAccelPrivate(KGlobalAccel *q)
     :
-#ifndef KGLOBALACCEL_NO_DEPRECATED
+#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(4, 4)
     enabled(true),
 #endif
     q(q),
@@ -192,7 +192,7 @@ bool KGlobalAccel::isComponentActive(const QString &componentUnique)
     return component->isActive();
 }
 
-#ifndef KGLOBALACCEL_NO_DEPRECATED
+#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(4, 4)
 bool KGlobalAccel::isEnabled() const
 {
     return d->enabled;
@@ -204,7 +204,7 @@ org::kde::kglobalaccel::Component *KGlobalAccel::getComponent(const QString &com
     return d->getComponent(componentUnique);
 }
 
-#ifndef KGLOBALACCEL_NO_DEPRECATED
+#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(4, 4)
 void KGlobalAccel::setEnabled(bool enabled)
 {
     d->enabled = enabled;
@@ -511,14 +511,14 @@ void KGlobalAccelPrivate::reRegisterAll()
     }
 }
 
-#ifndef KGLOBALACCEL_NO_DEPRECATED
+#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(4, 2)
 QList<QStringList> KGlobalAccel::allMainComponents()
 {
     return d->iface()->allMainComponents();
 }
 #endif
 
-#ifndef KGLOBALACCEL_NO_DEPRECATED
+#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(4, 2)
 QList<QStringList> KGlobalAccel::allActionsForComponent(const QStringList &actionId)
 {
     return d->iface()->allActionsForComponent(actionId);
@@ -526,7 +526,7 @@ QList<QStringList> KGlobalAccel::allActionsForComponent(const QStringList &actio
 #endif
 
 //static
-#ifndef KGLOBALACCEL_NO_DEPRECATED
+#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(4, 2)
 QStringList KGlobalAccel::findActionNameSystemwide(const QKeySequence &seq)
 {
     return self()->d->iface()->action(seq[0]);
@@ -544,7 +544,7 @@ bool KGlobalAccel::isGlobalShortcutAvailable(const QKeySequence &seq, const QStr
 }
 
 //static
-#ifndef KGLOBALACCEL_NO_DEPRECATED
+#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(4, 2)
 bool KGlobalAccel::promptStealShortcutSystemwide(QWidget *parent, const QStringList &actionIdentifier,
         const QKeySequence &seq)
 {
@@ -703,10 +703,12 @@ bool KGlobalAccel::hasShortcut(const QAction *action) const
     return d->actionShortcuts.contains(action) || d->actionDefaultShortcuts.contains(action);
 }
 
+#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(5, 9)
 bool KGlobalAccel::eventFilter(QObject *watched, QEvent *event)
 {
     return QObject::eventFilter(watched, event);
 }
+#endif
 
 bool KGlobalAccel::setGlobalShortcut(QAction *action, const QList<QKeySequence> &shortcut)
 {

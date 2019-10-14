@@ -30,7 +30,7 @@ class GlobalShortcutsRegistry;
 /**
  * Abstract interface for plugins to implement
  */
-class KF5GLOBALACCELPRIVATE_EXPORT KGlobalAccelInterface : public QObject
+class KGLOBALACCELPRIVATE_EXPORT KGlobalAccelInterface : public QObject
 {
     Q_OBJECT
 

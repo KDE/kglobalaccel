@@ -491,6 +491,7 @@ bool KGlobalAccelD::unregister(const QString &componentUnique, const QString &sh
 }
 
 
+#if KGLOBALACCELPRIVATE_BUILD_DEPRECATED_SINCE(4, 3)
 void KGlobalAccelD::unRegister(const QStringList &actionId)
 {
 #ifdef KDEDGLOBALACCEL_TRACE
@@ -505,7 +506,7 @@ void KGlobalAccelD::unRegister(const QStringList &actionId)
     }
 
 }
-
+#endif
 
 QList<int> KGlobalAccelD::setShortcut(const QStringList &actionId,
                                         const QList<int> &keys, uint flags)

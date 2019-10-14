@@ -35,7 +35,7 @@ struct KGlobalAccelDPrivate;
 /**
  * @todo get rid of all of those QStringList parameters.
  */
-class KF5GLOBALACCELPRIVATE_EXPORT KGlobalAccelD : public QObject, protected QDBusContext
+class KGLOBALACCELPRIVATE_EXPORT KGlobalAccelD : public QObject, protected QDBusContext
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.kde.KGlobalAccel")
@@ -100,8 +100,11 @@ public Q_SLOTS:
 
     Q_SCRIPTABLE void doRegister(const QStringList &actionId);
 
-    //! @see unregister
-    Q_SCRIPTABLE QT_DEPRECATED void unRegister(const QStringList &actionId);
+#if KGLOBALACCELPRIVATE_ENABLE_DEPRECATED_SINCE(4, 3)
+    //! @deprecated Since 4.3, use KGlobalAccelD::unregister
+    KGLOBALACCELPRIVATE_DEPRECATED_VERSION(4, 3, "Use KGlobalAccelD::unregister(const QString&, const QString&")
+    Q_SCRIPTABLE void unRegister(const QStringList &actionId);
+#endif
 
     Q_SCRIPTABLE void activateGlobalShortcutContext(
             const QString &component,

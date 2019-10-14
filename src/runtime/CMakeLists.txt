@@ -19,8 +19,16 @@ ecm_create_qm_loader(kglobalaccelprivate_SRCS kglobalaccel5_qt)
 configure_file(config-kglobalaccel.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kglobalaccel.h )
 
 add_library(KF5GlobalAccelPrivate ${kglobalaccelprivate_SRCS})
-generate_export_header(KF5GlobalAccelPrivate BASE_NAME KF5GlobalAccelPrivate)
 add_library(KF5::GlobalAccelPrivate ALIAS KF5GlobalAccelPrivate)
+ecm_generate_export_header(KF5GlobalAccelPrivate
+    EXPORT_FILE_NAME kf5globalaccelprivate_export.h
+    BASE_NAME KGlobalAccelPrivate
+    # GROUP_BASE_NAME KF <- enable once all of KF modules use ecm_generate_export_header
+    VERSION ${KF5_VERSION}
+    DEPRECATED_BASE_VERSION 0
+    DEPRECATION_VERSIONS 4.3
+    EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
+)
 
 target_include_directories(KF5GlobalAccelPrivate INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/KGlobalAccel>")
 
