@@ -23,7 +23,7 @@ add_library(KF5::GlobalAccelPrivate ALIAS KF5GlobalAccelPrivate)
 ecm_generate_export_header(KF5GlobalAccelPrivate
     EXPORT_FILE_NAME kf5globalaccelprivate_export.h
     BASE_NAME KGlobalAccelPrivate
-    # GROUP_BASE_NAME KF <- enable once all of KF modules use ecm_generate_export_header
+    GROUP_BASE_NAME KF
     VERSION ${KF5_VERSION}
     DEPRECATED_BASE_VERSION 0
     DEPRECATION_VERSIONS 4.3

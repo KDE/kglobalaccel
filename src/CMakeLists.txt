@@ -23,7 +23,7 @@ add_library(KF5GlobalAccel ${kglobalaccel_SRCS})
 add_library(KF5::GlobalAccel ALIAS KF5GlobalAccel)
 ecm_generate_export_header(KF5GlobalAccel
     BASE_NAME KGlobalAccel
-    # GROUP_BASE_NAME KF <- enable once all of KF modules use ecm_generate_export_header
+    GROUP_BASE_NAME KF
     VERSION ${KF5_VERSION}
     DEPRECATED_BASE_VERSION 0
     DEPRECATION_VERSIONS 4.2 4.4 5.9
