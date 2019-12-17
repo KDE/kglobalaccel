@@ -248,7 +248,7 @@ bool KGlobalAccelPrivate::doRegister(QAction *action)
 
     QStringList actionId = makeActionId(action);
 
-    nameToAction.insertMulti(actionId.at(KGlobalAccel::ActionUnique), action);
+    nameToAction.insert(actionId.at(KGlobalAccel::ActionUnique), action);
     actions.insert(action);
     iface()->doRegister(actionId);
 
