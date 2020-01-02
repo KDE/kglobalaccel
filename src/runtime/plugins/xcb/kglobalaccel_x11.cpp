@@ -112,13 +112,27 @@ bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
 
 	// Resolve the modifier
 	if( !KKeyServer::keyQtToModX(keyQt, &keyModX) ) {
-		qCDebug(KGLOBALACCELD) << "keyQt (0x" << hex << keyQt << ") failed to resolve to x11 modifier";
+            qCDebug(KGLOBALACCELD) << "keyQt (0x"
+                                   <<
+                          #if (QT_VERSION < QT_VERSION_CHECK(5, 15, 0))
+                                      hex
+                          #else
+                                      Qt::hex
+                          #endif
+                                   << keyQt << ") failed to resolve to x11 modifier";
 		return false;
 	}
 
 	// Resolve the X symbol
 	if( !KKeyServer::keyQtToSymX(keyQt, (int *)&keySymX) ) {
-		qCDebug(KGLOBALACCELD) << "keyQt (0x" << hex << keyQt << ") failed to resolve to x11 keycode";
+                qCDebug(KGLOBALACCELD) << "keyQt (0x"
+                                       <<
+                              #if (QT_VERSION < QT_VERSION_CHECK(5, 15, 0))
+                                          hex
+                              #else
+                                          Qt::hex
+                              #endif
+                                       << keyQt << ") failed to resolve to x11 keycode";
 		return false;
 	}
 
@@ -146,7 +160,14 @@ bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
         keyModX &= g_keyModMaskXAccel; // Get rid of any non-relevant bits in mod
 
         if( !keyCodeX ) {
-            qCDebug(KGLOBALACCELD) << "keyQt (0x" << hex << keyQt << ") was resolved to x11 keycode 0";
+            qCDebug(KGLOBALACCELD) << "keyQt (0x"
+                                   <<
+                          #if (QT_VERSION < QT_VERSION_CHECK(5, 15, 0))
+                                      hex
+                          #else
+                                      Qt::hex
+                          #endif
+                                   << keyQt << ") was resolved to x11 keycode 0";
             continue;
         }
 
