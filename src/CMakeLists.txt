@@ -5,7 +5,13 @@ set(kglobalaccel_SRCS
   kglobalshortcutinfo.cpp
   kglobalshortcutinfo_dbus.cpp
 )
-ecm_qt_declare_logging_category(kglobalaccel_SRCS HEADER kglobalaccel_debug.h IDENTIFIER KGLOBALACCEL_LOG CATEGORY_NAME kf5.kglobalaccel)
+ecm_qt_declare_logging_category(kglobalaccel_SRCS
+    HEADER kglobalaccel_debug.h
+    IDENTIFIER KGLOBALACCEL_LOG
+    CATEGORY_NAME kf5.kglobalaccel
+    DESCRIPTION "KGlobalAccel"
+    EXPORT KGLOBALACCEL
+)
 
 ecm_create_qm_loader(kglobalaccel_SRCS kglobalaccel5_qt)
 
@@ -97,3 +103,9 @@ ecm_generate_pri_file(BASE_NAME KGlobalAccel LIB_NAME KF5GlobalAccel DEPS "dbus 
 install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
 
 add_subdirectory(runtime)
+
+ecm_qt_install_logging_categories(
+    EXPORT KGLOBALACCEL
+    FILE kglobalaccel.categories
+    DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR}
+)
