@@ -69,7 +69,7 @@ void KServiceActionComponent::emitGlobalShortcutPressed( const GlobalShortcut &s
 
             QDBusConnection::sessionBus().asyncCall(msg);
         } else {
-            QProcess::startDetached(m_desktopFile.desktopGroup().readEntry(QStringLiteral("Exec"), QString()));
+            QProcess::startDetached(m_desktopFile.desktopGroup().readEntry(QStringLiteral("Exec"), QString()), QStringList());
         }
         return;
     }
