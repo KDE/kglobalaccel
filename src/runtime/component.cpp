@@ -206,7 +206,8 @@ QDBusObjectPath Component::dbusPath() const
     const int len = dbusPath.length();
     for ( int i = 0; i < len; ++i )
         {
-        if ( !dbusPath[i].isLetterOrNumber() )
+        if ( !dbusPath[i].isLetterOrNumber() || dbusPath[i].unicode() >= 0x7F )
+            // DBus path can only contain ASCII characters
             dbusPath[i] = QLatin1Char('_');
         }
     // QDBusObjectPath could be a little bit easier to handle :-)
