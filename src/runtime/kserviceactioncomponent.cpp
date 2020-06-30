@@ -33,7 +33,7 @@ KServiceActionComponent::KServiceActionComponent(
             GlobalShortcutsRegistry *registry)
     :   Component(serviceStorageId, friendlyName, registry),
         m_serviceStorageId(serviceStorageId),
-        m_desktopFile(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kglobalaccel/") + serviceStorageId))
+        m_desktopFile(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("applications/") + serviceStorageId))
     {
     }
 
