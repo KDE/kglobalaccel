@@ -21,7 +21,7 @@
 #include "kglobalaccel_x11.h"
 
 #include "logging_p.h"
-#include "kkeyserver.h"
+#include <KKeyServer>
 #include <netwm.h>
 
 #include <QDebug>

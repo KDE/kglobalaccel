@@ -22,7 +22,7 @@
 #include "kglobalacceld.h"
 #include "logging_p.h"
 
-#include <kcrash.h>
+#include <KCrash>
 #include <KAboutData>
 #include <KDBusService>
 #include <QGuiApplication>

@@ -18,7 +18,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "ksharedconfig.h"
+#include <KSharedConfig>
 
 #include <QObject>
 #include <QHash>

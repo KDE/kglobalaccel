@@ -28,7 +28,7 @@
 #include <QList>
 
 #include "globalshortcutsregistry.h"
-#include "kkeyserver.h"
+#include <KKeyServer>
 #include "logging_p.h"
 
 OSStatus hotKeyEventHandler(EventHandlerCallRef inHandlerCallRef, EventRef inEvent, void * inUserData)

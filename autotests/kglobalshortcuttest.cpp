@@ -21,13 +21,13 @@
 */
 
 #include "kglobalshortcuttest.h"
-#include <qdbusinterface.h>
+#include <QDBusInterface>
 #include <QSignalSpy>
 #include <QTest>
 #include <QAction>
 #include <QThread>
 #include <kglobalaccel.h>
-#include <qstandardpaths.h>
+#include <QStandardPaths>
 
 #include <qplatformdefs.h>
 
