@@ -20,4 +20,4 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "logging_p.h"
 
 // logging category for this framework, default: log stuff >= warning
-Q_LOGGING_CATEGORY(KGLOBALACCELD, "kglobalaccel-runtime", QtWarningMsg)
+Q_LOGGING_CATEGORY(KGLOBALACCELD, "kf.globalaccel.kglobalacceld", QtWarningMsg)

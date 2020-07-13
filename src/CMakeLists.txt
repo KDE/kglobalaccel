@@ -8,8 +8,17 @@ set(kglobalaccel_SRCS
 ecm_qt_declare_logging_category(kglobalaccel_SRCS
     HEADER kglobalaccel_debug.h
     IDENTIFIER KGLOBALACCEL_LOG
-    CATEGORY_NAME kf5.kglobalaccel
+    CATEGORY_NAME kf.globalaccel
+    OLD_CATEGORY_NAMES kf5.kglobalaccel
     DESCRIPTION "KGlobalAccel"
+    EXPORT KGLOBALACCEL
+)
+
+ecm_qt_export_logging_category(
+    IDENTIFIER KGLOBALACCELD
+    CATEGORY_NAME kf.globalaccel.kglobalacceld
+    OLD_CATEGORY_NAMES kglobalaccel-runtime
+    DESCRIPTION "KGlobalAccel demon"
     EXPORT KGLOBALACCEL
 )
 
