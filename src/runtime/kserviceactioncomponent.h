@@ -39,7 +39,7 @@ public:
 
 private:
     QString m_serviceStorageId;
-    KDesktopFile m_desktopFile;
+    QScopedPointer<KDesktopFile> m_desktopFile;
 };
 
 

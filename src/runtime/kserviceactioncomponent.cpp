@@ -20,10 +20,20 @@ KServiceActionComponent::KServiceActionComponent(
             const QString &friendlyName,
             GlobalShortcutsRegistry *registry)
     :   Component(serviceStorageId, friendlyName, registry),
-        m_serviceStorageId(serviceStorageId),
-        m_desktopFile(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kglobalaccel/") + serviceStorageId))
-    {
+      m_serviceStorageId(serviceStorageId),
+      m_desktopFile(nullptr)
+{
+    auto fileName = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kglobalaccel/") + serviceStorageId);
+    if (fileName.isEmpty()) {
+        // Fallback to applications data dir
+        // for custom shortcut for instance
+        fileName = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("applications/") + serviceStorageId);
     }
+    if (fileName.isEmpty()) {
+        qCWarning(KGLOBALACCELD) << "No desktop file found for service " << serviceStorageId;
+    }
+    m_desktopFile.reset(new KDesktopFile(fileName));
+}
 
 
 KServiceActionComponent::~KServiceActionComponent()
@@ -37,7 +47,7 @@ void KServiceActionComponent::emitGlobalShortcutPressed( const GlobalShortcut &s
 
     //we can't use KRun there as it depends from KIO and would create a circular dep
     if (shortcut.uniqueName() == QLatin1String("_launch")) {
-        QStringList parts = m_desktopFile.desktopGroup().readEntry(QStringLiteral("Exec"), QString()).split(QChar(' '));
+        QStringList parts = m_desktopFile->desktopGroup().readEntry(QStringLiteral("Exec"), QString()).split(QChar(' '));
         if (parts.isEmpty()) {
             return;
         }
@@ -61,10 +71,10 @@ void KServiceActionComponent::emitGlobalShortcutPressed( const GlobalShortcut &s
         }
         return;
     }
-    const auto lstActions = m_desktopFile.readActions();
+    const auto lstActions = m_desktopFile->readActions();
     for (const QString &action : lstActions) {
         if (action == shortcut.uniqueName()) {
-            QStringList parts = m_desktopFile.actionGroup(action).readEntry(QStringLiteral("Exec"), QString()).split(QChar(' '));
+            QStringList parts = m_desktopFile->actionGroup(action).readEntry(QStringLiteral("Exec"), QString()).split(QChar(' '));
 
             if (parts.isEmpty()) {
                 return;
@@ -99,23 +109,23 @@ void KServiceActionComponent::loadFromService()
 
     QString shortcutString;
 
-    QStringList shortcuts = m_desktopFile.desktopGroup().readEntry(QStringLiteral("X-KDE-Shortcuts"), QString()).split(QChar(','));
+    QStringList shortcuts = m_desktopFile->desktopGroup().readEntry(QStringLiteral("X-KDE-Shortcuts"), QString()).split(QChar(','));
     if (!shortcuts.isEmpty()) {
         shortcutString = shortcuts.join(QChar('\t'));
     }
 
-    GlobalShortcut *shortcut = registerShortcut(QStringLiteral("_launch"), m_desktopFile.readName(), shortcutString, shortcutString);
+    GlobalShortcut *shortcut = registerShortcut(QStringLiteral("_launch"), m_desktopFile->readName(), shortcutString, shortcutString);
     shortcut->setIsPresent(true);
-    const auto lstActions = m_desktopFile.readActions();
+    const auto lstActions = m_desktopFile->readActions();
     for (const QString &action : lstActions)
         {
-        shortcuts = m_desktopFile.actionGroup(action).readEntry(QStringLiteral("X-KDE-Shortcuts"), QString()).split(QChar(','));
+        shortcuts = m_desktopFile->actionGroup(action).readEntry(QStringLiteral("X-KDE-Shortcuts"), QString()).split(QChar(','));
         if (!shortcuts.isEmpty())
             {
             shortcutString = shortcuts.join(QChar('\t'));
             }
 
-        GlobalShortcut *shortcut = registerShortcut(action, m_desktopFile.actionGroup(action).readEntry(QStringLiteral("Name")), shortcutString, shortcutString);
+        GlobalShortcut *shortcut = registerShortcut(action, m_desktopFile->actionGroup(action).readEntry(QStringLiteral("Name")), shortcutString, shortcutString);
         shortcut->setIsPresent(true);
         }
     }
@@ -129,8 +139,8 @@ bool KServiceActionComponent::cleanUp()
         shortcut->setIsPresent(false);
     }
 
-    m_desktopFile.desktopGroup().writeEntry("NoDisplay", true);
-    m_desktopFile.desktopGroup().sync();
+    m_desktopFile->desktopGroup().writeEntry("NoDisplay", true);
+    m_desktopFile->desktopGroup().sync();
 
     return Component::cleanUp();
 }
