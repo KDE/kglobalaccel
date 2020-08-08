@@ -173,10 +173,10 @@ public:
      * i.e. the action will trigger if the keys were pressed no matter where in the X session.
      *
      * The action must have a per main component unique
-     * action->objectName() to enable cross-application bookeeping. If the action->objectName() is empty this method will
+     * action->objectName() to enable cross-application bookkeeping. If the action->objectName() is empty this method will
      * do nothing and will return false.
      *
-     * It is mandatory that the action->objectName() doesn't change once the shortcut has been sucessfully registered.
+     * It is mandatory that the action->objectName() doesn't change once the shortcut has been successfully registered.
      *
      * \note KActionCollection::insert(name, action) will set action's objectName to name so you often
      * don't have to set an objectName explicitly.
