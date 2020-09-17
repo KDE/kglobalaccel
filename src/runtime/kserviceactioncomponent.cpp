@@ -1,6 +1,7 @@
 /*
     SPDX-FileCopyrightText: 2008 Michael Jansen <kde@michael-jansen.biz>
     SPDX-FileCopyrightText: 2016 Marco Martin <mart@kde.org>
+    SPDX-FileCopyrightText: 2021 David Redondo <kde@david-redondo.de>
 
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
@@ -42,6 +43,24 @@ KServiceActionComponent::~KServiceActionComponent()
 
 void KServiceActionComponent::emitGlobalShortcutPressed( const GlobalShortcut &shortcut )
 {
+    //DBusActivatatable spec as per https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#dbus
+    if (m_desktopFile->desktopGroup().readEntry("DBusActivatable", false)) {
+        QString method;
+        const QString serviceName = m_serviceStorageId.chopped(strlen(".desktop"));
+        const QString objectPath = QStringLiteral("/%1").arg(serviceName).replace(QLatin1Char('.'), QLatin1Char('/'));
+        const QString interface = QStringLiteral("org.freedesktop.Application");
+        QDBusMessage message;
+        if (shortcut.uniqueName() == QLatin1String("_launch")) {
+            message = QDBusMessage::createMethodCall(serviceName, objectPath, interface, QStringLiteral("Activate"));
+        } else {
+            message = QDBusMessage::createMethodCall(serviceName, objectPath, interface, QStringLiteral("ActivateAction"));
+            message << shortcut.uniqueName() << QVariantList();
+        }
+        message << QVariantMap();
+        QDBusConnection::sessionBus().asyncCall(message);
+        return;
+    }
+
     QDBusConnectionInterface *dbusDaemon = QDBusConnection::sessionBus().interface();
     const bool klauncherAvailable = dbusDaemon->isServiceRegistered(QStringLiteral("org.kde.klauncher5"));
 
