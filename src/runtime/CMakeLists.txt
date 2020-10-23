@@ -71,4 +71,17 @@ install(FILES
   DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KGlobalAccel/private COMPONENT Devel
 )
 
-kdbusaddons_generate_dbus_service_file(kglobalaccel5 org.kde.kglobalaccel ${KDE_INSTALL_FULL_BINDIR})
+# D-Bus activation service file, and associated systemd service
+include (ECMGenerateDBusServiceFile)
+include (ECMConfiguredInstall)
+ecm_generate_dbus_service_file(
+   NAME org.kde.kglobalaccel
+   EXECUTABLE "${KDE_INSTALL_FULL_BINDIR}/kglobalaccel5"
+   SYSTEMD_SERVICE plasma-kglobalaccel.service
+   DESTINATION ${KDE_INSTALL_DBUSSERVICEDIR}
+)
+
+ecm_install_configured_files(
+   INPUT plasma-kglobalaccel.service.in
+   DESTINATION ${KDE_INSTALL_SYSTEMDUSERUNITDIR}
+)
