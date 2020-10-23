@@ -6,7 +6,6 @@
 
 #include "component.h"
 
-#include "globalshortcut.h"
 #include "globalshortcutcontext.h"
 #include "globalshortcutsregistry.h"
 #include "logging_p.h"
