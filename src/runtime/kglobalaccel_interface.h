@@ -15,6 +15,8 @@
 
 class GlobalShortcutsRegistry;
 
+#define KGlobalAccelInterface_iid "org.kde.kglobalaccel5.KGlobalAccelInterface"
+
 /**
  * Abstract interface for plugins to implement
  */
@@ -68,6 +70,6 @@ private:
     QScopedPointer<Private> d;
 };
 
-Q_DECLARE_INTERFACE(KGlobalAccelInterface, "org.kde.kglobalaccel5.KGlobalAccelInterface")
+Q_DECLARE_INTERFACE(KGlobalAccelInterface, KGlobalAccelInterface_iid)
 
 #endif

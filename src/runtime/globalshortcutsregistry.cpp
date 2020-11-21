@@ -24,26 +24,51 @@
 #include <QKeySequence>
 #include <QDBusConnection>
 
+static bool checkPlatform(const QJsonObject &metadata, const QString &platformName)
+{
+    const QJsonArray platforms = metadata.value(QStringLiteral("MetaData"))
+            .toObject().value(QStringLiteral("platforms")).toArray();
+    return std::any_of(platforms.begin(), platforms.end(), [&platformName](const QJsonValue &value) {
+        return QString::compare(platformName, value.toString(), Qt::CaseInsensitive) == 0;
+    });
+}
+
 static KGlobalAccelInterface *loadPlugin(GlobalShortcutsRegistry *parent)
 {
-    const QVector<KPluginMetaData> candidates = KPluginLoader::findPlugins(QStringLiteral("org.kde.kglobalaccel5.platforms"));
     QString platformName = QString::fromLocal8Bit(qgetenv("KGLOBALACCELD_PLATFORM"));
     if (platformName.isEmpty()) {
         platformName = QGuiApplication::platformName();
     }
-    for (const KPluginMetaData &candidate : candidates) {
-        const QJsonArray platforms = candidate.rawData().value(QStringLiteral("platforms")).toArray();
-        for (auto it = platforms.begin(); it != platforms.end(); ++it) {
-            if (QString::compare(platformName, (*it).toString(), Qt::CaseInsensitive) == 0) {
-                KGlobalAccelInterface *interface = qobject_cast< KGlobalAccelInterface* >(candidate.instantiate());
-                if (interface) {
-                    qCDebug(KGLOBALACCELD) << "Loaded plugin" << candidate.fileName() << "for platform" << platformName;
-                    interface->setRegistry(parent);
-                    return interface;
-                }
+
+    const QVector<QStaticPlugin> staticPlugins = QPluginLoader::staticPlugins();
+    for (const QStaticPlugin &staticPlugin : staticPlugins) {
+        const QJsonObject metadata = staticPlugin.metaData();
+        if (metadata.value(QLatin1String("IID")) != QLatin1String(KGlobalAccelInterface_iid)) {
+            continue;
+        }
+        if (checkPlatform(metadata, platformName)) {
+            KGlobalAccelInterface *interface = qobject_cast<KGlobalAccelInterface *>(staticPlugin.instance());
+            if (interface) {
+                qCDebug(KGLOBALACCELD) << "Loaded a static plugin for platform" << platformName;
+                interface->setRegistry(parent);
+                return interface;
             }
         }
     }
+
+    const QVector<KPluginMetaData> candidates = KPluginLoader::findPlugins(QStringLiteral("org.kde.kglobalaccel5.platforms"));
+    for (const KPluginMetaData &candidate : candidates) {
+        QPluginLoader loader(candidate.fileName());
+        if (checkPlatform(loader.metaData(), platformName)) {
+            KGlobalAccelInterface *interface = qobject_cast<KGlobalAccelInterface *>(loader.instance());
+            if (interface) {
+                qCDebug(KGLOBALACCELD) << "Loaded plugin" << candidate.fileName() << "for platform" << platformName;
+                interface->setRegistry(parent);
+                return interface;
+            }
+        }
+    }
+
     qCWarning(KGLOBALACCELD) << "Could not find any platform plugin";
     return nullptr;
 }
