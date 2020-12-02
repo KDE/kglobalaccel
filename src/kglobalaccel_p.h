@@ -92,6 +92,9 @@ public:
 
     bool setShortcutWithDefault(QAction *action, const QList<QKeySequence> &shortcut, KGlobalAccel::GlobalShortcutLoading loadFlag);
 
+    void unregister(const QStringList &actionId);
+    void setInactive(const QStringList &actionId);
+
 private:
     org::kde::KGlobalAccel *m_iface;
     QDBusServiceWatcher *m_watcher;

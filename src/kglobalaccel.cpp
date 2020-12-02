@@ -18,6 +18,7 @@
 #include <QGuiApplication>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QDBusMessage>
 #include <QDBusMetaType>
 #include <config-kglobalaccel.h>
 #if HAVE_X11
@@ -268,20 +269,41 @@ void KGlobalAccelPrivate::remove(QAction *action, Removal removal)
     if (removal == UnRegister) {
         // Complete removal of the shortcut is requested
         // (forgetGlobalShortcut)
-        iface()->unRegister(actionId);
+        unregister(actionId);
     } else {
         // If the action is a configurationAction wen only remove it from our
         // internal registry. That happened above.
+
+        // If we are merely marking a callback as inactive there is nothing for kglobalaccel to do if kglobalaccel is not running
+        // this can happen on shutdown where all apps and kglobalaccel are all torn down at once
+        // For this reason we turn off the autostart flag in the DBus message call
+
         if (!action->property("isConfigurationAction").toBool()) {
             // If it's a session shortcut unregister it.
             action->objectName().startsWith(QLatin1String("_k_session:"))
-            ? iface()->unRegister(actionId)
-            : iface()->setInactive(actionId);
+            ? unregister(actionId)
+            : setInactive(actionId);
         }
     }
 
     actionDefaultShortcuts.remove(action);
     actionShortcuts.remove(action);
+}
+
+void KGlobalAccelPrivate::unregister(const QStringList &actionId)
+{
+    auto message = QDBusMessage::createMethodCall(iface()->service(), iface()->path(), iface()->interface(), QStringLiteral("unRegister"));
+    message.setArguments({actionId});
+    message.setAutoStartService(false);
+    QDBusConnection::sessionBus().call(message, QDBus::NoBlock);
+}
+
+void KGlobalAccelPrivate::setInactive(const QStringList &actionId)
+{
+    auto message = QDBusMessage::createMethodCall(iface()->service(), iface()->path(), iface()->interface(), QStringLiteral("setInactive"));
+    message.setArguments({actionId});
+    message.setAutoStartService(false);
+    QDBusConnection::sessionBus().call(message, QDBus::NoBlock);
 }
 
 void KGlobalAccelPrivate::updateGlobalShortcut(/*const would be better*/QAction* action,
