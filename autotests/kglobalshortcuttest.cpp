@@ -38,12 +38,12 @@
  *
 */
 
-const QKeySequence sequenceA = QKeySequence(Qt::SHIFT + Qt::META + Qt::CTRL + Qt::ALT + Qt::Key_F12);
+const QKeySequence sequenceA = QKeySequence(Qt::SHIFT | Qt::META | Qt::CTRL | Qt::ALT | Qt::Key_F12);
 const QKeySequence sequenceB = QKeySequence(Qt::Key_F29);
-const QKeySequence sequenceC = QKeySequence(Qt::SHIFT + Qt::META + Qt::CTRL + Qt::Key_F28);
-const QKeySequence sequenceD = QKeySequence(Qt::META + Qt::ALT + Qt::Key_F30);
-const QKeySequence sequenceE = QKeySequence(Qt::META + Qt::Key_F29);
-const QKeySequence sequenceF = QKeySequence(Qt::META + Qt::Key_F27);
+const QKeySequence sequenceC = QKeySequence(Qt::SHIFT | Qt::META | Qt::CTRL | Qt::Key_F28);
+const QKeySequence sequenceD = QKeySequence(Qt::META | Qt::ALT | Qt::Key_F30);
+const QKeySequence sequenceE = QKeySequence(Qt::META | Qt::Key_F29);
+const QKeySequence sequenceF = QKeySequence(Qt::META | Qt::Key_F27);
 
 //we need a GUI so that the implementation can grab keys
 QTEST_MAIN(KGlobalShortcutTest)
