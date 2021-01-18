@@ -240,7 +240,7 @@ void Component::emitGlobalShortcutPressed( const GlobalShortcut &shortcut )
         return;
         }
 
-    emit globalShortcutPressed(
+    Q_EMIT globalShortcutPressed(
             shortcut.context()->component()->uniqueName(),
             shortcut.uniqueName(),
             timestamp);

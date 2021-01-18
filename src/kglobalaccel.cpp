@@ -361,7 +361,7 @@ void KGlobalAccelPrivate::updateGlobalShortcut(/*const would be better*/QAction*
             // If kglobalaccel returned a shortcut that differs from the one we
             // sent, use that one. There must have been clashes or some other problem.
             actionShortcuts.insert(action, scResult);
-            emit q->globalShortcutChanged(action, scResult.isEmpty() ? QKeySequence() : scResult.first());
+            Q_EMIT q->globalShortcutChanged(action, scResult.isEmpty() ? QKeySequence() : scResult.first());
         }
     }
 
@@ -488,7 +488,7 @@ void KGlobalAccelPrivate::_k_shortcutGotChanged(const QStringList &actionId,
 
     const QList<QKeySequence> shortcuts = shortcutFromIntList(keys);
     actionShortcuts.insert(action, shortcuts);
-    emit q->globalShortcutChanged(action, keys.isEmpty() ? QKeySequence() : shortcuts.first());
+    Q_EMIT q->globalShortcutChanged(action, keys.isEmpty() ? QKeySequence() : shortcuts.first());
 }
 
 void KGlobalAccelPrivate::_k_serviceOwnerChanged(const QString &name, const QString &oldOwner,

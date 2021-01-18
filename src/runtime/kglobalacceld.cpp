@@ -558,7 +558,7 @@ void KGlobalAccelD::setForeignShortcut(const QStringList &actionId, const QList<
 
     QList<int> newKeys = setShortcut(actionId, keys, NoAutoloading);
 
-    emit yourShortcutGotChanged(actionId, newKeys);
+    Q_EMIT yourShortcutGotChanged(actionId, newKeys);
 }
 
 
