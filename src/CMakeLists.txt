@@ -39,7 +39,7 @@ add_library(KF5::GlobalAccel ALIAS KF5GlobalAccel)
 ecm_generate_export_header(KF5GlobalAccel
     BASE_NAME KGlobalAccel
     GROUP_BASE_NAME KF
-    VERSION ${KF5_VERSION}
+    VERSION ${KF_VERSION}
     DEPRECATED_BASE_VERSION 0
     DEPRECATION_VERSIONS 4.2 4.4 5.9
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
@@ -86,7 +86,7 @@ if(BUILD_QCH)
         KF5GlobalAccel_QCH
         NAME KGlobalAccel
         BASE_NAME KF5GlobalAccel
-        VERSION ${KF5_VERSION}
+        VERSION ${KF_VERSION}
         ORG_DOMAIN org.kde
         SOURCES # using only public headers, to cover only public API
             ${KGlobalAccel_HEADERS}

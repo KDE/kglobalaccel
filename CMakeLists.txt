@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
 
-set(KF5_VERSION "5.79.0") # handled by release scripts
-set(KF5_DEP_VERSION "5.79.0") # handled by release scripts
-project(KGlobalAccel VERSION ${KF5_VERSION})
+set(KF_VERSION "5.79.0") # handled by release scripts
+set(KF_DEP_VERSION "5.79.0") # handled by release scripts
+project(KGlobalAccel VERSION ${KF_VERSION})
 
 # ECM setup
 include(FeatureSummary)
@@ -40,11 +40,11 @@ set(REQUIRED_QT_VERSION 5.14.0)
 find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus Widgets)
 
 # Dependencies of runtime component
-find_package(KF5Config ${KF5_DEP_VERSION} REQUIRED)
-find_package(KF5CoreAddons ${KF5_DEP_VERSION} REQUIRED)
-find_package(KF5Crash ${KF5_DEP_VERSION} REQUIRED)
-find_package(KF5DBusAddons ${KF5_DEP_VERSION} REQUIRED)
-find_package(KF5WindowSystem ${KF5_DEP_VERSION} REQUIRED)
+find_package(KF5Config ${KF_DEP_VERSION} REQUIRED)
+find_package(KF5CoreAddons ${KF_DEP_VERSION} REQUIRED)
+find_package(KF5Crash ${KF_DEP_VERSION} REQUIRED)
+find_package(KF5DBusAddons ${KF_DEP_VERSION} REQUIRED)
+find_package(KF5WindowSystem ${KF_DEP_VERSION} REQUIRED)
 
 # no X11 stuff on mac
 if (NOT APPLE)
