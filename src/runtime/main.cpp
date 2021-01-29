@@ -10,6 +10,8 @@
 #include "kglobalacceld.h"
 #include "logging_p.h"
 
+#include <unistd.h>
+
 #include <KAboutData>
 #include <KCrash>
 #include <KDBusService>
@@ -54,6 +56,16 @@ extern "C" Q_DECL_EXPORT int main(int argc, char **argv)
     // check if kglobalaccel is disabled
     if (!isEnabled()) {
         qCDebug(KGLOBALACCELD) << "kglobalaccel is disabled!";
+        return 0;
+    }
+
+    // It's possible that kglobalaccel gets started as the wrong user by
+    // accident, e.g. kdesu dolphin leads to dbus activation. It then installs
+    // its grabs and the actions are run as the wrong user.
+    bool isUidset = false;
+    const int sessionuid = qEnvironmentVariableIntValue("KDE_SESSION_UID", &isUidset);
+    if(isUidset && static_cast<uid_t>(sessionuid) != getuid()) {
+        qCWarning(KGLOBALACCELD) << "kglobalaccel running as wrong user, exiting.";
         return 0;
     }
 
