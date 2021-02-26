@@ -274,8 +274,11 @@ void KGlobalAccelPrivate::remove(QAction *action, Removal removal)
 
 void KGlobalAccelPrivate::unregister(const QStringList &actionId)
 {
-    auto message = QDBusMessage::createMethodCall(iface()->service(), iface()->path(), iface()->interface(), QStringLiteral("unRegister"));
-    message.setArguments({actionId});
+    const auto component = actionId.at(KGlobalAccel::ComponentUnique);
+    const auto action = actionId.at(KGlobalAccel::ActionUnique);
+
+    auto message = QDBusMessage::createMethodCall(iface()->service(), iface()->path(), iface()->interface(), QStringLiteral("unregister"));
+    message.setArguments({component, action});
     message.setAutoStartService(false);
     QDBusConnection::sessionBus().call(message, QDBus::NoBlock);
 }
