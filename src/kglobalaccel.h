@@ -44,7 +44,7 @@ public:
         /// @see setGlobalShortcut()
         Autoloading = 0x0,
         /// Prevent autoloading of saved global shortcut for action
-        NoAutoloading = 0x4
+        NoAutoloading = 0x4,
     };
 
     /**
@@ -54,7 +54,7 @@ public:
         ComponentUnique = 0,        //!< Components Unique Name (ID)
         ActionUnique = 1,           //!< Actions Unique Name(ID)
         ComponentFriendly = 2,      //!< Components Friendly Translated Name
-        ActionFriendly = 3          //!< Actions Friendly Translated Name
+        ActionFriendly = 3,          //!< Actions Friendly Translated Name
     };
 
     /**

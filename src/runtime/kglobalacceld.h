@@ -33,7 +33,7 @@ public:
     {
         SetPresent = 2,
         NoAutoloading = 4,
-        IsDefault = 8
+        IsDefault = 8,
     };
     Q_ENUM(SetShortcutFlag)
     Q_DECLARE_FLAGS(SetShortcutFlags, SetShortcutFlag)

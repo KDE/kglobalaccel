@@ -22,7 +22,7 @@
 enum SetShortcutFlag {
     SetPresent = 2,
     NoAutoloading = 4,
-    IsDefault = 8
+    IsDefault = 8,
 };
 
 class KGlobalAccelPrivate
@@ -33,13 +33,13 @@ public:
         ActiveShortcut = 0x1,
         /// The shortcut is a default shortcut - it becomes active when somebody decides to
         /// reset shortcuts to default.
-        DefaultShortcut = 0x2
+        DefaultShortcut = 0x2,
     };
 
     Q_DECLARE_FLAGS(ShortcutTypes, ShortcutType)
     enum Removal {
         SetInactive = 0,    ///< Forget the action in this class and mark it as not present in the KDED module
-        UnRegister          ///< Remove any trace of the action in this class and in the KDED module
+        UnRegister,          ///< Remove any trace of the action in this class and in the KDED module
     };
     KGlobalAccelPrivate(KGlobalAccel *);
 

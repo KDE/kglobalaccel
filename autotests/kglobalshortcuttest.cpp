@@ -319,7 +319,7 @@ enum actionIdFields {
     ComponentUnique = 0,
     ActionUnique = 1,
     ComponentFriendly = 2,
-    ActionFriendly = 3
+    ActionFriendly = 3,
 };
 
 void KGlobalShortcutTest::testListActions()
