@@ -9,8 +9,6 @@
 
 #include <KGlobalShortcutInfo>
 
-
-
 class GlobalShortcutContext;
 
 /**
@@ -25,9 +23,8 @@ class GlobalShortcutContext;
  * @author Michael Jansen <kde@michael-jansen.biz>
  */
 class GlobalShortcut
-    {
+{
 public:
-
     GlobalShortcut(const QString &uniqueName, const QString &friendlyName, GlobalShortcutContext *context);
     GlobalShortcut();
 
@@ -79,31 +76,29 @@ public:
     //! Returns the unique name aka id for the shortcuts.
     QString uniqueName() const;
 
-    operator KGlobalShortcutInfo () const;
+    operator KGlobalShortcutInfo() const;
 
     //! Remove this shortcut and it's siblings
     void unRegister();
 
 private:
-
     //! means the associated application is present.
-    bool _isPresent:1;
+    bool _isPresent : 1;
 
     //! means the shortcut is registered with GlobalShortcutsRegistry
-    bool _isRegistered:1;
+    bool _isRegistered : 1;
 
     //! means the shortcut is new
-    bool _isFresh:1;
+    bool _isFresh : 1;
 
     //! The context the shortcut belongs too
     GlobalShortcutContext *_context;
 
     QString _uniqueName;
-    QString _friendlyName; //usually localized
+    QString _friendlyName; // usually localized
 
     QList<int> _keys;
     QList<int> _defaultKeys;
-    };
-
+};
 
 #endif /* #ifndef GLOBALSHORTCUT_H */

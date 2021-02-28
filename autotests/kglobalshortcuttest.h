@@ -37,12 +37,14 @@ private Q_SLOTS:
     void testForgetGlobalShortcut(); // clean global config altered by setupTest
 
 public:
-
-    KGlobalShortcutTest() : m_actionA(nullptr), m_actionB(nullptr)
-    {}
+    KGlobalShortcutTest()
+        : m_actionA(nullptr)
+        , m_actionB(nullptr)
+    {
+    }
 
 private:
-    void setupTest(const QString& id);
+    void setupTest(const QString &id);
 
     QAction *m_actionA;
     QAction *m_actionB;

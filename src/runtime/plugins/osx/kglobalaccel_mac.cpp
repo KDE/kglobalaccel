@@ -12,14 +12,14 @@
 
 #ifdef Q_OS_OSX
 
-#include <QMultiMap>
 #include <QList>
+#include <QMultiMap>
 
 #include "globalshortcutsregistry.h"
-#include <KKeyServer>
 #include "logging_p.h"
+#include <KKeyServer>
 
-OSStatus hotKeyEventHandler(EventHandlerCallRef inHandlerCallRef, EventRef inEvent, void * inUserData)
+OSStatus hotKeyEventHandler(EventHandlerCallRef inHandlerCallRef, EventRef inEvent, void *inUserData)
 {
     UInt32 eventKind = GetEventKind(inEvent);
     if (eventKind == kEventRawKeyDown) {
@@ -29,33 +29,34 @@ OSStatus hotKeyEventHandler(EventHandlerCallRef inHandlerCallRef, EventRef inEve
         }
         qCDebug(KGLOBALACCELD) << " key down, keycode = " << keycode;
     } else if (eventKind == kEventHotKeyPressed) {
-        KGlobalAccelImpl* impl = static_cast<KGlobalAccelImpl *>(inUserData);
+        KGlobalAccelImpl *impl = static_cast<KGlobalAccelImpl *>(inUserData);
         EventHotKeyID hotkey;
         if (GetEventParameter(inEvent, kEventParamDirectObject, typeEventHotKeyID, NULL, sizeof(hotkey), NULL, &hotkey) != noErr) {
             qCWarning(KGLOBALACCELD) << "Error retrieving hotkey parameter from event";
             return eventNotHandledErr;
         }
         // Typecasts necesary to prevent a warning from gcc
-        return (impl->keyPressed(hotkey.id) ? (OSStatus) noErr : (OSStatus) eventNotHandledErr);
+        return (impl->keyPressed(hotkey.id) ? (OSStatus)noErr : (OSStatus)eventNotHandledErr);
     }
     return eventNotHandledErr;
 }
- 
-void layoutChanged(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
+
+void layoutChanged(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo)
+{
     static_cast<KGlobalAccelImpl *>(observer)->keyboardLayoutChanged();
 }
 
-KGlobalAccelImpl::KGlobalAccelImpl(GlobalShortcutsRegistry* owner)
-	: m_owner(owner)
+KGlobalAccelImpl::KGlobalAccelImpl(GlobalShortcutsRegistry *owner)
+    : m_owner(owner)
     , m_eventTarget(GetApplicationEventTarget())
     , m_eventHandler(NewEventHandlerUPP(hotKeyEventHandler))
 {
     m_eventType[0].eventClass = kEventClassKeyboard;
-    m_eventType[0].eventKind = kEventHotKeyPressed; 
+    m_eventType[0].eventKind = kEventHotKeyPressed;
     m_eventType[1].eventClass = kEventClassKeyboard; // only useful for testing, is not used because count passed in call to InstallEventHandler is 1
     m_eventType[1].eventKind = kEventRawKeyDown;
-    refs = new QMap<int, QList<EventHotKeyRef> >();
-    
+    refs = new QMap<int, QList<EventHotKeyRef>>();
+
     CFStringRef str = CFStringCreateWithCString(NULL, "AppleKeyboardPreferencesChangedNotification", kCFStringEncodingASCII);
     if (str) {
         CFNotificationCenterAddObserver(CFNotificationCenterGetDistributedCenter(), this, layoutChanged, str, NULL, CFNotificationSuspensionBehaviorHold);
@@ -72,20 +73,20 @@ KGlobalAccelImpl::~KGlobalAccelImpl()
     delete refs;
 }
 
-bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
+bool KGlobalAccelImpl::grabKey(int keyQt, bool grab)
 {
     if (grab) {
         qCDebug(KGLOBALACCELD) << "Grabbing key " << keyQt;
         QList<uint> keyCodes;
         uint mod;
-        KKeyServer::keyQtToCodeMac( keyQt, keyCodes );
-        KKeyServer::keyQtToModMac( keyQt, mod );
-        
+        KKeyServer::keyQtToCodeMac(keyQt, keyCodes);
+        KKeyServer::keyQtToModMac(keyQt, mod);
+
         qCDebug(KGLOBALACCELD) << "keyQt: " << keyQt << " mod: " << mod;
         for (uint keyCode : qAsConst(keyCodes)) {
             qCDebug(KGLOBALACCELD) << "  keyCode: " << keyCode;
         }
-        
+
         EventHotKeyID ehkid;
         ehkid.signature = 'Kgai';
         ehkid.id = keyQt;
@@ -100,7 +101,8 @@ bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
         refs->insert(keyQt, hotkeys);
     } else {
         qCDebug(KGLOBALACCELD) << "Ungrabbing key " << keyQt;
-        if (refs->count(keyQt) == 0) qCWarning(KGLOBALACCELD) << "Trying to ungrab a key thas is not grabbed";
+        if (refs->count(keyQt) == 0)
+            qCWarning(KGLOBALACCELD) << "Trying to ungrab a key thas is not grabbed";
         const auto lstRef = refs->value(keyQt);
         for (const EventHotKeyRef &ref : lstRef) {
             if (UnregisterEventHotKey(ref) != noErr) {
@@ -123,7 +125,7 @@ void KGlobalAccelImpl::setEnabled(bool enable)
     }
 }
 
-bool KGlobalAccelImpl::keyPressed( int key )
+bool KGlobalAccelImpl::keyPressed(int key)
 {
     return m_owner->keyPressed(key);
 }
@@ -142,6 +144,5 @@ void KGlobalAccelImpl::keyboardLayoutChanged()
         grabKey(key, true);
     }
 }
-
 
 #endif // !Q_OS_OSX

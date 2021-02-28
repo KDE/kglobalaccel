@@ -9,18 +9,17 @@
 
 #include <KSharedConfig>
 
-#include <QObject>
-#include <QHash>
 #include <QDBusObjectPath>
-
+#include <QHash>
+#include <QObject>
 
 class GlobalShortcut;
 class KGlobalAccelInterface;
 
 namespace KdeDGlobalAccel
-    {
-    class Component;
-    }
+{
+class Component;
+}
 
 /**
  * Global Shortcut Registry.
@@ -38,7 +37,7 @@ namespace KdeDGlobalAccel
  * @author Michael Jansen <kde@michael-jansen.biz>
  */
 class GlobalShortcutsRegistry : public QObject
-    {
+{
     Q_OBJECT
 
     Q_CLASSINFO("D-Bus Interface", "org.kde.KdedGlobalAccel.GlobalShortcutsRegistry")
@@ -70,8 +69,7 @@ public:
     /**
      * Deactivate all currently active shortcuts.
      */
-    void deactivateShortcuts(bool temporarily=false);
-
+    void deactivateShortcuts(bool temporarily = false);
 
     /**
      * Get the shortcut corresponding to key. Only active shortcut are
@@ -98,7 +96,7 @@ public:
      *
      * @see getShortcutsByKey(int key)
      */
-    QList<GlobalShortcut*> getShortcutsByKey(int key) const;
+    QList<GlobalShortcut *> getShortcutsByKey(int key) const;
 
     /**
      * Checks if @p shortcut is available for @p component.
@@ -106,10 +104,7 @@ public:
      * It is available if not used by another component in any context or used
      * by @p component only in not active contexts.
      */
-    bool isShortcutAvailable(
-            int shortcut,
-            const QString &component,
-            const QString &context) const;
+    bool isShortcutAvailable(int shortcut, const QString &component, const QString &context) const;
 
     static GlobalShortcutsRegistry *self();
 
@@ -136,18 +131,17 @@ public Q_SLOTS:
     void ungrabKeys();
 
 private:
-
     friend class KdeDGlobalAccel::Component;
     friend class KGlobalAccelInterface;
 
     KdeDGlobalAccel::Component *addComponent(KdeDGlobalAccel::Component *component);
     KdeDGlobalAccel::Component *takeComponent(KdeDGlobalAccel::Component *component);
 
-    //called by the implementation to inform us about key presses
-    //returns true if the key was handled
+    // called by the implementation to inform us about key presses
+    // returns true if the key was handled
     bool keyPressed(int keyQt);
 
-    QHash<int, GlobalShortcut*> _active_keys;
+    QHash<int, GlobalShortcut *> _active_keys;
     QHash<QString, KdeDGlobalAccel::Component *> _components;
 
     KGlobalAccelInterface *_manager;
@@ -155,7 +149,6 @@ private:
     mutable KConfig _config;
 
     QDBusObjectPath _dbusPath;
-    };
-
+};
 
 #endif /* #ifndef GLOBALSHORTCUTSREGISTRY_H */

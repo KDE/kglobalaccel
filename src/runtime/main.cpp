@@ -10,11 +10,11 @@
 #include "kglobalacceld.h"
 #include "logging_p.h"
 
-#include <KCrash>
 #include <KAboutData>
+#include <KCrash>
 #include <KDBusService>
-#include <QGuiApplication>
 #include <QCommandLineParser>
+#include <QGuiApplication>
 
 static bool isEnabled()
 {
@@ -30,16 +30,15 @@ extern "C" Q_DECL_EXPORT int main(int argc, char **argv)
     // registering the app with the session manager. We remove the address to make sure we do not
     // get a hang on kglobalaccel restart (kglobalaccel tries to register with ksmserver,
     // ksmserver tries to register with kglobalaccel).
-    qunsetenv( "SESSION_MANAGER" );
+    qunsetenv("SESSION_MANAGER");
 
     QGuiApplication app(argc, argv);
-    KAboutData aboutdata(
-            QStringLiteral("kglobalaccel"),
-            QObject::tr("KDE Global Shortcuts Service"),
-            QStringLiteral("0.2"),
-            QObject::tr("KDE Global Shortcuts Service"),
-            KAboutLicense::LGPL,
-            "(C) 2007-2009  Andreas Hartmetz, Michael Jansen");
+    KAboutData aboutdata(QStringLiteral("kglobalaccel"),
+                         QObject::tr("KDE Global Shortcuts Service"),
+                         QStringLiteral("0.2"),
+                         QObject::tr("KDE Global Shortcuts Service"),
+                         KAboutLicense::LGPL,
+                         "(C) 2007-2009  Andreas Hartmetz, Michael Jansen");
     aboutdata.addAuthor("Andreas Hartmetz", QObject::tr("Maintainer"), "ahartmetz@gmail.com");
     aboutdata.addAuthor("Michael Jansen", QObject::tr("Maintainer"), "kde@michael-jansen.biz");
 
@@ -60,7 +59,7 @@ extern "C" Q_DECL_EXPORT int main(int argc, char **argv)
 
     KDBusService service(KDBusService::Unique);
 
-    app.setQuitOnLastWindowClosed( false );
+    app.setQuitOnLastWindowClosed(false);
     QGuiApplication::setFallbackSessionManagementEnabled(false);
 
     // Restart on a crash

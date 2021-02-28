@@ -10,12 +10,12 @@
 #ifndef _KGLOBALACCEL_H_
 #define _KGLOBALACCEL_H_
 
-#include <kglobalaccel_export.h>
 #include "kglobalshortcutinfo.h"
+#include <kglobalaccel_export.h>
 
-#include <QObject>
 #include <QKeySequence>
 #include <QList>
+#include <QObject>
 
 class QAction;
 class OrgKdeKglobalaccelComponentInterface;
@@ -51,10 +51,10 @@ public:
      * Index for actionId QStringLists
      */
     enum actionIdFields {
-        ComponentUnique = 0,        //!< Components Unique Name (ID)
-        ActionUnique = 1,           //!< Actions Unique Name(ID)
-        ComponentFriendly = 2,      //!< Components Friendly Translated Name
-        ActionFriendly = 3,          //!< Actions Friendly Translated Name
+        ComponentUnique = 0, //!< Components Unique Name (ID)
+        ActionUnique = 1, //!< Actions Unique Name(ID)
+        ComponentFriendly = 2, //!< Components Friendly Translated Name
+        ActionFriendly = 3, //!< Actions Friendly Translated Name
     };
 
     /**
@@ -82,10 +82,7 @@ public:
      *
      * @since 4.2
      */
-    static void activateGlobalShortcutContext(
-        const QString &contextUnique,
-        const QString &contextFriendly,
-        const QString &programName);
+    static void activateGlobalShortcutContext(const QString &contextUnique, const QString &contextFriendly, const QString &programName);
 
     /**
      * Clean the shortcuts for component @a componentUnique.
@@ -138,9 +135,7 @@ public:
      *
      * @since 4.2
      */
-    static bool isGlobalShortcutAvailable(
-        const QKeySequence &seq,
-        const QString &component = QString());
+    static bool isGlobalShortcutAvailable(const QKeySequence &seq, const QString &component = QString());
 
     /**
      * Show a messagebox to inform the user that a global shortcut is already occupied,
@@ -151,10 +146,7 @@ public:
      *
      * @since 4.2
      */
-    static bool promptStealShortcutSystemwide(
-        QWidget *parent,
-        const QList<KGlobalShortcutInfo> &shortcuts,
-        const QKeySequence &seq);
+    static bool promptStealShortcutSystemwide(QWidget *parent, const QList<KGlobalShortcutInfo> &shortcuts, const QKeySequence &seq);
 
     /**
      * Assign a default global shortcut for a given QAction.
@@ -190,7 +182,8 @@ public:
      * @p loading to NoAutoloading. The new shortcut will be automatically saved again.
      *
      * @param action the action for which the shortcut will be assigned
-     * @param shortcut global shortcut(s) to assign. Will be ignored unless @p loading is set to NoAutoloading or this is the first time ever you call this method (see above).
+     * @param shortcut global shortcut(s) to assign. Will be ignored unless @p loading is set to NoAutoloading or this is the first time ever you call this
+     * method (see above).
      * @param loadFlag if Autoloading, assign the global shortcut this action has previously had if any.
      *                   That way user preferences and changes made to avoid clashes will be conserved.
      *                if NoAutoloading the given shortcut will be assigned without looking up old values.
@@ -261,7 +254,7 @@ public:
      *
      * @since 5.10
      */
-    QList<QKeySequence> globalShortcut(const QString& componentName, const QString& actionId) const;
+    QList<QKeySequence> globalShortcut(const QString &componentName, const QString &actionId) const;
 
     /**
      * Unregister and remove all defined global shortcuts for the given action.
@@ -328,7 +321,9 @@ public:
     /**
      * @deprecated Since 4.2, use KGlobalAccel::promptStealShortcutSystemwide(QWidget *, const QList<KGlobalShortcutInfo> &, const QKeySequence &)
      */
-    KGLOBALACCEL_DEPRECATED_VERSION(4, 2, "Use KGlobalAccel::promptStealShortcutSystemwide(QWidget *, const QList<KGlobalShortcutInfo> &, const QKeySequence &)")
+    KGLOBALACCEL_DEPRECATED_VERSION(4,
+                                    2,
+                                    "Use KGlobalAccel::promptStealShortcutSystemwide(QWidget *, const QList<KGlobalShortcutInfo> &, const QKeySequence &)")
     static bool promptStealShortcutSystemwide(QWidget *parent, const QStringList &actionIdentifier, const QKeySequence &seq);
 #endif
 
@@ -354,7 +349,7 @@ Q_SIGNALS:
      *
      * @todo KF6: add const to the QAction parameter
      */
-    void globalShortcutChanged(/*const would be better*/QAction *action, const QKeySequence &seq);
+    void globalShortcutChanged(/*const would be better*/ QAction *action, const QKeySequence &seq);
 
 private:
     /// Creates a new KGlobalAccel object

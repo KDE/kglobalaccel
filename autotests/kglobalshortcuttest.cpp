@@ -8,13 +8,13 @@
 */
 
 #include "kglobalshortcuttest.h"
+#include <QAction>
 #include <QDBusInterface>
 #include <QSignalSpy>
+#include <QStandardPaths>
 #include <QTest>
-#include <QAction>
 #include <QThread>
 #include <kglobalaccel.h>
-#include <QStandardPaths>
 
 #include <qplatformdefs.h>
 
@@ -36,7 +36,7 @@
  * and we just choose very improbable shortcuts to avoid conflicts with real
  * applications' shortcuts.
  *
-*/
+ */
 
 const QKeySequence sequenceA = QKeySequence(Qt::SHIFT | Qt::META | Qt::CTRL | Qt::ALT | Qt::Key_F12);
 const QKeySequence sequenceB = QKeySequence(Qt::Key_F29);
@@ -45,7 +45,7 @@ const QKeySequence sequenceD = QKeySequence(Qt::META | Qt::ALT | Qt::Key_F30);
 const QKeySequence sequenceE = QKeySequence(Qt::META | Qt::Key_F29);
 const QKeySequence sequenceF = QKeySequence(Qt::META | Qt::Key_F27);
 
-//we need a GUI so that the implementation can grab keys
+// we need a GUI so that the implementation can grab keys
 QTEST_MAIN(KGlobalShortcutTest)
 
 void KGlobalShortcutTest::initTestCase()
@@ -76,7 +76,7 @@ void KGlobalShortcutTest::initTestCase()
  * The following sections are created and normally removed automatically:
  * [qttest]
  */
-void KGlobalShortcutTest::setupTest(const QString& id)
+void KGlobalShortcutTest::setupTest(const QString &id)
 {
     QString componentName = "qttest";
 
@@ -151,7 +151,7 @@ void KGlobalShortcutTest::testActivateShortcut()
     xcb_window_t w = QX11Info::appRootWindow();
 
     xcb_key_symbols_t *syms = xcb_key_symbols_alloc(c);
-    auto getCode = [syms] (int code) {
+    auto getCode = [syms](int code) {
         xcb_keycode_t *keyCodes = xcb_key_symbols_get_keycode(syms, code);
         const xcb_keycode_t ret = keyCodes[0];
         free(keyCodes);
@@ -164,17 +164,17 @@ void KGlobalShortcutTest::testActivateShortcut()
     const xcb_keycode_t f12 = getCode(XK_F12);
     xcb_key_symbols_free(syms);
 
-    xcb_test_fake_input(c, XCB_KEY_PRESS, meta,    XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
+    xcb_test_fake_input(c, XCB_KEY_PRESS, meta, XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
     xcb_test_fake_input(c, XCB_KEY_PRESS, control, XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
-    xcb_test_fake_input(c, XCB_KEY_PRESS, alt,     XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
-    xcb_test_fake_input(c, XCB_KEY_PRESS, shift,   XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
-    xcb_test_fake_input(c, XCB_KEY_PRESS, f12,     XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
+    xcb_test_fake_input(c, XCB_KEY_PRESS, alt, XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
+    xcb_test_fake_input(c, XCB_KEY_PRESS, shift, XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
+    xcb_test_fake_input(c, XCB_KEY_PRESS, f12, XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
 
-    xcb_test_fake_input(c, XCB_KEY_RELEASE, f12,     XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
-    xcb_test_fake_input(c, XCB_KEY_RELEASE, shift,   XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
-    xcb_test_fake_input(c, XCB_KEY_RELEASE, meta,    XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
+    xcb_test_fake_input(c, XCB_KEY_RELEASE, f12, XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
+    xcb_test_fake_input(c, XCB_KEY_RELEASE, shift, XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
+    xcb_test_fake_input(c, XCB_KEY_RELEASE, meta, XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
     xcb_test_fake_input(c, XCB_KEY_RELEASE, control, XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
-    xcb_test_fake_input(c, XCB_KEY_RELEASE, alt,     XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
+    xcb_test_fake_input(c, XCB_KEY_RELEASE, alt, XCB_TIME_CURRENT_TIME, w, 0, 0, 0);
     xcb_flush(c);
 
     QVERIFY(actionASpy.wait());
@@ -270,7 +270,7 @@ void KGlobalShortcutTest::testStealShortcut()
     QCOMPARE(KGlobalAccel::self()->defaultShortcut(m_actionA), cutA);
 
     KGlobalAccel::stealShortcutSystemwide(sequenceA);
-    //let DBus do its thing in case it happens asynchronously
+    // let DBus do its thing in case it happens asynchronously
     QTest::qWait(200);
     QList<QKeySequence> shortcuts = KGlobalAccel::self()->shortcut(m_actionA);
     QVERIFY(!shortcuts.isEmpty());
@@ -284,7 +284,7 @@ void KGlobalShortcutTest::testSaveRestore()
         QSKIP("kglobalaccel not installed");
     }
 
-    //It /would be nice/ to test persistent storage. That is not so easy...
+    // It /would be nice/ to test persistent storage. That is not so easy...
     QList<QKeySequence> cutA = KGlobalAccel::self()->shortcut(m_actionA);
     // Delete the action
     delete m_actionA;
@@ -308,10 +308,8 @@ void KGlobalShortcutTest::testSaveRestore()
     m_actionA->setObjectName("Action A:testSaveRestore");
     m_actionA->setProperty("componentName", "qttest");
     m_actionA->setProperty("componentDisplayName", "KDE Test Program");
-    KGlobalAccel::self()->setShortcut(m_actionA, QList<QKeySequence>() << QKeySequence()
-                                      << (cutA.isEmpty() ? QKeySequence() : cutA.first()));
+    KGlobalAccel::self()->setShortcut(m_actionA, QList<QKeySequence>() << QKeySequence() << (cutA.isEmpty() ? QKeySequence() : cutA.first()));
     QCOMPARE(KGlobalAccel::self()->shortcut(m_actionA), cutA);
-
 }
 
 // Duplicated again!
@@ -333,7 +331,7 @@ void KGlobalShortcutTest::testListActions()
 #if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(4, 2)
     KGlobalAccel *kga = KGlobalAccel::self();
     QList<QStringList> components = kga->allMainComponents();
-    //qDebug() << components;
+    // qDebug() << components;
     QStringList componentId;
     componentId << "qttest" << QString() << "KDE Test Program" << QString();
     QVERIFY(components.contains(componentId));
@@ -343,10 +341,16 @@ void KGlobalShortcutTest::testListActions()
     QList<QStringList> actions = kga->allActionsForComponent(componentId);
     QVERIFY(!actions.isEmpty());
     QStringList actionIdA;
-    actionIdA << "qttest" << "Action A:testListActions" << "KDE Test Program" << "Text For Action A";
+    actionIdA << "qttest"
+              << "Action A:testListActions"
+              << "KDE Test Program"
+              << "Text For Action A";
     QStringList actionIdB;
-    actionIdB << "qttest" << "Action B:testListActions" << "KDE Test Program" << "Text For Action B";
-    //qDebug() << actions;
+    actionIdB << "qttest"
+              << "Action B:testListActions"
+              << "KDE Test Program"
+              << "Text For Action B";
+    // qDebug() << actions;
     QVERIFY(actions.contains(actionIdA));
     QVERIFY(actions.contains(actionIdB));
 #endif
@@ -473,8 +477,8 @@ void KGlobalShortcutTest::testGetGlobalShortcut()
     QCOMPARE(shortcutList.count(), 2); // see setupTest
 
     // test for a real shortcut:
-//     shortcutList = KGlobalAccel::self()->shortcut("kwin", "Kill Window");
-//     QCOMPARE(shortcutList.count(), 1);
+    //     shortcutList = KGlobalAccel::self()->shortcut("kwin", "Kill Window");
+    //     QCOMPARE(shortcutList.count(), 1);
 }
 
 void KGlobalShortcutTest::testForgetGlobalShortcut()
@@ -505,5 +509,3 @@ void KGlobalShortcutTest::testForgetGlobalShortcut()
     QVERIFY(!components.contains(componentId));
 #endif
 }
-
-

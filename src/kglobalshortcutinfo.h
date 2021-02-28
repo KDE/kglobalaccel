@@ -9,10 +9,10 @@
 
 #include <kglobalaccel_export.h>
 
+#include <QDBusArgument>
+#include <QKeySequence>
 #include <QList>
 #include <QObject>
-#include <QKeySequence>
-#include <QDBusArgument>
 
 class KGlobalShortcutInfoPrivate;
 
@@ -25,27 +25,25 @@ class KGLOBALACCEL_EXPORT KGlobalShortcutInfo : public QObject
 
     Q_CLASSINFO("D-Bus Interface", "org.kde.kglobalaccel.KShortcutInfo")
 
-    Q_SCRIPTABLE Q_PROPERTY(QString uniqueName READ uniqueName)
-    Q_SCRIPTABLE Q_PROPERTY(QString friendlyName READ friendlyName)
+    Q_SCRIPTABLE Q_PROPERTY(QString uniqueName READ uniqueName) Q_SCRIPTABLE Q_PROPERTY(QString friendlyName READ friendlyName)
 
-    Q_SCRIPTABLE Q_PROPERTY(QString componentUniqueName READ componentUniqueName)
-    Q_SCRIPTABLE Q_PROPERTY(QString componentFriendlyName READ componentFriendlyName)
+        Q_SCRIPTABLE Q_PROPERTY(QString componentUniqueName READ componentUniqueName) Q_SCRIPTABLE
+        Q_PROPERTY(QString componentFriendlyName READ componentFriendlyName)
 
-    Q_SCRIPTABLE Q_PROPERTY(QString contextUniqueName READ contextUniqueName)
-    Q_SCRIPTABLE Q_PROPERTY(QString contextFriendlyName READ contextFriendlyName)
+            Q_SCRIPTABLE Q_PROPERTY(QString contextUniqueName READ contextUniqueName) Q_SCRIPTABLE
+        Q_PROPERTY(QString contextFriendlyName READ contextFriendlyName)
 
-    Q_SCRIPTABLE Q_PROPERTY(QList<QKeySequence> keys READ keys)
-    Q_SCRIPTABLE Q_PROPERTY(QList<QKeySequence> defaultKeys READ keys)
+            Q_SCRIPTABLE Q_PROPERTY(QList<QKeySequence> keys READ keys) Q_SCRIPTABLE Q_PROPERTY(QList<QKeySequence> defaultKeys READ keys)
 
-public:
+                public :
 
-    KGlobalShortcutInfo();
+        KGlobalShortcutInfo();
 
     KGlobalShortcutInfo(const KGlobalShortcutInfo &rhs);
 
     ~KGlobalShortcutInfo();
 
-    KGlobalShortcutInfo &operator= (const KGlobalShortcutInfo &rhs);
+    KGlobalShortcutInfo &operator=(const KGlobalShortcutInfo &rhs);
 
     QString contextFriendlyName() const;
 
@@ -64,24 +62,17 @@ public:
     QString uniqueName() const;
 
 private:
-
     friend class GlobalShortcut;
 
-    friend KGLOBALACCEL_EXPORT const QDBusArgument &operator>> (
-        const QDBusArgument &argument,
-        KGlobalShortcutInfo &shortcut);
+    friend KGLOBALACCEL_EXPORT const QDBusArgument &operator>>(const QDBusArgument &argument, KGlobalShortcutInfo &shortcut);
 
     //! Implementation details
     KGlobalShortcutInfoPrivate *d;
 };
 
-KGLOBALACCEL_EXPORT QDBusArgument &operator<< (
-    QDBusArgument &argument,
-    const KGlobalShortcutInfo &shortcut);
+KGLOBALACCEL_EXPORT QDBusArgument &operator<<(QDBusArgument &argument, const KGlobalShortcutInfo &shortcut);
 
-KGLOBALACCEL_EXPORT const QDBusArgument &operator>> (
-    const QDBusArgument &argument,
-    KGlobalShortcutInfo &shortcut);
+KGLOBALACCEL_EXPORT const QDBusArgument &operator>>(const QDBusArgument &argument, KGlobalShortcutInfo &shortcut);
 
 Q_DECLARE_METATYPE(KGlobalShortcutInfo)
 

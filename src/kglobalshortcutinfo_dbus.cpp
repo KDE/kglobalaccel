@@ -7,15 +7,11 @@
 #include "kglobalshortcutinfo.h"
 #include "kglobalshortcutinfo_p.h"
 
-QDBusArgument &operator<< (QDBusArgument &argument, const KGlobalShortcutInfo &shortcut)
+QDBusArgument &operator<<(QDBusArgument &argument, const KGlobalShortcutInfo &shortcut)
 {
     argument.beginStructure();
-    argument << shortcut.uniqueName()
-             << shortcut.friendlyName()
-             << shortcut.componentUniqueName()
-             << shortcut.componentFriendlyName()
-             << shortcut.contextUniqueName()
-             << shortcut.contextFriendlyName();
+    argument << shortcut.uniqueName() << shortcut.friendlyName() << shortcut.componentUniqueName() << shortcut.componentFriendlyName()
+             << shortcut.contextUniqueName() << shortcut.contextFriendlyName();
     argument.beginArray(qMetaTypeId<int>());
     for (const QKeySequence &key : shortcut.keys()) {
         argument << key[0];
@@ -30,15 +26,11 @@ QDBusArgument &operator<< (QDBusArgument &argument, const KGlobalShortcutInfo &s
     return argument;
 }
 
-const QDBusArgument &operator>> (const QDBusArgument &argument, KGlobalShortcutInfo &shortcut)
+const QDBusArgument &operator>>(const QDBusArgument &argument, KGlobalShortcutInfo &shortcut)
 {
     argument.beginStructure();
-    argument >> shortcut.d->uniqueName
-             >> shortcut.d->friendlyName
-             >> shortcut.d->componentUniqueName
-             >> shortcut.d->componentFriendlyName
-             >> shortcut.d->contextUniqueName
-             >> shortcut.d->contextFriendlyName;
+    argument >> shortcut.d->uniqueName >> shortcut.d->friendlyName >> shortcut.d->componentUniqueName >> shortcut.d->componentFriendlyName
+        >> shortcut.d->contextUniqueName >> shortcut.d->contextFriendlyName;
     argument.beginArray();
     while (!argument.atEnd()) {
         int key;
@@ -56,4 +48,3 @@ const QDBusArgument &operator>> (const QDBusArgument &argument, KGlobalShortcutI
     argument.endStructure();
     return argument;
 }
-

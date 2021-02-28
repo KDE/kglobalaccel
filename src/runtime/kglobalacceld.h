@@ -13,8 +13,8 @@
 
 #include <kglobalshortcutinfo.h>
 
-#include <QStringList>
 #include <QList>
+#include <QStringList>
 #include <QtDBus>
 
 struct KGlobalAccelDPrivate;
@@ -28,9 +28,7 @@ class KGLOBALACCELPRIVATE_EXPORT KGlobalAccelD : public QObject, protected QDBus
     Q_CLASSINFO("D-Bus Interface", "org.kde.KGlobalAccel")
 
 public:
-
-    enum SetShortcutFlag
-    {
+    enum SetShortcutFlag {
         SetPresent = 2,
         NoAutoloading = 4,
         IsDefault = 8,
@@ -39,7 +37,7 @@ public:
     Q_DECLARE_FLAGS(SetShortcutFlags, SetShortcutFlag)
     Q_FLAG(SetShortcutFlags)
 
-    explicit KGlobalAccelD(QObject* parent = nullptr);
+    explicit KGlobalAccelD(QObject *parent = nullptr);
     ~KGlobalAccelD();
 
     bool init();
@@ -59,10 +57,10 @@ public Q_SLOTS:
 
     Q_SCRIPTABLE QStringList action(int key) const;
 
-    //to be called by main components not owning the action
+    // to be called by main components not owning the action
     Q_SCRIPTABLE QList<int> shortcut(const QStringList &actionId) const;
 
-    //to be called by main components not owning the action
+    // to be called by main components not owning the action
     Q_SCRIPTABLE QList<int> defaultShortcut(const QStringList &actionId) const;
 
     /**
@@ -74,15 +72,14 @@ public Q_SLOTS:
      */
     Q_SCRIPTABLE QDBusObjectPath getComponent(const QString &componentUnique) const;
 
-    //to be called by main components owning the action
-    Q_SCRIPTABLE QList<int> setShortcut(const QStringList &actionId,
-                           const QList<int> &keys, uint flags);
+    // to be called by main components owning the action
+    Q_SCRIPTABLE QList<int> setShortcut(const QStringList &actionId, const QList<int> &keys, uint flags);
 
-    //this is used if application A wants to change shortcuts of application B
+    // this is used if application A wants to change shortcuts of application B
     Q_SCRIPTABLE void setForeignShortcut(const QStringList &actionId, const QList<int> &keys);
 
-    //to be called when a KAction is destroyed. The shortcut stays in the data structures for
-    //conflict resolution but won't trigger.
+    // to be called when a KAction is destroyed. The shortcut stays in the data structures for
+    // conflict resolution but won't trigger.
     Q_SCRIPTABLE void setInactive(const QStringList &actionId);
 
     Q_SCRIPTABLE void doRegister(const QStringList &actionId);
@@ -93,10 +90,7 @@ public Q_SLOTS:
     Q_SCRIPTABLE void unRegister(const QStringList &actionId);
 #endif
 
-    Q_SCRIPTABLE void activateGlobalShortcutContext(
-            const QString &component,
-            const QString &context);
-
+    Q_SCRIPTABLE void activateGlobalShortcutContext(const QString &component, const QString &context);
 
     /**
      * Returns the shortcuts registered for @p key.
@@ -109,9 +103,7 @@ public Q_SLOTS:
     /**
      * Return true if the @p shortcut is available for @p component.
      */
-    Q_SCRIPTABLE bool isGlobalShortcutAvailable(
-            int key,
-            const QString &component) const;
+    Q_SCRIPTABLE bool isGlobalShortcutAvailable(int key, const QString &component) const;
 
     /**
      * Delete the shortcut with @a component and @name.
@@ -124,9 +116,7 @@ public Q_SLOTS:
      *
      * @return @c true if the shortcuts was deleted, @c false if it didn't * exist.
      */
-    Q_SCRIPTABLE bool unregister(
-            const QString &componentUnique,
-            const QString &shortcutUnique);
+    Q_SCRIPTABLE bool unregister(const QString &componentUnique, const QString &shortcutUnique);
 
     Q_SCRIPTABLE void blockGlobalShortcuts(bool);
 
@@ -134,12 +124,10 @@ Q_SIGNALS:
 
     Q_SCRIPTABLE void yourShortcutGotChanged(const QStringList &actionId, const QList<int> &newKeys);
 
-
 private:
-
     void scheduleWriteSettings() const;
 
     KGlobalAccelDPrivate *const d;
 };
 
-#endif //KGLOBALACCELD_H
+#endif // KGLOBALACCELD_H

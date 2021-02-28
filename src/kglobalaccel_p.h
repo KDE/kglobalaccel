@@ -11,13 +11,13 @@
 #define KGLOBALACCEL_P_H
 
 #include <QHash>
-#include <QStringList>
 #include <QKeySequence>
 #include <QList>
+#include <QStringList>
 
 #include "kglobalaccel.h"
-#include "kglobalaccel_interface.h"
 #include "kglobalaccel_component_interface.h"
+#include "kglobalaccel_interface.h"
 
 enum SetShortcutFlag {
     SetPresent = 2,
@@ -38,19 +38,21 @@ public:
 
     Q_DECLARE_FLAGS(ShortcutTypes, ShortcutType)
     enum Removal {
-        SetInactive = 0,    ///< Forget the action in this class and mark it as not present in the KDED module
-        UnRegister,          ///< Remove any trace of the action in this class and in the KDED module
+        SetInactive = 0, ///< Forget the action in this class and mark it as not present in the KDED module
+        UnRegister, ///< Remove any trace of the action in this class and in the KDED module
     };
     KGlobalAccelPrivate(KGlobalAccel *);
 
-    ///Propagate any shortcut changes to the KDED module that does the bookkeeping
-    ///and the key grabbing.
+    /// Propagate any shortcut changes to the KDED module that does the bookkeeping
+    /// and the key grabbing.
     ///@todo KF6
-    void updateGlobalShortcut(/*const would be better*/QAction* action, KGlobalAccelPrivate::ShortcutTypes actionFlags, KGlobalAccel::GlobalShortcutLoading globalFlags);
+    void updateGlobalShortcut(/*const would be better*/ QAction *action,
+                              KGlobalAccelPrivate::ShortcutTypes actionFlags,
+                              KGlobalAccel::GlobalShortcutLoading globalFlags);
 
-    ///Register the action in this class and in the KDED module
-    bool doRegister(QAction *action);   //"register" is a C keyword :p
-    ///cf. the RemoveAction enum
+    /// Register the action in this class and in the KDED module
+    bool doRegister(QAction *action); //"register" is a C keyword :p
+    /// cf. the RemoveAction enum
     void remove(QAction *action, Removal r);
 
     //"private" helpers
@@ -62,13 +64,13 @@ public:
 
     void cleanup();
 
-    //private slot implementations
+    // private slot implementations
     void _k_invokeAction(const QString &, const QString &, qlonglong);
     void _k_shortcutGotChanged(const QStringList &, const QList<int> &);
     void _k_serviceOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner);
     void reRegisterAll();
 
-    //for all actions with (isEnabled() && globalShortcutAllowed())
+    // for all actions with (isEnabled() && globalShortcutAllowed())
     QMultiHash<QString, QAction *> nameToAction;
     QSet<QAction *> actions;
 
@@ -87,8 +89,8 @@ public:
 
     //! The components the application is using
     QHash<QString, org::kde::kglobalaccel::Component *> components;
-    QMap<const QAction *, QList<QKeySequence> > actionDefaultShortcuts;
-    QMap<const QAction *, QList<QKeySequence> > actionShortcuts;
+    QMap<const QAction *, QList<QKeySequence>> actionDefaultShortcuts;
+    QMap<const QAction *, QList<QKeySequence>> actionShortcuts;
 
     bool setShortcutWithDefault(QAction *action, const QList<QKeySequence> &shortcut, KGlobalAccel::GlobalShortcutLoading loadFlag);
 

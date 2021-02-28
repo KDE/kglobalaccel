@@ -12,36 +12,31 @@
 
 #include "kconfiggroup.h"
 
-#include <QObject>
 #include <QHash>
+#include <QObject>
 
 class GlobalShortcut;
 class GlobalShortcutContext;
 class GlobalShortcutsRegistry;
 
-
-namespace KdeDGlobalAccel {
-
+namespace KdeDGlobalAccel
+{
 /**
  * @author Michael Jansen <kde@michael-jansen.biz>
  */
 class Component : public QObject
-    {
+{
     Q_OBJECT
 
     Q_CLASSINFO("D-Bus Interface", "org.kde.kglobalaccel.Component")
 
-    Q_SCRIPTABLE Q_PROPERTY( QString friendlyName READ friendlyName )
-    Q_SCRIPTABLE Q_PROPERTY( QString uniqueName READ uniqueName )
+    Q_SCRIPTABLE Q_PROPERTY(QString friendlyName READ friendlyName) Q_SCRIPTABLE Q_PROPERTY(QString uniqueName READ uniqueName)
 
-public:
+        public :
 
-    //! Creates a new component. The component will be registered with @p
-    //! registry if specified and registered with dbus.
-    Component(
-            const QString &uniqueName,
-            const QString &friendlyName,
-            GlobalShortcutsRegistry *registry = nullptr);
+        //! Creates a new component. The component will be registered with @p
+        //! registry if specified and registered with dbus.
+        Component(const QString &uniqueName, const QString &friendlyName, GlobalShortcutsRegistry *registry = nullptr);
 
     ~Component();
 
@@ -53,16 +48,16 @@ public:
     QList<GlobalShortcut *> allShortcuts(const QString &context = QStringLiteral("default")) const;
 
     //! Creates the new global shortcut context @p context
-    bool createGlobalShortcutContext(const QString &context, const QString &friendlyName=QString());
+    bool createGlobalShortcutContext(const QString &context, const QString &friendlyName = QString());
 
     //! Return the current context
-    GlobalShortcutContext* currentContext();
+    GlobalShortcutContext *currentContext();
 
     //! Return uniqueName converted to a valid dbus path
     QDBusObjectPath dbusPath() const;
 
     //! Deactivate all currently active shortcuts
-    void deactivateShortcuts(bool temporarily=false);
+    void deactivateShortcuts(bool temporarily = false);
 
     //! Returns the friendly name
     QString friendlyName() const;
@@ -82,17 +77,12 @@ public:
 
     //! Returns the shortcut by unique name. Only the active context is
     //! searched.
-    GlobalShortcut *getShortcutByName(
-            const QString &uniqueName,
-            const QString &context = QStringLiteral("default")) const;
+    GlobalShortcut *getShortcutByName(const QString &uniqueName, const QString &context = QStringLiteral("default")) const;
 
     /**
      * Check if @a key is available for component @p component
      */
-    bool isShortcutAvailable(
-            int key,
-            const QString &component,
-            const QString &context) const;
+    bool isShortcutAvailable(int key, const QString &component, const QString &context) const;
 
     //! Load the settings from config group @p config
     void loadSettings(KConfigGroup &config);
@@ -117,7 +107,8 @@ protected:
      *                   such as "CTRL+S", when the user choses to reset to default
      *                   the keyboard shortcut will return to this one.
      */
-    GlobalShortcut *registerShortcut(const QString &uniqueName, const QString &friendlyName, const QString &shortcutString, const QString &defaultShortcutString);
+    GlobalShortcut *
+    registerShortcut(const QString &uniqueName, const QString &friendlyName, const QString &shortcutString, const QString &defaultShortcutString);
 
 public Q_SLOTS:
 
@@ -164,19 +155,17 @@ Q_SIGNALS:
     Q_SCRIPTABLE void globalShortcutPressed(const QString &componentUnique, const QString &shortcutUnique, qlonglong timestamp);
 
 private:
-
     QString _uniqueName;
-    //the name as it would be found in a magazine article about the application,
-    //possibly localized if a localized name exists.
+    // the name as it would be found in a magazine article about the application,
+    // possibly localized if a localized name exists.
     QString _friendlyName;
 
     GlobalShortcutsRegistry *_registry;
 
     GlobalShortcutContext *_current;
     QHash<QString, GlobalShortcutContext *> _contexts;
-    };
+};
 
 }
-
 
 #endif /* #ifndef COMPONENT_H */

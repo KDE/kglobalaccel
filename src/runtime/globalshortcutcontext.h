@@ -9,11 +9,12 @@
 
 #include "kglobalshortcutinfo.h"
 
-#include <QString>
 #include <QHash>
+#include <QString>
 
-namespace KdeDGlobalAccel {
-    class Component;
+namespace KdeDGlobalAccel
+{
+class Component;
 }
 
 class GlobalShortcut;
@@ -22,16 +23,12 @@ class GlobalShortcut;
  * @author Michael Jansen <kde@michael-jansen.biz>
  */
 class GlobalShortcutContext
-    {
+{
 public:
-
     /**
      * Default constructor
      */
-    GlobalShortcutContext(
-            const QString &uniqueName,
-            const QString &friendlyName,
-            KdeDGlobalAccel::Component *component );
+    GlobalShortcutContext(const QString &uniqueName, const QString &friendlyName, KdeDGlobalAccel::Component *component);
 
     /**
      * Destructor
@@ -60,7 +57,6 @@ public:
     GlobalShortcut *takeShortcut(GlobalShortcut *shortcut);
 
 private:
-
     friend class KdeDGlobalAccel::Component;
 
     //! The unique name for this context
@@ -73,8 +69,7 @@ private:
     KdeDGlobalAccel::Component *_component;
 
     //! The actions associated with this context
-    QHash<QString, GlobalShortcut*> _actions;
+    QHash<QString, GlobalShortcut *> _actions;
 };
-
 
 #endif /* #ifndef GLOBALSHORTCUTCONTEXT_H */

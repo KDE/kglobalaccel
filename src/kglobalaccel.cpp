@@ -9,17 +9,17 @@
 */
 
 #include "kglobalaccel.h"
-#include "kglobalaccel_p.h"
 #include "kglobalaccel_debug.h"
+#include "kglobalaccel_p.h"
 
 #include <memory>
 
 #include <QAction>
+#include <QDBusMessage>
+#include <QDBusMetaType>
 #include <QGuiApplication>
 #include <QMessageBox>
 #include <QPushButton>
-#include <QDBusMessage>
-#include <QDBusMetaType>
 #include <config-kglobalaccel.h>
 #if HAVE_X11
 #include <QX11Info>
@@ -36,10 +36,7 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
     }
 
     // Connect to the kglobalaccel daemon
-    org::kde::KGlobalAccel kglobalaccel(
-        QStringLiteral("org.kde.kglobalaccel"),
-        QStringLiteral("/kglobalaccel"),
-        QDBusConnection::sessionBus());
+    org::kde::KGlobalAccel kglobalaccel(QStringLiteral("org.kde.kglobalaccel"), QStringLiteral("/kglobalaccel"), QDBusConnection::sessionBus());
     if (!kglobalaccel.isValid()) {
         qCDebug(KGLOBALACCEL_LOG) << "Failed to connect to the kglobalaccel daemon" << QDBusConnection::sessionBus().lastError();
         return nullptr;
@@ -49,7 +46,6 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
     // componentUnique is probably not a valid dbus object path
     QDBusReply<QDBusObjectPath> reply = kglobalaccel.getComponent(componentUnique);
     if (!reply.isValid()) {
-
         if (reply.error().name() == QLatin1String("org.kde.kglobalaccel.NoSuchComponent")) {
             // No problem. The component doesn't exists. That's normal
             return nullptr;
@@ -61,11 +57,8 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
     }
 
     // Now get the component
-    org::kde::kglobalaccel::Component *component = new org::kde::kglobalaccel::Component(
-        QStringLiteral("org.kde.kglobalaccel"),
-        reply.value().path(),
-        QDBusConnection::sessionBus(),
-        q);
+    org::kde::kglobalaccel::Component *component =
+        new org::kde::kglobalaccel::Component(QStringLiteral("org.kde.kglobalaccel"), reply.value().path(), QDBusConnection::sessionBus(), q);
 
     // No component no cleaning
     if (!component->isValid()) {
@@ -75,8 +68,7 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
 
     if (remember) {
         // Connect to the signals we are interested in.
-        q->connect(component, SIGNAL(globalShortcutPressed(QString,QString,qlonglong)),
-                   SLOT(_k_invokeAction(QString,QString,qlonglong)));
+        q->connect(component, SIGNAL(globalShortcutPressed(QString, QString, qlonglong)), SLOT(_k_invokeAction(QString, QString, qlonglong)));
 
         components[componentUnique] = component;
     }
@@ -104,17 +96,14 @@ void KGlobalAccelPrivate::cleanup()
 KGlobalAccelPrivate::KGlobalAccelPrivate(KGlobalAccel *q)
     :
 #if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(4, 4)
-    enabled(true),
+    enabled(true)
+    ,
 #endif
-    q(q),
-    m_iface(nullptr)
+    q(q)
+    , m_iface(nullptr)
 {
-    m_watcher = new QDBusServiceWatcher(serviceName(),
-            QDBusConnection::sessionBus(),
-            QDBusServiceWatcher::WatchForOwnerChange,
-            q);
-    q->connect(m_watcher, SIGNAL(serviceOwnerChanged(QString,QString,QString)),
-               q, SLOT(_k_serviceOwnerChanged(QString,QString,QString)));
+    m_watcher = new QDBusServiceWatcher(serviceName(), QDBusConnection::sessionBus(), QDBusServiceWatcher::WatchForOwnerChange, q);
+    q->connect(m_watcher, SIGNAL(serviceOwnerChanged(QString, QString, QString)), q, SLOT(_k_serviceOwnerChanged(QString, QString, QString)));
 }
 
 org::kde::KGlobalAccel *KGlobalAccelPrivate::iface()
@@ -129,8 +118,7 @@ org::kde::KGlobalAccel *KGlobalAccelPrivate::iface()
                 qCritical() << "Couldn't start kglobalaccel from org.kde.kglobalaccel.service:" << reply.error();
             }
         }
-        q->connect(m_iface, SIGNAL(yourShortcutGotChanged(QStringList,QList<int>)),
-                SLOT(_k_shortcutGotChanged(QStringList,QList<int>)));
+        q->connect(m_iface, SIGNAL(yourShortcutGotChanged(QStringList, QList<int>)), SLOT(_k_shortcutGotChanged(QStringList, QList<int>)));
     }
     return m_iface;
 }
@@ -138,10 +126,10 @@ org::kde::KGlobalAccel *KGlobalAccelPrivate::iface()
 KGlobalAccel::KGlobalAccel()
     : d(new KGlobalAccelPrivate(this))
 {
-    qDBusRegisterMetaType<QList<int> >();
-    qDBusRegisterMetaType<QList<QStringList> >();
+    qDBusRegisterMetaType<QList<int>>();
+    qDBusRegisterMetaType<QList<QStringList>>();
     qDBusRegisterMetaType<KGlobalShortcutInfo>();
-    qDBusRegisterMetaType<QList<KGlobalShortcutInfo> >();
+    qDBusRegisterMetaType<QList<KGlobalShortcutInfo>>();
 }
 
 KGlobalAccel::~KGlobalAccel()
@@ -149,10 +137,7 @@ KGlobalAccel::~KGlobalAccel()
     delete d;
 }
 
-void KGlobalAccel::activateGlobalShortcutContext(
-    const QString &contextUnique,
-    const QString &contextFriendly,
-    const QString &programName)
+void KGlobalAccel::activateGlobalShortcutContext(const QString &contextUnique, const QString &contextFriendly, const QString &programName)
 {
     Q_UNUSED(contextFriendly);
     // TODO: provide contextFriendly
@@ -226,7 +211,7 @@ bool KGlobalAccelPrivate::doRegister(QAction *action)
 {
     if (!action || action->objectName().isEmpty() || action->objectName().startsWith(QLatin1String("unnamed-"))) {
         qWarning() << "Attempt to set global shortcut for action without objectName()."
-                   " Read the setGlobalShortcut() documentation.";
+                      " Read the setGlobalShortcut() documentation.";
         return false;
     }
 
@@ -252,7 +237,7 @@ bool KGlobalAccelPrivate::doRegister(QAction *action)
 
 void KGlobalAccelPrivate::remove(QAction *action, Removal removal)
 {
-    if (!action  || action->objectName().isEmpty()) {
+    if (!action || action->objectName().isEmpty()) {
         return;
     }
 
@@ -280,9 +265,7 @@ void KGlobalAccelPrivate::remove(QAction *action, Removal removal)
 
         if (!action->property("isConfigurationAction").toBool()) {
             // If it's a session shortcut unregister it.
-            action->objectName().startsWith(QLatin1String("_k_session:"))
-            ? unregister(actionId)
-            : setInactive(actionId);
+            action->objectName().startsWith(QLatin1String("_k_session:")) ? unregister(actionId) : setInactive(actionId);
         }
     }
 
@@ -306,7 +289,7 @@ void KGlobalAccelPrivate::setInactive(const QStringList &actionId)
     QDBusConnection::sessionBus().call(message, QDBus::NoBlock);
 }
 
-void KGlobalAccelPrivate::updateGlobalShortcut(/*const would be better*/QAction* action,
+void KGlobalAccelPrivate::updateGlobalShortcut(/*const would be better*/ QAction *action,
                                                ShortcutTypes actionFlags,
                                                KGlobalAccel::GlobalShortcutLoading globalFlags)
 {
@@ -333,10 +316,7 @@ void KGlobalAccelPrivate::updateGlobalShortcut(/*const would be better*/QAction*
         }
 
         // Sets the shortcut, returns the active/real keys
-        const auto result = iface()->setShortcut(
-                                      actionId,
-                                      intListFromShortcut(activeShortcut),
-                                      activeSetterFlags);
+        const auto result = iface()->setShortcut(actionId, intListFromShortcut(activeShortcut), activeSetterFlags);
 
         // Make sure we get informed about changes in the component by kglobalaccel
         getComponent(componentUniqueForAction(action), true);
@@ -367,20 +347,19 @@ void KGlobalAccelPrivate::updateGlobalShortcut(/*const would be better*/QAction*
 
     if (actionFlags & DefaultShortcut) {
         const QList<QKeySequence> defaultShortcut = actionDefaultShortcuts.value(action);
-        iface()->setShortcut(actionId, intListFromShortcut(defaultShortcut),
-                          setterFlags | IsDefault);
+        iface()->setShortcut(actionId, intListFromShortcut(defaultShortcut), setterFlags | IsDefault);
     }
 }
 
 QStringList KGlobalAccelPrivate::makeActionId(const QAction *action)
 {
-    QStringList ret(componentUniqueForAction(action));  // Component Unique Id ( see actionIdFields )
+    QStringList ret(componentUniqueForAction(action)); // Component Unique Id ( see actionIdFields )
     Q_ASSERT(!ret.at(KGlobalAccel::ComponentUnique).isEmpty());
     Q_ASSERT(!action->objectName().isEmpty());
-    ret.append(action->objectName());                   // Action Unique Name
-    ret.append(componentFriendlyForAction(action));     // Component Friendly name
+    ret.append(action->objectName()); // Action Unique Name
+    ret.append(componentFriendlyForAction(action)); // Component Friendly name
     const QString actionText = action->text().replace(QLatin1Char('&'), QStringLiteral(""));
-    ret.append(actionText);                             // Action Friendly Name
+    ret.append(actionText); // Action Friendly Name
     return ret;
 }
 
@@ -434,14 +413,11 @@ int _k_timestampCompare(unsigned long time1_, unsigned long time2_) // like strc
     if (time1 == time2) {
         return 0;
     }
-    return quint32(time1 - time2) < 0x7fffffffU ? 1 : -1;   // time1 > time2 -> 1, handle wrapping
+    return quint32(time1 - time2) < 0x7fffffffU ? 1 : -1; // time1 > time2 -> 1, handle wrapping
 }
 #endif
 
-void KGlobalAccelPrivate::_k_invokeAction(
-    const QString &componentUnique,
-    const QString &actionUnique,
-    qlonglong timestamp)
+void KGlobalAccelPrivate::_k_invokeAction(const QString &componentUnique, const QString &actionUnique, qlonglong timestamp)
 {
     QAction *action = nullptr;
     const QList<QAction *> candidates = nameToAction.values(actionUnique);
@@ -478,8 +454,7 @@ void KGlobalAccelPrivate::_k_invokeAction(
     action->trigger();
 }
 
-void KGlobalAccelPrivate::_k_shortcutGotChanged(const QStringList &actionId,
-        const QList<int> &keys)
+void KGlobalAccelPrivate::_k_shortcutGotChanged(const QStringList &actionId, const QList<int> &keys)
 {
     QAction *action = nameToAction.value(actionId.at(KGlobalAccel::ActionUnique));
     if (!action) {
@@ -491,8 +466,7 @@ void KGlobalAccelPrivate::_k_shortcutGotChanged(const QStringList &actionId,
     Q_EMIT q->globalShortcutChanged(action, keys.isEmpty() ? QKeySequence() : shortcuts.first());
 }
 
-void KGlobalAccelPrivate::_k_serviceOwnerChanged(const QString &name, const QString &oldOwner,
-        const QString &newOwner)
+void KGlobalAccelPrivate::_k_serviceOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner)
 {
     Q_UNUSED(oldOwner);
     if (name == QLatin1String("org.kde.kglobalaccel") && !newOwner.isEmpty()) {
@@ -504,13 +478,13 @@ void KGlobalAccelPrivate::_k_serviceOwnerChanged(const QString &name, const QStr
 
 void KGlobalAccelPrivate::reRegisterAll()
 {
-    //We clear all our data, assume that all data on the other side is clear too,
-    //and register each action as if it just was allowed to have global shortcuts.
-    //If the kded side still has the data it doesn't matter because of the
-    //autoloading mechanism. The worst case I can imagine is that an action's
-    //shortcut was changed but the kded side died before it got the message so
-    //autoloading will now assign an old shortcut to the action. Particularly
-    //picky apps might assert or misbehave.
+    // We clear all our data, assume that all data on the other side is clear too,
+    // and register each action as if it just was allowed to have global shortcuts.
+    // If the kded side still has the data it doesn't matter because of the
+    // autoloading mechanism. The worst case I can imagine is that an action's
+    // shortcut was changed but the kded side died before it got the message so
+    // autoloading will now assign an old shortcut to the action. Particularly
+    // picky apps might assert or misbehave.
     const QSet<QAction *> allActions = actions;
     nameToAction.clear();
     actions.clear();
@@ -535,7 +509,7 @@ QList<QStringList> KGlobalAccel::allActionsForComponent(const QStringList &actio
 }
 #endif
 
-//static
+// static
 #if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(4, 2)
 QStringList KGlobalAccel::findActionNameSystemwide(const QKeySequence &seq)
 {
@@ -553,10 +527,9 @@ bool KGlobalAccel::isGlobalShortcutAvailable(const QKeySequence &seq, const QStr
     return self()->d->iface()->isGlobalShortcutAvailable(seq[0], comp);
 }
 
-//static
+// static
 #if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(4, 2)
-bool KGlobalAccel::promptStealShortcutSystemwide(QWidget *parent, const QStringList &actionIdentifier,
-        const QKeySequence &seq)
+bool KGlobalAccel::promptStealShortcutSystemwide(QWidget *parent, const QStringList &actionIdentifier, const QKeySequence &seq)
 {
     if (actionIdentifier.size() < 4) {
         return false;
@@ -565,9 +538,7 @@ bool KGlobalAccel::promptStealShortcutSystemwide(QWidget *parent, const QStringL
     QString message = tr("The '%1' key combination has already been allocated "
                          "to the global action \"%2\" in %3.\n"
                          "Do you want to reassign it from that action to the current one?")
-                      .arg(seq.toString(),
-                           actionIdentifier.at(KGlobalAccel::ActionFriendly),
-                           actionIdentifier.at(KGlobalAccel::ComponentFriendly));
+                          .arg(seq.toString(), actionIdentifier.at(KGlobalAccel::ActionFriendly), actionIdentifier.at(KGlobalAccel::ComponentFriendly));
 
     QMessageBox box(parent);
     box.setWindowTitle(title);
@@ -579,11 +550,8 @@ bool KGlobalAccel::promptStealShortcutSystemwide(QWidget *parent, const QStringL
 }
 #endif
 
-//static
-bool KGlobalAccel::promptStealShortcutSystemwide(
-    QWidget *parent,
-    const QList<KGlobalShortcutInfo> &shortcuts,
-    const QKeySequence &seq)
+// static
+bool KGlobalAccel::promptStealShortcutSystemwide(QWidget *parent, const QList<KGlobalShortcutInfo> &shortcuts, const QKeySequence &seq)
 {
     if (shortcuts.isEmpty()) {
         // Usage error. Just say no
@@ -594,16 +562,13 @@ bool KGlobalAccel::promptStealShortcutSystemwide(
 
     QString message;
     if (shortcuts.size() == 1) {
-        message = tr("The '%1' key combination is registered by application %2 for action %3:")
-                  .arg(seq.toString(), component, shortcuts[0].friendlyName());
+        message = tr("The '%1' key combination is registered by application %2 for action %3:").arg(seq.toString(), component, shortcuts[0].friendlyName());
     } else {
         QString actionList;
         for (const KGlobalShortcutInfo &info : shortcuts) {
-            actionList += tr("In context '%1' for action '%2'\n")
-                          .arg(info.contextFriendlyName(), info.friendlyName());
+            actionList += tr("In context '%1' for action '%2'\n").arg(info.contextFriendlyName(), info.friendlyName());
         }
-        message = tr("The '%1' key combination is registered by application %2.\n%3")
-                  .arg(seq.toString(), component, actionList);
+        message = tr("The '%1' key combination is registered by application %2.\n%3").arg(seq.toString(), component, actionList);
     }
 
     QString title = tr("Conflict With Registered Global Shortcut");
@@ -617,10 +582,10 @@ bool KGlobalAccel::promptStealShortcutSystemwide(
     return box.exec() == QMessageBox::Ok;
 }
 
-//static
+// static
 void KGlobalAccel::stealShortcutSystemwide(const QKeySequence &seq)
 {
-    //get the shortcut, remove seq, and set the new shortcut
+    // get the shortcut, remove seq, and set the new shortcut
     const QStringList actionId = self()->d->iface()->action(seq[0]);
     if (actionId.size() < 4) { // not a global shortcut
         return;
@@ -690,7 +655,7 @@ QList<QKeySequence> KGlobalAccel::shortcut(const QAction *action) const
     return d->actionShortcuts.value(action);
 }
 
-QList<QKeySequence> KGlobalAccel::globalShortcut(const QString& componentName, const QString& actionId) const
+QList<QKeySequence> KGlobalAccel::globalShortcut(const QString &componentName, const QString &actionId) const
 {
     // see also d->updateGlobalShortcut(action, KGlobalAccelPrivate::ActiveShortcut, KGlobalAccel::Autoloading);
 
@@ -698,7 +663,7 @@ QList<QKeySequence> KGlobalAccel::globalShortcut(const QString& componentName, c
     // action->setProperty("componentName", "kwin");
     // action->setObjectName("Kill Window");
 
-    const QList<int> result = self()->d->iface()->shortcut({ componentName, actionId, QString(), QString() });
+    const QList<int> result = self()->d->iface()->shortcut({componentName, actionId, QString(), QString()});
     const QList<QKeySequence> scResult(d->shortcutFromIntList(result));
     return scResult;
 }
@@ -731,7 +696,7 @@ bool KGlobalAccel::setGlobalShortcut(QAction *action, const QKeySequence &shortc
     return KGlobalAccel::setGlobalShortcut(action, QList<QKeySequence>() << shortcut);
 }
 
-bool KGlobalAccelPrivate::setShortcutWithDefault(QAction* action, const QList<QKeySequence>& shortcut, KGlobalAccel::GlobalShortcutLoading loadFlag)
+bool KGlobalAccelPrivate::setShortcutWithDefault(QAction *action, const QList<QKeySequence> &shortcut, KGlobalAccel::GlobalShortcutLoading loadFlag)
 {
     if (checkGarbageKeycode(shortcut)) {
         return false;
@@ -748,4 +713,3 @@ bool KGlobalAccelPrivate::setShortcutWithDefault(QAction* action, const QList<QK
 }
 
 #include "moc_kglobalaccel.cpp"
-

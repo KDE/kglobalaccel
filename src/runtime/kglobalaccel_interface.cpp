@@ -12,13 +12,15 @@ class KGlobalAccelInterface::Private
 {
 public:
     Private(GlobalShortcutsRegistry *owner)
-        : owner(owner) {}
+        : owner(owner)
+    {
+    }
     GlobalShortcutsRegistry *owner;
 };
 
 KGlobalAccelInterface::KGlobalAccelInterface(QObject *owner)
     : QObject(owner)
-    , d(new Private(qobject_cast<GlobalShortcutsRegistry*>(owner)))
+    , d(new Private(qobject_cast<GlobalShortcutsRegistry *>(owner)))
 {
 }
 

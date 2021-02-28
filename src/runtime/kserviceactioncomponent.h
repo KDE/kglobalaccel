@@ -12,8 +12,8 @@
 
 #include <KDesktopFile>
 
-namespace KdeDGlobalAccel {
-
+namespace KdeDGlobalAccel
+{
 /**
  * @author Michael Jansen <kde@michael-jansen.biz>
  */
@@ -22,13 +22,9 @@ class KServiceActionComponent : public Component
     Q_OBJECT
 
 public:
-
     //! Creates a new component. The component will be registered with @p
     //! registry if specified and registered with dbus.
-    KServiceActionComponent(
-            const QString &serviceStorageId,
-            const QString &friendlyName,
-            GlobalShortcutsRegistry *registry = nullptr);
+    KServiceActionComponent(const QString &serviceStorageId, const QString &friendlyName, GlobalShortcutsRegistry *registry = nullptr);
 
     ~KServiceActionComponent() override;
 
@@ -42,9 +38,6 @@ private:
     QScopedPointer<KDesktopFile> m_desktopFile;
 };
 
-
-
 }
-
 
 #endif /* #ifndef COMPONENT_H */

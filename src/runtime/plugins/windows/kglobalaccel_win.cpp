@@ -12,22 +12,23 @@
 #include <QWidgetList>
 #ifdef Q_OS_WIN
 
-#include "kglobalaccel.h"
 #include "globalshortcutsregistry.h"
+#include "kglobalaccel.h"
 #include "logging_p.h"
 
 #include <QDebug>
 
 #include <windows.h>
 
-KGlobalAccelImpl::KGlobalAccelImpl(GlobalShortcutsRegistry* owner)
-    : m_owner(owner), m_enabled(false)
+KGlobalAccelImpl::KGlobalAccelImpl(GlobalShortcutsRegistry *owner)
+    : m_owner(owner)
+    , m_enabled(false)
 {
 }
 
-bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
+bool KGlobalAccelImpl::grabKey(int keyQt, bool grab)
 {
-    if( !keyQt ) {
+    if (!keyQt) {
         qCWarning(KGLOBALACCELD) << "Tried to grab key with null code.";
         return false;
     }
@@ -48,12 +49,12 @@ bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
     return b;
 }
 
-void KGlobalAccelImpl::setEnabled( bool enable )
+void KGlobalAccelImpl::setEnabled(bool enable)
 {
     m_enabled = enable;
 }
 
-bool KGlobalAccelImpl::winEvent( MSG * message, long * result )
+bool KGlobalAccelImpl::winEvent(MSG *message, long *result)
 {
     if (message->message == WM_HOTKEY) {
         uint keyCodeW = HIWORD(message->lParam);
@@ -67,6 +68,5 @@ bool KGlobalAccelImpl::winEvent( MSG * message, long * result )
     }
     return false;
 }
-
 
 #endif // Q_OS_WIN

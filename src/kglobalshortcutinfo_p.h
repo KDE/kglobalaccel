@@ -27,4 +27,3 @@ public:
 };
 
 #endif /* #ifndef KGLOBALSHORTCUTINFO_P_H */
-
