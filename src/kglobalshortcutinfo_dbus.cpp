@@ -10,8 +10,14 @@
 QDBusArgument &operator<<(QDBusArgument &argument, const KGlobalShortcutInfo &shortcut)
 {
     argument.beginStructure();
-    argument << shortcut.uniqueName() << shortcut.friendlyName() << shortcut.componentUniqueName() << shortcut.componentFriendlyName()
-             << shortcut.contextUniqueName() << shortcut.contextFriendlyName();
+    /* clang-format off */
+    argument << shortcut.uniqueName()
+             << shortcut.friendlyName()
+             << shortcut.componentUniqueName()
+             << shortcut.componentFriendlyName()
+             << shortcut.contextUniqueName()
+             << shortcut.contextFriendlyName();
+    /* clang-format on */
     argument.beginArray(qMetaTypeId<int>());
     for (const QKeySequence &key : shortcut.keys()) {
         argument << key[0];
@@ -29,8 +35,15 @@ QDBusArgument &operator<<(QDBusArgument &argument, const KGlobalShortcutInfo &sh
 const QDBusArgument &operator>>(const QDBusArgument &argument, KGlobalShortcutInfo &shortcut)
 {
     argument.beginStructure();
-    argument >> shortcut.d->uniqueName >> shortcut.d->friendlyName >> shortcut.d->componentUniqueName >> shortcut.d->componentFriendlyName
-        >> shortcut.d->contextUniqueName >> shortcut.d->contextFriendlyName;
+    /* clang-format off */
+    argument >> shortcut.d->uniqueName
+             >> shortcut.d->friendlyName
+             >> shortcut.d->componentUniqueName
+             >> shortcut.d->componentFriendlyName
+             >> shortcut.d->contextUniqueName
+             >> shortcut.d->contextFriendlyName;
+    /* clang-format on */
+
     argument.beginArray();
     while (!argument.atEnd()) {
         int key;

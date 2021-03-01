@@ -176,7 +176,9 @@ QDBusObjectPath Component::dbusPath() const
 void Component::deactivateShortcuts(bool temporarily)
 {
     for (GlobalShortcut *shortcut : qAsConst(_current->_actions)) {
-        if (temporarily && uniqueName() == QLatin1String("kwin") && shortcut->uniqueName() == QLatin1String("Block Global Shortcuts")) {
+        if (temporarily //
+            && uniqueName() == QLatin1String("kwin") //
+            && shortcut->uniqueName() == QLatin1String("Block Global Shortcuts")) {
             continue;
         }
         shortcut->setInactive();

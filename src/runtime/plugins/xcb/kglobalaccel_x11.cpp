@@ -117,8 +117,12 @@ bool KGlobalAccelImpl::grabKey(int keyQt, bool grab)
 
         // Check if shift needs to be added to the grab since KKeySequenceWidget
         // can remove shift for some keys. (all the %&* and such)
-        if (!(keyQt & Qt::SHIFT) && !KKeyServer::isShiftAsModifierAllowed(keyQt) && !(keyQt & Qt::KeypadModifier)
-            && keySymX != xcb_key_symbols_get_keysym(m_keySymbols, keyCodeX, 0) && keySymX == xcb_key_symbols_get_keysym(m_keySymbols, keyCodeX, 1)) {
+        /* clang-format off */
+        if (!(keyQt & Qt::SHIFT)
+            && !KKeyServer::isShiftAsModifierAllowed(keyQt)
+            && !(keyQt & Qt::KeypadModifier)
+            && keySymX != xcb_key_symbols_get_keysym(m_keySymbols, keyCodeX, 0)
+            && keySymX == xcb_key_symbols_get_keysym(m_keySymbols, keyCodeX, 1)) { /* clang-format on */
             qCDebug(KGLOBALACCELD) << "adding shift to the grab";
             keyModX |= KKeyServer::modXShift();
         }
@@ -145,7 +149,7 @@ bool KGlobalAccelImpl::grabKey(int keyQt, bool grab)
 #ifndef NDEBUG
                 sDebug += QString("0x%3, ").arg(irrelevantBitsMask, 0, 16);
 #endif
-                if (grab)
+                if (grab) {
                     cookies << xcb_grab_key_checked(QX11Info::connection(),
                                                     true,
                                                     QX11Info::appRootWindow(),
@@ -153,8 +157,13 @@ bool KGlobalAccelImpl::grabKey(int keyQt, bool grab)
                                                     keyCodeX,
                                                     XCB_GRAB_MODE_ASYNC,
                                                     XCB_GRAB_MODE_SYNC);
-                else
-                    cookies << xcb_ungrab_key_checked(QX11Info::connection(), keyCodeX, QX11Info::appRootWindow(), keyModX | irrelevantBitsMask);
+                } else {
+                    /* clang-format off */
+                    cookies << xcb_ungrab_key_checked(QX11Info::connection(),
+                                                      keyCodeX, QX11Info::appRootWindow(),
+                                                      keyModX | irrelevantBitsMask);
+                    /* clang-format on */
+                }
             }
         }
 

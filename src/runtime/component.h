@@ -30,13 +30,13 @@ class Component : public QObject
 
     Q_CLASSINFO("D-Bus Interface", "org.kde.kglobalaccel.Component")
 
-    Q_SCRIPTABLE Q_PROPERTY(QString friendlyName READ friendlyName) Q_SCRIPTABLE Q_PROPERTY(QString uniqueName READ uniqueName)
+    Q_SCRIPTABLE Q_PROPERTY(QString friendlyName READ friendlyName);
+    Q_SCRIPTABLE Q_PROPERTY(QString uniqueName READ uniqueName);
 
-        public :
-
-        //! Creates a new component. The component will be registered with @p
-        //! registry if specified and registered with dbus.
-        Component(const QString &uniqueName, const QString &friendlyName, GlobalShortcutsRegistry *registry = nullptr);
+public:
+    //! Creates a new component. The component will be registered with @p
+    //! registry if specified and registered with dbus.
+    Component(const QString &uniqueName, const QString &friendlyName, GlobalShortcutsRegistry *registry = nullptr);
 
     ~Component();
 

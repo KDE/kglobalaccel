@@ -25,19 +25,20 @@ class KGLOBALACCEL_EXPORT KGlobalShortcutInfo : public QObject
 
     Q_CLASSINFO("D-Bus Interface", "org.kde.kglobalaccel.KShortcutInfo")
 
-    Q_SCRIPTABLE Q_PROPERTY(QString uniqueName READ uniqueName) Q_SCRIPTABLE Q_PROPERTY(QString friendlyName READ friendlyName)
+    Q_SCRIPTABLE Q_PROPERTY(QString uniqueName READ uniqueName);
+    Q_SCRIPTABLE Q_PROPERTY(QString friendlyName READ friendlyName);
 
-        Q_SCRIPTABLE Q_PROPERTY(QString componentUniqueName READ componentUniqueName) Q_SCRIPTABLE
-        Q_PROPERTY(QString componentFriendlyName READ componentFriendlyName)
+    Q_SCRIPTABLE Q_PROPERTY(QString componentUniqueName READ componentUniqueName);
+    Q_SCRIPTABLE Q_PROPERTY(QString componentFriendlyName READ componentFriendlyName);
 
-            Q_SCRIPTABLE Q_PROPERTY(QString contextUniqueName READ contextUniqueName) Q_SCRIPTABLE
-        Q_PROPERTY(QString contextFriendlyName READ contextFriendlyName)
+    Q_SCRIPTABLE Q_PROPERTY(QString contextUniqueName READ contextUniqueName);
+    Q_SCRIPTABLE Q_PROPERTY(QString contextFriendlyName READ contextFriendlyName);
 
-            Q_SCRIPTABLE Q_PROPERTY(QList<QKeySequence> keys READ keys) Q_SCRIPTABLE Q_PROPERTY(QList<QKeySequence> defaultKeys READ keys)
+    Q_SCRIPTABLE Q_PROPERTY(QList<QKeySequence> keys READ keys);
+    Q_SCRIPTABLE Q_PROPERTY(QList<QKeySequence> defaultKeys READ keys);
 
-                public :
-
-        KGlobalShortcutInfo();
+public:
+    KGlobalShortcutInfo();
 
     KGlobalShortcutInfo(const KGlobalShortcutInfo &rhs);
 
