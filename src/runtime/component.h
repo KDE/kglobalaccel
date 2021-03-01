@@ -30,8 +30,10 @@ class Component : public QObject
 
     Q_CLASSINFO("D-Bus Interface", "org.kde.kglobalaccel.Component")
 
+    /* clang-format off */
     Q_SCRIPTABLE Q_PROPERTY(QString friendlyName READ friendlyName);
     Q_SCRIPTABLE Q_PROPERTY(QString uniqueName READ uniqueName);
+    /* clang-format on */
 
 public:
     //! Creates a new component. The component will be registered with @p
