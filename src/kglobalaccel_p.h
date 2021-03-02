@@ -75,7 +75,7 @@ public:
     QSet<QAction *> actions;
 
 #if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(4, 4)
-    bool enabled;
+    bool enabled = true;
 #endif
 
     org::kde::KGlobalAccel *iface();
@@ -98,7 +98,7 @@ public:
     void setInactive(const QStringList &actionId);
 
 private:
-    org::kde::KGlobalAccel *m_iface;
+    org::kde::KGlobalAccel *m_iface = nullptr;
     QDBusServiceWatcher *m_watcher;
 };
 

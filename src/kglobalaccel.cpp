@@ -94,12 +94,7 @@ void KGlobalAccelPrivate::cleanup()
 }
 
 KGlobalAccelPrivate::KGlobalAccelPrivate(KGlobalAccel *q)
-    :
-#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(4, 4)
-    enabled(true)
-#endif
-    , q(q)
-    , m_iface(nullptr)
+    : q(q)
 {
     m_watcher = new QDBusServiceWatcher(serviceName(), QDBusConnection::sessionBus(), QDBusServiceWatcher::WatchForOwnerChange, q);
     q->connect(m_watcher, SIGNAL(serviceOwnerChanged(QString, QString, QString)), q, SLOT(_k_serviceOwnerChanged(QString, QString, QString)));
