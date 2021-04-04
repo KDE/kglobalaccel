@@ -37,7 +37,7 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX KGLOBALACCEL
                         SOVERSION 5)
 
 # Dependencies
-set(REQUIRED_QT_VERSION 5.14.0)
+set(REQUIRED_QT_VERSION 5.15.0)
 find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus Widgets)
 
 # Dependencies of runtime component
@@ -64,7 +64,7 @@ if(X11_FOUND AND XCB_XCB_FOUND)
     set(HAVE_X11 1)
     find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED X11Extras)
 endif()
-add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050e00)
+add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050f00)
 add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x055000)
 # Subdirectories
 if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/po")
