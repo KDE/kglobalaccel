@@ -35,16 +35,9 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
         }
     }
 
-    // Connect to the kglobalaccel daemon
-    org::kde::KGlobalAccel kglobalaccel(QStringLiteral("org.kde.kglobalaccel"), QStringLiteral("/kglobalaccel"), QDBusConnection::sessionBus());
-    if (!kglobalaccel.isValid()) {
-        qCDebug(KGLOBALACCEL_LOG) << "Failed to connect to the kglobalaccel daemon" << QDBusConnection::sessionBus().lastError();
-        return nullptr;
-    }
-
     // Get the path for our component. We have to do that because
     // componentUnique is probably not a valid dbus object path
-    QDBusReply<QDBusObjectPath> reply = kglobalaccel.getComponent(componentUnique);
+    QDBusReply<QDBusObjectPath> reply = iface()->getComponent(componentUnique);
     if (!reply.isValid()) {
         if (reply.error().name() == QLatin1String("org.kde.kglobalaccel.NoSuchComponent")) {
             // No problem. The component doesn't exists. That's normal
