@@ -178,7 +178,7 @@ bool KGlobalAccelD::init()
     Q_ASSERT(reg);
 
     d->writeoutTimer.setSingleShot(true);
-    connect(&d->writeoutTimer, SIGNAL(timeout()), reg, SLOT(writeSettings()));
+    connect(&d->writeoutTimer, &QTimer::timeout, reg, &GlobalShortcutsRegistry::writeSettings);
 
     if (!QDBusConnection::sessionBus().registerService(QLatin1String("org.kde.kglobalaccel"))) {
         qCWarning(KGLOBALACCELD) << "Failed to register service org.kde.kglobalaccel";

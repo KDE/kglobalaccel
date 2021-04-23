@@ -144,7 +144,7 @@ void KGlobalShortcutTest::testActivateShortcut()
     if (!m_daemonInstalled) {
         QSKIP("kglobalaccel not installed");
     }
-    QSignalSpy actionASpy(m_actionA, SIGNAL(triggered(bool)));
+    QSignalSpy actionASpy(m_actionA, &QAction::triggered);
     QVERIFY(actionASpy.isValid());
 
     xcb_connection_t *c = QX11Info::connection();

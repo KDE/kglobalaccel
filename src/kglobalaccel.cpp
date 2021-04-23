@@ -73,7 +73,12 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
 
     if (remember) {
         // Connect to the signals we are interested in.
-        q->connect(component, SIGNAL(globalShortcutPressed(QString, QString, qlonglong)), SLOT(_k_invokeAction(QString, QString, qlonglong)));
+        q->connect(component,
+                   &org::kde::kglobalaccel::Component::globalShortcutPressed,
+                   q,
+                   [this](const QString &componentUnique, const QString &shortcutUnique, qlonglong timestamp) {
+                       _k_invokeAction(componentUnique, shortcutUnique, timestamp);
+                   });
 
         components[componentUnique] = component;
     }
@@ -102,7 +107,9 @@ KGlobalAccelPrivate::KGlobalAccelPrivate(KGlobalAccel *q)
     : q(q)
 {
     m_watcher = new QDBusServiceWatcher(serviceName(), QDBusConnection::sessionBus(), QDBusServiceWatcher::WatchForOwnerChange, q);
-    q->connect(m_watcher, SIGNAL(serviceOwnerChanged(QString, QString, QString)), q, SLOT(_k_serviceOwnerChanged(QString, QString, QString)));
+    q->connect(m_watcher, &QDBusServiceWatcher::serviceOwnerChanged, q, [this](const QString &serviceName, const QString &oldOwner, const QString &newOwner) {
+        _k_serviceOwnerChanged(serviceName, oldOwner, newOwner);
+    });
 }
 
 org::kde::KGlobalAccel *KGlobalAccelPrivate::iface()
@@ -117,7 +124,9 @@ org::kde::KGlobalAccel *KGlobalAccelPrivate::iface()
                 qCritical() << "Couldn't start kglobalaccel from org.kde.kglobalaccel.service:" << reply.error();
             }
         }
-        q->connect(m_iface, SIGNAL(yourShortcutGotChanged(QStringList, QList<int>)), SLOT(_k_shortcutGotChanged(QStringList, QList<int>)));
+        q->connect(m_iface, &org::kde::KGlobalAccel::yourShortcutGotChanged, q, [this](const QStringList &actionId, const QList<int> &newKeys) {
+            _k_shortcutGotChanged(actionId, newKeys);
+        });
     }
     return m_iface;
 }
