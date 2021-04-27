@@ -36,6 +36,32 @@ KServiceActionComponent::~KServiceActionComponent()
 {
 }
 
+void runProcess(const KConfigGroup &group, bool klauncherAvailable)
+{
+    QStringList parts = group.readEntry(QStringLiteral("Exec"), QString()).split(QChar(' '));
+    if (parts.isEmpty()) {
+        return;
+    }
+    const QString command = parts.first();
+    // sometimes entries have an %u for command line parameters
+    if (parts.last().contains(QChar('%'))) {
+        parts.pop_back();
+    }
+    parts.pop_front();
+
+    if (klauncherAvailable) {
+        QDBusMessage msg = QDBusMessage::createMethodCall(QStringLiteral("org.kde.klauncher5"),
+                                                          QStringLiteral("/KLauncher"),
+                                                          QStringLiteral("org.kde.KLauncher"),
+                                                          QStringLiteral("exec_blind"));
+        msg << command << parts;
+
+        QDBusConnection::sessionBus().asyncCall(msg);
+    } else {
+        QProcess::startDetached(command, parts);
+    }
+}
+
 void KServiceActionComponent::emitGlobalShortcutPressed(const GlobalShortcut &shortcut)
 {
     // DBusActivatatable spec as per https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#dbus
@@ -61,56 +87,13 @@ void KServiceActionComponent::emitGlobalShortcutPressed(const GlobalShortcut &sh
 
     // we can't use KRun there as it depends from KIO and would create a circular dep
     if (shortcut.uniqueName() == QLatin1String("_launch")) {
-        QStringList parts = m_desktopFile->desktopGroup().readEntry(QStringLiteral("Exec"), QString()).split(QChar(' '));
-        if (parts.isEmpty()) {
-            return;
-        }
-        const QString command = parts.first();
-        // sometimes entries have an %u for command line parameters
-        if (parts.last().contains(QChar('%'))) {
-            parts.pop_back();
-        }
-        parts.pop_front();
-
-        if (klauncherAvailable) {
-            QDBusMessage msg = QDBusMessage::createMethodCall(QStringLiteral("org.kde.klauncher5"),
-                                                              QStringLiteral("/KLauncher"),
-                                                              QStringLiteral("org.kde.KLauncher"),
-                                                              QStringLiteral("exec_blind"));
-            msg << command << parts;
-
-            QDBusConnection::sessionBus().asyncCall(msg);
-        } else {
-            QProcess::startDetached(command, parts);
-        }
+        runProcess(m_desktopFile->desktopGroup(), klauncherAvailable);
         return;
     }
     const auto lstActions = m_desktopFile->readActions();
     for (const QString &action : lstActions) {
         if (action == shortcut.uniqueName()) {
-            QStringList parts = m_desktopFile->actionGroup(action).readEntry(QStringLiteral("Exec"), QString()).split(QChar(' '));
-
-            if (parts.isEmpty()) {
-                return;
-            }
-            const QString command = parts.first();
-            // sometimes entries have an %u for command line parameters
-            if (parts.last().contains(QChar('%'))) {
-                parts.pop_back();
-            }
-            parts.pop_front();
-
-            if (klauncherAvailable) {
-                QDBusMessage msg = QDBusMessage::createMethodCall(QStringLiteral("org.kde.klauncher5"),
-                                                                  QStringLiteral("/KLauncher"),
-                                                                  QStringLiteral("org.kde.KLauncher"),
-                                                                  QStringLiteral("exec_blind"));
-                msg << command << parts;
-
-                QDBusConnection::sessionBus().asyncCall(msg);
-            } else {
-                QProcess::startDetached(command, parts);
-            }
+            runProcess(m_desktopFile->actionGroup(action), klauncherAvailable);
             return;
         }
     }
