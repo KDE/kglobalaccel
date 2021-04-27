@@ -58,7 +58,13 @@ void runProcess(const KConfigGroup &group, bool klauncherAvailable)
 
         QDBusConnection::sessionBus().asyncCall(msg);
     } else {
-        QProcess::startDetached(command, parts);
+        const auto kstart = QStandardPaths::findExecutable(QStringLiteral("kstart5"));
+        if (kstart.isEmpty()) {
+            QProcess::startDetached(command, parts);
+        } else {
+            parts.prepend(command);
+            QProcess::startDetached(kstart, parts);
+        }
     }
 }
 
