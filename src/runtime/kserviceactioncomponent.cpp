@@ -42,13 +42,12 @@ void runProcess(const KConfigGroup &group, bool klauncherAvailable)
     if (parts.isEmpty()) {
         return;
     }
-    const QString command = parts.first();
     // sometimes entries have an %u for command line parameters
     if (parts.last().contains(QChar('%'))) {
         parts.pop_back();
     }
-    parts.pop_front();
 
+    const QString command = parts.takeFirst();
     if (klauncherAvailable) {
         QDBusMessage msg = QDBusMessage::createMethodCall(QStringLiteral("org.kde.klauncher5"),
                                                           QStringLiteral("/KLauncher"),
