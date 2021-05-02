@@ -40,7 +40,7 @@ target_link_libraries(KF5GlobalAccelPrivate
    KF5::ConfigCore
 )
 
-set_target_properties(KF5GlobalAccelPrivate PROPERTIES VERSION   ${KGLOBALACCEL_VERSION_STRING}
+set_target_properties(KF5GlobalAccelPrivate PROPERTIES VERSION ${KGLOBALACCEL_VERSION}
                                                 SOVERSION ${KGLOBALACCEL_SOVERSION}
                                                 EXPORT_NAME "GlobalAccelPrivate"
 )

@@ -60,7 +60,7 @@ if(HAVE_X11)
     )
 endif()
 
-set_target_properties(KF5GlobalAccel PROPERTIES VERSION   ${KGLOBALACCEL_VERSION_STRING}
+set_target_properties(KF5GlobalAccel PROPERTIES VERSION   ${KGLOBALACCEL_VERSION}
                                                 SOVERSION ${KGLOBALACCEL_SOVERSION}
                                                 EXPORT_NAME "GlobalAccel"
 )
