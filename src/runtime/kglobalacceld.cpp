@@ -356,7 +356,7 @@ QDBusObjectPath KGlobalAccelD::getComponent(const QString &componentUnique) cons
     if (component) {
         return component->dbusPath();
     } else {
-        sendErrorReply("org.kde.kglobalaccel.NoSuchComponent", QString("The component '%1' doesn't exist.").arg(componentUnique));
+        sendErrorReply("org.kde.kglobalaccel.NoSuchComponent", QStringLiteral("The component '%1' doesn't exist.").arg(componentUnique));
         return QDBusObjectPath("/");
     }
 }
