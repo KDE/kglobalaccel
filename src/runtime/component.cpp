@@ -59,7 +59,7 @@ Component::Component(const QString &uniqueName, const QString &friendlyName, Glo
     // Make sure we do no get uniquenames still containing the context
     Q_ASSERT(uniqueName.indexOf("|") == -1);
 
-    // Register ourselve with the registry
+    // Register ourselves with the registry
     if (_registry) {
         _registry->addComponent(this);
     }
@@ -71,7 +71,7 @@ Component::Component(const QString &uniqueName, const QString &friendlyName, Glo
 
 Component::~Component()
 {
-    // Remove ourselve from the registry
+    // Remove ourselves from the registry
     if (_registry) {
         _registry->takeComponent(this);
     }

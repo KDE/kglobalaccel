@@ -35,7 +35,7 @@ OSStatus hotKeyEventHandler(EventHandlerCallRef inHandlerCallRef, EventRef inEve
             qCWarning(KGLOBALACCELD) << "Error retrieving hotkey parameter from event";
             return eventNotHandledErr;
         }
-        // Typecasts necesary to prevent a warning from gcc
+        // Typecasts necessary to prevent a warning from gcc
         return (impl->keyPressed(hotkey.id) ? (OSStatus)noErr : (OSStatus)eventNotHandledErr);
     }
     return eventNotHandledErr;
