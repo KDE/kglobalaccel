@@ -19,12 +19,16 @@ QDBusArgument &operator<<(QDBusArgument &argument, const KGlobalShortcutInfo &sh
              << shortcut.contextFriendlyName();
     /* clang-format on */
     argument.beginArray(qMetaTypeId<int>());
-    for (const QKeySequence &key : shortcut.keys()) {
+
+    const QList<QKeySequence> keys = shortcut.keys();
+    for (const QKeySequence &key : keys) {
         argument << key[0];
     }
     argument.endArray();
     argument.beginArray(qMetaTypeId<int>());
-    for (const QKeySequence &key : shortcut.defaultKeys()) {
+
+    const QList<QKeySequence> defaultKeys = shortcut.defaultKeys();
+    for (const QKeySequence &key : defaultKeys) {
         argument << key[0];
     }
     argument.endArray();
