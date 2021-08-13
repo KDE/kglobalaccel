@@ -60,13 +60,15 @@ GlobalShortcut *GlobalShortcutContext::getShortcutByKey(int key) const
     int keyMod = key & Qt::KeyboardModifierMask;
     if ((keyMod & Qt::SHIFT) && (keySym == Qt::Key_Backtab || keySym == Qt::Key_Tab)) {
         for (GlobalShortcut *sc : qAsConst(_actions)) {
-            if (sc->keys().contains(keyMod | Qt::Key_Tab) || sc->keys().contains(keyMod | Qt::Key_Backtab))
+            if (sc->keys().contains(keyMod | Qt::Key_Tab) || sc->keys().contains(keyMod | Qt::Key_Backtab)) {
                 return sc;
+            }
         }
     } else {
         for (GlobalShortcut *sc : qAsConst(_actions)) {
-            if (sc->keys().contains(key))
+            if (sc->keys().contains(key)) {
                 return sc;
+            }
         }
     }
     return nullptr;

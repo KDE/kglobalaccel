@@ -178,8 +178,9 @@ bool KGlobalAccelImpl::grabKey(int keyQt, bool grab)
             if (failed) {
                 qCDebug(KGLOBALACCELD) << "grab failed!\n";
                 for (uint m = 0; m <= 0xff; m++) {
-                    if ((m & keyModMaskX) == 0)
+                    if ((m & keyModMaskX) == 0) {
                         xcb_ungrab_key(QX11Info::connection(), keyCodeX, QX11Info::appRootWindow(), keyModX | m);
+                    }
                 }
             } else {
                 success = true;
@@ -215,8 +216,9 @@ bool KGlobalAccelImpl::nativeEventFilter(const QByteArray &eventType, void *mess
             break;
         case XCB_XKB_NEW_KEYBOARD_NOTIFY: {
             const xcb_xkb_new_keyboard_notify_event_t *ev = reinterpret_cast<xcb_xkb_new_keyboard_notify_event_t *>(event);
-            if (ev->changed & XCB_XKB_NKN_DETAIL_KEYCODES)
+            if (ev->changed & XCB_XKB_NKN_DETAIL_KEYCODES) {
                 x11MappingNotify();
+            }
             break;
         }
         default:

@@ -591,10 +591,11 @@ void KGlobalAccel::stealShortcutSystemwide(const QKeySequence &seq)
     }
     QList<int> sc = self()->d->iface()->shortcut(actionId);
 
-    for (int i = 0; i < sc.count(); i++)
+    for (int i = 0; i < sc.count(); i++) {
         if (sc[i] == seq[0]) {
             sc[i] = 0;
         }
+    }
 
     self()->d->iface()->setForeignShortcut(actionId, sc);
 }

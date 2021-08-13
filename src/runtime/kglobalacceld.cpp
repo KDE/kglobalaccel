@@ -78,8 +78,9 @@ GlobalShortcut *KGlobalAccelDPrivate::findAction(const QString &_componentUnique
     QString contextUnique;
     if (componentUnique.indexOf('|') == -1) {
         component = GlobalShortcutsRegistry::self()->getComponent(componentUnique);
-        if (component)
+        if (component) {
             contextUnique = component->currentContext()->uniqueName();
+        }
     } else {
         splitComponent(componentUnique, contextUnique);
         component = GlobalShortcutsRegistry::self()->getComponent(componentUnique);
@@ -274,8 +275,9 @@ QStringList KGlobalAccelD::action(int key) const
 void KGlobalAccelD::activateGlobalShortcutContext(const QString &component, const QString &uniqueName)
 {
     KdeDGlobalAccel::Component *const comp = GlobalShortcutsRegistry::self()->getComponent(component);
-    if (comp)
+    if (comp) {
         comp->activateGlobalShortcutContext(uniqueName);
+    }
 }
 
 QList<QDBusObjectPath> KGlobalAccelD::allComponents() const
@@ -301,16 +303,18 @@ void KGlobalAccelD::blockGlobalShortcuts(bool block)
 QList<int> KGlobalAccelD::shortcut(const QStringList &action) const
 {
     GlobalShortcut *shortcut = d->findAction(action);
-    if (shortcut)
+    if (shortcut) {
         return shortcut->keys();
+    }
     return QList<int>();
 }
 
 QList<int> KGlobalAccelD::defaultShortcut(const QStringList &action) const
 {
     GlobalShortcut *shortcut = d->findAction(action);
-    if (shortcut)
+    if (shortcut) {
         return shortcut->defaultKeys();
+    }
     return QList<int>();
 }
 
@@ -394,8 +398,9 @@ void KGlobalAccelD::setInactive(const QStringList &actionId)
 #endif
 
     GlobalShortcut *shortcut = d->findAction(actionId);
-    if (shortcut)
+    if (shortcut) {
         shortcut->setIsPresent(false);
+    }
 }
 
 bool KGlobalAccelD::unregister(const QString &componentUnique, const QString &shortcutUnique)
@@ -486,8 +491,9 @@ void KGlobalAccelD::setForeignShortcut(const QStringList &actionId, const QList<
 #endif
 
     GlobalShortcut *shortcut = d->findAction(actionId);
-    if (!shortcut)
+    if (!shortcut) {
         return;
+    }
 
     QList<int> newKeys = setShortcut(actionId, keys, NoAutoloading);
 
@@ -496,8 +502,9 @@ void KGlobalAccelD::setForeignShortcut(const QStringList &actionId, const QList<
 
 void KGlobalAccelD::scheduleWriteSettings() const
 {
-    if (!d->writeoutTimer.isActive())
+    if (!d->writeoutTimer.isActive()) {
         d->writeoutTimer.start(500);
+    }
 }
 
 #include "moc_kglobalacceld.cpp"

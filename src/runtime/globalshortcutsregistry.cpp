@@ -162,8 +162,9 @@ GlobalShortcut *GlobalShortcutsRegistry::getShortcutByKey(int key) const
 {
     for (KdeDGlobalAccel::Component *component : qAsConst(_components)) {
         GlobalShortcut *rc = component->getShortcutByKey(key);
-        if (rc)
+        if (rc) {
             return rc;
+        }
     }
     return nullptr;
 }
@@ -174,8 +175,9 @@ QList<GlobalShortcut *> GlobalShortcutsRegistry::getShortcutsByKey(int key) cons
 
     for (KdeDGlobalAccel::Component *component : qAsConst(_components)) {
         rc = component->getShortcutsByKey(key);
-        if (!rc.isEmpty())
+        if (!rc.isEmpty()) {
             return rc;
+        }
     }
     return rc;
 }
@@ -183,8 +185,9 @@ QList<GlobalShortcut *> GlobalShortcutsRegistry::getShortcutsByKey(int key) cons
 bool GlobalShortcutsRegistry::isShortcutAvailable(int shortcut, const QString &componentName, const QString &contextName) const
 {
     for (KdeDGlobalAccel::Component *component : qAsConst(_components)) {
-        if (!component->isShortcutAvailable(shortcut, componentName, contextName))
+        if (!component->isShortcutAvailable(shortcut, componentName, contextName)) {
             return false;
+        }
     }
     return true;
 }
@@ -271,8 +274,9 @@ void GlobalShortcutsRegistry::loadSettings()
         const auto groupList = configGroup.groupList();
         for (const QString &context : groupList) {
             // Skip the friendly name group
-            if (context == QLatin1String("Friendly Name"))
+            if (context == QLatin1String("Friendly Name")) {
                 continue;
+            }
 
             KConfigGroup contextGroup(&configGroup, context);
             QString contextFriendlyName = contextGroup.readEntry("_k_friendly_name");

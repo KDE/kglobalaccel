@@ -165,9 +165,10 @@ QDBusObjectPath Component::dbusPath() const
     // Clean up for dbus usage: any non-alphanumeric char should be turned into '_'
     const int len = dbusPath.length();
     for (int i = 0; i < len; ++i) {
-        if (!dbusPath[i].isLetterOrNumber() || dbusPath[i].unicode() >= 0x7F)
+        if (!dbusPath[i].isLetterOrNumber() || dbusPath[i].unicode() >= 0x7F) {
             // DBus path can only contain ASCII characters
             dbusPath[i] = QLatin1Char('_');
+        }
     }
     // QDBusObjectPath could be a little bit easier to handle :-)
     return QDBusObjectPath(_registry->dbusPath().path() + "component/" + dbusPath);
@@ -213,14 +214,16 @@ void Component::emitGlobalShortcutPressed(const GlobalShortcut &shortcut)
 void Component::invokeShortcut(const QString &shortcutName, const QString &context)
 {
     GlobalShortcut *shortcut = getShortcutByName(shortcutName, context);
-    if (shortcut)
+    if (shortcut) {
         emitGlobalShortcutPressed(*shortcut);
+    }
 }
 
 QString Component::friendlyName() const
 {
-    if (_friendlyName.isEmpty())
+    if (_friendlyName.isEmpty()) {
         return _uniqueName;
+    }
     return _friendlyName;
 }
 
@@ -234,8 +237,9 @@ QList<GlobalShortcut *> Component::getShortcutsByKey(int key) const
     QList<GlobalShortcut *> rc;
     for (GlobalShortcutContext *context : qAsConst(_contexts)) {
         GlobalShortcut *sc = context->getShortcutByKey(key);
-        if (sc)
+        if (sc) {
             rc.append(sc);
+        }
     }
     return rc;
 }
@@ -259,8 +263,9 @@ bool Component::isActive() const
     // The component is active if at least one of it's global shortcuts is
     // present.
     for (GlobalShortcut *shortcut : qAsConst(_current->_actions)) {
-        if (shortcut->isPresent())
+        if (shortcut->isPresent()) {
             return true;
+        }
     }
     return false;
 }
@@ -274,14 +279,16 @@ bool Component::isShortcutAvailable(int key, const QString &component, const QSt
     if (component == uniqueName()) {
         const auto actions = shortcutContext(context)->_actions;
         for (GlobalShortcut *sc : actions) {
-            if (sc->keys().contains(key))
+            if (sc->keys().contains(key)) {
                 return false;
+            }
         }
     } else {
         for (GlobalShortcutContext *ctx : qAsConst(_contexts)) {
             for (GlobalShortcut *sc : qAsConst(ctx->_actions)) {
-                if (sc->keys().contains(key))
+                if (sc->keys().contains(key)) {
                     return false;
+                }
             }
         }
     }
