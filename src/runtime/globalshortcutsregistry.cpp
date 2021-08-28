@@ -115,7 +115,7 @@ KdeDGlobalAccel::Component *GlobalShortcutsRegistry::addComponent(KdeDGlobalAcce
 
 void GlobalShortcutsRegistry::activateShortcuts()
 {
-    for (KdeDGlobalAccel::Component *component : qAsConst(_components)) {
+    for (KdeDGlobalAccel::Component *component : std::as_const(_components)) {
         component->activateShortcuts();
     }
 }
@@ -127,7 +127,7 @@ QList<KdeDGlobalAccel::Component *> GlobalShortcutsRegistry::allMainComponents()
 
 void GlobalShortcutsRegistry::clear()
 {
-    for (KdeDGlobalAccel::Component *component : qAsConst(_components)) {
+    for (KdeDGlobalAccel::Component *component : std::as_const(_components)) {
         delete component;
     }
     _components.clear();
@@ -143,7 +143,7 @@ QDBusObjectPath GlobalShortcutsRegistry::dbusPath() const
 
 void GlobalShortcutsRegistry::deactivateShortcuts(bool temporarily)
 {
-    for (KdeDGlobalAccel::Component *component : qAsConst(_components)) {
+    for (KdeDGlobalAccel::Component *component : std::as_const(_components)) {
         component->deactivateShortcuts(temporarily);
     }
 }
@@ -160,7 +160,7 @@ KdeDGlobalAccel::Component *GlobalShortcutsRegistry::getComponent(const QString 
 
 GlobalShortcut *GlobalShortcutsRegistry::getShortcutByKey(int key) const
 {
-    for (KdeDGlobalAccel::Component *component : qAsConst(_components)) {
+    for (KdeDGlobalAccel::Component *component : std::as_const(_components)) {
         GlobalShortcut *rc = component->getShortcutByKey(key);
         if (rc) {
             return rc;
@@ -173,7 +173,7 @@ QList<GlobalShortcut *> GlobalShortcutsRegistry::getShortcutsByKey(int key) cons
 {
     QList<GlobalShortcut *> rc;
 
-    for (KdeDGlobalAccel::Component *component : qAsConst(_components)) {
+    for (KdeDGlobalAccel::Component *component : std::as_const(_components)) {
         rc = component->getShortcutsByKey(key);
         if (!rc.isEmpty()) {
             return rc;
@@ -184,7 +184,7 @@ QList<GlobalShortcut *> GlobalShortcutsRegistry::getShortcutsByKey(int key) cons
 
 bool GlobalShortcutsRegistry::isShortcutAvailable(int shortcut, const QString &componentName, const QString &contextName) const
 {
-    for (KdeDGlobalAccel::Component *component : qAsConst(_components)) {
+    for (KdeDGlobalAccel::Component *component : std::as_const(_components)) {
         if (!component->isShortcutAvailable(shortcut, componentName, contextName)) {
             return false;
         }

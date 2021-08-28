@@ -83,7 +83,7 @@ bool KGlobalAccelImpl::grabKey(int keyQt, bool grab)
         KKeyServer::keyQtToModMac(keyQt, mod);
 
         qCDebug(KGLOBALACCELD) << "keyQt: " << keyQt << " mod: " << mod;
-        for (uint keyCode : qAsConst(keyCodes)) {
+        for (uint keyCode : std::as_const(keyCodes)) {
             qCDebug(KGLOBALACCELD) << "  keyCode: " << keyCode;
         }
 
@@ -91,7 +91,7 @@ bool KGlobalAccelImpl::grabKey(int keyQt, bool grab)
         ehkid.signature = 'Kgai';
         ehkid.id = keyQt;
         QList<EventHotKeyRef> hotkeys;
-        for (uint keyCode : qAsConst(keyCodes)) {
+        for (uint keyCode : std::as_const(keyCodes)) {
             EventHotKeyRef ref;
             if (RegisterEventHotKey(keyCode, mod, ehkid, m_eventTarget, 0, &ref) != noErr) {
                 qCWarning(KGLOBALACCELD) << "RegisterEventHotKey failed!";
@@ -140,7 +140,7 @@ void KGlobalAccelImpl::keyboardLayoutChanged()
         grabKey(key, false);
     }
     // Now re-grab all the keys
-    for (int key : qAsConst(keys)) {
+    for (int key : std::as_const(keys)) {
         grabKey(key, true);
     }
 }
