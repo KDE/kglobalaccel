@@ -24,8 +24,8 @@
 #include "kglobalaccel.h"
 
 struct KGlobalAccelDPrivate {
-    KGlobalAccelDPrivate(KGlobalAccelD *q)
-        : q(q)
+    KGlobalAccelDPrivate(KGlobalAccelD *qq)
+        : q(qq)
     {
     }
 
