@@ -91,8 +91,8 @@ void KGlobalAccelPrivate::cleanup()
     m_watcher = nullptr;
 }
 
-KGlobalAccelPrivate::KGlobalAccelPrivate(KGlobalAccel *q)
-    : q(q)
+KGlobalAccelPrivate::KGlobalAccelPrivate(KGlobalAccel *qq)
+    : q(qq)
 {
     m_watcher = new QDBusServiceWatcher(serviceName(), QDBusConnection::sessionBus(), QDBusServiceWatcher::WatchForOwnerChange, q);
     q->connect(m_watcher, &QDBusServiceWatcher::serviceOwnerChanged, q, [this](const QString &serviceName, const QString &oldOwner, const QString &newOwner) {
