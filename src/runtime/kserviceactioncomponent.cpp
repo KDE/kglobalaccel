@@ -52,6 +52,7 @@ void runProcess(const KConfigGroup &group, bool klauncherAvailable)
     const auto kstart = QStandardPaths::findExecutable(QStringLiteral("kstart5"));
     if (!kstart.isEmpty()) {
         parts.prepend(command);
+        parts.prepend(QStringLiteral("--"));
         QProcess::startDetached(kstart, parts);
     } else if (klauncherAvailable) {
         QDBusMessage msg = QDBusMessage::createMethodCall(QStringLiteral("org.kde.klauncher5"),
