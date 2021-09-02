@@ -48,7 +48,12 @@ void runProcess(const KConfigGroup &group, bool klauncherAvailable)
     }
 
     const QString command = parts.takeFirst();
-    if (klauncherAvailable) {
+
+    const auto kstart = QStandardPaths::findExecutable(QStringLiteral("kstart5"));
+    if (!kstart.isEmpty()) {
+        parts.prepend(command);
+        QProcess::startDetached(kstart, parts);
+    } else if (klauncherAvailable) {
         QDBusMessage msg = QDBusMessage::createMethodCall(QStringLiteral("org.kde.klauncher5"),
                                                           QStringLiteral("/KLauncher"),
                                                           QStringLiteral("org.kde.KLauncher"),
@@ -57,18 +62,14 @@ void runProcess(const KConfigGroup &group, bool klauncherAvailable)
 
         QDBusConnection::sessionBus().asyncCall(msg);
     } else {
-        const auto kstart = QStandardPaths::findExecutable(QStringLiteral("kstart5"));
-        if (kstart.isEmpty()) {
-            QProcess::startDetached(command, parts);
-        } else {
-            parts.prepend(command);
-            QProcess::startDetached(kstart, parts);
-        }
+        QProcess::startDetached(command, parts);
     }
 }
 
 void KServiceActionComponent::emitGlobalShortcutPressed(const GlobalShortcut &shortcut)
 {
+    // TODO KF6 use ApplicationLauncherJob to start processes when it's available in a framework that we depend on
+
     // DBusActivatatable spec as per https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#dbus
     if (m_desktopFile->desktopGroup().readEntry("DBusActivatable", false)) {
         QString method;
