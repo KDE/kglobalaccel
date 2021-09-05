@@ -1,0 +1,12 @@
+Dependencies:
+- 'on': ['Linux']
+  'require':
+    'frameworks/extra-cmake-modules': '@same'
+    'frameworks/kconfig' : '@same'
+    'frameworks/kcoreaddons' : '@same'
+    'frameworks/kcrash' : '@same'
+    'frameworks/kdbusaddons' : '@same'
+    'frameworks/kwindowsystem' : '@same'
+
+Options:
+  test-before-installing: True
