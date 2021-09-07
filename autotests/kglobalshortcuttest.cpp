@@ -109,7 +109,7 @@ void KGlobalShortcutTest::setupTest(const QString &id)
     m_actionB = new QAction("Text For Action B", this);
     m_actionB->setObjectName("Action B:" + id);
     m_actionB->setProperty("componentName", componentName);
-    m_actionA->setProperty("componentDisplayName", "KDE Test Program");
+    m_actionB->setProperty("componentDisplayName", "KDE Test Program");
     KGlobalAccel::self()->setShortcut(m_actionB, QList<QKeySequence>(), KGlobalAccel::NoAutoloading);
     KGlobalAccel::self()->setDefaultShortcut(m_actionB, QList<QKeySequence>(), KGlobalAccel::NoAutoloading);
 }
