@@ -35,7 +35,7 @@ public:
     GlobalShortcutContext const *context() const;
 
     //! Returns the default keys for this shortcut.
-    QList<int> defaultKeys() const;
+    QList<QKeySequence> defaultKeys() const;
 
     //! Return the friendly display name for this shortcut.
     QString friendlyName() const;
@@ -53,13 +53,13 @@ public:
     bool isSessionShortcut() const;
 
     //! Returns a list of keys associated with this shortcut.
-    QList<int> keys() const;
+    QList<QKeySequence> keys() const;
 
     //! Activates the shortcut. The keys are grabbed.
     void setActive();
 
     //! Sets the default keys for this shortcut.
-    void setDefaultKeys(const QList<int>);
+    void setDefaultKeys(const QList<QKeySequence> &);
 
     //! Sets the friendly name for the shortcut. For display.
     void setFriendlyName(const QString &);
@@ -71,7 +71,7 @@ public:
     void setIsFresh(bool);
 
     //! Sets the keys activated with this shortcut. The old keys are freed.
-    void setKeys(const QList<int>);
+    void setKeys(const QList<QKeySequence> &);
 
     //! Returns the unique name aka id for the shortcuts.
     QString uniqueName() const;
@@ -97,8 +97,8 @@ private:
     QString _uniqueName;
     QString _friendlyName; // usually localized
 
-    QList<int> _keys;
-    QList<int> _defaultKeys;
+    QList<QKeySequence> _keys;
+    QList<QKeySequence> _defaultKeys;
 };
 
 #endif /* #ifndef GLOBALSHORTCUT_H */

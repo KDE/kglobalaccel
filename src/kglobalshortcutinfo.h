@@ -68,14 +68,17 @@ private:
     friend class GlobalShortcut;
 
     friend KGLOBALACCEL_EXPORT const QDBusArgument &operator>>(const QDBusArgument &argument, KGlobalShortcutInfo &shortcut);
+    friend KGLOBALACCEL_EXPORT const QDBusArgument &operator>>(const QDBusArgument &argument, QKeySequence &sequence);
 
     //! Implementation details
     KGlobalShortcutInfoPrivate *d;
 };
 
 KGLOBALACCEL_EXPORT QDBusArgument &operator<<(QDBusArgument &argument, const KGlobalShortcutInfo &shortcut);
+KGLOBALACCEL_EXPORT QDBusArgument &operator<<(QDBusArgument &argument, const QKeySequence &sequence);
 
 KGLOBALACCEL_EXPORT const QDBusArgument &operator>>(const QDBusArgument &argument, KGlobalShortcutInfo &shortcut);
+KGLOBALACCEL_EXPORT const QDBusArgument &operator>>(const QDBusArgument &argument, QKeySequence &sequence);
 
 Q_DECLARE_METATYPE(KGlobalShortcutInfo)
 

@@ -8,6 +8,9 @@
 
 #include "globalshortcut.h"
 
+#include "kglobalaccel.h"
+#include "sequencehelpers_p.h"
+
 GlobalShortcutContext::GlobalShortcutContext(const QString &uniqueName, const QString &friendlyName, KdeDGlobalAccel::Component *component)
 
     : _uniqueName(uniqueName)
@@ -52,22 +55,32 @@ QString GlobalShortcutContext::friendlyName() const
     return _friendlyName;
 }
 
-GlobalShortcut *GlobalShortcutContext::getShortcutByKey(int key) const
+GlobalShortcut *GlobalShortcutContext::getShortcutByKey(const QKeySequence &key, KGlobalAccel::MatchType type) const
 {
-    // Qt triggers both shortcuts that include Shift+Backtab and Shift+Tab
-    // when user presses Shift+Tab. Do the same here.
-    int keySym = key & ~Qt::KeyboardModifierMask;
-    int keyMod = key & Qt::KeyboardModifierMask;
-    if ((keyMod & Qt::SHIFT) && (keySym == Qt::Key_Backtab || keySym == Qt::Key_Tab)) {
-        for (GlobalShortcut *sc : std::as_const(_actions)) {
-            if (sc->keys().contains(keyMod | Qt::Key_Tab) || sc->keys().contains(keyMod | Qt::Key_Backtab)) {
-                return sc;
-            }
-        }
-    } else {
-        for (GlobalShortcut *sc : std::as_const(_actions)) {
-            if (sc->keys().contains(key)) {
-                return sc;
+    if (key.isEmpty()) {
+        return nullptr;
+    }
+    QKeySequence keyMangled = mangleKey(key);
+    for (GlobalShortcut *sc : std::as_const(_actions)) {
+        const auto keys = sc->keys();
+        for (const QKeySequence &other : keys) {
+            QKeySequence otherMangled = mangleKey(other);
+            switch (type) {
+            case KGlobalAccel::MatchType::Equal:
+                if (otherMangled == keyMangled) {
+                    return sc;
+                }
+                break;
+            case KGlobalAccel::MatchType::Shadows:
+                if (!other.isEmpty() && contains(keyMangled, otherMangled)) {
+                    return sc;
+                }
+                break;
+            case KGlobalAccel::MatchType::Shadowed:
+                if (!other.isEmpty() && contains(otherMangled, keyMangled)) {
+                    return sc;
+                }
+                break;
             }
         }
     }

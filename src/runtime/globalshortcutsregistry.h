@@ -7,10 +7,13 @@
 #ifndef GLOBALSHORTCUTSREGISTRY_H
 #define GLOBALSHORTCUTSREGISTRY_H
 
+#include "kglobalaccel.h"
+
 #include <KSharedConfig>
 
 #include <QDBusObjectPath>
 #include <QHash>
+#include <QKeySequence>
 #include <QObject>
 
 class GlobalShortcut;
@@ -75,7 +78,7 @@ public:
      * Get the shortcut corresponding to key. Only active shortcut are
      * considered.
      */
-    GlobalShortcut *getActiveShortcutByKey(int key) const;
+    GlobalShortcut *getActiveShortcutByKey(const QKeySequence &key) const;
 
     /**
      */
@@ -88,7 +91,7 @@ public:
      *
      * @see getShortcutsByKey(int key)
      */
-    GlobalShortcut *getShortcutByKey(int key) const;
+    GlobalShortcut *getShortcutByKey(const QKeySequence &key, KGlobalAccel::MatchType type = KGlobalAccel::MatchType::Equal) const;
 
     /**
      * Get the shortcuts corresponding to key. Active and inactive shortcuts
@@ -96,7 +99,7 @@ public:
      *
      * @see getShortcutsByKey(int key)
      */
-    QList<GlobalShortcut *> getShortcutsByKey(int key) const;
+    QList<GlobalShortcut *> getShortcutsByKey(const QKeySequence &key, KGlobalAccel::MatchType type) const;
 
     /**
      * Checks if @p shortcut is available for @p component.
@@ -104,17 +107,17 @@ public:
      * It is available if not used by another component in any context or used
      * by @p component only in not active contexts.
      */
-    bool isShortcutAvailable(int shortcut, const QString &component, const QString &context) const;
+    bool isShortcutAvailable(const QKeySequence &shortcut, const QString &component, const QString &context) const;
 
     static GlobalShortcutsRegistry *self();
 
-    bool registerKey(int key, GlobalShortcut *shortcut);
+    bool registerKey(const QKeySequence &key, GlobalShortcut *shortcut);
 
     void setAccelManager(KGlobalAccelInterface *manager);
 
     void setDBusPath(const QDBusObjectPath &path);
 
-    bool unregisterKey(int key, GlobalShortcut *shortcut);
+    bool unregisterKey(const QKeySequence &key, GlobalShortcut *shortcut);
 
 public Q_SLOTS:
 
@@ -141,7 +144,9 @@ private:
     // returns true if the key was handled
     bool keyPressed(int keyQt);
 
-    QHash<int, GlobalShortcut *> _active_keys;
+    QHash<QKeySequence, GlobalShortcut *> _active_keys;
+    QKeySequence _active_sequence;
+    QHash<int, int> _keys_count;
     QHash<QString, KdeDGlobalAccel::Component *> _components;
 
     KGlobalAccelInterface *_manager;

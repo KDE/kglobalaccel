@@ -16,5 +16,5 @@ include(ECMAddTests)
 
 ecm_add_tests(
    kglobalshortcuttest.cpp
-   LINK_LIBRARIES Qt5::Test KF5::GlobalAccel ${additionalLibraries}
+   LINK_LIBRARIES Qt5::Test KF5::GlobalAccel KF5::GlobalAccelPrivate ${additionalLibraries}
 )

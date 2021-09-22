@@ -7,6 +7,37 @@
 #include "kglobalshortcutinfo.h"
 #include "kglobalshortcutinfo_p.h"
 
+QDBusArgument &operator<<(QDBusArgument &argument, const QKeySequence &sequence)
+{
+    argument.beginStructure();
+    argument.beginArray(qMetaTypeId<int>());
+    for (int i = 0; i < maxSequenceLength; i++) {
+        if (i < sequence.count()) {
+            argument << sequence[i];
+        } else {
+            argument << 0;
+        }
+    }
+    argument.endArray();
+    argument.endStructure();
+    return argument;
+}
+
+const QDBusArgument &operator>>(const QDBusArgument &argument, QKeySequence &sequence)
+{
+    int s1;
+    int s2;
+    int s3;
+    int s4;
+    argument.beginStructure();
+    argument.beginArray();
+    argument >> s1 >> s2 >> s3 >> s4;
+    sequence = QKeySequence(s1, s2, s3, s4);
+    argument.endArray();
+    argument.endStructure();
+    return argument;
+}
+
 QDBusArgument &operator<<(QDBusArgument &argument, const KGlobalShortcutInfo &shortcut)
 {
     argument.beginStructure();

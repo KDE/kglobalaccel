@@ -12,6 +12,7 @@
 
 #include "kconfiggroup.h"
 
+#include <KGlobalAccel>
 #include <QHash>
 #include <QObject>
 
@@ -67,7 +68,7 @@ public:
     QString friendlyName() const;
 
     //! Returns the currently active shortcut for key
-    GlobalShortcut *getShortcutByKey(int key) const;
+    GlobalShortcut *getShortcutByKey(const QKeySequence &key, KGlobalAccel::MatchType type) const;
 
     //! Returns the shortcut context @p name or nullptr
     GlobalShortcutContext *shortcutContext(const QString &name);
@@ -77,7 +78,7 @@ public:
      * Returns the list of shortcuts (different context) registered with @p
      * key.
      */
-    QList<GlobalShortcut *> getShortcutsByKey(int key) const;
+    QList<GlobalShortcut *> getShortcutsByKey(const QKeySequence &key, KGlobalAccel::MatchType type) const;
 
     //! Returns the shortcut by unique name. Only the active context is
     //! searched.
@@ -86,7 +87,7 @@ public:
     /**
      * Check if @a key is available for component @p component
      */
-    bool isShortcutAvailable(int key, const QString &component, const QString &context) const;
+    bool isShortcutAvailable(const QKeySequence &key, const QString &component, const QString &context) const;
 
     //! Load the settings from config group @p config
     void loadSettings(KConfigGroup &config);

@@ -10,6 +10,7 @@
 #include "globalshortcutsregistry.h"
 #include "kglobalaccel_interface.h"
 #include "logging_p.h"
+#include "sequencehelpers_p.h"
 #include <config-kglobalaccel.h>
 
 #include <QKeySequence>
@@ -19,30 +20,30 @@
 #include <QX11Info>
 #endif
 
-static QList<int> keysFromString(const QString &str)
+static QList<QKeySequence> keysFromString(const QString &str)
 {
-    QList<int> ret;
+    QList<QKeySequence> ret;
     if (str == QLatin1String("none")) {
         return ret;
     }
     const QStringList strList = str.split('\t');
     for (const QString &s : strList) {
-        int key = QKeySequence(s)[0];
-        if (key != -1) { // sanity check just in case
+        QKeySequence key = QKeySequence(s);
+        if (!key.isEmpty()) { // sanity check just in case
             ret.append(key);
         }
     }
     return ret;
 }
 
-static QString stringFromKeys(const QList<int> &keys)
+static QString stringFromKeys(const QList<QKeySequence> &keys)
 {
     if (keys.isEmpty()) {
         return QStringLiteral("none");
     }
     QString ret;
-    for (int key : keys) {
-        ret.append(QKeySequence(key).toString());
+    for (const QKeySequence &key : keys) {
+        ret.append(key.toString());
         ret.append('\t');
     }
     ret.chop(1);
@@ -227,16 +228,16 @@ QString Component::friendlyName() const
     return _friendlyName;
 }
 
-GlobalShortcut *Component::getShortcutByKey(int key) const
+GlobalShortcut *Component::getShortcutByKey(const QKeySequence &key, KGlobalAccel::MatchType type) const
 {
-    return _current->getShortcutByKey(key);
+    return _current->getShortcutByKey(key, type);
 }
 
-QList<GlobalShortcut *> Component::getShortcutsByKey(int key) const
+QList<GlobalShortcut *> Component::getShortcutsByKey(const QKeySequence &key, KGlobalAccel::MatchType type) const
 {
     QList<GlobalShortcut *> rc;
     for (GlobalShortcutContext *context : std::as_const(_contexts)) {
-        GlobalShortcut *sc = context->getShortcutByKey(key);
+        GlobalShortcut *sc = context->getShortcutByKey(key, type);
         if (sc) {
             rc.append(sc);
         }
@@ -270,23 +271,23 @@ bool Component::isActive() const
     return false;
 }
 
-bool Component::isShortcutAvailable(int key, const QString &component, const QString &context) const
+bool Component::isShortcutAvailable(const QKeySequence &key, const QString &component, const QString &context) const
 {
-    qCDebug(KGLOBALACCELD) << QKeySequence(key).toString() << component;
+    qCDebug(KGLOBALACCELD) << key.toString() << component;
 
     // if this component asks for the key. only check the keys in the same
     // context
     if (component == uniqueName()) {
         const auto actions = shortcutContext(context)->_actions;
         for (GlobalShortcut *sc : actions) {
-            if (sc->keys().contains(key)) {
+            if (matchSequences(key, sc->keys())) {
                 return false;
             }
         }
     } else {
         for (GlobalShortcutContext *ctx : std::as_const(_contexts)) {
             for (GlobalShortcut *sc : std::as_const(ctx->_actions)) {
-                if (sc->keys().contains(key)) {
+                if (matchSequences(key, sc->keys())) {
                     return false;
                 }
             }
@@ -301,12 +302,12 @@ Component::registerShortcut(const QString &uniqueName, const QString &friendlyNa
     // The shortcut will register itself with us
     GlobalShortcut *shortcut = new GlobalShortcut(uniqueName, friendlyName, currentContext());
 
-    const QList<int> keys = keysFromString(shortcutString);
+    const QList<QKeySequence> keys = keysFromString(shortcutString);
     shortcut->setDefaultKeys(keysFromString(defaultShortcutString));
     shortcut->setIsFresh(false);
-    QList<int> newKeys = keys;
-    for (int key : keys) {
-        if (key != 0) {
+    QList<QKeySequence> newKeys = keys;
+    for (const QKeySequence &key : keys) {
+        if (!key.isEmpty()) {
             if (GlobalShortcutsRegistry::self()->getShortcutByKey(key)) {
                 // The shortcut is already used. The config file is
                 // broken. Ignore the request.

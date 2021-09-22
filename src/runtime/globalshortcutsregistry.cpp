@@ -9,6 +9,7 @@
 #include "globalshortcut.h"
 #include "globalshortcutcontext.h"
 #include "kglobalaccel_interface.h"
+#include "kglobalshortcutinfo_p.h"
 #include "kserviceactioncomponent.h"
 #include "logging_p.h"
 #include <config-kglobalaccel.h>
@@ -75,6 +76,7 @@ static KGlobalAccelInterface *loadPlugin(GlobalShortcutsRegistry *parent)
 GlobalShortcutsRegistry::GlobalShortcutsRegistry()
     : QObject()
     , _active_keys()
+    , _active_sequence()
     , _components()
     , _manager(loadPlugin(this))
     , _config(qEnvironmentVariableIsSet("KGLOBALACCEL_TEST_MODE") ? QString() : QStringLiteral("kglobalshortcutsrc"), KConfig::SimpleConfig)
@@ -92,11 +94,14 @@ GlobalShortcutsRegistry::~GlobalShortcutsRegistry()
         // Ungrab all keys. We don't go over GlobalShortcuts because
         // GlobalShortcutsRegistry::self() doesn't work anymore.
         const auto listKeys = _active_keys.keys();
-        for (const int key : listKeys) {
-            _manager->grabKey(key, false);
+        for (const QKeySequence &key : listKeys) {
+            for (int i = 0; i < key.count(); i++) {
+                _manager->grabKey(key[i], false);
+            }
         }
     }
     _active_keys.clear();
+    _keys_count.clear();
 }
 
 KdeDGlobalAccel::Component *GlobalShortcutsRegistry::addComponent(KdeDGlobalAccel::Component *component)
@@ -148,7 +153,7 @@ void GlobalShortcutsRegistry::deactivateShortcuts(bool temporarily)
     }
 }
 
-GlobalShortcut *GlobalShortcutsRegistry::getActiveShortcutByKey(int key) const
+GlobalShortcut *GlobalShortcutsRegistry::getActiveShortcutByKey(const QKeySequence &key) const
 {
     return _active_keys.value(key);
 }
@@ -158,10 +163,10 @@ KdeDGlobalAccel::Component *GlobalShortcutsRegistry::getComponent(const QString 
     return _components.value(uniqueName);
 }
 
-GlobalShortcut *GlobalShortcutsRegistry::getShortcutByKey(int key) const
+GlobalShortcut *GlobalShortcutsRegistry::getShortcutByKey(const QKeySequence &key, KGlobalAccel::MatchType type) const
 {
     for (KdeDGlobalAccel::Component *component : std::as_const(_components)) {
-        GlobalShortcut *rc = component->getShortcutByKey(key);
+        GlobalShortcut *rc = component->getShortcutByKey(key, type);
         if (rc) {
             return rc;
         }
@@ -169,12 +174,12 @@ GlobalShortcut *GlobalShortcutsRegistry::getShortcutByKey(int key) const
     return nullptr;
 }
 
-QList<GlobalShortcut *> GlobalShortcutsRegistry::getShortcutsByKey(int key) const
+QList<GlobalShortcut *> GlobalShortcutsRegistry::getShortcutsByKey(const QKeySequence &key, KGlobalAccel::MatchType type) const
 {
     QList<GlobalShortcut *> rc;
 
     for (KdeDGlobalAccel::Component *component : std::as_const(_components)) {
-        rc = component->getShortcutsByKey(key);
+        rc = component->getShortcutsByKey(key, type);
         if (!rc.isEmpty()) {
             return rc;
         }
@@ -182,7 +187,7 @@ QList<GlobalShortcut *> GlobalShortcutsRegistry::getShortcutsByKey(int key) cons
     return rc;
 }
 
-bool GlobalShortcutsRegistry::isShortcutAvailable(int shortcut, const QString &componentName, const QString &contextName) const
+bool GlobalShortcutsRegistry::isShortcutAvailable(const QKeySequence &shortcut, const QString &componentName, const QString &contextName) const
 {
     for (KdeDGlobalAccel::Component *component : std::as_const(_components)) {
         if (!component->isShortcutAvailable(shortcut, componentName, contextName)) {
@@ -200,7 +205,43 @@ GlobalShortcutsRegistry *GlobalShortcutsRegistry::self()
 
 bool GlobalShortcutsRegistry::keyPressed(int keyQt)
 {
-    GlobalShortcut *shortcut = getShortcutByKey(keyQt);
+    int keys[maxSequenceLength] = {0, 0, 0, 0};
+    int count = _active_sequence.count();
+    if (count == maxSequenceLength) {
+        // buffer is full, rotate it
+        for (int i = 1; i < count; i++) {
+            keys[i - 1] = _active_sequence[i];
+        }
+        keys[maxSequenceLength - 1] = keyQt;
+    } else {
+        // just append the new key
+        for (int i = 0; i < count; i++) {
+            keys[i] = _active_sequence[i];
+        }
+        keys[count] = keyQt;
+    }
+
+    _active_sequence = QKeySequence(keys[0], keys[1], keys[2], keys[3]);
+
+    GlobalShortcut *shortcut = nullptr;
+    QKeySequence tempSequence;
+    for (int length = 1; length <= _active_sequence.count(); length++) {
+        // We have to check all possible matches from the end since we're rotating active sequence
+        // instead of cleaning it when it's full
+        int sequenceToCheck[maxSequenceLength] = {0, 0, 0, 0};
+        for (int i = 0; i < length; i++) {
+            sequenceToCheck[i] = _active_sequence[_active_sequence.count() - length + i];
+        }
+        tempSequence = QKeySequence(sequenceToCheck[0], sequenceToCheck[1], sequenceToCheck[2], sequenceToCheck[3]);
+        shortcut = getShortcutByKey(tempSequence);
+
+        if (shortcut) {
+            break;
+        }
+    }
+
+    qCDebug(KGLOBALACCELD) << "Pressed key" << QKeySequence(keyQt).toString() << ", current sequence" << _active_sequence.toString() << "="
+                           << (shortcut ? shortcut->uniqueName() : "(no shortcut found)");
     if (!shortcut) {
         // This can happen for example with the ALT-Print shortcut of kwin.
         // ALT+PRINT is SYSREQ on my keyboard. So we grab something we think
@@ -224,6 +265,9 @@ bool GlobalShortcutsRegistry::keyPressed(int keyQt)
 #ifdef KDEDGLOBALACCEL_TRACE
     qCDebug(KGLOBALACCELD) << QKeySequence(keyQt).toString() << "=" << shortcut->uniqueName();
 #endif
+
+    // shortcut is found, reset active sequence
+    _active_sequence = QKeySequence();
 
     QStringList data(shortcut->context()->component()->uniqueName());
     data.append(shortcut->uniqueName());
@@ -322,12 +366,12 @@ void GlobalShortcutsRegistry::grabKeys()
     activateShortcuts();
 }
 
-bool GlobalShortcutsRegistry::registerKey(int key, GlobalShortcut *shortcut)
+bool GlobalShortcutsRegistry::registerKey(const QKeySequence &key, GlobalShortcut *shortcut)
 {
     if (!_manager) {
         return false;
     }
-    if (key == 0) {
+    if (key.isEmpty()) {
         qCDebug(KGLOBALACCELD) << shortcut->uniqueName() << ": Key '" << QKeySequence(key).toString() << "' already taken by "
                                << _active_keys.value(key)->uniqueName() << ".";
         return false;
@@ -339,8 +383,37 @@ bool GlobalShortcutsRegistry::registerKey(int key, GlobalShortcut *shortcut)
     qCDebug(KGLOBALACCELD) << "Registering key" << QKeySequence(key).toString() << "for" << shortcut->context()->component()->uniqueName() << ":"
                            << shortcut->uniqueName();
 
+    bool error = false;
+    int i;
+    for (i = 0; i < key.count(); i++) {
+        if (!_manager->grabKey(key[i], true)) {
+            error = true;
+            break;
+        }
+        ++(_keys_count[key[i]]);
+    }
+
+    if (error) {
+        // Last key was not registered, rewind index by 1
+        for (--i; i >= 0; i--) {
+            auto it = _keys_count.find(key[i]);
+            if (it == _keys_count.end()) {
+                continue;
+            }
+
+            if (it.value() == 1) {
+                _keys_count.erase(it);
+                _manager->grabKey(key[i], false);
+            } else {
+                --(it.value());
+            }
+        }
+        return false;
+    }
+
     _active_keys.insert(key, shortcut);
-    return _manager->grabKey(key, true);
+
+    return true;
 }
 
 void GlobalShortcutsRegistry::setAccelManager(KGlobalAccelInterface *manager)
@@ -365,7 +438,7 @@ void GlobalShortcutsRegistry::ungrabKeys()
     deactivateShortcuts();
 }
 
-bool GlobalShortcutsRegistry::unregisterKey(int key, GlobalShortcut *shortcut)
+bool GlobalShortcutsRegistry::unregisterKey(const QKeySequence &key, GlobalShortcut *shortcut)
 {
     if (!_manager) {
         return false;
@@ -375,11 +448,27 @@ bool GlobalShortcutsRegistry::unregisterKey(int key, GlobalShortcut *shortcut)
         return false;
     }
 
-    qCDebug(KGLOBALACCELD) << "Unregistering key" << QKeySequence(key).toString() << "for" << shortcut->context()->component()->uniqueName() << ":"
-                           << shortcut->uniqueName();
+    for (int i = 0; i < key.count(); i++) {
+        auto iter = _keys_count.find(key[i]);
+        if ((iter == _keys_count.end()) || (iter.value() <= 0)) {
+            continue;
+        }
 
-    _manager->grabKey(key, false);
-    _active_keys.take(key);
+        // Unregister if there's only one ref to given key
+        // We should fail earlier when key is not registered
+        if (iter.value() == 1) {
+            qCDebug(KGLOBALACCELD) << "Unregistering key" << QKeySequence(key[i]).toString() << "for" << shortcut->context()->component()->uniqueName() << ":"
+                                   << shortcut->uniqueName();
+
+            _manager->grabKey(key[i], false);
+            _keys_count.erase(iter);
+        } else {
+            qCDebug(KGLOBALACCELD) << "Refused to unregister key" << QKeySequence(key[i]).toString() << ": used by another global shortcut";
+            --(iter.value());
+        }
+    }
+
+    _active_keys.remove(key);
     return true;
 }
 

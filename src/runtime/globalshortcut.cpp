@@ -54,11 +54,11 @@ GlobalShortcut::operator KGlobalShortcutInfo() const
     info.d->contextFriendlyName = context()->friendlyName();
     info.d->componentUniqueName = context()->component()->uniqueName();
     info.d->componentFriendlyName = context()->component()->friendlyName();
-    for (int key : std::as_const(_keys)) {
-        info.d->keys.append(QKeySequence(key));
+    for (const QKeySequence &key : std::as_const(_keys)) {
+        info.d->keys.append(key);
     }
-    for (int key : std::as_const(_defaultKeys)) {
-        info.d->defaultKeys.append(QKeySequence(key));
+    for (const QKeySequence &key : std::as_const(_defaultKeys)) {
+        info.d->defaultKeys.append(key);
     }
     return info;
 }
@@ -125,26 +125,28 @@ void GlobalShortcut::setFriendlyName(const QString &name)
     _friendlyName = name;
 }
 
-QList<int> GlobalShortcut::keys() const
+QList<QKeySequence> GlobalShortcut::keys() const
 {
     return _keys;
 }
 
-void GlobalShortcut::setKeys(const QList<int> newKeys)
+void GlobalShortcut::setKeys(const QList<QKeySequence> &newKeys)
 {
     bool active = _isRegistered;
     if (active) {
         setInactive();
     }
 
-    _keys = QList<int>();
+    _keys = QList<QKeySequence>();
 
-    for (int key : std::as_const(newKeys)) {
-        if (key != 0 && !GlobalShortcutsRegistry::self()->getShortcutByKey(key)) {
+    for (const QKeySequence &key : std::as_const(newKeys)) {
+        if (!key.isEmpty() && !GlobalShortcutsRegistry::self()->getShortcutByKey(key)
+            && !GlobalShortcutsRegistry::self()->getShortcutByKey(key, KGlobalAccel::MatchType::Shadowed)
+            && !GlobalShortcutsRegistry::self()->getShortcutByKey(key, KGlobalAccel::MatchType::Shadows)) {
             _keys.append(key);
         } else {
             qCDebug(KGLOBALACCELD) << _uniqueName << "skipping because key" << QKeySequence(key).toString() << "is already taken";
-            _keys.append(0);
+            _keys.append(QKeySequence());
         }
     }
 
@@ -153,12 +155,12 @@ void GlobalShortcut::setKeys(const QList<int> newKeys)
     }
 }
 
-QList<int> GlobalShortcut::defaultKeys() const
+QList<QKeySequence> GlobalShortcut::defaultKeys() const
 {
     return _defaultKeys;
 }
 
-void GlobalShortcut::setDefaultKeys(const QList<int> newKeys)
+void GlobalShortcut::setDefaultKeys(const QList<QKeySequence> &newKeys)
 {
     _defaultKeys = newKeys;
 }
@@ -171,8 +173,8 @@ void GlobalShortcut::setActive()
         return;
     }
 
-    for (int key : std::as_const(_keys)) {
-        if (key != 0 && !GlobalShortcutsRegistry::self()->registerKey(key, this)) {
+    for (const QKeySequence &key : std::as_const(_keys)) {
+        if (!key.isEmpty() && !GlobalShortcutsRegistry::self()->registerKey(key, this)) {
             qCDebug(KGLOBALACCELD) << uniqueName() << ": Failed to register " << QKeySequence(key).toString();
         }
     }
@@ -187,8 +189,8 @@ void GlobalShortcut::setInactive()
         return;
     }
 
-    for (int key : std::as_const(_keys)) {
-        if (key != 0 && !GlobalShortcutsRegistry::self()->unregisterKey(key, this)) {
+    for (const QKeySequence &key : std::as_const(_keys)) {
+        if (!key.isEmpty() && !GlobalShortcutsRegistry::self()->unregisterKey(key, this)) {
             qCDebug(KGLOBALACCELD) << uniqueName() << ": Failed to unregister " << QKeySequence(key).toString();
         }
     }

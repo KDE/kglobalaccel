@@ -30,6 +30,10 @@ private Q_SLOTS:
     void testNotification();
 
     void testGetGlobalShortcut();
+    void testMangle();
+    void testCrop();
+    void testReverse();
+    void testMatch();
 
     // This has to be the last before forgetGlobalShortcut
     void testOverrideMainComponentData();

@@ -58,6 +58,15 @@ public:
     };
 
     /**
+     * Keysequence match semantics
+     */
+    enum MatchType {
+        Equal,
+        Shadows,
+        Shadowed,
+    };
+
+    /**
      * Returns (and creates if necessary) the singleton instance
      */
     static KGlobalAccel *self();
@@ -116,6 +125,7 @@ public:
      */
     static bool isComponentActive(const QString &componentName);
 
+#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(5, 89)
     /**
      * Returns a list of global shortcuts registered for the shortcut @seq.
      *
@@ -124,8 +134,12 @@ public:
      * returned shortcuts belong to the same component.
      *
      * @since 4.2
+     * @deprecated Since 5.89
      */
+    KGLOBALACCEL_DEPRECATED_VERSION(5, 89, "Use getGlobalShortcutsByKey_v2(const QKeySequence&, int)")
     static QList<KGlobalShortcutInfo> getGlobalShortcutsByKey(const QKeySequence &seq);
+#endif
+    static QList<KGlobalShortcutInfo> getGlobalShortcutsByKey_v2(const QKeySequence &seq, MatchType type = Equal);
 
     /**
      * Check if the shortcut @seq is available for the @p component. The
@@ -364,7 +378,10 @@ private:
     class KGlobalAccelPrivate *const d;
 
     Q_PRIVATE_SLOT(d, void _k_invokeAction(const QString &, const QString &, qlonglong))
+#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(5, 89)
     Q_PRIVATE_SLOT(d, void _k_shortcutGotChanged(const QStringList &, const QList<int> &))
+#endif
+    Q_PRIVATE_SLOT(d, void _k_shortcutGotChanged_v2(const QStringList &, const QList<QKeySequence> &))
     Q_PRIVATE_SLOT(d, void _k_serviceOwnerChanged(const QString &, const QString &, const QString &))
 
     friend class KGlobalAccelSingleton;
