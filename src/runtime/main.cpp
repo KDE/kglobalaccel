@@ -4,7 +4,7 @@
     SPDX-FileCopyrightText: 2007 Andreas Hartmetz <ahartmetz@gmail.com>
     SPDX-FileCopyrightText: 2007 Michael Jansen <kde@michael-jansen.biz>
 
-    SPDX-License-Identifier: LGPL-2.0-only
+    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
 #include "kglobalacceld.h"
