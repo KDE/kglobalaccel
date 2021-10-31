@@ -109,6 +109,9 @@ void KServiceActionComponent::runProcess(const KConfigGroup &group, const QStrin
 
 void KServiceActionComponent::emitGlobalShortcutPressed(const GlobalShortcut &shortcut)
 {
+    // The desktop file's content may have changed by now
+    m_desktopFile->reparseConfiguration();
+
     // TODO KF6 use ApplicationLauncherJob to start processes when it's available in a framework that we depend on
 
     auto launchWithToken = [this, shortcut](const QString &token) {
