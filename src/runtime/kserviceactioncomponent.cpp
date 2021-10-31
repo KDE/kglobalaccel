@@ -13,6 +13,8 @@
 #include <QDBusConnectionInterface>
 #include <QProcess>
 
+#include <KShell>
+
 namespace KdeDGlobalAccel
 {
 KServiceActionComponent::KServiceActionComponent(const QString &serviceStorageId, const QString &friendlyName, GlobalShortcutsRegistry *registry)
@@ -38,7 +40,7 @@ KServiceActionComponent::~KServiceActionComponent()
 
 void runProcess(const KConfigGroup &group, bool klauncherAvailable)
 {
-    QStringList parts = group.readEntry(QStringLiteral("Exec"), QString()).split(QChar(' '));
+    QStringList parts = KShell::splitArgs(group.readEntry(QStringLiteral("Exec"), QString()));
     if (parts.isEmpty()) {
         return;
     }
