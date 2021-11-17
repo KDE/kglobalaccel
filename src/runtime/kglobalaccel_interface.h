@@ -26,7 +26,7 @@ class KGLOBALACCELPRIVATE_EXPORT KGlobalAccelInterface : public QObject
 
 public:
     explicit KGlobalAccelInterface(QObject *parent);
-    virtual ~KGlobalAccelInterface();
+    ~KGlobalAccelInterface() override;
 
 public:
     /**

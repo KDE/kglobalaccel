@@ -42,7 +42,7 @@ public:
 
     /* clang-format on */
 
-    ~Component();
+    ~Component() override;
 
     bool activateGlobalShortcutContext(const QString &uniqueName);
 

@@ -356,7 +356,7 @@ private:
     KGlobalAccel();
 
     /// Destructor
-    ~KGlobalAccel();
+    ~KGlobalAccel() override;
 
     //! get component @p componentUnique
     OrgKdeKglobalaccelComponentInterface *getComponent(const QString &componentUnique);

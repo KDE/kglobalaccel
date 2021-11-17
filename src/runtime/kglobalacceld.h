@@ -38,7 +38,7 @@ public:
     Q_FLAG(SetShortcutFlags)
 
     explicit KGlobalAccelD(QObject *parent = nullptr);
-    ~KGlobalAccelD();
+    ~KGlobalAccelD() override;
 
     bool init();
 

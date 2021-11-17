@@ -49,7 +49,7 @@ public:
      * @internal
      */
     GlobalShortcutsRegistry();
-    ~GlobalShortcutsRegistry();
+    ~GlobalShortcutsRegistry() override;
 
     /**
      * Activate all shortcuts having their application present.

@@ -44,7 +44,7 @@ public:
 
     KGlobalShortcutInfo(const KGlobalShortcutInfo &rhs);
 
-    ~KGlobalShortcutInfo();
+    ~KGlobalShortcutInfo() override;
 
     KGlobalShortcutInfo &operator=(const KGlobalShortcutInfo &rhs);
 

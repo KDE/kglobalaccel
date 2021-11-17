@@ -1,5 +1,6 @@
 set(xcb_plugin_SRCS
     kglobalaccel_x11.cpp
+    kglobalaccel_x11.h
     ../../logging.cpp
 )
 
