@@ -12,11 +12,11 @@ QDBusArgument &operator<<(QDBusArgument &argument, const QKeySequence &sequence)
     argument.beginStructure();
     argument.beginArray(qMetaTypeId<int>());
     for (int i = 0; i < maxSequenceLength; i++) {
-        if (i < sequence.count()) {
-            argument << sequence[i];
-        } else {
-            argument << 0;
-        }
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        argument << (i < sequence.count() ? sequence[i].toCombined() : 0);
+#else
+        argument << (i < sequence.count() ? sequence[i] : 0);
+#endif
     }
     argument.endArray();
     argument.endStructure();
@@ -53,14 +53,22 @@ QDBusArgument &operator<<(QDBusArgument &argument, const KGlobalShortcutInfo &sh
 
     const QList<QKeySequence> keys = shortcut.keys();
     for (const QKeySequence &key : keys) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        argument << key[0].toCombined();
+#else
         argument << key[0];
+#endif
     }
     argument.endArray();
     argument.beginArray(qMetaTypeId<int>());
 
     const QList<QKeySequence> defaultKeys = shortcut.defaultKeys();
     for (const QKeySequence &key : defaultKeys) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        argument << key[0].toCombined();
+#else
         argument << key[0];
+#endif
     }
     argument.endArray();
     argument.endStructure();

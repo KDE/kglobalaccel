@@ -30,14 +30,15 @@ ecm_generate_export_header(KF5GlobalAccelPrivate
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
 
-target_include_directories(KF5GlobalAccelPrivate INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/KGlobalAccel>")
+target_include_directories(KF5GlobalAccelPrivate INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KGlobalAccel>")
 
 target_link_libraries(KF5GlobalAccelPrivate
-   Qt5::DBus
-   KF5::GlobalAccel
-   KF5::WindowSystem # KKeyServer
-   KF5::CoreAddons   # KAboutData
-   KF5::ConfigCore
+    PUBLIC
+        Qt${QT_MAJOR_VERSION}::DBus
+        KF5::GlobalAccel
+        KF5::WindowSystem # KKeyServer
+        KF5::CoreAddons   # KAboutData
+        KF5::ConfigCore
 )
 
 set_target_properties(KF5GlobalAccelPrivate PROPERTIES VERSION ${KGLOBALACCEL_VERSION}
@@ -45,8 +46,12 @@ set_target_properties(KF5GlobalAccelPrivate PROPERTIES VERSION ${KGLOBALACCEL_VE
                                                 EXPORT_NAME "GlobalAccelPrivate"
 )
 
-if (${XCB_XCB_FOUND})
-    target_link_libraries(KF5GlobalAccelPrivate Qt5::X11Extras)
+if(XCB_XCB_FOUND)
+    if (TARGET Qt5::X11Extras)
+        target_link_libraries(KF5GlobalAccelPrivate PUBLIC Qt5::X11Extras)
+    elseif (TARGET Qt6::Gui)
+        target_link_libraries(KF5GlobalAccelPrivate PUBLIC Qt6::GuiPrivate) # qtx11extras_p.h
+    endif()
 endif()
 
 add_executable(kglobalaccel5 main.cpp logging.cpp)
@@ -62,13 +67,13 @@ add_subdirectory(plugins)
 # Install application and configuration
 install(TARGETS KF5GlobalAccelPrivate EXPORT KF5GlobalAccelTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
 install( TARGETS kglobalaccel5 ${KF5_INSTALL_TARGETS_DEFAULT_ARGS} )
-install( FILES kglobalaccel.desktop  DESTINATION ${KDE_INSTALL_KSERVICES5DIR} RENAME kglobalaccel5.desktop)
+install( FILES kglobalaccel.desktop  DESTINATION ${KDE_INSTALL_KSERVICESDIR} RENAME kglobalaccel5.desktop)
 
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kf5globalaccelprivate_export.h
   kglobalacceld.h
   kglobalaccel_interface.h
-  DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KGlobalAccel/private COMPONENT Devel
+  DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KGlobalAccel/private COMPONENT Devel
 )
 
 # D-Bus activation service file, and associated systemd service

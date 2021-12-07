@@ -38,7 +38,7 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX KGLOBALACCEL
 
 # Dependencies
 set(REQUIRED_QT_VERSION 5.15.2)
-find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus Widgets)
+find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus Widgets)
 
 # Dependencies of runtime component
 find_package(KF5Config ${KF_DEP_VERSION} REQUIRED)
@@ -62,7 +62,11 @@ set(HAVE_X11 0)
 
 if(X11_FOUND AND XCB_XCB_FOUND)
     set(HAVE_X11 1)
-    find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED X11Extras)
+    if (QT_MAJOR_VERSION STREQUAL "5")
+        find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED X11Extras)
+    elseif (QT_MAJOR_VERSION STREQUAL "6")
+        find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED Gui) # qtx11extras_p.h
+    endif()
 endif()
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050f02)
 add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x055100)
@@ -103,7 +107,7 @@ install(EXPORT KF5GlobalAccelTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FI
 
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kglobalaccel_version.h
-        DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5} COMPONENT Devel )
+        DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF} COMPONENT Devel )
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 

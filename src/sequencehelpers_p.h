@@ -10,7 +10,11 @@ static QKeySequence reverseKey(const QKeySequence &key)
     int k[maxSequenceLength] = {0, 0, 0, 0};
     int count = key.count();
     for (int i = 0; i < count; i++) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        k[count - i - 1] = key[i].toCombined();
+#else
         k[count - i - 1] = key[i];
+#endif
     }
 
     return QKeySequence(k[0], k[1], k[2], k[3]);
@@ -30,7 +34,11 @@ static QKeySequence cropKey(const QKeySequence &key, int count)
     int k[maxSequenceLength] = {0, 0, 0, 0};
     // cut from beginning
     for (int i = count; i < key.count(); i++) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        k[i - count] = key[i].toCombined();
+#else
         k[i - count] = key[i];
+#endif
     }
 
     return QKeySequence(k[0], k[1], k[2], k[3]);
@@ -88,12 +96,21 @@ static QKeySequence mangleKey(const QKeySequence &key)
     for (int i = 0; i < key.count(); i++) {
         // Qt triggers both shortcuts that include Shift+Backtab and Shift+Tab
         // when user presses Shift+Tab. Make no difference here.
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        int keySym = key[i].toCombined() & ~Qt::KeyboardModifierMask;
+        int keyMod = key[i].toCombined() & Qt::KeyboardModifierMask;
+#else
         int keySym = key[i] & ~Qt::KeyboardModifierMask;
         int keyMod = key[i] & Qt::KeyboardModifierMask;
+#endif
         if ((keyMod & Qt::SHIFT) && (keySym == Qt::Key_Backtab || keySym == Qt::Key_Tab)) {
             k[i] = keyMod | Qt::Key_Tab;
         } else {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+            k[i] = key[i].toCombined();
+#else
             k[i] = key[i];
+#endif
         }
     }
 

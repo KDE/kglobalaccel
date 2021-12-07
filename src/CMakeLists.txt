@@ -45,19 +45,20 @@ ecm_generate_export_header(KF5GlobalAccel
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
 
-target_include_directories(KF5GlobalAccel INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/KGlobalAccel>")
+target_include_directories(KF5GlobalAccel INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KGlobalAccel>")
 
 target_link_libraries(KF5GlobalAccel
 PUBLIC
-    Qt5::DBus
-    Qt5::Widgets
+    Qt${QT_MAJOR_VERSION}::DBus
+    Qt${QT_MAJOR_VERSION}::Widgets
 )
 
 if(HAVE_X11)
-    target_link_libraries(KF5GlobalAccel
-    PRIVATE
-        Qt5::X11Extras
-    )
+    if (TARGET Qt5::X11Extras)
+        target_link_libraries(KF5GlobalAccel PRIVATE Qt5::X11Extras)
+    elseif (TARGET Qt6::Gui)
+        target_link_libraries(KF5GlobalAccel PRIVATE Qt6::GuiPrivate) # qtx11extras_p.h
+    endif()
 endif()
 
 set_target_properties(KF5GlobalAccel PROPERTIES VERSION   ${KGLOBALACCEL_VERSION}
@@ -78,7 +79,7 @@ install(TARGETS KF5GlobalAccel EXPORT KF5GlobalAccelTargets ${KF5_INSTALL_TARGET
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kglobalaccel_export.h
   ${KGlobalAccel_HEADERS}
-  DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KGlobalAccel COMPONENT Devel
+  DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KGlobalAccel COMPONENT Devel
 )
 
 if(BUILD_QCH)
@@ -108,7 +109,7 @@ if(BUILD_QCH)
 endif()
 
 include(ECMGeneratePriFile)
-ecm_generate_pri_file(BASE_NAME KGlobalAccel LIB_NAME KF5GlobalAccel DEPS "dbus widgets" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF5}/KGlobalAccel)
+ecm_generate_pri_file(BASE_NAME KGlobalAccel LIB_NAME KF5GlobalAccel DEPS "dbus widgets" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/KGlobalAccel)
 install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
 
 add_subdirectory(runtime)

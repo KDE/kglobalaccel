@@ -17,7 +17,11 @@
 #include <QStringList>
 
 #if HAVE_X11
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <private/qtx11extras_p.h>
+#else
 #include <QX11Info>
+#endif
 #endif
 
 static QList<QKeySequence> keysFromString(const QString &str)
