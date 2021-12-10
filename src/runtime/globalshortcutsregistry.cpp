@@ -14,11 +14,11 @@
 #include <config-kglobalaccel.h>
 
 #include <KDesktopFile>
-#include <KPluginLoader>
 #include <KPluginMetaData>
 #include <QDir>
 #include <QGuiApplication>
 #include <QJsonArray>
+#include <QPluginLoader>
 #include <QStandardPaths>
 
 #include <QDBusConnection>
@@ -55,7 +55,7 @@ static KGlobalAccelInterface *loadPlugin(GlobalShortcutsRegistry *parent)
         }
     }
 
-    const QVector<KPluginMetaData> candidates = KPluginLoader::findPlugins(QStringLiteral("org.kde.kglobalaccel5.platforms"));
+    const QVector<KPluginMetaData> candidates = KPluginMetaData::findPlugins(QStringLiteral("org.kde.kglobalaccel5.platforms"));
     for (const KPluginMetaData &candidate : candidates) {
         QPluginLoader loader(candidate.fileName());
         if (checkPlatform(loader.metaData(), platformName)) {
