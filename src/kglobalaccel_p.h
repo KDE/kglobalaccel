@@ -67,7 +67,7 @@ public:
     // private slot implementations
     void _k_invokeAction(const QString &, const QString &, qlonglong);
     void _k_shortcutGotChanged(const QStringList &, const QList<int> &);
-    void _k_shortcutGotChanged_v2(const QStringList &, const QList<QKeySequence> &);
+    void shortcutsChanged(const QStringList &, const QList<QKeySequence> &);
     void _k_serviceOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner);
     void reRegisterAll();
 

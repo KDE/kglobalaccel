@@ -136,10 +136,10 @@ public:
      * @since 4.2
      * @deprecated Since 5.89
      */
-    KGLOBALACCEL_DEPRECATED_VERSION(5, 89, "Use getGlobalShortcutsByKey_v2(const QKeySequence&, int)")
+    KGLOBALACCEL_DEPRECATED_VERSION(5, 89, "Use globalShortcutsByKey(const QKeySequence&, int)")
     static QList<KGlobalShortcutInfo> getGlobalShortcutsByKey(const QKeySequence &seq);
 #endif
-    static QList<KGlobalShortcutInfo> getGlobalShortcutsByKey_v2(const QKeySequence &seq, MatchType type = Equal);
+    static QList<KGlobalShortcutInfo> globalShortcutsByKey(const QKeySequence &seq, MatchType type = Equal);
 
     /**
      * Check if the shortcut @seq is available for the @p component. The
@@ -381,7 +381,6 @@ private:
 #if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(5, 89)
     Q_PRIVATE_SLOT(d, void _k_shortcutGotChanged(const QStringList &, const QList<int> &))
 #endif
-    Q_PRIVATE_SLOT(d, void _k_shortcutGotChanged_v2(const QStringList &, const QList<QKeySequence> &))
     Q_PRIVATE_SLOT(d, void _k_serviceOwnerChanged(const QString &, const QString &, const QString &))
 
     friend class KGlobalAccelSingleton;
