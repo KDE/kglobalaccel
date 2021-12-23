@@ -458,7 +458,7 @@ void KGlobalAccelPrivate::_k_invokeAction(const QString &componentUnique, const 
     action->trigger();
 }
 
-#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(5, 89)
+#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(5, 90)
 void KGlobalAccelPrivate::_k_shortcutGotChanged(const QStringList &actionId, const QList<int> &keys)
 {
     QAction *action = nameToAction.value(actionId.at(KGlobalAccel::ActionUnique));
@@ -534,7 +534,7 @@ QStringList KGlobalAccel::findActionNameSystemwide(const QKeySequence &seq)
 }
 #endif
 
-#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(5, 89)
+#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(5, 90)
 QList<KGlobalShortcutInfo> KGlobalAccel::getGlobalShortcutsByKey(const QKeySequence &seq)
 {
     return globalShortcutsByKey(seq);

@@ -58,7 +58,15 @@ public:
     };
 
     /**
-     * Keysequence match semantics
+     * Keysequence match semantics.
+     *
+     * Assuming we have an Emacs-style shortcut, for example (Alt+B, Alt+F, Alt+G) already assigned,
+     * how a new shortcut is compared depends on which value of the enum is used:
+     * @c Equal : Exact matching: (Alt+B, Alt+F, Alt+G)
+     * @c Shadows : Sequence shadowing: (Alt+B, Alt+F), (Alt+F, Alt+G)
+     * @c Shadowed : Sequence being shadowed: (Alt+B, Alt+F, Alt+G, <any key>), (<any key>, Alt+B, Alt+F, Alt+G)
+     *
+     * @since 5.90
      */
     enum MatchType {
         Equal,
@@ -125,20 +133,32 @@ public:
      */
     static bool isComponentActive(const QString &componentName);
 
-#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(5, 89)
+#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(5, 90)
     /**
-     * Returns a list of global shortcuts registered for the shortcut @seq.
+     * Returns a list of global shortcuts registered for the shortcut @p seq.
      *
      * If the list contains more that one entry it means the component
      * that registered the shortcuts uses global shortcut contexts. All
      * returned shortcuts belong to the same component.
      *
      * @since 4.2
-     * @deprecated Since 5.89
+     * @deprecated Since 5.90, use globalShortcutsByKey(const QKeySequence&, int) instead.
      */
-    KGLOBALACCEL_DEPRECATED_VERSION(5, 89, "Use globalShortcutsByKey(const QKeySequence&, int)")
+    KGLOBALACCEL_DEPRECATED_VERSION(5, 90, "Use globalShortcutsByKey(const QKeySequence&, int) instead.")
     static QList<KGlobalShortcutInfo> getGlobalShortcutsByKey(const QKeySequence &seq);
 #endif
+
+    /**
+     * Returns a list of global shortcuts registered for the shortcut @p seq.
+     *
+     * If the list contains more that one entry it means the component
+     * that registered the shortcuts uses global shortcut contexts. All
+     * returned shortcuts belong to the same component.
+     *
+     * @param type a value from the KGlobalAccel::MatchType enum
+     *
+     * @since 5.90
+     */
     static QList<KGlobalShortcutInfo> globalShortcutsByKey(const QKeySequence &seq, MatchType type = Equal);
 
     /**
@@ -378,9 +398,6 @@ private:
     class KGlobalAccelPrivate *const d;
 
     Q_PRIVATE_SLOT(d, void _k_invokeAction(const QString &, const QString &, qlonglong))
-#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(5, 89)
-    Q_PRIVATE_SLOT(d, void _k_shortcutGotChanged(const QStringList &, const QList<int> &))
-#endif
     Q_PRIVATE_SLOT(d, void _k_serviceOwnerChanged(const QString &, const QString &, const QString &))
 
     friend class KGlobalAccelSingleton;
