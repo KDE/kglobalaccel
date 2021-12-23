@@ -65,7 +65,7 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
                    &org::kde::kglobalaccel::Component::globalShortcutPressed,
                    q,
                    [this](const QString &componentUnique, const QString &shortcutUnique, qlonglong timestamp) {
-                       _k_invokeAction(componentUnique, shortcutUnique, timestamp);
+                       invokeAction(componentUnique, shortcutUnique, timestamp);
                    });
 
         components[componentUnique] = component;
@@ -96,7 +96,7 @@ KGlobalAccelPrivate::KGlobalAccelPrivate(KGlobalAccel *qq)
 {
     m_watcher = new QDBusServiceWatcher(serviceName(), QDBusConnection::sessionBus(), QDBusServiceWatcher::WatchForOwnerChange, q);
     q->connect(m_watcher, &QDBusServiceWatcher::serviceOwnerChanged, q, [this](const QString &serviceName, const QString &oldOwner, const QString &newOwner) {
-        _k_serviceOwnerChanged(serviceName, oldOwner, newOwner);
+        serviceOwnerChanged(serviceName, oldOwner, newOwner);
     });
 }
 
@@ -113,7 +113,7 @@ org::kde::KGlobalAccel *KGlobalAccelPrivate::iface()
             }
         }
         q->connect(m_iface, &org::kde::KGlobalAccel::yourShortcutGotChanged, q, [this](const QStringList &actionId, const QList<int> &newKeys) {
-            _k_shortcutGotChanged(actionId, newKeys);
+            shortcutGotChanged(actionId, newKeys);
         });
         q->connect(m_iface, &org::kde::KGlobalAccel::yourShortcutsChanged, q, [this](const QStringList &actionId, const QList<QKeySequence> &newKeys) {
             shortcutsChanged(actionId, newKeys);
@@ -336,7 +336,7 @@ void KGlobalAccelPrivate::updateGlobalShortcut(/*const would be better*/ QAction
             // at the time of comparison (now) the action *already has* the new shortcut.
             // We called setShortcut(), remember?
             // Also note that we will see our own signal so we may not need to call
-            // setActiveGlobalShortcutNoEnable - _k_shortcutGotChanged() does it.
+            // setActiveGlobalShortcutNoEnable - shortcutGotChanged() does it.
             // In practice it's probably better to get the change propagated here without
             // DBus delay as we do below.
             iface()->setForeignShortcutKeys(actionId, result);
@@ -410,7 +410,7 @@ QString KGlobalAccelPrivate::componentFriendlyForAction(const QAction *action)
 }
 
 #if HAVE_X11
-int _k_timestampCompare(unsigned long time1_, unsigned long time2_) // like strcmp()
+int timestampCompare(unsigned long time1_, unsigned long time2_) // like strcmp()
 {
     quint32 time1 = time1_;
     quint32 time2 = time2_;
@@ -421,7 +421,7 @@ int _k_timestampCompare(unsigned long time1_, unsigned long time2_) // like strc
 }
 #endif
 
-void KGlobalAccelPrivate::_k_invokeAction(const QString &componentUnique, const QString &actionUnique, qlonglong timestamp)
+void KGlobalAccelPrivate::invokeAction(const QString &componentUnique, const QString &actionUnique, qlonglong timestamp)
 {
     QAction *action = nullptr;
     const QList<QAction *> candidates = nameToAction.values(actionUnique);
@@ -445,10 +445,10 @@ void KGlobalAccelPrivate::_k_invokeAction(const QString &componentUnique, const 
     // in the proper place in relation to the X events queue in order to avoid
     // the possibility of wrong ordering of user events.
     if (QX11Info::isPlatformX11()) {
-        if (_k_timestampCompare(timestamp, QX11Info::appTime()) > 0) {
+        if (timestampCompare(timestamp, QX11Info::appTime()) > 0) {
             QX11Info::setAppTime(timestamp);
         }
-        if (_k_timestampCompare(timestamp, QX11Info::appUserTime()) > 0) {
+        if (timestampCompare(timestamp, QX11Info::appUserTime()) > 0) {
             QX11Info::setAppUserTime(timestamp);
         }
     }
@@ -459,7 +459,7 @@ void KGlobalAccelPrivate::_k_invokeAction(const QString &componentUnique, const 
 }
 
 #if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(5, 90)
-void KGlobalAccelPrivate::_k_shortcutGotChanged(const QStringList &actionId, const QList<int> &keys)
+void KGlobalAccelPrivate::shortcutGotChanged(const QStringList &actionId, const QList<int> &keys)
 {
     QAction *action = nameToAction.value(actionId.at(KGlobalAccel::ActionUnique));
     if (!action) {
@@ -483,7 +483,7 @@ void KGlobalAccelPrivate::shortcutsChanged(const QStringList &actionId, const QL
     Q_EMIT q->globalShortcutChanged(action, keys.isEmpty() ? QKeySequence() : keys.first());
 }
 
-void KGlobalAccelPrivate::_k_serviceOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner)
+void KGlobalAccelPrivate::serviceOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner)
 {
     Q_UNUSED(oldOwner);
     if (name == QLatin1String("org.kde.kglobalaccel") && !newOwner.isEmpty()) {

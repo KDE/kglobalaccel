@@ -397,9 +397,6 @@ private:
 
     class KGlobalAccelPrivate *const d;
 
-    Q_PRIVATE_SLOT(d, void _k_invokeAction(const QString &, const QString &, qlonglong))
-    Q_PRIVATE_SLOT(d, void _k_serviceOwnerChanged(const QString &, const QString &, const QString &))
-
     friend class KGlobalAccelSingleton;
 };
 

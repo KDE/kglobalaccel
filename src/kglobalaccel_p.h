@@ -65,10 +65,10 @@ public:
     void cleanup();
 
     // private slot implementations
-    void _k_invokeAction(const QString &, const QString &, qlonglong);
-    void _k_shortcutGotChanged(const QStringList &, const QList<int> &);
+    void invokeAction(const QString &, const QString &, qlonglong);
+    void shortcutGotChanged(const QStringList &, const QList<int> &);
     void shortcutsChanged(const QStringList &, const QList<QKeySequence> &);
-    void _k_serviceOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner);
+    void serviceOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner);
     void reRegisterAll();
 
     // for all actions with (isEnabled() && globalShortcutAllowed())
