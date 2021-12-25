@@ -112,9 +112,13 @@ org::kde::KGlobalAccel *KGlobalAccelPrivate::iface()
                 qCritical() << "Couldn't start kglobalaccel from org.kde.kglobalaccel.service:" << reply.error();
             }
         }
+
+#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(5, 90)
         q->connect(m_iface, &org::kde::KGlobalAccel::yourShortcutGotChanged, q, [this](const QStringList &actionId, const QList<int> &newKeys) {
             shortcutGotChanged(actionId, newKeys);
         });
+#endif
+
         q->connect(m_iface, &org::kde::KGlobalAccel::yourShortcutsChanged, q, [this](const QStringList &actionId, const QList<QKeySequence> &newKeys) {
             shortcutsChanged(actionId, newKeys);
         });

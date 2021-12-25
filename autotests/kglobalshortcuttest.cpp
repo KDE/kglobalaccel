@@ -197,7 +197,12 @@ void KGlobalShortcutTest::testFindActionByKey()
         QSKIP("kglobalaccel not installed");
     }
 
+#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(5, 90)
     QList<KGlobalShortcutInfo> actionId = KGlobalAccel::self()->getGlobalShortcutsByKey(sequenceB);
+#else
+    QList<KGlobalShortcutInfo> actionId = KGlobalAccel::self()->globalShortcutsByKey(sequenceB);
+#endif
+
     QCOMPARE(actionId.size(), 1);
 
     QString actionIdAComponentUniqueName("qttest");
@@ -210,7 +215,12 @@ void KGlobalShortcutTest::testFindActionByKey()
     QCOMPARE(actionId.first().componentFriendlyName(), actionIdAComponentFriendlyName);
     QCOMPARE(actionId.first().friendlyName(), actionIdAFriendlyName);
 
+#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(5, 90)
     actionId = KGlobalAccel::self()->getGlobalShortcutsByKey(sequenceA);
+#else
+    actionId = KGlobalAccel::self()->globalShortcutsByKey(sequenceA);
+#endif
+
     QCOMPARE(actionId.size(), 1);
 
     QCOMPARE(actionId.first().componentUniqueName(), actionIdAComponentUniqueName);

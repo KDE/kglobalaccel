@@ -169,8 +169,11 @@ public Q_SLOTS:
     Q_SCRIPTABLE void blockGlobalShortcuts(bool);
 
 Q_SIGNALS:
-
+#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(5, 90)
+    KGLOBALACCELPRIVATE_DEPRECATED_VERSION(5, 90, "Use the yourShortcutsChanged(const QStringList &, const QList<QKeySequence> &) signal instead.")
     Q_SCRIPTABLE void yourShortcutGotChanged(const QStringList &actionId, const QList<int> &newKeys);
+#endif
+
     Q_SCRIPTABLE void yourShortcutsChanged(const QStringList &actionId, const QList<QKeySequence> &newKeys);
 
 private:
