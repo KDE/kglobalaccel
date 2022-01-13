@@ -25,6 +25,7 @@ include(ECMAddQch)
 include(ECMMarkNonGuiExecutable)
 include(ECMQtDeclareLoggingCategory)
 include(ECMPoQmTools)
+include(ECMDeprecationSettings)
 
 set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprecated API excluded from the build [default=0].")
 
@@ -68,8 +69,12 @@ if(X11_FOUND AND XCB_XCB_FOUND)
         find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED Gui) # qtx11extras_p.h
     endif()
 endif()
-add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050f02)
-add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x055100)
+
+ecm_set_disabled_deprecation_versions(
+    QT 5.15.2
+    KF 5.90.0
+)
+
 # Subdirectories
 ecm_install_po_files_as_qm(po)
 
