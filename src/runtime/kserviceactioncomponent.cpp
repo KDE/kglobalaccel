@@ -40,32 +40,32 @@ KServiceActionComponent::~KServiceActionComponent()
 
 void runProcess(const KConfigGroup &group, bool klauncherAvailable)
 {
-    QStringList parts = KShell::splitArgs(group.readEntry(QStringLiteral("Exec"), QString()));
-    if (parts.isEmpty()) {
+    QStringList args = KShell::splitArgs(group.readEntry(QStringLiteral("Exec"), QString()));
+    if (args.isEmpty()) {
         return;
     }
     // sometimes entries have an %u for command line parameters
-    if (parts.last().contains(QChar('%'))) {
-        parts.pop_back();
+    if (args.last().contains(QChar('%'))) {
+        args.pop_back();
     }
 
-    const QString command = parts.takeFirst();
+    const QString command = args.takeFirst();
 
     const auto kstart = QStandardPaths::findExecutable(QStringLiteral("kstart5"));
     if (!kstart.isEmpty()) {
-        parts.prepend(command);
-        parts.prepend(QStringLiteral("--"));
-        QProcess::startDetached(kstart, parts);
+        args.prepend(command);
+        args.prepend(QStringLiteral("--"));
+        QProcess::startDetached(kstart, args);
     } else if (klauncherAvailable) {
         QDBusMessage msg = QDBusMessage::createMethodCall(QStringLiteral("org.kde.klauncher5"),
                                                           QStringLiteral("/KLauncher"),
                                                           QStringLiteral("org.kde.KLauncher"),
                                                           QStringLiteral("exec_blind"));
-        msg << command << parts;
+        msg << command << args;
 
         QDBusConnection::sessionBus().asyncCall(msg);
     } else {
-        QProcess::startDetached(command, parts);
+        QProcess::startDetached(command, args);
     }
 }
 
