@@ -65,7 +65,12 @@ void runProcess(const KConfigGroup &group, bool klauncherAvailable)
 
         QDBusConnection::sessionBus().asyncCall(msg);
     } else {
-        QProcess::startDetached(command, args);
+        const QString cmdExec = QStandardPaths::findExecutable(command);
+        if (cmdExec.isEmpty()) {
+            qCWarning(KGLOBALACCELD) << "Could not find executable in PATH" << command;
+            return;
+        }
+        QProcess::startDetached(cmdExec, args);
     }
 }
 
