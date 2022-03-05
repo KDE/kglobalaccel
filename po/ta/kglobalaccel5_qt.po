@@ -1,0 +1,83 @@
+# translation of kdelibs4.po to தமிழ்
+# Copyright (C) 2000,2002, 2004, 2007, 2008 Free Software Foundation, Inc.
+#
+# Sivakumar Shanmugasundaram <sshanmu@yahoo.com>, 2000.
+# Thuraiappah Vaseeharan <t_vasee@yahoo.com>, 2000-2001.
+# ம. ஸ்ரீ ராமதாஸ் | Sri Ramadoss M <amachu@yavarkkum.org>, 2007-2012.
+# Kishore G <kishore96@gmail.com>, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: kdelibs4\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2014-03-23 01:50+0000\n"
+"PO-Revision-Date: 2021-12-19 11:47+0530\n"
+"Last-Translator: Kishore G <kishore96@gmail.com>\n"
+"Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
+"Language: ta\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 21.12.0\n"
+"X-Qt-Contexts: true\n"
+
+#: kglobalaccel.cpp:574
+msgctxt "KGlobalAccel|"
+msgid "Conflict with Global Shortcut"
+msgstr "பொதுவான சுருக்குவழியுடன் முரண்பாடு"
+
+#: kglobalaccel.cpp:575
+#, qt-format
+msgctxt "KGlobalAccel|"
+msgid ""
+"The '%1' key combination has already been allocated to the global action "
+"\"%2\" in %3.\n"
+"Do you want to reassign it from that action to the current one?"
+msgstr ""
+"'%1' எனும் விசைக்கூட்டு, ஏற்கனவே \"%2\" என்ற பொது செயலுக்கு \"%3\"-இல்  "
+"பயன்படுத்தப்படுகிறது.\n"
+"அதற்கு பதிலாக தற்போதைய செயலுக்கே இச்சுருக்குவழியை அமர்த்த வேண்டுமா?"
+
+#: kglobalaccel.cpp:583 kglobalaccel.cpp:616
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "இதற்கே அமர்த்து"
+
+#: kglobalaccel.cpp:602
+#, qt-format
+msgctxt "KGlobalAccel|"
+msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgstr ""
+"'%1' எனும் விசைக்கூட்டு, ஏற்கனவே %2 எனும் செயலியால் %3 என்ற செயலுக்காக "
+"பயன்படுத்தப்படுகிறது:"
+
+#: kglobalaccel.cpp:606
+#, qt-format
+msgctxt "KGlobalAccel|"
+msgid "In context '%1' for action '%2'\n"
+msgstr "'%1' எனும் சூழலில் '%2' எனும் செயலுக்கு\n"
+
+#: kglobalaccel.cpp:608
+#, qt-format
+msgctxt "KGlobalAccel|"
+msgid ""
+"The '%1' key combination is registered by application %2.\n"
+"%3"
+msgstr ""
+"'%1' எனும் விசைக்கூட்டு, ஏற்கனவே %2 எனும் செயலியால் பயன்படுத்தப்படுகிறது.\n"
+"%3"
+
+#: kglobalaccel.cpp:611
+msgctxt "KGlobalAccel|"
+msgid "Conflict With Registered Global Shortcut"
+msgstr "பயனிலுள்ள பொது சுருக்குவழியுடன் முரண்பாடு"
+
+#: runtime/main.cpp:41 runtime/main.cpp:43
+msgctxt "QObject|"
+msgid "KDE Global Shortcuts Service"
+msgstr "கே.டீ.யீ. பொது சுருக்குவழி சேவை"
+
+#: runtime/main.cpp:46 runtime/main.cpp:47
+msgctxt "QObject|"
+msgid "Maintainer"
+msgstr "பராமரிப்பாளர்"
