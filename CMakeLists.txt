@@ -80,6 +80,9 @@ ecm_install_po_files_as_qm(po)
 
 add_subdirectory(src)
 if (BUILD_TESTING)
+    find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED Test)
+
+    add_subdirectory(tests)
     add_subdirectory(autotests)
 endif()
 
