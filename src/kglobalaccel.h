@@ -380,10 +380,9 @@ Q_SIGNALS:
      * @see setGlobalShortcut
      * @see setDefaultShortcut
      * @since 5.0
-     *
-     * @todo KF6: add const to the QAction parameter
      */
-    void globalShortcutChanged(/*const would be better*/ QAction *action, const QKeySequence &seq);
+    void globalShortcutChanged(QAction *action, const QKeySequence &seq);
+    void globalShortcutActiveChanged(QAction *action, bool active);
 
 private:
     /// Creates a new KGlobalAccel object

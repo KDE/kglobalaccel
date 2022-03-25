@@ -73,6 +73,13 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
                        invokeAction(componentUnique, shortcutUnique, timestamp);
                    });
 
+        q->connect(component,
+                   &org::kde::kglobalaccel::Component::globalShortcutReleased,
+                   q,
+                   [this](const QString &componentUnique, const QString &shortcutUnique, qlonglong timestamp) {
+                       invokeDeactivate(componentUnique, shortcutUnique, timestamp);
+                   });
+
         components[componentUnique] = component;
     }
 
@@ -434,7 +441,7 @@ int timestampCompare(unsigned long time1_, unsigned long time2_) // like strcmp(
 }
 #endif
 
-void KGlobalAccelPrivate::invokeAction(const QString &componentUnique, const QString &actionUnique, qlonglong timestamp)
+QAction *KGlobalAccelPrivate::findAction(const QString &componentUnique, const QString &actionUnique)
 {
     QAction *action = nullptr;
     const QList<QAction *> candidates = nameToAction.values(actionUnique);
@@ -449,6 +456,15 @@ void KGlobalAccelPrivate::invokeAction(const QString &componentUnique, const QSt
     // - the action is not enabled
     // - the action is an configuration action
     if (!action || !action->isEnabled() || action->property("isConfigurationAction").toBool()) {
+        return nullptr;
+    }
+    return action;
+}
+
+void KGlobalAccelPrivate::invokeAction(const QString &componentUnique, const QString &actionUnique, qlonglong timestamp)
+{
+    QAction *action = findAction(componentUnique, actionUnique);
+    if (!action) {
         return;
     }
 
@@ -468,7 +484,18 @@ void KGlobalAccelPrivate::invokeAction(const QString &componentUnique, const QSt
 #endif
     action->setProperty("org.kde.kglobalaccel.activationTimestamp", timestamp);
 
+    Q_EMIT q->globalShortcutActiveChanged(action, true);
     action->trigger();
+}
+
+void KGlobalAccelPrivate::invokeDeactivate(const QString &componentUnique, const QString &actionUnique, qlonglong timestamp)
+{
+    QAction *action = findAction(componentUnique, actionUnique);
+    if (!action) {
+        return;
+    }
+
+    Q_EMIT q->globalShortcutActiveChanged(action, false);
 }
 
 #if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(5, 90)

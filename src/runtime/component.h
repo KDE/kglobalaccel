@@ -151,6 +151,7 @@ public Q_SLOTS:
     Q_SCRIPTABLE QStringList getShortcutContexts() const;
 
     virtual void emitGlobalShortcutPressed(const GlobalShortcut &shortcut);
+    virtual void emitGlobalShortcutReleased(const GlobalShortcut &shortcut);
 
     Q_SCRIPTABLE void invokeShortcut(const QString &shortcutName, const QString &context = "default");
 
@@ -158,6 +159,9 @@ Q_SIGNALS:
 
     //! Signals that a action for this component was triggered
     Q_SCRIPTABLE void globalShortcutPressed(const QString &componentUnique, const QString &shortcutUnique, qlonglong timestamp);
+
+    //! Signals that a action for this component is not triggered anymore
+    Q_SCRIPTABLE void globalShortcutReleased(const QString &componentUnique, const QString &shortcutUnique, qlonglong timestamp);
 
 private:
     QString _uniqueName;
