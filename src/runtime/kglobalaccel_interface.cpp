@@ -52,3 +52,13 @@ void KGlobalAccelInterface::ungrabKeys()
 {
     d->owner->ungrabKeys();
 }
+
+KGlobalAccelInterfaceV2::KGlobalAccelInterfaceV2(QObject *parent)
+    : KGlobalAccelInterface(parent)
+{
+}
+
+bool KGlobalAccelInterfaceV2::keyReleased(int keyQt)
+{
+    return d->owner->keyReleased(keyQt);
+}

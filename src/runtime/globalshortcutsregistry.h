@@ -136,6 +136,7 @@ public Q_SLOTS:
 private:
     friend class KdeDGlobalAccel::Component;
     friend class KGlobalAccelInterface;
+    friend class KGlobalAccelInterfaceV2;
 
     KdeDGlobalAccel::Component *addComponent(KdeDGlobalAccel::Component *component);
     KdeDGlobalAccel::Component *takeComponent(KdeDGlobalAccel::Component *component);
@@ -143,6 +144,7 @@ private:
     // called by the implementation to inform us about key presses
     // returns true if the key was handled
     bool keyPressed(int keyQt);
+    bool keyReleased(int keyQt);
 
     QHash<QKeySequence, GlobalShortcut *> _active_keys;
     QKeySequence _active_sequence;
@@ -154,6 +156,7 @@ private:
     mutable KConfig _config;
 
     QDBusObjectPath _dbusPath;
+    GlobalShortcut *m_lastShortcut = nullptr;
 };
 
 #endif /* #ifndef GLOBALSHORTCUTSREGISTRY_H */
