@@ -14,6 +14,7 @@
 #include <QObject>
 
 struct xcb_key_press_event_t;
+typedef xcb_key_press_event_t xcb_key_release_event_t;
 typedef struct _XCBKeySymbols xcb_key_symbols_t;
 /**
  * @internal
@@ -21,7 +22,7 @@ typedef struct _XCBKeySymbols xcb_key_symbols_t;
  * The KGlobalAccel private class handles grabbing of global keys,
  * and notification of when these keys are pressed.
  */
-class KGlobalAccelImpl : public KGlobalAccelInterface, public QAbstractNativeEventFilter
+class KGlobalAccelImpl : public KGlobalAccelInterfaceV2, public QAbstractNativeEventFilter
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.kde.kglobalaccel5.KGlobalAccelInterface" FILE "xcb.json")
@@ -67,9 +68,12 @@ private:
      */
     void x11MappingNotify();
     bool x11KeyPress(xcb_key_press_event_t *event);
+    bool x11KeyRelease(xcb_key_press_event_t *event);
 
     xcb_key_symbols_t *m_keySymbols;
     uint8_t m_xkb_first_event;
+    void *m_display;
+    unsigned int m_xrecordCookieSequence;
 };
 
 #endif // _KGLOBALACCEL_X11_H
