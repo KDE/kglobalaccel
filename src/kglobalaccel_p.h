@@ -102,6 +102,7 @@ public:
 
 private:
     org::kde::KGlobalAccel *m_iface = nullptr;
+    QPointer<QAction> m_lastActivatedAction;
     QDBusServiceWatcher *m_watcher;
 };
 

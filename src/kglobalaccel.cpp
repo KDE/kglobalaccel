@@ -484,7 +484,10 @@ void KGlobalAccelPrivate::invokeAction(const QString &componentUnique, const QSt
 #endif
     action->setProperty("org.kde.kglobalaccel.activationTimestamp", timestamp);
 
-    Q_EMIT q->globalShortcutActiveChanged(action, true);
+    if (m_lastActivatedAction != action) {
+        Q_EMIT q->globalShortcutActiveChanged(action, true);
+        m_lastActivatedAction = action;
+    }
     action->trigger();
 }
 
@@ -494,6 +497,8 @@ void KGlobalAccelPrivate::invokeDeactivate(const QString &componentUnique, const
     if (!action) {
         return;
     }
+
+    m_lastActivatedAction.clear();
 
     Q_EMIT q->globalShortcutActiveChanged(action, false);
 }
