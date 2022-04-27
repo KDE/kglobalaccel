@@ -75,12 +75,6 @@ public:
     void deactivateShortcuts(bool temporarily = false);
 
     /**
-     * Get the shortcut corresponding to key. Only active shortcut are
-     * considered.
-     */
-    GlobalShortcut *getActiveShortcutByKey(const QKeySequence &key) const;
-
-    /**
      */
     KdeDGlobalAccel::Component *getComponent(const QString &uniqueName);
 

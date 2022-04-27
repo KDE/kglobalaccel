@@ -157,11 +157,6 @@ void GlobalShortcutsRegistry::deactivateShortcuts(bool temporarily)
     }
 }
 
-GlobalShortcut *GlobalShortcutsRegistry::getActiveShortcutByKey(const QKeySequence &key) const
-{
-    return _active_keys.value(key);
-}
-
 KdeDGlobalAccel::Component *GlobalShortcutsRegistry::getComponent(const QString &uniqueName)
 {
     return _components.value(uniqueName);
