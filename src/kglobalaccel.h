@@ -73,6 +73,7 @@ public:
         Shadows,
         Shadowed,
     };
+    Q_ENUM(MatchType)
 
     /**
      * Returns (and creates if necessary) the singleton instance
