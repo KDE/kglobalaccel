@@ -207,9 +207,7 @@ void Component::emitGlobalShortcutPressed(const GlobalShortcut &shortcut)
     long timestamp = 0;
 #endif
 
-    // Make sure it is one of ours
     if (shortcut.context()->component() != this) {
-        // In production mode do nothing
         return;
     }
 
@@ -232,7 +230,6 @@ void Component::emitGlobalShortcutReleased(const GlobalShortcut &shortcut)
     long timestamp = 0;
 #endif
 
-    // Make sure it is one of ours
     if (shortcut.context()->component() != this) {
         return;
     }
