@@ -150,25 +150,16 @@ void KServiceActionComponent::emitGlobalShortcutPressed(const GlobalShortcut &sh
 
 void KServiceActionComponent::loadFromService()
 {
-    QString shortcutString;
+    auto registerGroupShortcut = [this](const QString &name, const KConfigGroup &group) {
+        const QString shortcutString = group.readEntry(QStringLiteral("X-KDE-Shortcuts"), QString()).replace(QLatin1Char(','), QLatin1Char('\t'));
+        GlobalShortcut *shortcut = registerShortcut(name, group.readEntry(QStringLiteral("Name"), QString()), shortcutString, shortcutString);
+        shortcut->setIsPresent(true);
+    };
 
-    QStringList shortcuts = m_desktopFile->desktopGroup().readEntry(QStringLiteral("X-KDE-Shortcuts"), QString()).split(QChar(','));
-    if (!shortcuts.isEmpty()) {
-        shortcutString = shortcuts.join(QChar('\t'));
-    }
-
-    GlobalShortcut *shortcut = registerShortcut(QStringLiteral("_launch"), m_desktopFile->readName(), shortcutString, shortcutString);
-    shortcut->setIsPresent(true);
+    registerGroupShortcut(QStringLiteral("_launch"), m_desktopFile->desktopGroup());
     const auto lstActions = m_desktopFile->readActions();
     for (const QString &action : lstActions) {
-        shortcuts = m_desktopFile->actionGroup(action).readEntry(QStringLiteral("X-KDE-Shortcuts"), QString()).split(QChar(','));
-        if (!shortcuts.isEmpty()) {
-            shortcutString = shortcuts.join(QChar('\t'));
-        }
-
-        GlobalShortcut *shortcut =
-            registerShortcut(action, m_desktopFile->actionGroup(action).readEntry(QStringLiteral("Name")), shortcutString, shortcutString);
-        shortcut->setIsPresent(true);
+        registerGroupShortcut(action, m_desktopFile->actionGroup(action));
     }
 }
 
