@@ -418,6 +418,7 @@ QList<KGlobalShortcutInfo> KGlobalAccelD::globalShortcutsByKey(const QKeySequenc
     const QList<GlobalShortcut *> shortcuts = GlobalShortcutsRegistry::self()->getShortcutsByKey(key, type);
 
     QList<KGlobalShortcutInfo> rc;
+    rc.reserve(shortcuts.size());
     for (const GlobalShortcut *sc : shortcuts) {
 #ifdef KDEDGLOBALACCEL_TRACE
         qCDebug(KGLOBALACCELD) << sc->context()->uniqueName() << sc->uniqueName();
@@ -490,12 +491,15 @@ void KGlobalAccelD::unRegister(const QStringList &actionId)
 #if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(5, 90)
 QList<int> KGlobalAccelD::setShortcut(const QStringList &actionId, const QList<int> &keys, uint flags)
 {
-    QList<int> ret;
     QList<QKeySequence> input;
+    input.reserve(keys.size());
     for (auto i : keys) {
         input << i;
     }
+
     const QList<QKeySequence> list = setShortcutKeys(actionId, input, flags);
+    QList<int> ret;
+    ret.reserve(list.size());
     for (auto i : list) {
         ret << i[0];
     }
