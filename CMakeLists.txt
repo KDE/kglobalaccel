@@ -29,6 +29,9 @@ include(ECMDeprecationSettings)
 
 set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprecated API excluded from the build [default=0].")
 
+option(BUILD_RUNTIME "Build the kglobalacceld runtime" ON)
+add_feature_info(BUILD_RUNTIME ${BUILD_RUNTIME} "The kglobalacceld runtime")
+
 option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)" OFF)
 add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
 
@@ -42,14 +45,16 @@ set(REQUIRED_QT_VERSION 5.15.2)
 find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus Widgets)
 
 # Dependencies of runtime component
-find_package(KF5Config ${KF_DEP_VERSION} REQUIRED)
-find_package(KF5CoreAddons ${KF_DEP_VERSION} REQUIRED)
-find_package(KF5Crash ${KF_DEP_VERSION} REQUIRED)
-find_package(KF5DBusAddons ${KF_DEP_VERSION} REQUIRED)
-find_package(KF5WindowSystem ${KF_DEP_VERSION} REQUIRED)
+if (BUILD_RUNTIME)
+    find_package(KF5Config ${KF_DEP_VERSION} REQUIRED)
+    find_package(KF5CoreAddons ${KF_DEP_VERSION} REQUIRED)
+    find_package(KF5Crash ${KF_DEP_VERSION} REQUIRED)
+    find_package(KF5DBusAddons ${KF_DEP_VERSION} REQUIRED)
+    find_package(KF5WindowSystem ${KF_DEP_VERSION} REQUIRED)
+endif()
 
 # no X11 stuff on mac
-if (NOT APPLE)
+if (BUILD_RUNTIME AND NOT APPLE)
     find_package(XCB MODULE COMPONENTS XCB KEYSYMS XKB RECORD OPTIONAL_COMPONENTS XTEST)
     set_package_properties(XCB PROPERTIES DESCRIPTION "X protocol C-language Binding"
                        URL "http://xcb.freedesktop.org"
