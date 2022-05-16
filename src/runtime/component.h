@@ -102,6 +102,11 @@ public:
 
     void writeSettings(KConfigGroup &config) const;
 
+    GlobalShortcutsRegistry *registry() const
+    {
+        return _registry;
+    }
+
 protected:
     /**
      * Create a new globalShortcut by its name

@@ -86,6 +86,21 @@ protected:
     bool keyReleased(int keyQt);
 };
 
+class KGLOBALACCELPRIVATE_EXPORT KGlobalAccelInterfaceV3 : public KGlobalAccelInterfaceV2
+{
+    Q_OBJECT
+public:
+    KGlobalAccelInterfaceV3(QObject *parent);
+
+public:
+    /**
+     * Should provide an activation token to be used with interfaces like xdg_activation_v1
+     *
+     * @returns the token, as a string
+     **/
+    virtual QString activationToken(const QString &appId) = 0;
+};
+
 Q_DECLARE_INTERFACE(KGlobalAccelInterface, KGlobalAccelInterface_iid)
 
 #endif

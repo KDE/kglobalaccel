@@ -62,3 +62,8 @@ bool KGlobalAccelInterfaceV2::keyReleased(int keyQt)
 {
     return d->owner->keyReleased(keyQt);
 }
+
+KGlobalAccelInterfaceV3::KGlobalAccelInterfaceV3(QObject *parent)
+    : KGlobalAccelInterfaceV2(parent)
+{
+}

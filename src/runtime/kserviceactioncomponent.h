@@ -34,6 +34,8 @@ public:
     bool cleanUp() override;
 
 private:
+    void runProcess(const KConfigGroup &group, bool klauncherAvailable) const;
+
     QString m_serviceStorageId;
     QScopedPointer<KDesktopFile> m_desktopFile;
 };

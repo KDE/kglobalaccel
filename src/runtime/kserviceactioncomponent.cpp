@@ -13,6 +13,8 @@
 #include <QDBusConnectionInterface>
 #include <QProcess>
 
+#include "globalshortcutsregistry.h"
+#include "kglobalaccel_interface.h"
 #include <KShell>
 
 namespace KdeDGlobalAccel
@@ -38,7 +40,7 @@ KServiceActionComponent::~KServiceActionComponent()
 {
 }
 
-void runProcess(const KConfigGroup &group, bool klauncherAvailable)
+void KServiceActionComponent::runProcess(const KConfigGroup &group, bool klauncherAvailable) const
 {
     QStringList args = KShell::splitArgs(group.readEntry(QStringLiteral("Exec"), QString()));
     if (args.isEmpty()) {
@@ -51,11 +53,24 @@ void runProcess(const KConfigGroup &group, bool klauncherAvailable)
 
     const QString command = args.takeFirst();
 
+    auto startDetachedWithToken = [this](const QString &program, const QStringList &args) {
+        QProcess p;
+        p.setProgram(program);
+        p.setArguments(args);
+        QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+        if (auto v = qobject_cast<KGlobalAccelInterfaceV3 *>(registry()->accelManager())) {
+            const QString serviceName = m_serviceStorageId.chopped(strlen(".desktop"));
+            env.insert("XDG_ACTIVATION_TOKEN", v->activationToken(serviceName));
+        }
+        p.setProcessEnvironment(env);
+        if (!p.startDetached()) {
+            qCWarning(KGLOBALACCELD) << "Failed to start" << program;
+        }
+    };
+
     const auto kstart = QStandardPaths::findExecutable(QStringLiteral("kstart5"));
     if (!kstart.isEmpty()) {
-        args.prepend(command);
-        args.prepend(QStringLiteral("--"));
-        QProcess::startDetached(kstart, args);
+        startDetachedWithToken(kstart, QStringList(command) << QStringLiteral("--") << args);
     } else if (klauncherAvailable) {
         QDBusMessage msg = QDBusMessage::createMethodCall(QStringLiteral("org.kde.klauncher5"),
                                                           QStringLiteral("/KLauncher"),
@@ -70,7 +85,7 @@ void runProcess(const KConfigGroup &group, bool klauncherAvailable)
             qCWarning(KGLOBALACCELD) << "Could not find executable in PATH" << command;
             return;
         }
-        QProcess::startDetached(cmdExec, args);
+        startDetachedWithToken(cmdExec, args);
     }
 }
 
@@ -91,7 +106,13 @@ void KServiceActionComponent::emitGlobalShortcutPressed(const GlobalShortcut &sh
             message = QDBusMessage::createMethodCall(serviceName, objectPath, interface, QStringLiteral("ActivateAction"));
             message << shortcut.uniqueName() << QVariantList();
         }
-        message << QVariantMap();
+
+        if (auto v = qobject_cast<KGlobalAccelInterfaceV3 *>(registry()->accelManager())) {
+            message << QVariantMap{{QStringLiteral("activation-token"), v->activationToken(serviceName)}};
+        } else {
+            message << QVariantMap();
+        }
+
         QDBusConnection::sessionBus().asyncCall(message);
         return;
     }
