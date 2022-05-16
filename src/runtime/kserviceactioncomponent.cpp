@@ -14,6 +14,7 @@
 #include <QProcess>
 
 #include <KShell>
+#include <KWindowSystem>
 
 namespace KdeDGlobalAccel
 {
@@ -38,7 +39,7 @@ KServiceActionComponent::~KServiceActionComponent()
 {
 }
 
-void runProcess(const KConfigGroup &group, bool klauncherAvailable)
+void runProcess(const KConfigGroup &group, bool klauncherAvailable, const QString &token)
 {
     QStringList args = KShell::splitArgs(group.readEntry(QStringLiteral("Exec"), QString()));
     if (args.isEmpty()) {
@@ -51,11 +52,25 @@ void runProcess(const KConfigGroup &group, bool klauncherAvailable)
 
     const QString command = args.takeFirst();
 
+    auto startDetachedWithToken = [token](const QString &program, const QStringList &args) {
+        QProcess p;
+        p.setProgram(program);
+        p.setArguments(args);
+        QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+        if (!token.isEmpty()) {
+            env.insert("XDG_ACTIVATION_TOKEN", token);
+        }
+        p.setProcessEnvironment(env);
+        if (!p.startDetached()) {
+            qCWarning(KGLOBALACCELD) << "Failed to start" << program;
+        }
+    };
+
     const auto kstart = QStandardPaths::findExecutable(QStringLiteral("kstart5"));
     if (!kstart.isEmpty()) {
         args.prepend(command);
         args.prepend(QStringLiteral("--"));
-        QProcess::startDetached(kstart, args);
+        startDetachedWithToken(kstart, args);
     } else if (klauncherAvailable) {
         QDBusMessage msg = QDBusMessage::createMethodCall(QStringLiteral("org.kde.klauncher5"),
                                                           QStringLiteral("/KLauncher"),
@@ -70,7 +85,7 @@ void runProcess(const KConfigGroup &group, bool klauncherAvailable)
             qCWarning(KGLOBALACCELD) << "Could not find executable in PATH" << command;
             return;
         }
-        QProcess::startDetached(cmdExec, args);
+        startDetachedWithToken(cmdExec, args);
     }
 }
 
@@ -78,38 +93,58 @@ void KServiceActionComponent::emitGlobalShortcutPressed(const GlobalShortcut &sh
 {
     // TODO KF6 use ApplicationLauncherJob to start processes when it's available in a framework that we depend on
 
-    // DBusActivatatable spec as per https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#dbus
-    if (m_desktopFile->desktopGroup().readEntry("DBusActivatable", false)) {
-        QString method;
-        const QString serviceName = m_serviceStorageId.chopped(strlen(".desktop"));
-        const QString objectPath = QStringLiteral("/%1").arg(serviceName).replace(QLatin1Char('.'), QLatin1Char('/'));
-        const QString interface = QStringLiteral("org.freedesktop.Application");
-        QDBusMessage message;
-        if (shortcut.uniqueName() == QLatin1String("_launch")) {
-            message = QDBusMessage::createMethodCall(serviceName, objectPath, interface, QStringLiteral("Activate"));
-        } else {
-            message = QDBusMessage::createMethodCall(serviceName, objectPath, interface, QStringLiteral("ActivateAction"));
-            message << shortcut.uniqueName() << QVariantList();
-        }
-        message << QVariantMap();
-        QDBusConnection::sessionBus().asyncCall(message);
-        return;
-    }
+    auto launchWithToken = [this, shortcut](const QString &token) {
+        // DBusActivatatable spec as per https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#dbus
+        if (m_desktopFile->desktopGroup().readEntry("DBusActivatable", false)) {
+            QString method;
+            const QString serviceName = m_serviceStorageId.chopped(strlen(".desktop"));
+            const QString objectPath = QStringLiteral("/%1").arg(serviceName).replace(QLatin1Char('.'), QLatin1Char('/'));
+            const QString interface = QStringLiteral("org.freedesktop.Application");
+            QDBusMessage message;
+            if (shortcut.uniqueName() == QLatin1String("_launch")) {
+                message = QDBusMessage::createMethodCall(serviceName, objectPath, interface, QStringLiteral("Activate"));
+            } else {
+                message = QDBusMessage::createMethodCall(serviceName, objectPath, interface, QStringLiteral("ActivateAction"));
+                message << shortcut.uniqueName() << QVariantList();
+            }
+            if (!token.isEmpty()) {
+                message << QVariantMap{{QStringLiteral("activation-token"), token}};
+            } else {
+                message << QVariantMap();
+            }
 
-    QDBusConnectionInterface *dbusDaemon = QDBusConnection::sessionBus().interface();
-    const bool klauncherAvailable = dbusDaemon->isServiceRegistered(QStringLiteral("org.kde.klauncher5"));
-
-    // we can't use KRun there as it depends from KIO and would create a circular dep
-    if (shortcut.uniqueName() == QLatin1String("_launch")) {
-        runProcess(m_desktopFile->desktopGroup(), klauncherAvailable);
-        return;
-    }
-    const auto lstActions = m_desktopFile->readActions();
-    for (const QString &action : lstActions) {
-        if (action == shortcut.uniqueName()) {
-            runProcess(m_desktopFile->actionGroup(action), klauncherAvailable);
+            QDBusConnection::sessionBus().asyncCall(message);
             return;
         }
+
+        QDBusConnectionInterface *dbusDaemon = QDBusConnection::sessionBus().interface();
+        const bool klauncherAvailable = dbusDaemon->isServiceRegistered(QStringLiteral("org.kde.klauncher5"));
+
+        // we can't use KRun there as it depends from KIO and would create a circular dep
+        if (shortcut.uniqueName() == QLatin1String("_launch")) {
+            runProcess(m_desktopFile->desktopGroup(), klauncherAvailable, token);
+            return;
+        }
+        const auto lstActions = m_desktopFile->readActions();
+        for (const QString &action : lstActions) {
+            if (action == shortcut.uniqueName()) {
+                runProcess(m_desktopFile->actionGroup(action), klauncherAvailable, token);
+                return;
+            }
+        }
+    };
+    if (KWindowSystem::isPlatformWayland()) {
+        const QString serviceName = m_serviceStorageId.chopped(strlen(".desktop"));
+        KWindowSystem::requestXdgActivationToken(nullptr, 0, serviceName);
+        connect(KWindowSystem::self(), &KWindowSystem::xdgActivationTokenArrived, this, [this, launchWithToken](int tokenSerial, const QString &token) {
+            if (tokenSerial == 0) {
+                launchWithToken(token);
+                bool b = disconnect(KWindowSystem::self(), &KWindowSystem::xdgActivationTokenArrived, this, nullptr);
+                Q_ASSERT(b);
+            }
+        });
+    } else {
+        launchWithToken({});
     }
 }
 
