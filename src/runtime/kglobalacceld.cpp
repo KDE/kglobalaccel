@@ -13,6 +13,7 @@
 #include "globalshortcut.h"
 #include "globalshortcutcontext.h"
 #include "globalshortcutsregistry.h"
+#include "kglobalaccel.h"
 #include "kserviceactioncomponent.h"
 #include "logging_p.h"
 
@@ -20,8 +21,6 @@
 #include <QDBusObjectPath>
 #include <QMetaMethod>
 #include <QTimer>
-
-#include "kglobalaccel.h"
 
 struct KGlobalAccelDPrivate {
     KGlobalAccelDPrivate(KGlobalAccelD *qq)
@@ -175,6 +174,7 @@ bool KGlobalAccelD::init()
     qDBusRegisterMetaType<QStringList>();
     qDBusRegisterMetaType<KGlobalShortcutInfo>();
     qDBusRegisterMetaType<QList<KGlobalShortcutInfo>>();
+    qDBusRegisterMetaType<KGlobalAccel::MatchType>();
 
     GlobalShortcutsRegistry *reg = GlobalShortcutsRegistry::self();
     Q_ASSERT(reg);

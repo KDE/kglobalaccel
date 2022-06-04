@@ -13,6 +13,7 @@
 
 static const int maxSequenceLength = 4;
 
+#include "kglobalaccel.h"
 #include "kglobalshortcutinfo.h"
 
 class KGlobalShortcutInfoPrivate

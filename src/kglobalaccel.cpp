@@ -147,6 +147,7 @@ KGlobalAccel::KGlobalAccel()
     qDBusRegisterMetaType<QList<QStringList>>();
     qDBusRegisterMetaType<KGlobalShortcutInfo>();
     qDBusRegisterMetaType<QList<KGlobalShortcutInfo>>();
+    qDBusRegisterMetaType<KGlobalAccel::MatchType>();
 }
 
 KGlobalAccel::~KGlobalAccel()
@@ -783,6 +784,24 @@ bool KGlobalAccelPrivate::setShortcutWithDefault(QAction *action, const QList<QK
     actionShortcuts.insert(action, shortcut);
     updateGlobalShortcut(action, KGlobalAccelPrivate::DefaultShortcut | KGlobalAccelPrivate::ActiveShortcut, loadFlag);
     return true;
+}
+
+QDBusArgument &operator<<(QDBusArgument &argument, const KGlobalAccel::MatchType &type)
+{
+    argument.beginStructure();
+    argument << static_cast<int>(type);
+    argument.endStructure();
+    return argument;
+}
+
+const QDBusArgument &operator>>(const QDBusArgument &argument, KGlobalAccel::MatchType &type)
+{
+    argument.beginStructure();
+    int arg;
+    argument >> arg;
+    type = static_cast<KGlobalAccel::MatchType>(arg);
+    argument.endStructure();
+    return argument;
 }
 
 #include "moc_kglobalaccel.cpp"

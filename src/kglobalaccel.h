@@ -400,4 +400,7 @@ private:
     friend class KGlobalAccelSingleton;
 };
 
+KGLOBALACCEL_EXPORT QDBusArgument &operator<<(QDBusArgument &argument, const KGlobalAccel::MatchType &type);
+KGLOBALACCEL_EXPORT const QDBusArgument &operator>>(const QDBusArgument &argument, KGlobalAccel::MatchType &type);
+
 #endif // _KGLOBALACCEL_H_

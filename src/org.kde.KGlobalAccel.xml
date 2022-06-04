@@ -121,7 +121,8 @@
       <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QList&lt;KGlobalShortcutInfo&gt;"/>
       <arg name="key" type="ai" direction="in"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="QKeySequence"/>
-      <arg name="type" type="i" direction="in"/>
+      <arg name="matchType" type="KGlobalAccel::MatchType" direction="in"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="KGlobalAccel::MatchType"/>
     </method>
     <method name="globalShortcutAvailable">
       <arg type="b" direction="out"/>
