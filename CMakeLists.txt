@@ -57,7 +57,6 @@ endif()
 if (BUILD_RUNTIME AND NOT APPLE)
     find_package(XCB MODULE COMPONENTS XCB KEYSYMS XKB RECORD OPTIONAL_COMPONENTS XTEST)
     set_package_properties(XCB PROPERTIES DESCRIPTION "X protocol C-language Binding"
-                       URL "http://xcb.freedesktop.org"
                        TYPE OPTIONAL
                       )
 
