@@ -43,11 +43,11 @@ struct KGlobalAccelDPrivate {
     void splitComponent(QString &component, QString &context) const
     {
         context = QStringLiteral("default");
-        if (component.indexOf('|') != -1) {
-            QStringList tmp = component.split('|');
-            Q_ASSERT(tmp.size() == 2);
-            component = tmp.at(0);
-            context = tmp.at(1);
+        const int index = component.indexOf('|');
+        if (index != -1) {
+            Q_ASSERT(component.indexOf('|', index + 1) == -1); // Only one '|' character
+            context = component.mid(index + 1);
+            component.truncate(index);
         }
     }
 
@@ -130,15 +130,8 @@ GlobalShortcut *KGlobalAccelDPrivate::addAction(const QStringList &actionId)
     Q_ASSERT(actionId.size() >= 4);
 
     QString componentUnique = actionId.at(KGlobalAccel::ComponentUnique);
-
-    QString contextUnique = QStringLiteral("default");
-
-    if (componentUnique.indexOf('|') != -1) {
-        QStringList tmp = componentUnique.split('|');
-        Q_ASSERT(tmp.size() == 2);
-        componentUnique = tmp.at(0);
-        contextUnique = tmp.at(1);
-    }
+    QString contextUnique;
+    splitComponent(componentUnique, contextUnique);
 
     QStringList actionIdTmp = actionId;
     actionIdTmp.replace(KGlobalAccel::ComponentUnique, componentUnique);

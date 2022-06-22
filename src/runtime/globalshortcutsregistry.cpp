@@ -179,24 +179,20 @@ GlobalShortcut *GlobalShortcutsRegistry::getShortcutByKey(const QKeySequence &ke
 QList<GlobalShortcut *> GlobalShortcutsRegistry::getShortcutsByKey(const QKeySequence &key, KGlobalAccel::MatchType type) const
 {
     QList<GlobalShortcut *> rc;
-
     for (KdeDGlobalAccel::Component *component : m_components) {
         rc = component->getShortcutsByKey(key, type);
         if (!rc.isEmpty()) {
             return rc;
         }
     }
-    return rc;
+    return {};
 }
 
 bool GlobalShortcutsRegistry::isShortcutAvailable(const QKeySequence &shortcut, const QString &componentName, const QString &contextName) const
 {
-    for (KdeDGlobalAccel::Component *component : m_components) {
-        if (!component->isShortcutAvailable(shortcut, componentName, contextName)) {
-            return false;
-        }
-    }
-    return true;
+    return std::all_of(m_components.cbegin(), m_components.cend(), [&shortcut, &componentName, &contextName](const KdeDGlobalAccel::Component *component) {
+        return component->isShortcutAvailable(shortcut, componentName, contextName);
+    });
 }
 
 Q_GLOBAL_STATIC(GlobalShortcutsRegistry, _self)
