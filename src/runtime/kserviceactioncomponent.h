@@ -12,6 +12,8 @@
 
 #include <KDesktopFile>
 
+#include <memory>
+
 namespace KdeDGlobalAccel
 {
 /**
@@ -37,7 +39,7 @@ private:
     void runProcess(const KConfigGroup &group, const QString &token);
 
     QString m_serviceStorageId;
-    QScopedPointer<KDesktopFile> m_desktopFile;
+    std::unique_ptr<KDesktopFile> m_desktopFile;
     bool m_isInApplicationsDir = false;
 };
 

@@ -22,33 +22,30 @@ namespace KdeDGlobalAccel
 KServiceActionComponent::KServiceActionComponent(const QString &serviceStorageId, const QString &friendlyName, GlobalShortcutsRegistry *registry)
     : Component(serviceStorageId, friendlyName, registry)
     , m_serviceStorageId(serviceStorageId)
-    , m_desktopFile(nullptr)
 {
-    auto fileName = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kglobalaccel/") + serviceStorageId);
-    if (fileName.isEmpty()) {
-        // Fallback to applications data dir
-        // for custom shortcut for instance
-        fileName = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("applications/") + serviceStorageId);
+    QString filePath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kglobalaccel/") + serviceStorageId);
+    if (filePath.isEmpty()) {
+        // Fallback to applications data dir for custom shortcut for instance
+        filePath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("applications/") + serviceStorageId);
         m_isInApplicationsDir = true;
     } else {
-        QFileInfo info(fileName);
+        QFileInfo info(filePath);
         if (info.isSymLink()) {
-            auto fileName2 = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("applications/") + serviceStorageId);
-            if (info.symLinkTarget() == fileName2) {
-                fileName = fileName2;
+            const QString filePath2 = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("applications/") + serviceStorageId);
+            if (info.symLinkTarget() == filePath2) {
+                filePath = filePath2;
                 m_isInApplicationsDir = true;
             }
         }
     }
-    if (fileName.isEmpty()) {
+
+    if (filePath.isEmpty()) {
         qCWarning(KGLOBALACCELD) << "No desktop file found for service " << serviceStorageId;
     }
-    m_desktopFile.reset(new KDesktopFile(fileName));
+    m_desktopFile.reset(new KDesktopFile(filePath));
 }
 
-KServiceActionComponent::~KServiceActionComponent()
-{
-}
+KServiceActionComponent::~KServiceActionComponent() = default;
 
 void KServiceActionComponent::runProcess(const KConfigGroup &group, const QString &token)
 {
@@ -57,7 +54,7 @@ void KServiceActionComponent::runProcess(const KConfigGroup &group, const QStrin
         return;
     }
     // sometimes entries have an %u for command line parameters
-    if (args.last().contains(QChar('%'))) {
+    if (args.last().contains(QLatin1Char('%'))) {
         args.pop_back();
     }
 

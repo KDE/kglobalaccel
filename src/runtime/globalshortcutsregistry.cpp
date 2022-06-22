@@ -74,9 +74,6 @@ static KGlobalAccelInterface *loadPlugin(GlobalShortcutsRegistry *parent)
 
 GlobalShortcutsRegistry::GlobalShortcutsRegistry()
     : QObject()
-    , _active_keys()
-    , _active_sequence()
-    , _components()
     , _manager(loadPlugin(this))
     , _config(qEnvironmentVariableIsSet("KGLOBALACCEL_TEST_MODE") ? QString() : QStringLiteral("kglobalshortcutsrc"), KConfig::SimpleConfig)
 {
@@ -135,8 +132,8 @@ QList<KdeDGlobalAccel::Component *> GlobalShortcutsRegistry::allMainComponents()
 
 void GlobalShortcutsRegistry::clear()
 {
-    for (KdeDGlobalAccel::Component *component : std::as_const(_components)) {
-        delete component;
+    for (auto it = _components.begin(), endIt = _components.end(); it != endIt; ++it) {
+        delete it.value();
     }
     _components.clear();
 

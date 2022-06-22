@@ -19,11 +19,6 @@ GlobalShortcut::GlobalShortcut()
     : _isPresent(false)
     , _isRegistered(false)
     , _isFresh(true)
-    , _context(nullptr)
-    , _uniqueName()
-    , _friendlyName()
-    , _keys()
-    , _defaultKeys()
 {
 }
 
@@ -34,8 +29,6 @@ GlobalShortcut::GlobalShortcut(const QString &uniqueName, const QString &friendl
     , _context(context)
     , _uniqueName(uniqueName)
     , _friendlyName(friendlyName)
-    , _keys()
-    , _defaultKeys()
 {
     context->addShortcut(this);
 }

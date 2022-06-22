@@ -24,9 +24,7 @@ KGlobalAccelInterface::KGlobalAccelInterface(QObject *owner)
 {
 }
 
-KGlobalAccelInterface::~KGlobalAccelInterface()
-{
-}
+KGlobalAccelInterface::~KGlobalAccelInterface() = default;
 
 void KGlobalAccelInterface::setRegistry(GlobalShortcutsRegistry *registry)
 {

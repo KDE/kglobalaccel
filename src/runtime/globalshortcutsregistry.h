@@ -145,7 +145,7 @@ private:
     QHash<int, int> _keys_count;
     QHash<QString, KdeDGlobalAccel::Component *> _components;
 
-    KGlobalAccelInterface *_manager;
+    KGlobalAccelInterface *_manager = nullptr;
 
     mutable KConfig _config;
 

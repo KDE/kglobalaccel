@@ -16,7 +16,6 @@ GlobalShortcutContext::GlobalShortcutContext(const QString &uniqueName, const QS
     : _uniqueName(uniqueName)
     , _friendlyName(friendlyName)
     , _component(component)
-    , _actions()
 {
 }
 

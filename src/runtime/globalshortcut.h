@@ -92,7 +92,7 @@ private:
     bool _isFresh : 1;
 
     //! The context the shortcut belongs too
-    GlobalShortcutContext *_context;
+    GlobalShortcutContext *_context = nullptr;
 
     QString _uniqueName;
     QString _friendlyName; // usually localized

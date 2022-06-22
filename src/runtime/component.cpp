@@ -111,21 +111,13 @@ void Component::activateShortcuts()
 QList<GlobalShortcut *> Component::allShortcuts(const QString &contextName) const
 {
     GlobalShortcutContext *context = _contexts.value(contextName);
-    if (context) {
-        return context->_actions.values();
-    } else {
-        return QList<GlobalShortcut *>();
-    }
+    return context ? context->_actions.values() : QList<GlobalShortcut *>{};
 }
 
 QList<KGlobalShortcutInfo> Component::allShortcutInfos(const QString &contextName) const
 {
     GlobalShortcutContext *context = _contexts.value(contextName);
-    if (!context) {
-        return QList<KGlobalShortcutInfo>();
-    }
-
-    return context->allShortcutInfos();
+    return context ? context->allShortcutInfos() : QList<KGlobalShortcutInfo>{};
 }
 
 bool Component::cleanUp()
@@ -176,14 +168,14 @@ QDBusObjectPath Component::dbusPath() const
         }
     }
     // QDBusObjectPath could be a little bit easier to handle :-)
-    return QDBusObjectPath(_registry->dbusPath().path() + "component/" + dbusPath);
+    return QDBusObjectPath(_registry->dbusPath().path() + QLatin1String("component/") + dbusPath);
 }
 
 void Component::deactivateShortcuts(bool temporarily)
 {
     for (GlobalShortcut *shortcut : std::as_const(_current->_actions)) {
         if (temporarily //
-            && uniqueName() == QLatin1String("kwin") //
+            && _uniqueName == QLatin1String("kwin") //
             && shortcut->uniqueName() == QLatin1String("Block Global Shortcuts")) {
             continue;
         }
@@ -195,7 +187,7 @@ void Component::emitGlobalShortcutPressed(const GlobalShortcut &shortcut)
 {
 #if HAVE_X11
     // pass X11 timestamp
-    long timestamp = QX11Info::appTime();
+    const long timestamp = QX11Info::appTime();
     // Make sure kglobalacceld has ungrabbed the keyboard after receiving the
     // keypress, otherwise actions in application that try to grab the
     // keyboard (e.g. in kwin) may fail to do so. There is still a small race
@@ -204,7 +196,7 @@ void Component::emitGlobalShortcutPressed(const GlobalShortcut &shortcut)
         _registry->_manager->syncWindowingSystem();
     }
 #else
-    long timestamp = 0;
+    const long timestamp = 0;
 #endif
 
     if (shortcut.context()->component() != this) {
@@ -218,7 +210,7 @@ void Component::emitGlobalShortcutReleased(const GlobalShortcut &shortcut)
 {
 #if HAVE_X11
     // pass X11 timestamp
-    long timestamp = QX11Info::appTime();
+    const long timestamp = QX11Info::appTime();
     // Make sure kglobalacceld has ungrabbed the keyboard after receiving the
     // keypress, otherwise actions in application that try to grab the
     // keyboard (e.g. in kwin) may fail to do so. There is still a small race
@@ -227,7 +219,7 @@ void Component::emitGlobalShortcutReleased(const GlobalShortcut &shortcut)
         _registry->_manager->syncWindowingSystem();
     }
 #else
-    long timestamp = 0;
+    const long timestamp = 0;
 #endif
 
     if (shortcut.context()->component() != this) {
@@ -247,10 +239,7 @@ void Component::invokeShortcut(const QString &shortcutName, const QString &conte
 
 QString Component::friendlyName() const
 {
-    if (_friendlyName.isEmpty()) {
-        return _uniqueName;
-    }
-    return _friendlyName;
+    return !_friendlyName.isEmpty() ? _friendlyName : _uniqueName;
 }
 
 GlobalShortcut *Component::getShortcutByKey(const QKeySequence &key, KGlobalAccel::MatchType type) const
@@ -272,11 +261,8 @@ QList<GlobalShortcut *> Component::getShortcutsByKey(const QKeySequence &key, KG
 
 GlobalShortcut *Component::getShortcutByName(const QString &uniqueName, const QString &context) const
 {
-    if (!_contexts.value(context)) {
-        return nullptr;
-    }
-
-    return _contexts.value(context)->_actions.value(uniqueName);
+    const GlobalShortcutContext *shortcutContext = _contexts.value(context);
+    return shortcutContext ? shortcutContext->_actions.value(uniqueName) : nullptr;
 }
 
 QStringList Component::getShortcutContexts() const
@@ -379,12 +365,8 @@ GlobalShortcutContext const *Component::shortcutContext(const QString &contextNa
 
 QStringList Component::shortcutNames(const QString &contextName) const
 {
-    GlobalShortcutContext *context = _contexts.value(contextName);
-    if (!context) {
-        return QStringList();
-    }
-
-    return context->_actions.keys();
+    const GlobalShortcutContext *context = _contexts.value(contextName);
+    return context ? context->_actions.keys() : QStringList{};
 }
 
 QString Component::uniqueName() const

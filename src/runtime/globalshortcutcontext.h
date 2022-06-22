@@ -67,8 +67,8 @@ private:
     //! The unique name for this context
     QString _friendlyName;
 
-    //! The component the context belongs too
-    KdeDGlobalAccel::Component *_component;
+    //! The component the context belongs to
+    KdeDGlobalAccel::Component *_component = nullptr;
 
     //! The actions associated with this context
     QHash<QString, GlobalShortcut *> _actions;
