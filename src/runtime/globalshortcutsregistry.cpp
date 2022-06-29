@@ -23,7 +23,6 @@
 #include <QStandardPaths>
 
 #include <QDBusConnection>
-#include <QKeySequence>
 
 static bool checkPlatform(const QJsonObject &metadata, const QString &platformName)
 {
