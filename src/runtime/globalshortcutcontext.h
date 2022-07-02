@@ -58,6 +58,10 @@ public:
     //! Remove @p shortcut from the context. The shortcut is not deleted.
     GlobalShortcut *takeShortcut(GlobalShortcut *shortcut);
 
+    // Returns true if key is not used by any global shortcuts in this context,
+    // otherwise returns false
+    bool isShortcutAvailable(const QKeySequence &key) const;
+
 private:
     friend class KdeDGlobalAccel::Component;
 

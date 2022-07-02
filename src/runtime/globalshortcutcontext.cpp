@@ -97,3 +97,14 @@ QString GlobalShortcutContext::uniqueName() const
 {
     return _uniqueName;
 }
+
+bool GlobalShortcutContext::isShortcutAvailable(const QKeySequence &key) const
+{
+    for (auto it = _actionsMap.cbegin(), endIt = _actionsMap.cend(); it != endIt; ++it) {
+        const GlobalShortcut *sc = it.value();
+        if (matchSequences(key, sc->keys())) {
+            return false;
+        }
+    }
+    return true;
+}

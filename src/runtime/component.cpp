@@ -289,18 +289,12 @@ bool Component::isShortcutAvailable(const QKeySequence &key, const QString &comp
     // if this component asks for the key. only check the keys in the same
     // context
     if (component == uniqueName()) {
-        const auto actions = shortcutContext(context)->_actionsMap;
-        for (GlobalShortcut *sc : actions) {
-            if (matchSequences(key, sc->keys())) {
-                return false;
-            }
-        }
+        return shortcutContext(context)->isShortcutAvailable(key);
     } else {
-        for (GlobalShortcutContext *ctx : std::as_const(_contexts)) {
-            for (GlobalShortcut *sc : std::as_const(ctx->_actionsMap)) {
-                if (matchSequences(key, sc->keys())) {
-                    return false;
-                }
+        for (auto it = _contexts.cbegin(), endIt = _contexts.cend(); it != endIt; ++it) {
+            const GlobalShortcutContext *ctx = it.value();
+            if (!ctx->isShortcutAvailable(key)) {
+                return false;
             }
         }
     }
