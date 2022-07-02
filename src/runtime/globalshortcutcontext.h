@@ -71,7 +71,7 @@ private:
     KdeDGlobalAccel::Component *_component = nullptr;
 
     //! The actions associated with this context
-    QHash<QString, GlobalShortcut *> _actions;
+    QHash<QString, GlobalShortcut *> _actionsMap;
 };
 
 #endif /* #ifndef GLOBALSHORTCUTCONTEXT_H */

@@ -21,19 +21,19 @@ GlobalShortcutContext::GlobalShortcutContext(const QString &uniqueName, const QS
 
 GlobalShortcutContext::~GlobalShortcutContext()
 {
-    qDeleteAll(_actions);
-    _actions.clear();
+    qDeleteAll(_actionsMap);
+    _actionsMap.clear();
 }
 
 void GlobalShortcutContext::addShortcut(GlobalShortcut *shortcut)
 {
-    _actions.insert(shortcut->uniqueName(), shortcut);
+    _actionsMap.insert(shortcut->uniqueName(), shortcut);
 }
 
 QList<KGlobalShortcutInfo> GlobalShortcutContext::allShortcutInfos() const
 {
     QList<KGlobalShortcutInfo> rc;
-    for (GlobalShortcut *shortcut : std::as_const(_actions)) {
+    for (GlobalShortcut *shortcut : std::as_const(_actionsMap)) {
         rc.append(static_cast<KGlobalShortcutInfo>(*shortcut));
     }
     return rc;
@@ -60,7 +60,7 @@ GlobalShortcut *GlobalShortcutContext::getShortcutByKey(const QKeySequence &key,
         return nullptr;
     }
     QKeySequence keyMangled = mangleKey(key);
-    for (GlobalShortcut *sc : std::as_const(_actions)) {
+    for (GlobalShortcut *sc : std::as_const(_actionsMap)) {
         const auto keys = sc->keys();
         for (const QKeySequence &other : keys) {
             QKeySequence otherMangled = mangleKey(other);
@@ -90,7 +90,7 @@ GlobalShortcut *GlobalShortcutContext::takeShortcut(GlobalShortcut *shortcut)
 {
     // Try to take the shortcut. Result could be nullptr if the shortcut doesn't
     // belong to this component.
-    return _actions.take(shortcut->uniqueName());
+    return _actionsMap.take(shortcut->uniqueName());
 }
 
 QString GlobalShortcutContext::uniqueName() const

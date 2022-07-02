@@ -103,7 +103,7 @@ bool Component::activateGlobalShortcutContext(const QString &uniqueName)
 
 void Component::activateShortcuts()
 {
-    for (GlobalShortcut *shortcut : std::as_const(_current->_actions)) {
+    for (GlobalShortcut *shortcut : std::as_const(_current->_actionsMap)) {
         shortcut->setActive();
     }
 }
@@ -111,7 +111,7 @@ void Component::activateShortcuts()
 QList<GlobalShortcut *> Component::allShortcuts(const QString &contextName) const
 {
     GlobalShortcutContext *context = _contexts.value(contextName);
-    return context ? context->_actions.values() : QList<GlobalShortcut *>{};
+    return context ? context->_actionsMap.values() : QList<GlobalShortcut *>{};
 }
 
 QList<KGlobalShortcutInfo> Component::allShortcutInfos(const QString &contextName) const
@@ -124,9 +124,9 @@ bool Component::cleanUp()
 {
     bool changed = false;
 
-    const auto actions = _current->_actions;
+    const auto actions = _current->_actionsMap;
     for (GlobalShortcut *shortcut : actions) {
-        qCDebug(KGLOBALACCELD) << _current->_actions.size();
+        qCDebug(KGLOBALACCELD) << _current->_actionsMap.size();
         if (!shortcut->isPresent()) {
             changed = true;
             shortcut->unRegister();
@@ -173,7 +173,7 @@ QDBusObjectPath Component::dbusPath() const
 
 void Component::deactivateShortcuts(bool temporarily)
 {
-    for (GlobalShortcut *shortcut : std::as_const(_current->_actions)) {
+    for (GlobalShortcut *shortcut : std::as_const(_current->_actionsMap)) {
         if (temporarily //
             && _uniqueName == QLatin1String("kwin") //
             && shortcut->uniqueName() == QLatin1String("Block Global Shortcuts")) {
@@ -262,7 +262,7 @@ QList<GlobalShortcut *> Component::getShortcutsByKey(const QKeySequence &key, KG
 GlobalShortcut *Component::getShortcutByName(const QString &uniqueName, const QString &context) const
 {
     const GlobalShortcutContext *shortcutContext = _contexts.value(context);
-    return shortcutContext ? shortcutContext->_actions.value(uniqueName) : nullptr;
+    return shortcutContext ? shortcutContext->_actionsMap.value(uniqueName) : nullptr;
 }
 
 QStringList Component::getShortcutContexts() const
@@ -274,7 +274,7 @@ bool Component::isActive() const
 {
     // The component is active if at least one of it's global shortcuts is
     // present.
-    for (GlobalShortcut *shortcut : std::as_const(_current->_actions)) {
+    for (GlobalShortcut *shortcut : std::as_const(_current->_actionsMap)) {
         if (shortcut->isPresent()) {
             return true;
         }
@@ -289,7 +289,7 @@ bool Component::isShortcutAvailable(const QKeySequence &key, const QString &comp
     // if this component asks for the key. only check the keys in the same
     // context
     if (component == uniqueName()) {
-        const auto actions = shortcutContext(context)->_actions;
+        const auto actions = shortcutContext(context)->_actionsMap;
         for (GlobalShortcut *sc : actions) {
             if (matchSequences(key, sc->keys())) {
                 return false;
@@ -297,7 +297,7 @@ bool Component::isShortcutAvailable(const QKeySequence &key, const QString &comp
         }
     } else {
         for (GlobalShortcutContext *ctx : std::as_const(_contexts)) {
-            for (GlobalShortcut *sc : std::as_const(ctx->_actions)) {
+            for (GlobalShortcut *sc : std::as_const(ctx->_actionsMap)) {
                 if (matchSequences(key, sc->keys())) {
                     return false;
                 }
@@ -366,7 +366,7 @@ GlobalShortcutContext const *Component::shortcutContext(const QString &contextNa
 QStringList Component::shortcutNames(const QString &contextName) const
 {
     const GlobalShortcutContext *context = _contexts.value(contextName);
-    return context ? context->_actions.keys() : QStringList{};
+    return context ? context->_actionsMap.keys() : QStringList{};
 }
 
 QString Component::uniqueName() const
@@ -378,8 +378,8 @@ void Component::unregisterShortcut(const QString &uniqueName)
 {
     // Now wrote all contexts
     for (GlobalShortcutContext *context : std::as_const(_contexts)) {
-        if (context->_actions.value(uniqueName)) {
-            delete context->takeShortcut(context->_actions.value(uniqueName));
+        if (context->_actionsMap.value(uniqueName)) {
+            delete context->takeShortcut(context->_actionsMap.value(uniqueName));
         }
     }
 }
@@ -406,7 +406,7 @@ void Component::writeSettings(KConfigGroup &configGroup) const
 
         // qCDebug(KGLOBALACCELD) << "writing group " << _uniqueName << ":" << context->uniqueName();
 
-        for (const GlobalShortcut *shortcut : std::as_const(context->_actions)) {
+        for (const GlobalShortcut *shortcut : std::as_const(context->_actionsMap)) {
             // qCDebug(KGLOBALACCELD) << "writing" << shortcut->uniqueName();
 
             // We do not write fresh shortcuts.
