@@ -34,8 +34,11 @@ public:
     bool cleanUp() override;
 
 private:
+    void runProcess(const KConfigGroup &group, const QString &token);
+
     QString m_serviceStorageId;
     QScopedPointer<KDesktopFile> m_desktopFile;
+    bool m_isInApplicationsDir = false;
 };
 
 }

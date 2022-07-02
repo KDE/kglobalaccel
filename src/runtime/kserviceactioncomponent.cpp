@@ -11,6 +11,7 @@
 #include "logging_p.h"
 
 #include <QDBusConnectionInterface>
+#include <QFileInfo>
 #include <QProcess>
 
 #include <KShell>
@@ -28,6 +29,16 @@ KServiceActionComponent::KServiceActionComponent(const QString &serviceStorageId
         // Fallback to applications data dir
         // for custom shortcut for instance
         fileName = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("applications/") + serviceStorageId);
+        m_isInApplicationsDir = true;
+    } else {
+        QFileInfo info(fileName);
+        if (info.isSymLink()) {
+            auto fileName2 = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("applications/") + serviceStorageId);
+            if (info.symLinkTarget() == fileName2) {
+                fileName = fileName2;
+                m_isInApplicationsDir = true;
+            }
+        }
     }
     if (fileName.isEmpty()) {
         qCWarning(KGLOBALACCELD) << "No desktop file found for service " << serviceStorageId;
@@ -39,7 +50,7 @@ KServiceActionComponent::~KServiceActionComponent()
 {
 }
 
-void runProcess(const KConfigGroup &group, bool klauncherAvailable, const QString &token)
+void KServiceActionComponent::runProcess(const KConfigGroup &group, const QString &token)
 {
     QStringList args = KShell::splitArgs(group.readEntry(QStringLiteral("Exec"), QString()));
     if (args.isEmpty()) {
@@ -68,10 +79,20 @@ void runProcess(const KConfigGroup &group, bool klauncherAvailable, const QStrin
 
     const auto kstart = QStandardPaths::findExecutable(QStringLiteral("kstart5"));
     if (!kstart.isEmpty()) {
-        args.prepend(command);
-        args.prepend(QStringLiteral("--"));
+        if (group.name() == QLatin1String("Desktop Entry") && m_isInApplicationsDir) {
+            args.prepend(QFileInfo(m_desktopFile->fileName()).completeBaseName());
+            args.prepend(QStringLiteral("--application"));
+        } else {
+            args.prepend(command);
+            args.prepend(QStringLiteral("--"));
+        }
         startDetachedWithToken(kstart, args);
-    } else if (klauncherAvailable) {
+        return;
+    }
+
+    QDBusConnectionInterface *dbusDaemon = QDBusConnection::sessionBus().interface();
+    const bool klauncherAvailable = dbusDaemon->isServiceRegistered(QStringLiteral("org.kde.klauncher5"));
+    if (klauncherAvailable) {
         QDBusMessage msg = QDBusMessage::createMethodCall(QStringLiteral("org.kde.klauncher5"),
                                                           QStringLiteral("/KLauncher"),
                                                           QStringLiteral("org.kde.KLauncher"),
@@ -79,14 +100,15 @@ void runProcess(const KConfigGroup &group, bool klauncherAvailable, const QStrin
         msg << command << args;
 
         QDBusConnection::sessionBus().asyncCall(msg);
-    } else {
-        const QString cmdExec = QStandardPaths::findExecutable(command);
-        if (cmdExec.isEmpty()) {
-            qCWarning(KGLOBALACCELD) << "Could not find executable in PATH" << command;
-            return;
-        }
-        startDetachedWithToken(cmdExec, args);
+        return;
     }
+
+    const QString cmdExec = QStandardPaths::findExecutable(command);
+    if (cmdExec.isEmpty()) {
+        qCWarning(KGLOBALACCELD) << "Could not find executable in PATH" << command;
+        return;
+    }
+    startDetachedWithToken(cmdExec, args);
 }
 
 void KServiceActionComponent::emitGlobalShortcutPressed(const GlobalShortcut &shortcut)
@@ -117,18 +139,15 @@ void KServiceActionComponent::emitGlobalShortcutPressed(const GlobalShortcut &sh
             return;
         }
 
-        QDBusConnectionInterface *dbusDaemon = QDBusConnection::sessionBus().interface();
-        const bool klauncherAvailable = dbusDaemon->isServiceRegistered(QStringLiteral("org.kde.klauncher5"));
-
         // we can't use KRun there as it depends from KIO and would create a circular dep
         if (shortcut.uniqueName() == QLatin1String("_launch")) {
-            runProcess(m_desktopFile->desktopGroup(), klauncherAvailable, token);
+            runProcess(m_desktopFile->desktopGroup(), token);
             return;
         }
         const auto lstActions = m_desktopFile->readActions();
         for (const QString &action : lstActions) {
             if (action == shortcut.uniqueName()) {
-                runProcess(m_desktopFile->actionGroup(action), klauncherAvailable, token);
+                runProcess(m_desktopFile->actionGroup(action), token);
                 return;
             }
         }
