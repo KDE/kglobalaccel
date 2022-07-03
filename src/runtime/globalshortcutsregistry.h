@@ -62,7 +62,7 @@ public:
     /**
      * Return a list of all main components
      */
-    QList<KdeDGlobalAccel::Component *> allMainComponents() const;
+    const std::vector<KdeDGlobalAccel::Component *> &allMainComponents() const;
 
     /**
      * Return the root dbus path for the registry.
@@ -143,7 +143,7 @@ private:
     QHash<QKeySequence, GlobalShortcut *> _active_keys;
     QKeySequence _active_sequence;
     QHash<int, int> _keys_count;
-    QHash<QString, KdeDGlobalAccel::Component *> _components;
+    std::vector<KdeDGlobalAccel::Component *> m_components;
 
     KGlobalAccelInterface *_manager = nullptr;
 

@@ -218,7 +218,7 @@ QList<QStringList> KGlobalAccelD::allMainComponents() const
         emptyList.append(QString());
     }
 
-    const auto components = GlobalShortcutsRegistry::self()->allMainComponents();
+    const auto &components = GlobalShortcutsRegistry::self()->allMainComponents();
     ret.reserve(components.size() * 4);
     for (const KdeDGlobalAccel::Component *component : components) {
         QStringList actionId(emptyList);
@@ -292,7 +292,7 @@ QList<QDBusObjectPath> KGlobalAccelD::allComponents() const
 {
     QList<QDBusObjectPath> allComp;
 
-    const auto lstMainComponents = GlobalShortcutsRegistry::self()->allMainComponents();
+    const auto &lstMainComponents = GlobalShortcutsRegistry::self()->allMainComponents();
     for (const KdeDGlobalAccel::Component *component : lstMainComponents) {
         allComp.append(component->dbusPath());
     }
