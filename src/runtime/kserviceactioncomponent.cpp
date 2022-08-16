@@ -77,13 +77,12 @@ void KServiceActionComponent::runProcess(const KConfigGroup &group, const QStrin
     const auto kstart = QStandardPaths::findExecutable(QStringLiteral("kstart5"));
     if (!kstart.isEmpty()) {
         if (group.name() == QLatin1String("Desktop Entry") && m_isInApplicationsDir) {
-            args.prepend(QFileInfo(m_desktopFile->fileName()).completeBaseName());
-            args.prepend(QStringLiteral("--application"));
+            startDetachedWithToken(kstart, {QStringLiteral("--application"), QFileInfo(m_desktopFile->fileName()).completeBaseName()});
         } else {
             args.prepend(command);
             args.prepend(QStringLiteral("--"));
+            startDetachedWithToken(kstart, args);
         }
-        startDetachedWithToken(kstart, args);
         return;
     }
 
