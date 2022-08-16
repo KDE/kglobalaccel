@@ -187,9 +187,6 @@ bool KServiceActionComponent::cleanUp()
         shortcut->setIsPresent(false);
     }
 
-    m_desktopFile->desktopGroup().writeEntry("NoDisplay", true);
-    m_desktopFile->desktopGroup().sync();
-
     return Component::cleanUp();
 }
 
