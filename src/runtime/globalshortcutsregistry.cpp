@@ -367,8 +367,6 @@ void GlobalShortcutsRegistry::loadSettings()
 
         KConfigGroup configGroup(&_config, groupName);
 
-        // We previously stored the friendly name in a separate group. migrate
-        // that
         const QString friendlyName = configGroup.readEntry("_k_friendly_name");
 
         const bool isDesktop = groupName.endsWith(QLatin1String(".desktop"));
@@ -379,7 +377,7 @@ void GlobalShortcutsRegistry::loadSettings()
         // Now load the contexts
         const auto groupList = configGroup.groupList();
         for (const QString &context : groupList) {
-            // Skip the friendly name group
+            // Skip the friendly name group, this was previously used instead of _k_friendly_name
             if (context == QLatin1String("Friendly Name")) {
                 continue;
             }
