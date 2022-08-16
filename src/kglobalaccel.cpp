@@ -155,12 +155,14 @@ KGlobalAccel::~KGlobalAccel()
     delete d;
 }
 
+#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(5, 102)
 void KGlobalAccel::activateGlobalShortcutContext(const QString &contextUnique, const QString &contextFriendly, const QString &programName)
 {
     Q_UNUSED(contextFriendly);
     // TODO: provide contextFriendly
     self()->d->iface()->activateGlobalShortcutContext(programName, contextUnique);
 }
+#endif
 
 // static
 bool KGlobalAccel::cleanComponent(const QString &componentUnique)
