@@ -168,7 +168,10 @@ void KServiceActionComponent::loadFromService()
         shortcut->setIsPresent(true);
     };
 
-    registerGroupShortcut(QStringLiteral("_launch"), m_desktopFile->desktopGroup());
+    if (m_desktopFile->hasApplicationType()) {
+        registerGroupShortcut(QStringLiteral("_launch"), m_desktopFile->desktopGroup());
+    }
+
     const auto lstActions = m_desktopFile->readActions();
     for (const QString &action : lstActions) {
         registerGroupShortcut(action, m_desktopFile->actionGroup(action));
