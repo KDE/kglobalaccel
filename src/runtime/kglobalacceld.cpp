@@ -110,9 +110,7 @@ KdeDGlobalAccel::Component *KGlobalAccelDPrivate::component(const QStringList &a
     KdeDGlobalAccel::Component *component = GlobalShortcutsRegistry::self()->getComponent(actionId.at(KGlobalAccel::ComponentUnique));
     if (!component) {
         if (actionId.at(KGlobalAccel::ComponentUnique).endsWith(QLatin1String(".desktop"))) {
-            component = new KdeDGlobalAccel::KServiceActionComponent(actionId.at(KGlobalAccel::ComponentUnique),
-                                                                     actionId.at(KGlobalAccel::ComponentFriendly),
-                                                                     GlobalShortcutsRegistry::self());
+            component = new KdeDGlobalAccel::KServiceActionComponent(actionId.at(KGlobalAccel::ComponentUnique), GlobalShortcutsRegistry::self());
             component->activateGlobalShortcutContext(QStringLiteral("default"));
             static_cast<KdeDGlobalAccel::KServiceActionComponent *>(component)->loadFromService();
         } else {

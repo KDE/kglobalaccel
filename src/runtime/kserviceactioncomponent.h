@@ -26,7 +26,7 @@ class KServiceActionComponent : public Component
 public:
     //! Creates a new component. The component will be registered with @p
     //! registry if specified and registered with dbus.
-    KServiceActionComponent(const QString &serviceStorageId, const QString &friendlyName, GlobalShortcutsRegistry *registry = nullptr);
+    KServiceActionComponent(const QString &serviceStorageId, GlobalShortcutsRegistry *registry = nullptr);
 
     ~KServiceActionComponent() override;
 

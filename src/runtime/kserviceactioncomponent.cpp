@@ -19,8 +19,8 @@
 
 namespace KdeDGlobalAccel
 {
-KServiceActionComponent::KServiceActionComponent(const QString &serviceStorageId, const QString &friendlyName, GlobalShortcutsRegistry *registry)
-    : Component(serviceStorageId, friendlyName, registry)
+KServiceActionComponent::KServiceActionComponent(const QString &serviceStorageId, GlobalShortcutsRegistry *registry)
+    : Component(serviceStorageId, QString(), registry)
     , m_serviceStorageId(serviceStorageId)
 {
     QString filePath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kglobalaccel/") + serviceStorageId);
@@ -43,6 +43,8 @@ KServiceActionComponent::KServiceActionComponent(const QString &serviceStorageId
         qCWarning(KGLOBALACCELD) << "No desktop file found for service " << serviceStorageId;
     }
     m_desktopFile.reset(new KDesktopFile(filePath));
+
+    setFriendlyName(m_desktopFile->readName());
 }
 
 KServiceActionComponent::~KServiceActionComponent() = default;

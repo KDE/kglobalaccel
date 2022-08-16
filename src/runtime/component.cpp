@@ -390,12 +390,20 @@ void Component::writeSettings(KConfigGroup &configGroup) const
 
         if (context->uniqueName() == QLatin1String("default")) {
             contextGroup = configGroup;
-            // Write the friendly name
-            contextGroup.writeEntry("_k_friendly_name", friendlyName());
         } else {
             contextGroup = KConfigGroup(&configGroup, context->uniqueName());
-            // Write the friendly name
-            contextGroup.writeEntry("_k_friendly_name", context->friendlyName());
+        }
+
+        // Don't save friendly name for desktop file entries
+        // The name is read from the desktop file there
+        if (!uniqueName().endsWith(".desktop")) {
+            if (context->uniqueName() == QLatin1String("default")) {
+                // Write the friendly name
+                contextGroup.writeEntry("_k_friendly_name", friendlyName());
+            } else {
+                // Write the friendly name
+                contextGroup.writeEntry("_k_friendly_name", context->friendlyName());
+            }
         }
 
         // qCDebug(KGLOBALACCELD) << "writing group " << _uniqueName << ":" << context->uniqueName();
