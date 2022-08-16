@@ -19,7 +19,7 @@
 #include <private/qtx11extras_p.h>
 #endif
 
-static QList<QKeySequence> keysFromString(const QString &str)
+QList<QKeySequence> Component::keysFromString(const QString &str)
 {
     QList<QKeySequence> ret;
     if (str == QLatin1String("none")) {
@@ -35,7 +35,7 @@ static QList<QKeySequence> keysFromString(const QString &str)
     return ret;
 }
 
-static QString stringFromKeys(const QList<QKeySequence> &keys)
+QString Component::stringFromKeys(const QList<QKeySequence> &keys)
 {
     if (keys.isEmpty()) {
         return QStringLiteral("none");
@@ -323,10 +323,7 @@ void Component::loadSettings(KConfigGroup &configGroup)
             continue;
         }
 
-        GlobalShortcut *shortcut = registerShortcut(confKey, entry[2], entry[0], entry[1]);
-        if (configGroup.name().endsWith(QLatin1String(".desktop"))) {
-            shortcut->setIsPresent(true);
-        }
+        registerShortcut(confKey, entry[2], entry[0], entry[1]);
     }
 }
 

@@ -345,7 +345,7 @@ void GlobalShortcutsRegistry::unregisterComponent(Component *component)
     delete component;
 }
 
-KServiceActionComponent *GlobalShortcutsRegistry::createServiceActionComponent(const QString &uniqueName, const QString &friendlyName)
+KServiceActionComponent *GlobalShortcutsRegistry::createServiceActionComponent(const QString &uniqueName)
 {
     auto it = findByName(uniqueName);
     if (it != m_components.cend()) {
@@ -355,7 +355,7 @@ KServiceActionComponent *GlobalShortcutsRegistry::createServiceActionComponent(c
         return static_cast<KServiceActionComponent *>((*it).get());
     }
 
-    auto *c = registerComponent(ComponentPtr(new KServiceActionComponent(uniqueName, friendlyName), &unregisterComponent));
+    auto *c = registerComponent(ComponentPtr(new KServiceActionComponent(uniqueName), &unregisterComponent));
     return static_cast<KServiceActionComponent *>(c);
 }
 
@@ -373,12 +373,10 @@ void GlobalShortcutsRegistry::loadSettings()
 
         KConfigGroup configGroup(&_config, groupName);
 
-        const QString friendlyName = configGroup.readEntry("_k_friendly_name");
-
         const bool isDesktop = groupName.endsWith(QLatin1String(".desktop"));
         // Create the component
-        Component *component = isDesktop ? createServiceActionComponent(groupName, friendlyName) //
-                                         : createComponent(groupName, friendlyName);
+        Component *component = isDesktop ? createServiceActionComponent(groupName) //
+                                         : createComponent(groupName, configGroup.readEntry("_k_friendly_name"));
 
         // Now load the contexts
         const auto groupList = configGroup.groupList();
@@ -418,7 +416,7 @@ void GlobalShortcutsRegistry::loadSettings()
             continue;
         }
 
-        auto *actionComp = createServiceActionComponent(fileName, deskF.readName());
+        auto *actionComp = createServiceActionComponent(fileName);
         actionComp->activateGlobalShortcutContext(QStringLiteral("default"));
         actionComp->loadFromService();
     }

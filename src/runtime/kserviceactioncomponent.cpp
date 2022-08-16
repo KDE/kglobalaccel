@@ -7,6 +7,7 @@
 */
 
 #include "kserviceactioncomponent.h"
+#include "globalshortcutcontext.h"
 #include "logging_p.h"
 
 #include <QDBusConnectionInterface>
@@ -22,8 +23,8 @@
 #include <private/qtx11extras_p.h>
 #endif
 
-KServiceActionComponent::KServiceActionComponent(const QString &serviceStorageId, const QString &friendlyName)
-    : Component(serviceStorageId, friendlyName)
+KServiceActionComponent::KServiceActionComponent(const QString &serviceStorageId)
+    : Component(serviceStorageId, QString())
     , m_serviceStorageId(serviceStorageId)
 {
     QString filePath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kglobalaccel/") + serviceStorageId);
@@ -46,6 +47,8 @@ KServiceActionComponent::KServiceActionComponent(const QString &serviceStorageId
         qCWarning(KGLOBALACCELD) << "No desktop file found for service " << serviceStorageId;
     }
     m_desktopFile.reset(new KDesktopFile(filePath));
+
+    setFriendlyName(m_desktopFile->readName());
 }
 
 KServiceActionComponent::~KServiceActionComponent() = default;
@@ -201,6 +204,58 @@ bool KServiceActionComponent::cleanUp()
     }
 
     return Component::cleanUp();
+}
+
+void KServiceActionComponent::writeSettings(KConfigGroup &config) const
+{
+    // Clear the config so we remove entries after forgetGlobalShortcut
+    config.deleteGroup();
+
+    // Now write all contexts
+    for (GlobalShortcutContext *context : std::as_const(_contexts)) {
+        KConfigGroup contextGroup;
+
+        if (context->uniqueName() == QLatin1String("default")) {
+            contextGroup = config;
+        } else {
+            contextGroup = KConfigGroup(&config, context->uniqueName());
+        }
+
+        for (const GlobalShortcut *shortcut : std::as_const(context->_actionsMap)) {
+            // We do not write fresh shortcuts.
+            // We do not write session shortcuts
+            if (shortcut->isFresh() || shortcut->isSessionShortcut()) {
+                continue;
+            }
+
+            if (shortcut->keys() != shortcut->defaultKeys()) {
+                contextGroup.writeEntry(shortcut->uniqueName(), stringFromKeys(shortcut->keys()));
+            } else {
+                contextGroup.revertToDefault(shortcut->uniqueName());
+            }
+        }
+    }
+}
+
+void KServiceActionComponent::loadSettings(KConfigGroup &configGroup)
+{
+    // Action shortcuts
+    const QStringList actions = m_desktopFile->readActions();
+    for (const QString &action : actions) {
+        const KConfigGroup actionGroup = m_desktopFile->actionGroup(action);
+        const QString defaultShortcutString = actionGroup.readEntry(QStringLiteral("X-KDE-Shortcuts"), QString()).replace(QLatin1Char(','), QLatin1Char('\t'));
+        const QString shortcutString = configGroup.readEntry(action, defaultShortcutString);
+        GlobalShortcut *shortcut = registerShortcut(action, actionGroup.name(), shortcutString, defaultShortcutString);
+        shortcut->setIsPresent(true);
+    }
+
+    // lauch shortcut
+    const QString defaultShortcutString =
+        m_desktopFile->desktopGroup().readEntry(QStringLiteral("X-KDE-Shortcuts"), QString()).replace(QLatin1Char(','), QLatin1Char('\t'));
+    const QString shortcutString = configGroup.readEntry("_launch", defaultShortcutString);
+    GlobalShortcut *shortcut =
+        registerShortcut(QStringLiteral("_launch"), m_desktopFile->desktopGroup().readEntry("Name"), shortcutString, defaultShortcutString);
+    shortcut->setIsPresent(true);
 }
 
 #include "moc_kserviceactioncomponent.cpp"

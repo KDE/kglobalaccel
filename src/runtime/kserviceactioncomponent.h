@@ -29,11 +29,14 @@ public:
 
     bool cleanUp() override;
 
+    void writeSettings(KConfigGroup &config) const override;
+    void loadSettings(KConfigGroup &config) override;
+
 private:
     friend class ::GlobalShortcutsRegistry;
     //! Constructs a KServiceActionComponent. This is a private constuctor, to create
     //! a KServiceActionComponent, use GlobalShortcutsRegistry::self()->createServiceActionComponent().
-    KServiceActionComponent(const QString &serviceStorageId, const QString &friendlyName);
+    KServiceActionComponent(const QString &serviceStorageId);
 
     void runProcess(const KConfigGroup &group, const QString &token);
 

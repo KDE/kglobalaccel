@@ -60,6 +60,7 @@ public:
 
 private:
     friend class Component;
+    friend class KServiceActionComponent;
 
     //! The unique name for this context
     QString _uniqueName;

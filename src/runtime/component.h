@@ -85,7 +85,7 @@ public:
     bool isShortcutAvailable(const QKeySequence &key, const QString &component, const QString &context) const;
 
     //! Load the settings from config group @p config
-    void loadSettings(KConfigGroup &config);
+    virtual void loadSettings(KConfigGroup &config);
 
     //! Sets the human readable name for this component.
     void setFriendlyName(const QString &);
@@ -95,7 +95,7 @@ public:
     //! Unregister @a shortcut. This will remove its siblings from all contexts
     void unregisterShortcut(const QString &uniqueName);
 
-    void writeSettings(KConfigGroup &config) const;
+    virtual void writeSettings(KConfigGroup &config) const;
 
 protected:
     friend class ::GlobalShortcutsRegistry;
@@ -115,6 +115,9 @@ protected:
      */
     GlobalShortcut *
     registerShortcut(const QString &uniqueName, const QString &friendlyName, const QString &shortcutString, const QString &defaultShortcutString);
+
+    static QString stringFromKeys(const QList<QKeySequence> &keys);
+    static QList<QKeySequence> keysFromString(const QString &str);
 
 public Q_SLOTS:
 
@@ -164,7 +167,7 @@ Q_SIGNALS:
     //! Signals that a action for this component is not triggered anymore
     Q_SCRIPTABLE void globalShortcutReleased(const QString &componentUnique, const QString &shortcutUnique, qlonglong timestamp);
 
-private:
+protected:
     QString _uniqueName;
     // the name as it would be found in a magazine article about the application,
     // possibly localized if a localized name exists.
