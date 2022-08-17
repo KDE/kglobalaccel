@@ -532,7 +532,8 @@ bool GlobalShortcutsRegistry::unregisterKey(const QKeySequence &key, GlobalShort
 
 void GlobalShortcutsRegistry::writeSettings() const
 {
-    const auto &lst = GlobalShortcutsRegistry::self()->allMainComponents();
+    // Make a copy for iterating. ~Component removes itself from the list.
+    const auto lst = GlobalShortcutsRegistry::self()->allMainComponents();
     for (const KdeDGlobalAccel::Component *component : lst) {
         KConfigGroup configGroup(&_config, component->uniqueName());
         if (component->allShortcuts().isEmpty()) {
