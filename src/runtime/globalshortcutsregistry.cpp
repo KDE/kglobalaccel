@@ -72,10 +72,15 @@ static KGlobalAccelInterface *loadPlugin(GlobalShortcutsRegistry *parent)
     return nullptr;
 }
 
+static QString getConfigFile()
+{
+    return qEnvironmentVariableIsSet("KGLOBALACCEL_TEST_MODE") ? QString() : QStringLiteral("kglobalshortcutsrc");
+}
+
 GlobalShortcutsRegistry::GlobalShortcutsRegistry()
     : QObject()
     , _manager(loadPlugin(this))
-    , _config(qEnvironmentVariableIsSet("KGLOBALACCEL_TEST_MODE") ? QString() : QStringLiteral("kglobalshortcutsrc"), KConfig::SimpleConfig)
+    , _config(getConfigFile(), KConfig::SimpleConfig)
 {
     if (_manager) {
         _manager->setEnabled(true);
