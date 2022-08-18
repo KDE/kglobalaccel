@@ -68,11 +68,6 @@ Component::Component(const QString &uniqueName, const QString &friendlyName)
 
 Component::~Component()
 {
-    // Remove ourselves from the registry
-    if (_registry) {
-        _registry->takeComponent(this);
-    }
-
     // We delete all shortcuts from all contexts
     qDeleteAll(_contexts);
 }

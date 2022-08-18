@@ -127,7 +127,7 @@ public Q_SLOTS:
 
     void loadSettings();
 
-    void writeSettings() const;
+    void writeSettings();
 
     // Grab the keys
     void grabKeys();
@@ -136,6 +136,7 @@ public Q_SLOTS:
     void ungrabKeys();
 
 private:
+
     friend class KGlobalAccelDPrivate;
     friend class Component;
     friend class KGlobalAccelInterface;
@@ -144,8 +145,10 @@ private:
     Component *createComponent(const QString &uniqueName, const QString &friendlyName);
     KServiceActionComponent *createServiceActionComponent(const QString &uniqueName, const QString &friendlyName);
 
-    Component *registerComponent(Component *component);
-    Component *takeComponent(Component *component);
+    static void unregisterComponent(Component *component);
+    using ComponentPtr = std::unique_ptr<Component, decltype(&unregisterComponent)>;
+
+    Component *registerComponent(ComponentPtr component);
 
     // called by the implementation to inform us about key presses
     // returns true if the key was handled
@@ -156,11 +159,11 @@ private:
     QKeySequence _active_sequence;
     QHash<int, int> _keys_count;
 
-    using ComponentVec = std::vector<Component *>;
+    using ComponentVec = std::vector<ComponentPtr>;
     ComponentVec m_components;
     ComponentVec::const_iterator findByName(const QString &name) const
     {
-        return std::find_if(m_components.cbegin(), m_components.cend(), [&name](const Component *comp) {
+        return std::find_if(m_components.cbegin(), m_components.cend(), [&name](const ComponentPtr &comp) {
             return comp->uniqueName() == name;
         });
     }

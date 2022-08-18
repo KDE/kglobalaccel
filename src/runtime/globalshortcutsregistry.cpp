@@ -1,5 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2008 Michael Jansen <kde@michael-jansen.biz>
+    SPDX-FileCopyrightText: 2022 Ahmad Samir <a.samirh78@gmail.com>
 
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
@@ -110,17 +111,18 @@ GlobalShortcutsRegistry::~GlobalShortcutsRegistry()
     _keys_count.clear();
 }
 
-Component *GlobalShortcutsRegistry::registerComponent(Component *component)
+Component *GlobalShortcutsRegistry::registerComponent(ComponentPtr component)
 {
-    m_components.push_back(component);
+    m_components.push_back(std::move(component));
+    auto *comp = m_components.back().get();
     QDBusConnection conn(QDBusConnection::sessionBus());
-    conn.registerObject(component->dbusPath().path(), component, QDBusConnection::ExportScriptableContents);
-    return component;
+    conn.registerObject(comp->dbusPath().path(), comp, QDBusConnection::ExportScriptableContents);
+    return comp;
 }
 
 void GlobalShortcutsRegistry::activateShortcuts()
 {
-    for (Component *component : m_components) {
+    for (auto &component : m_components) {
         component->activateShortcuts();
     }
 }
@@ -129,7 +131,7 @@ QList<QDBusObjectPath> GlobalShortcutsRegistry::componentsDbusPaths() const
 {
     QList<QDBusObjectPath> dbusPaths;
     dbusPaths.reserve(m_components.size());
-    std::transform(m_components.cbegin(), m_components.cend(), std::back_inserter(dbusPaths), [](const auto *comp) {
+    std::transform(m_components.cbegin(), m_components.cend(), std::back_inserter(dbusPaths), [](const auto &comp) {
         return comp->dbusPath();
     });
     return dbusPaths;
@@ -139,7 +141,7 @@ QList<QStringList> GlobalShortcutsRegistry::allComponentNames() const
 {
     QList<QStringList> ret;
     ret.reserve(m_components.size());
-    std::transform(m_components.cbegin(), m_components.cend(), std::back_inserter(ret), [](const auto *component) {
+    std::transform(m_components.cbegin(), m_components.cend(), std::back_inserter(ret), [](const auto &component) {
         // A string for each enumerator in KGlobalAccel::actionIdFields
         return QStringList{component->uniqueName(), component->friendlyName(), {}, {}};
     });
@@ -149,7 +151,6 @@ QList<QStringList> GlobalShortcutsRegistry::allComponentNames() const
 
 void GlobalShortcutsRegistry::clear()
 {
-    qDeleteAll(m_components);
     m_components.clear();
 
     // The shortcuts should have deregistered themselves
@@ -163,7 +164,7 @@ QDBusObjectPath GlobalShortcutsRegistry::dbusPath() const
 
 void GlobalShortcutsRegistry::deactivateShortcuts(bool temporarily)
 {
-    for (Component *component : m_components) {
+    for (ComponentPtr &component : m_components) {
         component->deactivateShortcuts(temporarily);
     }
 }
@@ -171,12 +172,12 @@ void GlobalShortcutsRegistry::deactivateShortcuts(bool temporarily)
 Component *GlobalShortcutsRegistry::getComponent(const QString &uniqueName)
 {
     auto it = findByName(uniqueName);
-    return it != m_components.cend() ? *it : nullptr;
+    return it != m_components.cend() ? (*it).get() : nullptr;
 }
 
 GlobalShortcut *GlobalShortcutsRegistry::getShortcutByKey(const QKeySequence &key, KGlobalAccel::MatchType type) const
 {
-    for (Component *component : m_components) {
+    for (const ComponentPtr &component : m_components) {
         GlobalShortcut *rc = component->getShortcutByKey(key, type);
         if (rc) {
             return rc;
@@ -188,7 +189,7 @@ GlobalShortcut *GlobalShortcutsRegistry::getShortcutByKey(const QKeySequence &ke
 QList<GlobalShortcut *> GlobalShortcutsRegistry::getShortcutsByKey(const QKeySequence &key, KGlobalAccel::MatchType type) const
 {
     QList<GlobalShortcut *> rc;
-    for (Component *component : m_components) {
+    for (const ComponentPtr &component : m_components) {
         rc = component->getShortcutsByKey(key, type);
         if (!rc.isEmpty()) {
             return rc;
@@ -199,7 +200,7 @@ QList<GlobalShortcut *> GlobalShortcutsRegistry::getShortcutsByKey(const QKeySeq
 
 bool GlobalShortcutsRegistry::isShortcutAvailable(const QKeySequence &shortcut, const QString &componentName, const QString &contextName) const
 {
-    return std::all_of(m_components.cbegin(), m_components.cend(), [&shortcut, &componentName, &contextName](const Component *component) {
+    return std::all_of(m_components.cbegin(), m_components.cend(), [&shortcut, &componentName, &contextName](const ComponentPtr &component) {
         return component->isShortcutAvailable(shortcut, componentName, contextName);
     });
 }
@@ -323,11 +324,17 @@ Component *GlobalShortcutsRegistry::createComponent(const QString &uniqueName, c
         Q_ASSERT_X(false, //
                    "GlobalShortcutsRegistry::createComponent",
                    QLatin1String("A Component with the name: %1, already exists").arg(uniqueName).toUtf8().constData());
-        return *it;
+        return (*it).get();
     }
 
-    auto *c = registerComponent(new Component(uniqueName, friendlyName));
+    auto *c = registerComponent(ComponentPtr(new Component(uniqueName, friendlyName), &unregisterComponent));
     return c;
+}
+
+void GlobalShortcutsRegistry::unregisterComponent(Component *component)
+{
+    QDBusConnection::sessionBus().unregisterObject(component->dbusPath().path());
+    delete component;
 }
 
 KServiceActionComponent *GlobalShortcutsRegistry::createServiceActionComponent(const QString &uniqueName, const QString &friendlyName)
@@ -336,11 +343,11 @@ KServiceActionComponent *GlobalShortcutsRegistry::createServiceActionComponent(c
     if (it != m_components.cend()) {
         Q_ASSERT_X(false, //
                    "GlobalShortcutsRegistry::createServiceActionComponent",
-                   QLatin1String("A Component with the name: %1, already exists").arg(uniqueName).toUtf8().constData());
-        return static_cast<KServiceActionComponent *>(*it);
+                   QLatin1String("A KServiceActionComponent with the name: %1, already exists").arg(uniqueName).toUtf8().constData());
+        return static_cast<KServiceActionComponent *>((*it).get());
     }
 
-    auto *c = registerComponent(new KServiceActionComponent(uniqueName, friendlyName));
+    auto *c = registerComponent(ComponentPtr(new KServiceActionComponent(uniqueName, friendlyName), &unregisterComponent));
     return static_cast<KServiceActionComponent *>(c);
 }
 
@@ -486,20 +493,6 @@ void GlobalShortcutsRegistry::setDBusPath(const QDBusObjectPath &path)
     _dbusPath = path;
 }
 
-Component *GlobalShortcutsRegistry::takeComponent(Component *component)
-{
-    QDBusConnection conn(QDBusConnection::sessionBus());
-    conn.unregisterObject(component->dbusPath().path());
-
-    Component *retComponent = nullptr;
-    auto it = findByName(component->uniqueName());
-    if (it != m_components.cend()) {
-        retComponent = *it;
-        m_components.erase(it);
-    }
-    return retComponent;
-}
-
 void GlobalShortcutsRegistry::ungrabKeys()
 {
     deactivateShortcuts();
@@ -554,20 +547,20 @@ bool GlobalShortcutsRegistry::unregisterKey(const QKeySequence &key, GlobalShort
     return true;
 }
 
-void GlobalShortcutsRegistry::writeSettings() const
+void GlobalShortcutsRegistry::writeSettings()
 {
-    // Make a copy for iterating. ~Component removes itself from the list.
-    const auto lst = m_components;
-    for (const Component *component : lst) {
+    auto it = std::remove_if(m_components.begin(), m_components.end(), [this](const ComponentPtr &component) {
         KConfigGroup configGroup(&_config, component->uniqueName());
         if (component->allShortcuts().isEmpty()) {
             configGroup.deleteGroup();
-            delete component;
+            return true;
         } else {
             component->writeSettings(configGroup);
+            return false;
         }
-    }
+    });
 
+    m_components.erase(it, m_components.end());
     _config.sync();
 }
 
