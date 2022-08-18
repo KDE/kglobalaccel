@@ -109,16 +109,9 @@ GlobalShortcutsRegistry::~GlobalShortcutsRegistry()
     _keys_count.clear();
 }
 
-static std::vector<KdeDGlobalAccel::Component *>::const_iterator findByName(const std::vector<KdeDGlobalAccel::Component *> &components, const QString &name)
-{
-    return std::find_if(components.cbegin(), components.cend(), [&name](const KdeDGlobalAccel::Component *comp) {
-        return comp->uniqueName() == name;
-    });
-}
-
 KdeDGlobalAccel::Component *GlobalShortcutsRegistry::addComponent(KdeDGlobalAccel::Component *component)
 {
-    auto it = findByName(m_components, component->uniqueName());
+    auto it = findByName(component->uniqueName());
     if (it != m_components.cend()) {
         Q_ASSERT_X(false, "GlobalShortcutsRegistry::addComponent", "component already registered");
         return *it;
@@ -166,7 +159,7 @@ void GlobalShortcutsRegistry::deactivateShortcuts(bool temporarily)
 
 KdeDGlobalAccel::Component *GlobalShortcutsRegistry::getComponent(const QString &uniqueName)
 {
-    auto it = findByName(m_components, uniqueName);
+    auto it = findByName(uniqueName);
     return it != m_components.cend() ? *it : nullptr;
 }
 
@@ -369,7 +362,7 @@ void GlobalShortcutsRegistry::loadSettings()
         const QStringList patterns = {QStringLiteral("*.desktop")};
         const auto lstDesktopFiles = dir.entryList(patterns);
         for (const QString &desktopFile : lstDesktopFiles) {
-            auto it = findByName(m_components, desktopFile);
+            auto it = findByName(desktopFile);
             if (it != m_components.cend()) {
                 continue;
             }
@@ -467,7 +460,7 @@ KdeDGlobalAccel::Component *GlobalShortcutsRegistry::takeComponent(KdeDGlobalAcc
     conn.unregisterObject(component->dbusPath().path());
 
     KdeDGlobalAccel::Component *retComponent = nullptr;
-    auto it = findByName(m_components, component->uniqueName());
+    auto it = findByName(component->uniqueName());
     if (it != m_components.cend()) {
         retComponent = *it;
         m_components.erase(it);

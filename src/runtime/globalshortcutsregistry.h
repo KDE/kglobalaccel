@@ -9,6 +9,8 @@
 
 #include "kglobalaccel.h"
 
+#include "component.h"
+
 #include <KSharedConfig>
 
 #include <QDBusObjectPath>
@@ -143,7 +145,15 @@ private:
     QHash<QKeySequence, GlobalShortcut *> _active_keys;
     QKeySequence _active_sequence;
     QHash<int, int> _keys_count;
-    std::vector<KdeDGlobalAccel::Component *> m_components;
+
+    using ComponentVec = std::vector<KdeDGlobalAccel::Component *>;
+    ComponentVec m_components;
+    ComponentVec::const_iterator findByName(const QString &name) const
+    {
+        return std::find_if(m_components.cbegin(), m_components.cend(), [&name](const KdeDGlobalAccel::Component *comp) {
+            return comp->uniqueName() == name;
+        });
+    }
 
     KGlobalAccelInterface *_manager = nullptr;
 
