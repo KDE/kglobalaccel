@@ -10,7 +10,6 @@
 #include "globalshortcutsregistry.h"
 #include "kglobalaccel_interface.h"
 #include "logging_p.h"
-#include "sequencehelpers_p.h"
 #include <config-kglobalaccel.h>
 
 #include <QKeySequence>

@@ -59,11 +59,11 @@ GlobalShortcut *GlobalShortcutContext::getShortcutByKey(const QKeySequence &key,
     if (key.isEmpty()) {
         return nullptr;
     }
-    QKeySequence keyMangled = mangleKey(key);
+    QKeySequence keyMangled = Utils::mangleKey(key);
     for (GlobalShortcut *sc : std::as_const(_actionsMap)) {
         const auto keys = sc->keys();
         for (const QKeySequence &other : keys) {
-            QKeySequence otherMangled = mangleKey(other);
+            QKeySequence otherMangled = Utils::mangleKey(other);
             switch (type) {
             case KGlobalAccel::MatchType::Equal:
                 if (otherMangled == keyMangled) {
@@ -71,12 +71,12 @@ GlobalShortcut *GlobalShortcutContext::getShortcutByKey(const QKeySequence &key,
                 }
                 break;
             case KGlobalAccel::MatchType::Shadows:
-                if (!other.isEmpty() && contains(keyMangled, otherMangled)) {
+                if (!other.isEmpty() && Utils::contains(keyMangled, otherMangled)) {
                     return sc;
                 }
                 break;
             case KGlobalAccel::MatchType::Shadowed:
-                if (!other.isEmpty() && contains(otherMangled, keyMangled)) {
+                if (!other.isEmpty() && Utils::contains(otherMangled, keyMangled)) {
                     return sc;
                 }
                 break;
@@ -102,7 +102,7 @@ bool GlobalShortcutContext::isShortcutAvailable(const QKeySequence &key) const
 {
     for (auto it = _actionsMap.cbegin(), endIt = _actionsMap.cend(); it != endIt; ++it) {
         const GlobalShortcut *sc = it.value();
-        if (matchSequences(key, sc->keys())) {
+        if (Utils::matchSequences(key, sc->keys())) {
             return false;
         }
     }

@@ -543,7 +543,7 @@ void KGlobalShortcutTest::testMangle()
     };
 
     for (unsigned int i = 0; i < sizeof(values) / sizeof(values[0]); ++i) {
-        QCOMPARE(mangleKey(values[i].first), values[i].second);
+        QCOMPARE(Utils::mangleKey(values[i].first), values[i].second);
     }
 }
 
@@ -562,7 +562,7 @@ void KGlobalShortcutTest::testCrop()
     };
 
     for (unsigned int i = 0; i < sizeof(values) / sizeof(values[0]); ++i) {
-        QCOMPARE(cropKey(std::get<0>(values[i]), std::get<1>(values[i])), std::get<2>(values[i]));
+        QCOMPARE(Utils::cropKey(std::get<0>(values[i]), std::get<1>(values[i])), std::get<2>(values[i]));
     }
 }
 
@@ -578,7 +578,7 @@ void KGlobalShortcutTest::testReverse()
     };
 
     for (unsigned int i = 0; i < sizeof(values) / sizeof(values[0]); ++i) {
-        QCOMPARE(reverseKey(values[i].first), values[i].second);
+        QCOMPARE(Utils::reverseKey(values[i].first), values[i].second);
     }
 }
 
@@ -601,7 +601,7 @@ void KGlobalShortcutTest::testMatch()
     };
 
     for (unsigned int i = 0; i < sizeof(values) / sizeof(values[0]); ++i) {
-        QCOMPARE(matchSequences(seq, values[i].first), values[i].second);
+        QCOMPARE(Utils::matchSequences(seq, values[i].first), values[i].second);
     }
 }
 

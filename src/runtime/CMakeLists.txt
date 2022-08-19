@@ -13,6 +13,7 @@ set(kglobalaccelprivate_SRCS
     globalshortcut.cpp
     globalshortcutsregistry.cpp
     globalshortcutcontext.cpp
+    ../sequencehelpers_p.cpp
 )
 ecm_create_qm_loader(kglobalaccelprivate_SRCS kglobalaccel5_qt)
 
