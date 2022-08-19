@@ -32,7 +32,7 @@ static QList<QKeySequence> keysFromString(const QString &str)
     }
     const QStringList strList = str.split('\t');
     for (const QString &s : strList) {
-        QKeySequence key = QKeySequence(s);
+        QKeySequence key = QKeySequence::fromString(s, QKeySequence::PortableText);
         if (!key.isEmpty()) { // sanity check just in case
             ret.append(key);
         }
@@ -47,7 +47,7 @@ static QString stringFromKeys(const QList<QKeySequence> &keys)
     }
     QString ret;
     for (const QKeySequence &key : keys) {
-        ret.append(key.toString());
+        ret.append(key.toString(QKeySequence::PortableText));
         ret.append('\t');
     }
     ret.chop(1);
