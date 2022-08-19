@@ -63,6 +63,20 @@ public:
     const std::vector<Component *> &allMainComponents() const;
 
     /**
+     * Returns a list of D-Bus paths of registered Components.
+     *
+     * The returned paths are absolute (i.e. no need to prepend anything).
+     */
+    QList<QDBusObjectPath> componentsDbusPaths() const;
+
+    /**
+     * Returns a list of QStringLists (one string list per registered component,
+     * with each string list containing four strings, one for each enumerator in
+     * KGlobalAccel::actionIdFields).
+     */
+    QList<QStringList> allComponentNames() const;
+
+    /**
      * Return the root dbus path for the registry.
      */
     QDBusObjectPath dbusPath() const;

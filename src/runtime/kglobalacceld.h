@@ -52,6 +52,11 @@ public Q_SLOTS:
      */
     Q_SCRIPTABLE QList<QDBusObjectPath> allComponents() const;
 
+    /**
+     * Returns a list of QStringLists (one string list per known component,
+     * with each string list containing four strings, one for each enumerator
+     * in KGlobalAccel::actionIdFields).
+     */
     Q_SCRIPTABLE QList<QStringList> allMainComponents() const;
 
     Q_SCRIPTABLE QList<QStringList> allActionsForComponent(const QStringList &actionId) const;

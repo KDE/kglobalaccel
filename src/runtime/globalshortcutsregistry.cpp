@@ -136,6 +136,28 @@ const std::vector<Component *> &GlobalShortcutsRegistry::allMainComponents() con
     return m_components;
 }
 
+QList<QDBusObjectPath> GlobalShortcutsRegistry::componentsDbusPaths() const
+{
+    QList<QDBusObjectPath> dbusPaths;
+    dbusPaths.reserve(m_components.size());
+    std::transform(m_components.cbegin(), m_components.cend(), std::back_inserter(dbusPaths), [](const auto *comp) {
+        return comp->dbusPath();
+    });
+    return dbusPaths;
+}
+
+QList<QStringList> GlobalShortcutsRegistry::allComponentNames() const
+{
+    QList<QStringList> ret;
+    ret.reserve(m_components.size());
+    std::transform(m_components.cbegin(), m_components.cend(), std::back_inserter(ret), [](const auto *component) {
+        // A string for each enumerator in KGlobalAccel::actionIdFields
+        return QStringList{component->uniqueName(), component->friendlyName(), {}, {}};
+    });
+
+    return ret;
+}
+
 void GlobalShortcutsRegistry::clear()
 {
     qDeleteAll(m_components);
