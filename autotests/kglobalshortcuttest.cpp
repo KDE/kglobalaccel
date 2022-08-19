@@ -269,33 +269,37 @@ void KGlobalShortcutTest::testChangeShortcut()
     // Check that the default shortcut is not active
     QVERIFY(KGlobalAccel::self()->defaultShortcut(m_actionB).isEmpty()); // unchanged
 
-    std::pair<QKeySequence, QKeySequence> values[] = {
-        {QKeySequence('A', 'B', 'C'), QKeySequence('A', 'B', 'C')},
-        {QKeySequence('A', 'B', 'C'), QKeySequence('B', 'C')},
-        {QKeySequence('A', 'B', 'C'), QKeySequence('A', 'B')},
-        {QKeySequence('A', 'B', 'C'), QKeySequence('B')},
-        {QKeySequence('A', 'B', 'C'), QKeySequence('D', 'B', 'C')},
-        {QKeySequence('A', 'B', 'C'), QKeySequence('A', 'B', 'D')},
-        {QKeySequence('A', 'B', 'C'), QKeySequence('D')},
-        {QKeySequence('A', 'B', 'B', 'C'), QKeySequence('B', 'B')},
-        {QKeySequence('A', 'B', 'C', 'D'), QKeySequence('A', 'B')},
-        {QKeySequence('A', 'B', 'C', 'D'), QKeySequence('B', 'C')},
-        {QKeySequence('A', 'B', 'C', 'D'), QKeySequence('C', 'D')},
+    struct SeqInfo {
+        QKeySequence seqA;
+        QKeySequence seqB;
+        bool expected;
     };
 
-    bool expected[] = {true, true, true, true, false, false, false, true, true, true, true};
+    static const SeqInfo values[] = {
+        {QKeySequence('A', 'B', 'C'), QKeySequence('A', 'B', 'C'), true},
+        {QKeySequence('A', 'B', 'C'), QKeySequence('B', 'C'), true},
+        {QKeySequence('A', 'B', 'C'), QKeySequence('A', 'B'), true},
+        {QKeySequence('A', 'B', 'C'), QKeySequence('B'), true},
+        {QKeySequence('A', 'B', 'C'), QKeySequence('D', 'B', 'C'), false},
+        {QKeySequence('A', 'B', 'C'), QKeySequence('A', 'B', 'D'), false},
+        {QKeySequence('A', 'B', 'C'), QKeySequence('D'), false},
+        {QKeySequence('A', 'B', 'B', 'C'), QKeySequence('B', 'B'), true},
+        {QKeySequence('A', 'B', 'C', 'D'), QKeySequence('A', 'B'), true},
+        {QKeySequence('A', 'B', 'C', 'D'), QKeySequence('B', 'C'), true},
+        {QKeySequence('A', 'B', 'C', 'D'), QKeySequence('C', 'D'), true},
+    };
 
-    for (unsigned int i = 0; i < sizeof(values) / sizeof(values[0]); ++i) {
+    for (const auto &info : values) {
         KGlobalAccel::self()->removeAllShortcuts(m_actionA);
-        KGlobalAccel::self()->setGlobalShortcut(m_actionA, values[i].first);
+        KGlobalAccel::self()->setGlobalShortcut(m_actionA, info.seqA);
 
         cutB.clear();
-        cutB << values[i].second;
+        cutB << info.seqB;
         KGlobalAccel::self()->removeAllShortcuts(m_actionB);
-        KGlobalAccel::self()->setGlobalShortcut(m_actionB, values[i].second);
+        KGlobalAccel::self()->setGlobalShortcut(m_actionB, info.seqB);
 
         QList<QKeySequence> seq = KGlobalAccel::self()->shortcut(m_actionB);
-        if (!expected[i]) {
+        if (!info.expected) {
             QCOMPARE(seq, cutB);
         } else {
             QVERIFY(seq.first().isEmpty());
@@ -532,7 +536,7 @@ void KGlobalShortcutTest::testGetGlobalShortcut()
 void KGlobalShortcutTest::testMangle()
 {
     setupTest("testMangle");
-    std::pair<QKeySequence, QKeySequence> values[] = {
+    static const std::pair<QKeySequence, QKeySequence> values[] = {
         {QKeySequence('A', 'B', 'C', 'D'), QKeySequence('A', 'B', 'C', 'D')},
         {QKeySequence("Shift+A,B,C,D"), QKeySequence("Shift+A,B,C,D")},
         {QKeySequence("Shift+Tab,B,C,D"), QKeySequence("Shift+Tab,B,C,D")},
@@ -542,15 +546,22 @@ void KGlobalShortcutTest::testMangle()
         {QKeySequence(), QKeySequence()},
     };
 
-    for (unsigned int i = 0; i < sizeof(values) / sizeof(values[0]); ++i) {
-        QCOMPARE(Utils::mangleKey(values[i].first), values[i].second);
+    for (const auto &pair : values) {
+        QCOMPARE(Utils::mangleKey(pair.first), pair.second);
     }
 }
 
 void KGlobalShortcutTest::testCrop()
 {
     setupTest("testCrop");
-    std::tuple<QKeySequence, int, QKeySequence> values[] = {
+
+    struct SeqInfo {
+        QKeySequence seq;
+        int count = 0;
+        QKeySequence expected;
+    };
+
+    static const SeqInfo values[] = {
         {QKeySequence('A', 'B', 'C', 'D'), 1, QKeySequence('B', 'C', 'D')},
         {QKeySequence('A', 'B', 'C', 'D'), 2, QKeySequence('C', 'D')},
         {QKeySequence('A', 'B', 'C'), 1, QKeySequence('B', 'C')},
@@ -561,15 +572,15 @@ void KGlobalShortcutTest::testCrop()
         {QKeySequence(), 2, QKeySequence()},
     };
 
-    for (unsigned int i = 0; i < sizeof(values) / sizeof(values[0]); ++i) {
-        QCOMPARE(Utils::cropKey(std::get<0>(values[i]), std::get<1>(values[i])), std::get<2>(values[i]));
+    for (const auto &s : values) {
+        QCOMPARE(Utils::cropKey(s.seq, s.count), s.expected);
     }
 }
 
 void KGlobalShortcutTest::testReverse()
 {
     setupTest("testReverse");
-    std::pair<QKeySequence, QKeySequence> values[] = {
+    static const std::pair<QKeySequence, QKeySequence> values[] = {
         {QKeySequence('A', 'B', 'C', 'D'), QKeySequence('D', 'C', 'B', 'A')},
         {QKeySequence('A', 'B', 'C'), QKeySequence('C', 'B', 'A')},
         {QKeySequence('A', 'B'), QKeySequence('B', 'A')},
@@ -577,8 +588,8 @@ void KGlobalShortcutTest::testReverse()
         {QKeySequence(), QKeySequence()},
     };
 
-    for (unsigned int i = 0; i < sizeof(values) / sizeof(values[0]); ++i) {
-        QCOMPARE(Utils::reverseKey(values[i].first), values[i].second);
+    for (const auto &pair : values) {
+        QCOMPARE(Utils::reverseKey(pair.first), pair.second);
     }
 }
 
@@ -586,22 +597,26 @@ void KGlobalShortcutTest::testMatch()
 {
     setupTest("Match");
 
-    QKeySequence seq = QKeySequence('A', 'B', 'C');
-
-    std::pair<QList<QKeySequence>, bool> values[] = {
-        {QList<QKeySequence>{QKeySequence('A', 'B', 'C')}, true},
-        {QList<QKeySequence>{QKeySequence('A', 'B', 'D')}, false},
-        {QList<QKeySequence>{QKeySequence('D')}, false},
-        {QList<QKeySequence>{QKeySequence('A', 'B', 'C', 'D')}, true},
-        {QList<QKeySequence>{QKeySequence('D', 'A', 'B', 'C')}, true},
-        {QList<QKeySequence>{QKeySequence('D', 'A', 'B', 'D')}, false},
-        {QList<QKeySequence>{QKeySequence('A', 'B')}, true},
-        {QList<QKeySequence>{QKeySequence('B', 'C')}, true},
-        {QList<QKeySequence>{QKeySequence('A', 'C')}, false},
+    struct Info {
+        QList<QKeySequence> seqList;
+        bool isMatch = false;
     };
 
-    for (unsigned int i = 0; i < sizeof(values) / sizeof(values[0]); ++i) {
-        QCOMPARE(Utils::matchSequences(seq, values[i].first), values[i].second);
+    static const Info values[] = {
+        {QList{QKeySequence('A', 'B', 'C')}, true},
+        {QList{QKeySequence('A', 'B', 'D')}, false},
+        {QList{QKeySequence('D')}, false},
+        {QList{QKeySequence('A', 'B', 'C', 'D')}, true},
+        {QList{QKeySequence('D', 'A', 'B', 'C')}, true},
+        {QList{QKeySequence('D', 'A', 'B', 'D')}, false},
+        {QList{QKeySequence('A', 'B')}, true},
+        {QList{QKeySequence('B', 'C')}, true},
+        {QList{QKeySequence('A', 'C')}, false},
+    };
+
+    const QKeySequence seq = QKeySequence('A', 'B', 'C');
+    for (const auto &i : values) {
+        QCOMPARE(Utils::matchSequences(seq, i.seqList), i.isMatch);
     }
 }
 
