@@ -86,21 +86,17 @@ GlobalShortcut *KGlobalAccelDPrivate::findAction(const QString &_componentUnique
     }
 
     if (!component) {
-#ifdef KDEDGLOBALACCEL_TRACE
         qCDebug(KGLOBALACCELD) << componentUnique << "not found";
-#endif
         return nullptr;
     }
 
     GlobalShortcut *shortcut = component->getShortcutByName(shortcutUnique, contextUnique);
 
-#ifdef KDEDGLOBALACCEL_TRACE
     if (shortcut) {
         qCDebug(KGLOBALACCELD) << componentUnique << contextUnique << shortcut->uniqueName();
     } else {
         qCDebug(KGLOBALACCELD) << "No match for" << shortcutUnique;
     }
-#endif
     return shortcut;
 }
 
@@ -295,9 +291,7 @@ QList<QDBusObjectPath> KGlobalAccelD::allComponents() const
 
 void KGlobalAccelD::blockGlobalShortcuts(bool block)
 {
-#ifdef KDEDGLOBALACCEL_TRACE
     qCDebug(KGLOBALACCELD) << block;
-#endif
     block ? GlobalShortcutsRegistry::self()->deactivateShortcuts(true) : GlobalShortcutsRegistry::self()->activateShortcuts();
 }
 
@@ -353,9 +347,7 @@ QList<QKeySequence> KGlobalAccelD::defaultShortcutKeys(const QStringList &action
 // later.
 void KGlobalAccelD::doRegister(const QStringList &actionId)
 {
-#ifdef KDEDGLOBALACCEL_TRACE
     qCDebug(KGLOBALACCELD) << actionId;
-#endif
 
     // Check because we would not want to add a action for an invalid
     // actionId. findAction returns nullptr in that case.
@@ -382,9 +374,7 @@ void KGlobalAccelD::doRegister(const QStringList &actionId)
 
 QDBusObjectPath KGlobalAccelD::getComponent(const QString &componentUnique) const
 {
-#ifdef KDEDGLOBALACCEL_TRACE
     qCDebug(KGLOBALACCELD) << componentUnique;
-#endif
 
     KdeDGlobalAccel::Component *component = GlobalShortcutsRegistry::self()->getComponent(componentUnique);
 
@@ -405,17 +395,13 @@ QList<KGlobalShortcutInfo> KGlobalAccelD::getGlobalShortcutsByKey(int key) const
 
 QList<KGlobalShortcutInfo> KGlobalAccelD::globalShortcutsByKey(const QKeySequence &key, KGlobalAccel::MatchType type) const
 {
-#ifdef KDEDGLOBALACCEL_TRACE
     qCDebug(KGLOBALACCELD) << key;
-#endif
     const QList<GlobalShortcut *> shortcuts = GlobalShortcutsRegistry::self()->getShortcutsByKey(key, type);
 
     QList<KGlobalShortcutInfo> rc;
     rc.reserve(shortcuts.size());
     for (const GlobalShortcut *sc : shortcuts) {
-#ifdef KDEDGLOBALACCEL_TRACE
         qCDebug(KGLOBALACCELD) << sc->context()->uniqueName() << sc->uniqueName();
-#endif
         rc.append(static_cast<KGlobalShortcutInfo>(*sc));
     }
 

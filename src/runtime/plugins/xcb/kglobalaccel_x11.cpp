@@ -118,10 +118,7 @@ KGlobalAccelImpl::KGlobalAccelImpl(QObject *parent)
             int nEvents = xcb_record_enable_context_data_length(reply) / sizeof(xcb_key_press_event_t);
             for (xcb_key_press_event_t *e = events; e < events + nEvents; e++) {
                 Q_ASSERT(e->response_type == XCB_KEY_RELEASE);
-
-#ifdef KDEDGLOBALACCEL_TRACE
                 qCDebug(KGLOBALACCELD) << "Got XKeyRelease event";
-#endif
                 x11KeyRelease(e);
             }
         }
@@ -277,9 +274,7 @@ bool KGlobalAccelImpl::nativeEventFilter(const QByteArray &eventType, void *mess
         // Make sure to let Qt handle it as well
         return false;
     } else if (responseType == XCB_KEY_PRESS) {
-#ifdef KDEDGLOBALACCEL_TRACE
         qCDebug(KGLOBALACCELD) << "Got XKeyPress event";
-#endif
         return x11KeyPress(reinterpret_cast<xcb_key_press_event_t *>(event));
     } else if (m_xkb_first_event && responseType == m_xkb_first_event) {
         const uint8_t xkbEvent = event->pad0;
