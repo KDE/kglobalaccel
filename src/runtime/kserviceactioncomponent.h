@@ -22,10 +22,6 @@ class KServiceActionComponent : public Component
     Q_OBJECT
 
 public:
-    //! Creates a new component. The component will be registered with @p
-    //! registry if specified and registered with dbus.
-    KServiceActionComponent(const QString &serviceStorageId, const QString &friendlyName, GlobalShortcutsRegistry *registry = nullptr);
-
     ~KServiceActionComponent() override;
 
     void loadFromService();
@@ -34,6 +30,11 @@ public:
     bool cleanUp() override;
 
 private:
+    friend class ::GlobalShortcutsRegistry;
+    //! Constructs a KServiceActionComponent. This is a private constuctor, to create
+    //! a KServiceActionComponent, use GlobalShortcutsRegistry::self()->createServiceActionComponent().
+    KServiceActionComponent(const QString &serviceStorageId, const QString &friendlyName);
+
     void runProcess(const KConfigGroup &group, const QString &token);
 
     QString m_serviceStorageId;
@@ -41,4 +42,4 @@ private:
     bool m_isInApplicationsDir = false;
 };
 
-#endif /* #ifndef COMPONENT_H */
+#endif /* #ifndef KSERVICEACTIONCOMPONENT_H */

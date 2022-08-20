@@ -110,17 +110,10 @@ GlobalShortcutsRegistry::~GlobalShortcutsRegistry()
     _keys_count.clear();
 }
 
-Component *GlobalShortcutsRegistry::addComponent(Component *component)
+Component *GlobalShortcutsRegistry::registerComponent(Component *component)
 {
-    auto it = findByName(component->uniqueName());
-    if (it != m_components.cend()) {
-        Q_ASSERT_X(false, "GlobalShortcutsRegistry::addComponent", "component already registered");
-        return *it;
-    }
-
     m_components.push_back(component);
     QDBusConnection conn(QDBusConnection::sessionBus());
-
     conn.registerObject(component->dbusPath().path(), component, QDBusConnection::ExportScriptableContents);
     return component;
 }
@@ -130,11 +123,6 @@ void GlobalShortcutsRegistry::activateShortcuts()
     for (Component *component : m_components) {
         component->activateShortcuts();
     }
-}
-
-const std::vector<Component *> &GlobalShortcutsRegistry::allMainComponents() const
-{
-    return m_components;
 }
 
 QList<QDBusObjectPath> GlobalShortcutsRegistry::componentsDbusPaths() const
@@ -328,6 +316,34 @@ bool GlobalShortcutsRegistry::keyReleased(int keyQt)
     return false;
 }
 
+Component *GlobalShortcutsRegistry::createComponent(const QString &uniqueName, const QString &friendlyName)
+{
+    auto it = findByName(uniqueName);
+    if (it != m_components.cend()) {
+        Q_ASSERT_X(false, //
+                   "GlobalShortcutsRegistry::createComponent",
+                   QLatin1String("A Component with the name: %1, already exists").arg(uniqueName).toUtf8().constData());
+        return *it;
+    }
+
+    auto *c = registerComponent(new Component(uniqueName, friendlyName));
+    return c;
+}
+
+KServiceActionComponent *GlobalShortcutsRegistry::createServiceActionComponent(const QString &uniqueName, const QString &friendlyName)
+{
+    auto it = findByName(uniqueName);
+    if (it != m_components.cend()) {
+        Q_ASSERT_X(false, //
+                   "GlobalShortcutsRegistry::createServiceActionComponent",
+                   QLatin1String("A Component with the name: %1, already exists").arg(uniqueName).toUtf8().constData());
+        return static_cast<KServiceActionComponent *>(*it);
+    }
+
+    auto *c = registerComponent(new KServiceActionComponent(uniqueName, friendlyName));
+    return static_cast<KServiceActionComponent *>(c);
+}
+
 void GlobalShortcutsRegistry::loadSettings()
 {
     const auto groupList = _config.groupList();
@@ -346,13 +362,10 @@ void GlobalShortcutsRegistry::loadSettings()
         // that
         const QString friendlyName = configGroup.readEntry("_k_friendly_name");
 
+        const bool isDesktop = groupName.endsWith(QLatin1String(".desktop"));
         // Create the component
-        Component *component = nullptr;
-        if (groupName.endsWith(QLatin1String(".desktop"))) {
-            component = new KServiceActionComponent(groupName, friendlyName, this);
-        } else {
-            component = new Component(groupName, friendlyName, this);
-        }
+        Component *component = isDesktop ? createServiceActionComponent(groupName, friendlyName) //
+                                         : createComponent(groupName, friendlyName);
 
         // Now load the contexts
         const auto groupList = configGroup.groupList();
@@ -387,14 +400,14 @@ void GlobalShortcutsRegistry::loadSettings()
             continue;
         }
 
-        KDesktopFile f(file);
-        if (f.noDisplay()) {
+        KDesktopFile deskF(file);
+        if (deskF.noDisplay()) {
             continue;
         }
 
-        KServiceActionComponent *component = new KServiceActionComponent(fileName, f.readName(), this);
-        component->activateGlobalShortcutContext(QStringLiteral("default"));
-        component->loadFromService();
+        auto *actionComp = createServiceActionComponent(fileName, deskF.readName());
+        actionComp->activateGlobalShortcutContext(QStringLiteral("default"));
+        actionComp->loadFromService();
     }
 }
 

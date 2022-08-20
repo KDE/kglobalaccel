@@ -16,8 +16,8 @@
 #include <KShell>
 #include <KWindowSystem>
 
-KServiceActionComponent::KServiceActionComponent(const QString &serviceStorageId, const QString &friendlyName, GlobalShortcutsRegistry *registry)
-    : Component(serviceStorageId, friendlyName, registry)
+KServiceActionComponent::KServiceActionComponent(const QString &serviceStorageId, const QString &friendlyName)
+    : Component(serviceStorageId, friendlyName)
     , m_serviceStorageId(serviceStorageId)
 {
     QString filePath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kglobalaccel/") + serviceStorageId);

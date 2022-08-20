@@ -104,19 +104,26 @@ GlobalShortcut *KGlobalAccelDPrivate::findAction(const QString &_componentUnique
 
 Component *KGlobalAccelDPrivate::component(const QStringList &actionId) const
 {
-    // Get the component for the action. If we have none create a new one
-    Component *component = m_registry->getComponent(actionId.at(KGlobalAccel::ComponentUnique));
-    if (!component) {
-        if (actionId.at(KGlobalAccel::ComponentUnique).endsWith(QLatin1String(".desktop"))) {
-            component = new KServiceActionComponent(actionId.at(KGlobalAccel::ComponentUnique), actionId.at(KGlobalAccel::ComponentFriendly), m_registry);
-            component->activateGlobalShortcutContext(QStringLiteral("default"));
-            static_cast<KServiceActionComponent *>(component)->loadFromService();
-        } else {
-            component = new Component(actionId.at(KGlobalAccel::ComponentUnique), actionId.at(KGlobalAccel::ComponentFriendly), m_registry);
-        }
-        Q_ASSERT(component);
+    const QString uniqueName = actionId.at(KGlobalAccel::ComponentUnique);
+
+    // If a component for action already exists, use that...
+    if (Component *c = m_registry->getComponent(uniqueName)) {
+        return c;
     }
-    return component;
+
+    // ... otherwise, create a new one
+    const QString friendlyName = actionId.at(KGlobalAccel::ComponentFriendly);
+    if (uniqueName.endsWith(QLatin1String(".desktop"))) {
+        auto *actionComp = m_registry->createServiceActionComponent(uniqueName, friendlyName);
+        Q_ASSERT(actionComp);
+        actionComp->activateGlobalShortcutContext(QStringLiteral("default"));
+        actionComp->loadFromService();
+        return actionComp;
+    } else {
+        auto *comp = m_registry->createComponent(uniqueName, friendlyName);
+        Q_ASSERT(comp);
+        return comp;
+    }
 }
 
 GlobalShortcut *KGlobalAccelDPrivate::addAction(const QStringList &actionId)

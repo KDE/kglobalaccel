@@ -10,6 +10,7 @@
 #include "kglobalaccel.h"
 
 #include "component.h"
+#include "kserviceactioncomponent.h"
 
 #include <KSharedConfig>
 
@@ -56,11 +57,6 @@ public:
      * Activate all shortcuts having their application present.
      */
     void activateShortcuts();
-
-    /**
-     * Return a list of all main components
-     */
-    const std::vector<Component *> &allMainComponents() const;
 
     /**
      * Returns a list of D-Bus paths of registered Components.
@@ -140,11 +136,15 @@ public Q_SLOTS:
     void ungrabKeys();
 
 private:
+    friend class KGlobalAccelDPrivate;
     friend class Component;
     friend class KGlobalAccelInterface;
     friend class KGlobalAccelInterfaceV2;
 
-    Component *addComponent(Component *component);
+    Component *createComponent(const QString &uniqueName, const QString &friendlyName);
+    KServiceActionComponent *createServiceActionComponent(const QString &uniqueName, const QString &friendlyName);
+
+    Component *registerComponent(Component *component);
     Component *takeComponent(Component *component);
 
     // called by the implementation to inform us about key presses

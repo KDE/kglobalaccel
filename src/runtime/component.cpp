@@ -53,18 +53,13 @@ static QString stringFromKeys(const QList<QKeySequence> &keys)
     return ret;
 }
 
-Component::Component(const QString &uniqueName, const QString &friendlyName, GlobalShortcutsRegistry *registry)
+Component::Component(const QString &uniqueName, const QString &friendlyName)
     : _uniqueName(uniqueName)
     , _friendlyName(friendlyName)
-    , _registry(registry)
+    , _registry(GlobalShortcutsRegistry::self())
 {
     // Make sure we do no get uniquenames still containing the context
     Q_ASSERT(uniqueName.indexOf(QLatin1Char('|')) == -1);
-
-    // Register ourselves with the registry
-    if (_registry) {
-        _registry->addComponent(this);
-    }
 
     const QString DEFAULT(QStringLiteral("default"));
     createGlobalShortcutContext(DEFAULT, QStringLiteral("Default Context"));
