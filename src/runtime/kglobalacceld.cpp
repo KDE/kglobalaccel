@@ -114,7 +114,7 @@ Component *KGlobalAccelDPrivate::component(const QStringList &actionId) const
     // ... otherwise, create a new one
     const QString friendlyName = actionId.at(KGlobalAccel::ComponentFriendly);
     if (uniqueName.endsWith(QLatin1String(".desktop"))) {
-        auto *actionComp = m_registry->createServiceActionComponent(uniqueName, friendlyName);
+        auto *actionComp = m_registry->createServiceActionComponent(uniqueName);
         Q_ASSERT(actionComp);
         actionComp->activateGlobalShortcutContext(QStringLiteral("default"));
         actionComp->loadFromService();

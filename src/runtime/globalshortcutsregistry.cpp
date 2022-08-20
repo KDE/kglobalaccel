@@ -15,7 +15,6 @@
 #include "logging_p.h"
 #include <config-kglobalaccel.h>
 
-#include <KDesktopFile>
 #include <KFileUtils>
 #include <KPluginMetaData>
 
@@ -361,7 +360,21 @@ void GlobalShortcutsRegistry::unregisterComponent(Component *component)
     delete component;
 }
 
-KServiceActionComponent *GlobalShortcutsRegistry::createServiceActionComponent(const QString &uniqueName, const QString &friendlyName)
+KServiceActionComponent *GlobalShortcutsRegistry::createServiceActionComponent(KService::Ptr service)
+{
+    auto it = findByName(service->storageId());
+    if (it != m_components.cend()) {
+        Q_ASSERT_X(false, //
+                   "GlobalShortcutsRegistry::createServiceActionComponent",
+                   QLatin1String("A KServiceActionComponent with the name: %1, already exists").arg(service->storageId()).toUtf8().constData());
+        return static_cast<KServiceActionComponent *>((*it).get());
+    }
+
+    auto *c = registerComponent(ComponentPtr(new KServiceActionComponent(service), &unregisterComponent));
+    return static_cast<KServiceActionComponent *>(c);
+}
+
+KServiceActionComponent *GlobalShortcutsRegistry::createServiceActionComponent(const QString &uniqueName)
 {
     auto it = findByName(uniqueName);
     if (it != m_components.cend()) {
@@ -371,7 +384,14 @@ KServiceActionComponent *GlobalShortcutsRegistry::createServiceActionComponent(c
         return static_cast<KServiceActionComponent *>((*it).get());
     }
 
-    auto *c = registerComponent(ComponentPtr(new KServiceActionComponent(uniqueName, friendlyName), &unregisterComponent));
+    KService::Ptr service = KService::serviceByStorageId(uniqueName);
+
+    if (!service) {
+        const QString filePath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QLatin1String("kglobalaccel/") + uniqueName);
+        service = new KService(filePath);
+    }
+
+    auto *c = registerComponent(ComponentPtr(new KServiceActionComponent(service), &unregisterComponent));
     return static_cast<KServiceActionComponent *>(c);
 }
 
@@ -392,8 +412,9 @@ void GlobalShortcutsRegistry::loadSettings()
         const QString friendlyName = configGroup.readEntry("_k_friendly_name");
 
         const bool isDesktop = groupName.endsWith(QLatin1String(".desktop"));
+
         // Create the component
-        Component *component = isDesktop ? createServiceActionComponent(groupName, friendlyName) //
+        Component *component = isDesktop ? createServiceActionComponent(groupName) //
                                          : createComponent(groupName, friendlyName);
 
         // Now load the contexts
@@ -424,17 +445,19 @@ void GlobalShortcutsRegistry::loadSettings()
 
     for (const QString &file : desktopFiles) {
         const QString fileName = QFileInfo(file).fileName();
+
         auto it = findByName(fileName);
         if (it != m_components.cend()) {
             continue;
         }
 
-        KDesktopFile deskF(file);
-        if (deskF.noDisplay()) {
+        KService::Ptr service(new KService(file));
+
+        if (service->noDisplay()) {
             continue;
         }
 
-        auto *actionComp = createServiceActionComponent(fileName, deskF.readName());
+        auto *actionComp = createServiceActionComponent(service);
         actionComp->activateGlobalShortcutContext(QStringLiteral("default"));
         actionComp->loadFromService();
     }

@@ -10,7 +10,7 @@
 
 #include "component.h"
 
-#include <KDesktopFile>
+#include <KService>
 
 #include <memory>
 
@@ -33,13 +33,15 @@ private:
     friend class ::GlobalShortcutsRegistry;
     //! Constructs a KServiceActionComponent. This is a private constuctor, to create
     //! a KServiceActionComponent, use GlobalShortcutsRegistry::self()->createServiceActionComponent().
-    KServiceActionComponent(const QString &serviceStorageId, const QString &friendlyName);
+    KServiceActionComponent(KService::Ptr service);
 
-    void runProcess(const KConfigGroup &group, const QString &token);
+    void runService(const QString &token);
+    void runServiceAction(const KServiceAction &action, const QString &token);
+    void startDetachedWithToken(const QString &program, const QStringList &args, const QString &token);
+    bool runWithKLauncher(const QString &command, QStringList &args);
 
-    QString m_serviceStorageId;
-    std::unique_ptr<KDesktopFile> m_desktopFile;
     bool m_isInApplicationsDir = false;
+    KService::Ptr m_service;
 };
 
 #endif /* #ifndef KSERVICEACTIONCOMPONENT_H */

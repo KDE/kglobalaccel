@@ -51,6 +51,7 @@ if (BUILD_RUNTIME)
     find_package(KF5Crash ${KF_DEP_VERSION} REQUIRED)
     find_package(KF5DBusAddons ${KF_DEP_VERSION} REQUIRED)
     find_package(KF5WindowSystem ${KF_DEP_VERSION} REQUIRED)
+    find_package(KF5Service ${KF_DEP_VERSION} REQUIRED)
 endif()
 
 # no X11 stuff on mac
