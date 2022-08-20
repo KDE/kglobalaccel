@@ -425,9 +425,7 @@ bool KGlobalAccelD::globalShortcutAvailable(const QKeySequence &shortcut, const 
 
 void KGlobalAccelD::setInactive(const QStringList &actionId)
 {
-#ifdef KDEDGLOBALACCEL_TRACE
     qCDebug(KGLOBALACCELD) << actionId;
-#endif
 
     GlobalShortcut *shortcut = d->findAction(actionId);
     if (shortcut) {
@@ -437,9 +435,7 @@ void KGlobalAccelD::setInactive(const QStringList &actionId)
 
 bool KGlobalAccelD::unregister(const QString &componentUnique, const QString &shortcutUnique)
 {
-#ifdef KDEDGLOBALACCEL_TRACE
     qCDebug(KGLOBALACCELD) << componentUnique << shortcutUnique;
-#endif
 
     // Stop grabbing the key
     GlobalShortcut *shortcut = d->findAction(componentUnique, shortcutUnique);
@@ -454,9 +450,7 @@ bool KGlobalAccelD::unregister(const QString &componentUnique, const QString &sh
 #if KGLOBALACCELPRIVATE_BUILD_DEPRECATED_SINCE(4, 3)
 void KGlobalAccelD::unRegister(const QStringList &actionId)
 {
-#ifdef KDEDGLOBALACCEL_TRACE
     qCDebug(KGLOBALACCELD) << actionId;
-#endif
 
     // Stop grabbing the key
     GlobalShortcut *shortcut = d->findAction(actionId);
@@ -548,9 +542,7 @@ void KGlobalAccelD::setForeignShortcut(const QStringList &actionId, const QList<
 
 void KGlobalAccelD::setForeignShortcutKeys(const QStringList &actionId, const QList<QKeySequence> &keys)
 {
-#ifdef KDEDGLOBALACCEL_TRACE
     qCDebug(KGLOBALACCELD) << actionId;
-#endif
 
     GlobalShortcut *shortcut = d->findAction(actionId);
     if (!shortcut) {
