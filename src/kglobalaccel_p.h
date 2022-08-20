@@ -67,7 +67,7 @@ public:
     // private slot implementations
     QAction *findAction(const QString &, const QString &);
     void invokeAction(const QString &, const QString &, qlonglong);
-    void invokeDeactivate(const QString &, const QString &, qlonglong);
+    void invokeDeactivate(const QString &, const QString &);
     void shortcutGotChanged(const QStringList &, const QList<int> &);
     void shortcutsChanged(const QStringList &, const QList<QKeySequence> &);
     void serviceOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner);

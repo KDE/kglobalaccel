@@ -76,8 +76,8 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
         q->connect(component,
                    &org::kde::kglobalaccel::Component::globalShortcutReleased,
                    q,
-                   [this](const QString &componentUnique, const QString &shortcutUnique, qlonglong timestamp) {
-                       invokeDeactivate(componentUnique, shortcutUnique, timestamp);
+                   [this](const QString &componentUnique, const QString &shortcutUnique, qlonglong) {
+                       invokeDeactivate(componentUnique, shortcutUnique);
                    });
 
         components[componentUnique] = component;
@@ -492,7 +492,7 @@ void KGlobalAccelPrivate::invokeAction(const QString &componentUnique, const QSt
     action->trigger();
 }
 
-void KGlobalAccelPrivate::invokeDeactivate(const QString &componentUnique, const QString &actionUnique, qlonglong timestamp)
+void KGlobalAccelPrivate::invokeDeactivate(const QString &componentUnique, const QString &actionUnique)
 {
     QAction *action = findAction(componentUnique, actionUnique);
     if (!action) {
