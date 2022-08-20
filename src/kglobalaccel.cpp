@@ -407,9 +407,10 @@ QList<int> KGlobalAccelPrivate::intListFromShortcut(const QList<QKeySequence> &c
 QList<QKeySequence> KGlobalAccelPrivate::shortcutFromIntList(const QList<int> &list)
 {
     QList<QKeySequence> ret;
-    for (int i : list) {
-        ret.append(i);
-    }
+    ret.reserve(list.size());
+    std::transform(list.begin(), list.end(), std::back_inserter(ret), [](int i) {
+        return QKeySequence(i);
+    });
     return ret;
 }
 

@@ -158,11 +158,10 @@ QDBusObjectPath Component::dbusPath() const
 {
     QString dbusPath = _uniqueName;
     // Clean up for dbus usage: any non-alphanumeric char should be turned into '_'
-    const int len = dbusPath.length();
-    for (int i = 0; i < len; ++i) {
-        if (!dbusPath[i].isLetterOrNumber() || dbusPath[i].unicode() >= 0x7F) {
+    for (auto &ch : dbusPath) {
+        if (!ch.isLetterOrNumber() || ch.unicode() >= 0x7F) {
             // DBus path can only contain ASCII characters
-            dbusPath[i] = QLatin1Char('_');
+            ch = QLatin1Char('_');
         }
     }
     // QDBusObjectPath could be a little bit easier to handle :-)
