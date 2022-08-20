@@ -18,13 +18,9 @@
 #include <QKeySequence>
 #include <QObject>
 
+class Component;
 class GlobalShortcut;
 class KGlobalAccelInterface;
-
-namespace KdeDGlobalAccel
-{
-class Component;
-}
 
 /**
  * Global Shortcut Registry.
@@ -64,7 +60,7 @@ public:
     /**
      * Return a list of all main components
      */
-    const std::vector<KdeDGlobalAccel::Component *> &allMainComponents() const;
+    const std::vector<Component *> &allMainComponents() const;
 
     /**
      * Return the root dbus path for the registry.
@@ -78,7 +74,7 @@ public:
 
     /**
      */
-    KdeDGlobalAccel::Component *getComponent(const QString &uniqueName);
+    Component *getComponent(const QString &uniqueName);
 
     /**
      * Get the shortcut corresponding to key. Active and inactive shortcuts
@@ -130,12 +126,12 @@ public Q_SLOTS:
     void ungrabKeys();
 
 private:
-    friend class KdeDGlobalAccel::Component;
+    friend class Component;
     friend class KGlobalAccelInterface;
     friend class KGlobalAccelInterfaceV2;
 
-    KdeDGlobalAccel::Component *addComponent(KdeDGlobalAccel::Component *component);
-    KdeDGlobalAccel::Component *takeComponent(KdeDGlobalAccel::Component *component);
+    Component *addComponent(Component *component);
+    Component *takeComponent(Component *component);
 
     // called by the implementation to inform us about key presses
     // returns true if the key was handled
@@ -146,11 +142,11 @@ private:
     QKeySequence _active_sequence;
     QHash<int, int> _keys_count;
 
-    using ComponentVec = std::vector<KdeDGlobalAccel::Component *>;
+    using ComponentVec = std::vector<Component *>;
     ComponentVec m_components;
     ComponentVec::const_iterator findByName(const QString &name) const
     {
-        return std::find_if(m_components.cbegin(), m_components.cend(), [&name](const KdeDGlobalAccel::Component *comp) {
+        return std::find_if(m_components.cbegin(), m_components.cend(), [&name](const Component *comp) {
             return comp->uniqueName() == name;
         });
     }

@@ -17,8 +17,6 @@
 #include <KShell>
 #include <KWindowSystem>
 
-namespace KdeDGlobalAccel
-{
 KServiceActionComponent::KServiceActionComponent(const QString &serviceStorageId, const QString &friendlyName, GlobalShortcutsRegistry *registry)
     : Component(serviceStorageId, friendlyName, registry)
     , m_serviceStorageId(serviceStorageId)
@@ -189,7 +187,5 @@ bool KServiceActionComponent::cleanUp()
 
     return Component::cleanUp();
 }
-
-} // namespace KdeDGlobalAccel
 
 #include "moc_kserviceactioncomponent.cpp"

@@ -20,8 +20,6 @@ class GlobalShortcut;
 class GlobalShortcutContext;
 class GlobalShortcutsRegistry;
 
-namespace KdeDGlobalAccel
-{
 /**
  * @author Michael Jansen <kde@michael-jansen.biz>
  */
@@ -174,7 +172,5 @@ private:
     GlobalShortcutContext *_current;
     QHash<QString, GlobalShortcutContext *> _contexts;
 };
-
-}
 
 #endif /* #ifndef COMPONENT_H */

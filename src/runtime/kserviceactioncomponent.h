@@ -14,8 +14,6 @@
 
 #include <memory>
 
-namespace KdeDGlobalAccel
-{
 /**
  * @author Michael Jansen <kde@michael-jansen.biz>
  */
@@ -42,7 +40,5 @@ private:
     std::unique_ptr<KDesktopFile> m_desktopFile;
     bool m_isInApplicationsDir = false;
 };
-
-}
 
 #endif /* #ifndef COMPONENT_H */

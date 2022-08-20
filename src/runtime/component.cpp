@@ -54,8 +54,6 @@ static QString stringFromKeys(const QList<QKeySequence> &keys)
     return ret;
 }
 
-namespace KdeDGlobalAccel
-{
 Component::Component(const QString &uniqueName, const QString &friendlyName, GlobalShortcutsRegistry *registry)
     : _uniqueName(uniqueName)
     , _friendlyName(friendlyName)
@@ -418,5 +416,3 @@ void Component::writeSettings(KConfigGroup &configGroup) const
         }
     }
 }
-
-} // namespace KdeDGlobalAccel
