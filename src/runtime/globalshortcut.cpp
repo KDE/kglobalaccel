@@ -16,9 +16,7 @@
 #include <QKeySequence>
 
 GlobalShortcut::GlobalShortcut()
-    : _isPresent(false)
-    , _isRegistered(false)
-    , _isFresh(true)
+    : GlobalShortcut(QString{}, QString{}, nullptr)
 {
 }
 
@@ -30,7 +28,9 @@ GlobalShortcut::GlobalShortcut(const QString &uniqueName, const QString &friendl
     , _uniqueName(uniqueName)
     , _friendlyName(friendlyName)
 {
-    context->addShortcut(this);
+    if (_context) {
+        _context->addShortcut(this);
+    }
 }
 
 GlobalShortcut::~GlobalShortcut()
