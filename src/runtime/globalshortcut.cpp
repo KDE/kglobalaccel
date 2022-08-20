@@ -85,7 +85,11 @@ void GlobalShortcut::setIsPresent(bool value)
 {
     // (de)activate depending on old/new value
     _isPresent = value;
-    value ? setActive() : setInactive();
+    if (_isPresent) {
+        setActive();
+    } else {
+        setInactive();
+    }
 }
 
 GlobalShortcutContext *GlobalShortcut::context()

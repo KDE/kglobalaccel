@@ -283,7 +283,11 @@ void KGlobalAccelPrivate::remove(QAction *action, Removal removal)
 
         if (!action->property("isConfigurationAction").toBool()) {
             // If it's a session shortcut unregister it.
-            action->objectName().startsWith(QLatin1String("_k_session:")) ? unregister(actionId) : setInactive(actionId);
+            if (action->objectName().startsWith(QLatin1String("_k_session:"))) {
+                unregister(actionId);
+            } else {
+                setInactive(actionId);
+            }
         }
     }
 
