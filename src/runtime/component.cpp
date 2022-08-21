@@ -155,14 +155,20 @@ GlobalShortcutContext *Component::currentContext()
 
 QDBusObjectPath Component::dbusPath() const
 {
+    auto isNonAscii = [](QChar ch) {
+        const char c = ch.unicode();
+        const bool isAscii = c == '_' //
+            || (c >= 'A' && c <= 'Z') //
+            || (c >= 'a' && c <= 'z') //
+            || (c >= '0' && c <= '9');
+        return !isAscii;
+    };
+
     QString dbusPath = _uniqueName;
-    // Clean up for dbus usage: any non-alphanumeric char should be turned into '_'
-    for (auto &ch : dbusPath) {
-        if (!ch.isLetterOrNumber() || ch.unicode() >= 0x7F) {
-            // DBus path can only contain ASCII characters
-            ch = QLatin1Char('_');
-        }
-    }
+    // DBus path can only contain ASCII characters, any non-alphanumeric char should
+    // be turned into '_'
+    std::replace_if(dbusPath.begin(), dbusPath.end(), isNonAscii, QLatin1Char('_'));
+
     // QDBusObjectPath could be a little bit easier to handle :-)
     return QDBusObjectPath(_registry->dbusPath().path() + QLatin1String("component/") + dbusPath);
 }
