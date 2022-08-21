@@ -36,6 +36,7 @@ extern "C" Q_DECL_EXPORT int main(int argc, char **argv)
     // ksmserver tries to register with kglobalaccel).
     qunsetenv("SESSION_MANAGER");
 
+    QGuiApplication::setDesktopSettingsAware(false);
     QGuiApplication app(argc, argv);
     KAboutData aboutdata(QStringLiteral("kglobalaccel"),
                          QObject::tr("KDE Global Shortcuts Service"),
