@@ -206,14 +206,14 @@ bool KGlobalAccelImpl::grabKey(int keyQt, bool grab)
         //  the irrelevant bits are always ignored and we can just make one XGrabKey
         //  call per accelerator? -- ellis
 #ifndef NDEBUG
-        QString sDebug = QString(QStringLiteral("\tcode: 0x%1 state: 0x%2 | ")).arg(keyCodeX, 0, 16).arg(keyModX, 0, 16);
+        QString sDebug = QStringLiteral("\tcode: 0x%1 state: 0x%2 | ").arg(keyCodeX, 0, 16).arg(keyModX, 0, 16);
 #endif
         uint keyModMaskX = ~g_keyModMaskXOnOrOff;
         QVector<xcb_void_cookie_t> cookies;
         for (uint irrelevantBitsMask = 0; irrelevantBitsMask <= 0xff; irrelevantBitsMask++) {
             if ((irrelevantBitsMask & keyModMaskX) == 0) {
 #ifndef NDEBUG
-                sDebug += QString(QStringLiteral("0x%3, ")).arg(irrelevantBitsMask, 0, 16);
+                sDebug += QStringLiteral("0x%3, ").arg(irrelevantBitsMask, 0, 16);
 #endif
                 if (grab) {
                     cookies << xcb_grab_key_checked(QX11Info::connection(),
