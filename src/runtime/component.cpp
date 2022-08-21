@@ -29,7 +29,7 @@ static QList<QKeySequence> keysFromString(const QString &str)
     if (str == QLatin1String("none")) {
         return ret;
     }
-    const QStringList strList = str.split('\t');
+    const QStringList strList = str.split(QLatin1Char('\t'));
     for (const QString &s : strList) {
         QKeySequence key = QKeySequence::fromString(s, QKeySequence::PortableText);
         if (!key.isEmpty()) { // sanity check just in case
@@ -47,7 +47,7 @@ static QString stringFromKeys(const QList<QKeySequence> &keys)
     QString ret;
     for (const QKeySequence &key : keys) {
         ret.append(key.toString(QKeySequence::PortableText));
-        ret.append('\t');
+        ret.append(QLatin1Char('\t'));
     }
     ret.chop(1);
     return ret;
@@ -59,14 +59,14 @@ Component::Component(const QString &uniqueName, const QString &friendlyName, Glo
     , _registry(registry)
 {
     // Make sure we do no get uniquenames still containing the context
-    Q_ASSERT(uniqueName.indexOf("|") == -1);
+    Q_ASSERT(uniqueName.indexOf(QLatin1Char('|')) == -1);
 
     // Register ourselves with the registry
     if (_registry) {
         _registry->addComponent(this);
     }
 
-    QString DEFAULT = QStringLiteral("default");
+    const QString DEFAULT(QStringLiteral("default"));
     createGlobalShortcutContext(DEFAULT, QStringLiteral("Default Context"));
     _current = _contexts.value(DEFAULT);
 }
@@ -85,7 +85,7 @@ Component::~Component()
 bool Component::activateGlobalShortcutContext(const QString &uniqueName)
 {
     if (!_contexts.value(uniqueName)) {
-        createGlobalShortcutContext(uniqueName, "TODO4");
+        createGlobalShortcutContext(uniqueName, QStringLiteral("TODO4"));
         return false;
     }
 

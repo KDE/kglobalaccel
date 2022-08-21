@@ -19,6 +19,8 @@
 #include "logging_p.h"
 #include <KKeyServer>
 
+#undef QT_NO_CAST_FROM_ASCII
+
 OSStatus hotKeyEventHandler(EventHandlerCallRef inHandlerCallRef, EventRef inEvent, void *inUserData)
 {
     UInt32 eventKind = GetEventKind(inEvent);

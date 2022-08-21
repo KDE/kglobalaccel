@@ -140,10 +140,10 @@ public Q_SLOTS:
     Q_SCRIPTABLE bool isActive() const;
 
     //! Get all shortcutnames living in @a context
-    Q_SCRIPTABLE QStringList shortcutNames(const QString &context = "default") const;
+    Q_SCRIPTABLE QStringList shortcutNames(const QString &context = QStringLiteral("default")) const;
 
     //! Returns all shortcut in @a context
-    Q_SCRIPTABLE QList<KGlobalShortcutInfo> allShortcutInfos(const QString &context = "default") const;
+    Q_SCRIPTABLE QList<KGlobalShortcutInfo> allShortcutInfos(const QString &context = QStringLiteral("default")) const;
 
     //! Returns the shortcut contexts available for the component.
     Q_SCRIPTABLE QStringList getShortcutContexts() const;
@@ -151,7 +151,7 @@ public Q_SLOTS:
     virtual void emitGlobalShortcutPressed(const GlobalShortcut &shortcut);
     virtual void emitGlobalShortcutReleased(const GlobalShortcut &shortcut);
 
-    Q_SCRIPTABLE void invokeShortcut(const QString &shortcutName, const QString &context = "default");
+    Q_SCRIPTABLE void invokeShortcut(const QString &shortcutName, const QString &context = QStringLiteral("default"));
 
 Q_SIGNALS:
 

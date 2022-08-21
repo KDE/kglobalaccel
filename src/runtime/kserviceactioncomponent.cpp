@@ -7,7 +7,6 @@
 */
 
 #include "kserviceactioncomponent.h"
-#include "globalshortcutcontext.h"
 #include "logging_p.h"
 
 #include <QDBusConnectionInterface>
@@ -64,7 +63,7 @@ void KServiceActionComponent::runProcess(const KConfigGroup &group, const QStrin
         p.setArguments(args);
         QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
         if (!token.isEmpty()) {
-            env.insert("XDG_ACTIVATION_TOKEN", token);
+            env.insert(QLatin1String("XDG_ACTIVATION_TOKEN"), token);
         }
         p.setProcessEnvironment(env);
         if (!p.startDetached()) {

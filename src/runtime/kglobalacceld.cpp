@@ -43,9 +43,9 @@ struct KGlobalAccelDPrivate {
     void splitComponent(QString &component, QString &context) const
     {
         context = QStringLiteral("default");
-        const int index = component.indexOf('|');
+        const int index = component.indexOf(QLatin1Char('|'));
         if (index != -1) {
-            Q_ASSERT(component.indexOf('|', index + 1) == -1); // Only one '|' character
+            Q_ASSERT(component.indexOf(QLatin1Char('|'), index + 1) == -1); // Only one '|' character
             context = component.mid(index + 1);
             component.truncate(index);
         }
@@ -75,7 +75,7 @@ GlobalShortcut *KGlobalAccelDPrivate::findAction(const QString &_componentUnique
 
     Component *component;
     QString contextUnique;
-    if (componentUnique.indexOf('|') == -1) {
+    if (componentUnique.indexOf(QLatin1Char('|')) == -1) {
         component = GlobalShortcutsRegistry::self()->getComponent(componentUnique);
         if (component) {
             contextUnique = component->currentContext()->uniqueName();
@@ -380,7 +380,7 @@ QDBusObjectPath KGlobalAccelD::getComponent(const QString &componentUnique) cons
     if (component) {
         return component->dbusPath();
     } else {
-        sendErrorReply("org.kde.kglobalaccel.NoSuchComponent", QStringLiteral("The component '%1' doesn't exist.").arg(componentUnique));
+        sendErrorReply(QStringLiteral("org.kde.kglobalaccel.NoSuchComponent"), QStringLiteral("The component '%1' doesn't exist.").arg(componentUnique));
         return QDBusObjectPath("/");
     }
 }

@@ -249,7 +249,7 @@ bool GlobalShortcutsRegistry::keyPressed(int keyQt)
     }
 
     qCDebug(KGLOBALACCELD) << "Pressed key" << QKeySequence(keyQt).toString() << ", current sequence" << _active_sequence.toString() << "="
-                           << (shortcut ? shortcut->uniqueName() : "(no shortcut found)");
+                           << (shortcut ? shortcut->uniqueName() : QStringLiteral("(no shortcut found)"));
     if (!shortcut) {
         // This can happen for example with the ALT-Print shortcut of kwin.
         // ALT+PRINT is SYSREQ on my keyboard. So we grab something we think
@@ -311,7 +311,7 @@ void GlobalShortcutsRegistry::loadSettings()
     for (const QString &groupName : groupList) {
         qCDebug(KGLOBALACCELD) << "Loading group " << groupName;
 
-        Q_ASSERT(groupName.indexOf('\x1d') == -1);
+        Q_ASSERT(groupName.indexOf(QLatin1Char('\x1d')) == -1);
 
         // loadSettings isn't designed to be called in between. Only at the
         // beginning.
@@ -347,7 +347,7 @@ void GlobalShortcutsRegistry::loadSettings()
         }
 
         // Load the default context
-        component->activateGlobalShortcutContext("default");
+        component->activateGlobalShortcutContext(QStringLiteral("default"));
         component->loadSettings(configGroup);
     }
 
