@@ -15,6 +15,7 @@
 #include <config-kglobalaccel.h>
 
 #include <KDesktopFile>
+#include <KFileUtils>
 #include <KPluginMetaData>
 
 #include <QDBusConnection>
@@ -376,28 +377,24 @@ void GlobalShortcutsRegistry::loadSettings()
     // Load the configured KServiceActions
     const QStringList desktopPaths =
         QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("kglobalaccel"), QStandardPaths::LocateDirectory);
-    for (const QString &path : desktopPaths) {
-        QDir dir(path);
-        if (!dir.exists()) {
+
+    const QStringList desktopFiles = KFileUtils::findAllUniqueFiles(desktopPaths, {QStringLiteral("*.desktop")});
+
+    for (const QString &file : desktopFiles) {
+        const QString fileName = QFileInfo(file).fileName();
+        auto it = findByName(fileName);
+        if (it != m_components.cend()) {
             continue;
         }
-        const QStringList patterns = {QStringLiteral("*.desktop")};
-        const auto lstDesktopFiles = dir.entryList(patterns);
-        for (const QString &desktopFile : lstDesktopFiles) {
-            auto it = findByName(desktopFile);
-            if (it != m_components.cend()) {
-                continue;
-            }
 
-            KDesktopFile f(dir.filePath(desktopFile));
-            if (f.noDisplay()) {
-                continue;
-            }
-
-            KServiceActionComponent *component = new KServiceActionComponent(desktopFile, f.readName(), this);
-            component->activateGlobalShortcutContext(QStringLiteral("default"));
-            component->loadFromService();
+        KDesktopFile f(file);
+        if (f.noDisplay()) {
+            continue;
         }
+
+        KServiceActionComponent *component = new KServiceActionComponent(fileName, f.readName(), this);
+        component->activateGlobalShortcutContext(QStringLiteral("default"));
+        component->loadFromService();
     }
 }
 
