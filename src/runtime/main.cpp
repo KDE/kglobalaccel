@@ -90,10 +90,8 @@ extern "C" Q_DECL_EXPORT int main(int argc, char **argv)
     // Restart on a crash
     KCrash::setFlags(KCrash::AutoRestart);
 
+    // Calls std::exit(EXIT_FAILURE) if registering kglobalaccel with D-Bus fails
     KGlobalAccelD globalaccel;
-    if (!globalaccel.init()) {
-        return -1;
-    }
 
     return app.exec();
 }
