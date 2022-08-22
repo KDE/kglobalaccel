@@ -10,6 +10,7 @@
 #include <KGlobalShortcutInfo>
 
 class GlobalShortcutContext;
+class GlobalShortcutsRegistry;
 
 /**
  * Represents a global shortcut.
@@ -90,6 +91,8 @@ private:
 
     //! means the shortcut is new
     bool _isFresh : 1;
+
+    GlobalShortcutsRegistry *_registry = nullptr;
 
     //! The context the shortcut belongs too
     GlobalShortcutContext *_context = nullptr;

@@ -56,6 +56,8 @@ struct KGlobalAccelDPrivate {
 
     //! Our holder
     KGlobalAccelD *q;
+
+    GlobalShortcutsRegistry *m_registry = nullptr;
 };
 
 GlobalShortcut *KGlobalAccelDPrivate::findAction(const QStringList &actionId) const
@@ -76,13 +78,13 @@ GlobalShortcut *KGlobalAccelDPrivate::findAction(const QString &_componentUnique
     Component *component;
     QString contextUnique;
     if (componentUnique.indexOf(QLatin1Char('|')) == -1) {
-        component = GlobalShortcutsRegistry::self()->getComponent(componentUnique);
+        component = m_registry->getComponent(componentUnique);
         if (component) {
             contextUnique = component->currentContext()->uniqueName();
         }
     } else {
         splitComponent(componentUnique, contextUnique);
-        component = GlobalShortcutsRegistry::self()->getComponent(componentUnique);
+        component = m_registry->getComponent(componentUnique);
     }
 
     if (!component) {
@@ -103,17 +105,14 @@ GlobalShortcut *KGlobalAccelDPrivate::findAction(const QString &_componentUnique
 Component *KGlobalAccelDPrivate::component(const QStringList &actionId) const
 {
     // Get the component for the action. If we have none create a new one
-    Component *component = GlobalShortcutsRegistry::self()->getComponent(actionId.at(KGlobalAccel::ComponentUnique));
+    Component *component = m_registry->getComponent(actionId.at(KGlobalAccel::ComponentUnique));
     if (!component) {
         if (actionId.at(KGlobalAccel::ComponentUnique).endsWith(QLatin1String(".desktop"))) {
-            component = new KServiceActionComponent(actionId.at(KGlobalAccel::ComponentUnique),
-                                                    actionId.at(KGlobalAccel::ComponentFriendly),
-                                                    GlobalShortcutsRegistry::self());
+            component = new KServiceActionComponent(actionId.at(KGlobalAccel::ComponentUnique), actionId.at(KGlobalAccel::ComponentFriendly), m_registry);
             component->activateGlobalShortcutContext(QStringLiteral("default"));
             static_cast<KServiceActionComponent *>(component)->loadFromService();
         } else {
-            component =
-                new Component(actionId.at(KGlobalAccel::ComponentUnique), actionId.at(KGlobalAccel::ComponentFriendly), GlobalShortcutsRegistry::self());
+            component = new Component(actionId.at(KGlobalAccel::ComponentUnique), actionId.at(KGlobalAccel::ComponentFriendly), m_registry);
         }
         Q_ASSERT(component);
     }
@@ -164,11 +163,11 @@ bool KGlobalAccelD::init()
     qDBusRegisterMetaType<QList<KGlobalShortcutInfo>>();
     qDBusRegisterMetaType<KGlobalAccel::MatchType>();
 
-    GlobalShortcutsRegistry *reg = GlobalShortcutsRegistry::self();
-    Q_ASSERT(reg);
+    d->m_registry = GlobalShortcutsRegistry::self();
+    Q_ASSERT(d->m_registry);
 
     d->writeoutTimer.setSingleShot(true);
-    connect(&d->writeoutTimer, &QTimer::timeout, reg, &GlobalShortcutsRegistry::writeSettings);
+    connect(&d->writeoutTimer, &QTimer::timeout, d->m_registry, &GlobalShortcutsRegistry::writeSettings);
 
     if (!QDBusConnection::sessionBus().registerService(QLatin1String("org.kde.kglobalaccel"))) {
         qCWarning(KGLOBALACCELD) << "Failed to register service org.kde.kglobalaccel";
@@ -180,20 +179,19 @@ bool KGlobalAccelD::init()
         return false;
     }
 
-    GlobalShortcutsRegistry::self()->setDBusPath(QDBusObjectPath("/"));
-    GlobalShortcutsRegistry::self()->loadSettings();
+    d->m_registry->setDBusPath(QDBusObjectPath("/"));
+    d->m_registry->loadSettings();
 
     return true;
 }
 
 KGlobalAccelD::~KGlobalAccelD()
 {
-    GlobalShortcutsRegistry *const reg = GlobalShortcutsRegistry::self();
     if (d->writeoutTimer.isActive()) {
         d->writeoutTimer.stop();
-        reg->writeSettings();
+        d->m_registry->writeSettings();
     }
-    reg->deactivateShortcuts();
+    d->m_registry->deactivateShortcuts();
     delete d;
 }
 
@@ -206,7 +204,7 @@ QList<QStringList> KGlobalAccelD::allMainComponents() const
         emptyList.append(QString());
     }
 
-    const auto &components = GlobalShortcutsRegistry::self()->allMainComponents();
+    const auto &components = d->m_registry->allMainComponents();
     ret.reserve(components.size() * 4);
     for (const Component *component : components) {
         QStringList actionId(emptyList);
@@ -223,7 +221,7 @@ QList<QStringList> KGlobalAccelD::allActionsForComponent(const QStringList &acti
     //### Would it be advantageous to sort the actions by unique name?
     QList<QStringList> ret;
 
-    Component *const component = GlobalShortcutsRegistry::self()->getComponent(actionId[KGlobalAccel::ComponentUnique]);
+    Component *const component = d->m_registry->getComponent(actionId[KGlobalAccel::ComponentUnique]);
     if (!component) {
         return ret;
     }
@@ -257,7 +255,7 @@ QStringList KGlobalAccelD::action(int key) const
 
 QStringList KGlobalAccelD::actionList(const QKeySequence &key) const
 {
-    GlobalShortcut *shortcut = GlobalShortcutsRegistry::self()->getShortcutByKey(key);
+    GlobalShortcut *shortcut = d->m_registry->getShortcutByKey(key);
     QStringList ret;
     if (shortcut) {
         ret.append(shortcut->context()->component()->uniqueName());
@@ -270,7 +268,7 @@ QStringList KGlobalAccelD::actionList(const QKeySequence &key) const
 
 void KGlobalAccelD::activateGlobalShortcutContext(const QString &component, const QString &uniqueName)
 {
-    Component *const comp = GlobalShortcutsRegistry::self()->getComponent(component);
+    Component *const comp = d->m_registry->getComponent(component);
     if (comp) {
         comp->activateGlobalShortcutContext(uniqueName);
     }
@@ -280,7 +278,7 @@ QList<QDBusObjectPath> KGlobalAccelD::allComponents() const
 {
     QList<QDBusObjectPath> allComp;
 
-    const auto &lstMainComponents = GlobalShortcutsRegistry::self()->allMainComponents();
+    const auto &lstMainComponents = d->m_registry->allMainComponents();
     for (const Component *component : lstMainComponents) {
         allComp.append(component->dbusPath());
     }
@@ -290,8 +288,12 @@ QList<QDBusObjectPath> KGlobalAccelD::allComponents() const
 
 void KGlobalAccelD::blockGlobalShortcuts(bool block)
 {
-    qCDebug(KGLOBALACCELD) << block;
-    block ? GlobalShortcutsRegistry::self()->deactivateShortcuts(true) : GlobalShortcutsRegistry::self()->activateShortcuts();
+    qCDebug(KGLOBALACCELD) << "Block global shortcuts?" << block;
+    if (block) {
+        d->m_registry->deactivateShortcuts(true);
+    } else {
+        d->m_registry->activateShortcuts();
+    }
 }
 
 #if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(5, 90)
@@ -375,7 +377,7 @@ QDBusObjectPath KGlobalAccelD::getComponent(const QString &componentUnique) cons
 {
     qCDebug(KGLOBALACCELD) << componentUnique;
 
-    Component *component = GlobalShortcutsRegistry::self()->getComponent(componentUnique);
+    Component *component = d->m_registry->getComponent(componentUnique);
 
     if (component) {
         return component->dbusPath();
@@ -395,7 +397,7 @@ QList<KGlobalShortcutInfo> KGlobalAccelD::getGlobalShortcutsByKey(int key) const
 QList<KGlobalShortcutInfo> KGlobalAccelD::globalShortcutsByKey(const QKeySequence &key, KGlobalAccel::MatchType type) const
 {
     qCDebug(KGLOBALACCELD) << key;
-    const QList<GlobalShortcut *> shortcuts = GlobalShortcutsRegistry::self()->getShortcutsByKey(key, type);
+    const QList<GlobalShortcut *> shortcuts = d->m_registry->getShortcutsByKey(key, type);
 
     QList<KGlobalShortcutInfo> rc;
     rc.reserve(shortcuts.size());
@@ -419,7 +421,7 @@ bool KGlobalAccelD::globalShortcutAvailable(const QKeySequence &shortcut, const 
     QString realComponent = component;
     QString context;
     d->splitComponent(realComponent, context);
-    return GlobalShortcutsRegistry::self()->isShortcutAvailable(shortcut, realComponent, context);
+    return d->m_registry->isShortcutAvailable(shortcut, realComponent, context);
 }
 
 void KGlobalAccelD::setInactive(const QStringList &actionId)

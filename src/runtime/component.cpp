@@ -309,7 +309,7 @@ Component::registerShortcut(const QString &uniqueName, const QString &friendlyNa
     QList<QKeySequence> newKeys = keys;
     for (const QKeySequence &key : keys) {
         if (!key.isEmpty()) {
-            if (GlobalShortcutsRegistry::self()->getShortcutByKey(key)) {
+            if (_registry->getShortcutByKey(key)) {
                 // The shortcut is already used. The config file is
                 // broken. Ignore the request.
                 newKeys.removeAll(key);

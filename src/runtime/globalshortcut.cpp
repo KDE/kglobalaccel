@@ -24,6 +24,7 @@ GlobalShortcut::GlobalShortcut(const QString &uniqueName, const QString &friendl
     : _isPresent(false)
     , _isRegistered(false)
     , _isFresh(true)
+    , _registry(GlobalShortcutsRegistry::self())
     , _context(context)
     , _uniqueName(uniqueName)
     , _friendlyName(friendlyName)
@@ -171,7 +172,7 @@ void GlobalShortcut::setActive()
     }
 
     for (const QKeySequence &key : std::as_const(_keys)) {
-        if (!key.isEmpty() && !GlobalShortcutsRegistry::self()->registerKey(key, this)) {
+        if (!key.isEmpty() && !_registry->registerKey(key, this)) {
             qCDebug(KGLOBALACCELD) << uniqueName() << ": Failed to register " << QKeySequence(key).toString();
         }
     }
@@ -187,7 +188,7 @@ void GlobalShortcut::setInactive()
     }
 
     for (const QKeySequence &key : std::as_const(_keys)) {
-        if (!key.isEmpty() && !GlobalShortcutsRegistry::self()->unregisterKey(key, this)) {
+        if (!key.isEmpty() && !_registry->unregisterKey(key, this)) {
             qCDebug(KGLOBALACCELD) << uniqueName() << ": Failed to unregister " << QKeySequence(key).toString();
         }
     }

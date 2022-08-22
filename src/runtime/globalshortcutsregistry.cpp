@@ -525,7 +525,7 @@ bool GlobalShortcutsRegistry::unregisterKey(const QKeySequence &key, GlobalShort
 void GlobalShortcutsRegistry::writeSettings() const
 {
     // Make a copy for iterating. ~Component removes itself from the list.
-    const auto lst = GlobalShortcutsRegistry::self()->allMainComponents();
+    const auto lst = m_components;
     for (const Component *component : lst) {
         KConfigGroup configGroup(&_config, component->uniqueName());
         if (component->allShortcuts().isEmpty()) {
