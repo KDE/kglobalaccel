@@ -21,6 +21,10 @@
 struct KGlobalAccelDPrivate;
 
 /**
+ * @note: Even though this is private API, KWin creates an object
+ * of this type, check in KWin to see which methods are used before
+ * removing them from here.
+ *
  * @todo get rid of all of those QStringList parameters.
  */
 class KGLOBALACCELPRIVATE_EXPORT KGlobalAccelD : public QObject, protected QDBusContext
