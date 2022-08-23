@@ -91,6 +91,8 @@ GlobalShortcutsRegistry::GlobalShortcutsRegistry()
 
 GlobalShortcutsRegistry::~GlobalShortcutsRegistry()
 {
+    m_components.clear();
+
     if (_manager) {
         _manager->setEnabled(false);
 
