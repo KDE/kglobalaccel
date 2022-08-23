@@ -17,8 +17,6 @@
 #include "kserviceactioncomponent.h"
 #include "logging_p.h"
 
-#include <stdlib.h>
-
 #include <QDBusMetaType>
 #include <QDBusObjectPath>
 #include <QMetaMethod>
@@ -152,6 +150,10 @@ KGlobalAccelD::KGlobalAccelD(QObject *parent)
     : QObject(parent)
     , d(new KGlobalAccelDPrivate(this))
 {
+}
+
+bool KGlobalAccelD::init()
+{
     qDBusRegisterMetaType<QKeySequence>();
     qDBusRegisterMetaType<QList<QKeySequence>>();
     qDBusRegisterMetaType<QList<QDBusObjectPath>>();
@@ -168,17 +170,19 @@ KGlobalAccelD::KGlobalAccelD(QObject *parent)
     connect(&d->writeoutTimer, &QTimer::timeout, d->m_registry, &GlobalShortcutsRegistry::writeSettings);
 
     if (!QDBusConnection::sessionBus().registerService(QLatin1String("org.kde.kglobalaccel"))) {
-        qCritical(KGLOBALACCELD) << "Failed to register service org.kde.kglobalaccel";
-        std::exit(EXIT_FAILURE);
+        qCWarning(KGLOBALACCELD) << "Failed to register service org.kde.kglobalaccel";
+        return false;
     }
 
     if (!QDBusConnection::sessionBus().registerObject(QStringLiteral("/kglobalaccel"), this, QDBusConnection::ExportScriptableContents)) {
-        qCritical(KGLOBALACCELD) << "Failed to register object kglobalaccel in org.kde.kglobalaccel";
-        std::exit(EXIT_FAILURE);
+        qCWarning(KGLOBALACCELD) << "Failed to register object kglobalaccel in org.kde.kglobalaccel";
+        return false;
     }
 
     d->m_registry->setDBusPath(QDBusObjectPath("/"));
     d->m_registry->loadSettings();
+
+    return true;
 }
 
 KGlobalAccelD::~KGlobalAccelD()

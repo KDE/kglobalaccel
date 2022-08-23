@@ -38,13 +38,10 @@ public:
     Q_DECLARE_FLAGS(SetShortcutFlags, SetShortcutFlag)
     Q_FLAG(SetShortcutFlags)
 
-    /**
-     * Default constructor.
-     *
-     * Calss std::exit(EXIT_FAILURE) if registering the daemon with D-Bus fails.
-     */
     explicit KGlobalAccelD(QObject *parent = nullptr);
     ~KGlobalAccelD() override;
+
+    bool init();
 
 public Q_SLOTS:
 
