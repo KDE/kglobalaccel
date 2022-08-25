@@ -15,7 +15,9 @@ endif()
 
 include(ECMAddTests)
 
-ecm_add_tests(
-   kglobalshortcuttest.cpp
-   LINK_LIBRARIES Qt${QT_MAJOR_VERSION}::Test KF5::GlobalAccelPrivate ${additionalLibraries}
-)
+if (BUILD_RUNTIME)
+    ecm_add_tests(
+        kglobalshortcuttest.cpp
+        LINK_LIBRARIES Qt${QT_MAJOR_VERSION}::Test KF5::GlobalAccelPrivate ${additionalLibraries}
+    )
+endif()
