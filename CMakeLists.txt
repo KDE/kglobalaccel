@@ -35,6 +35,9 @@ add_feature_info(BUILD_RUNTIME ${BUILD_RUNTIME} "The kglobalacceld runtime")
 option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)" OFF)
 add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
 
+option(WITH_X11 "Build with X11 interation" ON)
+add_feature_info(WITH_X11 ${WITH_X11} "Build with X11 integration")
+
 ecm_setup_version(PROJECT VARIABLE_PREFIX KGLOBALACCEL
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kglobalaccel_version.h"
                         PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5GlobalAccelConfigVersion.cmake"
@@ -54,7 +57,7 @@ if (BUILD_RUNTIME)
 endif()
 
 # no X11 stuff on mac
-if (BUILD_RUNTIME AND NOT APPLE)
+if (BUILD_RUNTIME AND NOT APPLE AND WITH_X11)
     find_package(XCB MODULE COMPONENTS XCB KEYSYMS XKB RECORD OPTIONAL_COMPONENTS XTEST)
     set_package_properties(XCB PROPERTIES DESCRIPTION "X protocol C-language Binding"
                        TYPE OPTIONAL
@@ -65,7 +68,7 @@ endif()
 
 set(HAVE_X11 0)
 
-if(X11_FOUND AND XCB_XCB_FOUND)
+if(X11_FOUND AND XCB_XCB_FOUND AND WITH_X11)
     set(HAVE_X11 1)
     if (QT_MAJOR_VERSION STREQUAL "5")
         find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED X11Extras)
