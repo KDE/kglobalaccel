@@ -1,0 +1,83 @@
+# translation of kdelibs4.po to Icelandic
+# íslensk þýðing á kdelibs4.po
+# Copyright (C) 1998,2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012 Free Software Foundation, Inc.
+#
+# Logi Ragnarsson <logi@logi.org>, 1998-2003.
+# Richard Allen <ra@ra.is>, 1998-2004.
+# Pjetur G. Hjaltason <pjetur@pjetur.net>, 2003.
+# Arnar Leósson <leosson@frisurf.no>, 2003, 2005.
+# Sveinn í Felli <sveinki@nett.is>, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: kdelibs4\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2014-03-23 01:50+0000\n"
+"PO-Revision-Date: 2022-06-22 09:55+0000\n"
+"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
+"Language-Team: Icelandic\n"
+"Language: is\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 19.12.3\n"
+"Plural-Forms: Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Qt-Contexts: true\n"
+
+#: kglobalaccel.cpp:612
+msgctxt "KGlobalAccel|"
+msgid "Conflict with Global Shortcut"
+msgstr "Árekstur við víðværa flýtilykla kerfisins"
+
+#: kglobalaccel.cpp:613
+#, qt-format
+msgctxt "KGlobalAccel|"
+msgid ""
+"The '%1' key combination has already been allocated to the global action "
+"\"%2\" in %3.\n"
+"Do you want to reassign it from that action to the current one?"
+msgstr ""
+"Lyklasamsetningin '%1' er nú þegar í notkun fyrir víðværu aðgerðina \"%2\" í "
+"%3.\n"
+"Viltu breyta henni úr þeirri aðgerð í núverandi aðgerð?"
+
+#: kglobalaccel.cpp:621 kglobalaccel.cpp:654
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "Endurúthluta"
+
+#: kglobalaccel.cpp:640
+#, qt-format
+msgctxt "KGlobalAccel|"
+msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgstr "Lyklasamsetningin '%1' er skráð af forritinu %2 fyrir aðgerðina %3:"
+
+#: kglobalaccel.cpp:644
+#, qt-format
+msgctxt "KGlobalAccel|"
+msgid "In context '%1' for action '%2'\n"
+msgstr "Í samhengi '%1' fyrir aðgerð '%2'\n"
+
+#: kglobalaccel.cpp:646
+#, qt-format
+msgctxt "KGlobalAccel|"
+msgid ""
+"The '%1' key combination is registered by application %2.\n"
+"%3"
+msgstr ""
+"Lyklasamsetningin '%1' er skráð af forritinu %2.\n"
+"%3"
+
+#: kglobalaccel.cpp:649
+msgctxt "KGlobalAccel|"
+msgid "Conflict With Registered Global Shortcut"
+msgstr "Árekstur við víðværan flýtilykil kerfisins"
+
+#: runtime/main.cpp:42 runtime/main.cpp:44
+msgctxt "QObject|"
+msgid "KDE Global Shortcuts Service"
+msgstr "KDE-víðtæk flýtilyklaþjónusta"
+
+#: runtime/main.cpp:47 runtime/main.cpp:48
+msgctxt "QObject|"
+msgid "Maintainer"
+msgstr "Umsjónarmaður"
