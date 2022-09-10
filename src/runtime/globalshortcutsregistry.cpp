@@ -377,10 +377,9 @@ void GlobalShortcutsRegistry::loadSettings()
         // Now load the contexts
         const auto groupList = configGroup.groupList();
         for (const QString &context : groupList) {
-            // Skip the friendly name group, this was previously used instead of _k_friendly_name
-            if (context == QLatin1String("Friendly Name")) {
-                continue;
-            }
+            Q_ASSERT_X(context != QLatin1String("Friendly Name"), //
+                       Q_FUNC_INFO,
+                       "Use \"_k_friendly_name\" instead of \"Friendly Name\" group name");
 
             KConfigGroup contextGroup(&configGroup, context);
             QString contextFriendlyName = contextGroup.readEntry("_k_friendly_name");
