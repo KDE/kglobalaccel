@@ -74,7 +74,7 @@ ecm_generate_headers(KGlobalAccel_HEADERS
   REQUIRED_HEADERS KGlobalAccel_HEADERS
 )
 
-install(TARGETS KF5GlobalAccel EXPORT KF5GlobalAccelTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS KF5GlobalAccel EXPORT KF5GlobalAccelTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kglobalaccel_export.h
