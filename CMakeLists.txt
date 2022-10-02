@@ -80,7 +80,7 @@ ecm_set_disabled_deprecation_versions(
 )
 
 # Subdirectories
-ecm_install_po_files_as_qm(po)
+ecm_install_po_files_as_qm(poqm)
 
 add_subdirectory(src)
 if (BUILD_TESTING)
