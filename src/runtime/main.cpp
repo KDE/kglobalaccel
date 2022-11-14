@@ -7,6 +7,7 @@
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
+#include "kglobalaccel_version.h"
 #include "kglobalacceld.h"
 #include "logging_p.h"
 
@@ -40,7 +41,7 @@ extern "C" Q_DECL_EXPORT int main(int argc, char **argv)
     QGuiApplication app(argc, argv);
     KAboutData aboutdata(QStringLiteral("kglobalaccel"),
                          QObject::tr("KDE Global Shortcuts Service"),
-                         QStringLiteral("0.2"),
+                         QStringLiteral(KGLOBALACCEL_VERSION_STRING),
                          QObject::tr("KDE Global Shortcuts Service"),
                          KAboutLicense::LGPL,
                          QStringLiteral("(C) 2007-2009  Andreas Hartmetz, Michael Jansen"));

@@ -54,6 +54,9 @@ endif()
 
 add_executable(kglobalaccel5 main.cpp logging.cpp)
 ecm_mark_nongui_executable(kglobalaccel5)
+
+target_include_directories(kglobalaccel5 PRIVATE ${CMAKE_BINARY_DIR})
+
 target_link_libraries(kglobalaccel5
     KF5GlobalAccelPrivate
     KF5::DBusAddons   # KDBusService
