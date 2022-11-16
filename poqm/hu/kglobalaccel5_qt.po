@@ -67,12 +67,12 @@ msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Ütközés egy globális billentyűparanccsal"
 
-#: runtime/main.cpp:42 runtime/main.cpp:44
+#: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
 msgid "KDE Global Shortcuts Service"
 msgstr "KDE globális billentyűparancsok szolgáltatás"
 
-#: runtime/main.cpp:47 runtime/main.cpp:48
+#: runtime/main.cpp:48 runtime/main.cpp:49
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "Karbantartó"

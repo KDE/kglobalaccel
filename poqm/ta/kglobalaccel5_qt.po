@@ -72,12 +72,12 @@ msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "பயனிலுள்ள பொது சுருக்குவழியுடன் முரண்பாடு"
 
-#: runtime/main.cpp:42 runtime/main.cpp:44
+#: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
 msgid "KDE Global Shortcuts Service"
 msgstr "கே.டீ.யீ. பொது சுருக்குவழி சேவை"
 
-#: runtime/main.cpp:47 runtime/main.cpp:48
+#: runtime/main.cpp:48 runtime/main.cpp:49
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "பராமரிப்பாளர்"

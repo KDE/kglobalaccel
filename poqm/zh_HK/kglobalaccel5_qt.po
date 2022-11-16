@@ -93,13 +93,13 @@ msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "與系統的全域快速鍵定義衝突"
 
-#: runtime/main.cpp:42 runtime/main.cpp:44
+#: runtime/main.cpp:43 runtime/main.cpp:45
 #, fuzzy
 msgctxt "QObject|"
 msgid "KDE Global Shortcuts Service"
 msgstr "快速鍵"
 
-#: runtime/main.cpp:47 runtime/main.cpp:48
+#: runtime/main.cpp:48 runtime/main.cpp:49
 #, fuzzy
 msgctxt "QObject|"
 msgid "Maintainer"

@@ -91,12 +91,12 @@ msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Konflikts ar reģistrētu globālo īsceļu"
 
-#: runtime/main.cpp:42 runtime/main.cpp:44
+#: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
 msgid "KDE Global Shortcuts Service"
 msgstr ""
 
-#: runtime/main.cpp:47 runtime/main.cpp:48
+#: runtime/main.cpp:48 runtime/main.cpp:49
 #, fuzzy
 #| msgid "Maintainer"
 msgctxt "QObject|"

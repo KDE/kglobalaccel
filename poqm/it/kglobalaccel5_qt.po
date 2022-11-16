@@ -78,12 +78,12 @@ msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Conflitto con una scorciatoia globale registrata"
 
-#: runtime/main.cpp:42 runtime/main.cpp:44
+#: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
 msgid "KDE Global Shortcuts Service"
 msgstr "Servizio delle scorciatoie globali di KDE"
 
-#: runtime/main.cpp:47 runtime/main.cpp:48
+#: runtime/main.cpp:48 runtime/main.cpp:49
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "Responsabile"

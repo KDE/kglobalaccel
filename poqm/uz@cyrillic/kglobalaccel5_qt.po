@@ -74,13 +74,13 @@ msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Умумий тугмалар бирикмаси билан муаммо"
 
-#: runtime/main.cpp:42 runtime/main.cpp:44
+#: runtime/main.cpp:43 runtime/main.cpp:45
 #, fuzzy
 msgctxt "QObject|"
 msgid "KDE Global Shortcuts Service"
 msgstr "Тугмалар бирикмаси"
 
-#: runtime/main.cpp:47 runtime/main.cpp:48
+#: runtime/main.cpp:48 runtime/main.cpp:49
 #, fuzzy
 msgctxt "QObject|"
 msgid "Maintainer"
