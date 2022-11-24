@@ -637,7 +637,7 @@ bool KGlobalAccel::promptStealShortcutSystemwide(QWidget *parent, const QList<KG
 
     QString message;
     if (shortcuts.size() == 1) {
-        message = tr("The '%1' key combination is registered by application %2 for action %3:").arg(seq.toString(), component, shortcuts[0].friendlyName());
+        message = tr("The '%1' key combination is registered by application %2 for action %3.").arg(seq.toString(), component, shortcuts[0].friendlyName());
     } else {
         QString actionList;
         for (const KGlobalShortcutInfo &info : shortcuts) {
