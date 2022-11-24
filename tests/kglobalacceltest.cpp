@@ -36,11 +36,15 @@ public:
     }
     void componentComplete() override
     {
+        m_done = true;
         refresh();
     }
 
     void refresh()
     {
+        if (!m_done) {
+            return;
+        }
         bool added = KGlobalAccel::self()->setShortcut(this, {shortcut()}, KGlobalAccel::NoAutoloading);
 
         if (!added) {
@@ -59,6 +63,7 @@ Q_SIGNALS:
     void activeChanged(bool active);
 
 private:
+    bool m_done = false;
     bool m_active = false;
 };
 
