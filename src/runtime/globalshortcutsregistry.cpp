@@ -213,8 +213,30 @@ GlobalShortcutsRegistry *GlobalShortcutsRegistry::self()
     return _self;
 }
 
+/**
+ * When we are provided just a Shift key press, interpret it as "Shift" not as "Shift+Shift"
+ */
+static void correctKeyEvent(int &keyQt)
+{
+    switch (keyQt) {
+    case Qt::ShiftModifier | Qt::Key_Shift:
+        keyQt = Qt::Key_Shift;
+        break;
+    case Qt::ControlModifier | Qt::Key_Control:
+        keyQt = Qt::Key_Control;
+        break;
+    case Qt::AltModifier | Qt::Key_Alt:
+        keyQt = Qt::Key_Alt;
+        break;
+    case Qt::MetaModifier | Qt::Key_Meta:
+        keyQt = Qt::Key_Meta;
+        break;
+    }
+}
+
 bool GlobalShortcutsRegistry::keyPressed(int keyQt)
 {
+    correctKeyEvent(keyQt);
     int keys[maxSequenceLength] = {0, 0, 0, 0};
     int count = _active_sequence.count();
     if (count == maxSequenceLength) {
