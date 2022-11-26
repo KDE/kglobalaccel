@@ -54,7 +54,7 @@ msgstr "फिर से आबंटित करव"
 #| msgid ""
 #| "The '%1' key combination is registered by application %2 for action %3:"
 msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "कुंजी '%1' काम्बीनेसन ह अनुपरयोग %2 के द्वारा काम %3 बर रजिस्टर हे:"
 
 #: kglobalaccel.cpp:644

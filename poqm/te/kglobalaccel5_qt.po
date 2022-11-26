@@ -59,7 +59,7 @@ msgstr "మళ్లి నియమించు"
 #| msgid ""
 #| "The '%1' key combination is registered by application %2 for action %3:"
 msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "'%1' కీ సమ్మేళనం అనువర్తనము %2 ద్వారా చర్య %3 కొరకు నమోదు కాబడింది:"
 
 #: kglobalaccel.cpp:644

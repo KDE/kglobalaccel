@@ -65,7 +65,7 @@ msgstr "Преповрзи"
 #| msgid ""
 #| "The '%1' key combination is registered by application %2 for action %3:"
 msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "Комбинацијата „%1“ е регистрирана од апликацијата %2 за дејството %3:"
 
 #: kglobalaccel.cpp:644

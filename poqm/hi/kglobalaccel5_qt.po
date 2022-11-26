@@ -45,9 +45,12 @@ msgid "Reassign"
 msgstr "फिर से आबंटित करें"
 
 #: kglobalaccel.cpp:640
-#, qt-format
+#, fuzzy, qt-format
+#| msgctxt "KGlobalAccel|"
+#| msgid ""
+#| "The '%1' key combination is registered by application %2 for action %3:"
 msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "'%1' कुंजी संयोजन %2 अनुप्रयोग द्वारा %3 के लिए दर्ज है:"
 
 #: kglobalaccel.cpp:644

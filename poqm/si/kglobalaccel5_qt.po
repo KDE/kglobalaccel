@@ -51,7 +51,7 @@ msgstr "යළි පැවරීම"
 #| msgid ""
 #| "The '%1' key combination is registered by application %2 for action %3:"
 msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "'%1' යතුරු සංයෝජනය %2 වැඩසටහනේ %3 ක්‍රියාව සඳහා ලියාපදිංවි කර ඇත:"
 
 #: kglobalaccel.cpp:644

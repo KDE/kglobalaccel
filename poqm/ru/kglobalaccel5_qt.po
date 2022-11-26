@@ -56,9 +56,12 @@ msgid "Reassign"
 msgstr "Связать с новым"
 
 #: kglobalaccel.cpp:640
-#, qt-format
+#, fuzzy, qt-format
+#| msgctxt "KGlobalAccel|"
+#| msgid ""
+#| "The '%1' key combination is registered by application %2 for action %3:"
 msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "Клавиша «%1» уже назначена в приложении %2 на действие %3:"
 
 #: kglobalaccel.cpp:644

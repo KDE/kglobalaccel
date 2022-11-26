@@ -41,9 +41,12 @@ msgid "Reassign"
 msgstr "재할당"
 
 #: kglobalaccel.cpp:640
-#, qt-format
+#, fuzzy, qt-format
+#| msgctxt "KGlobalAccel|"
+#| msgid ""
+#| "The '%1' key combination is registered by application %2 for action %3:"
 msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "단축키 '%1'이(가) 프로그램 %2의 동작 %3에 할당되어 있습니다:"
 
 #: kglobalaccel.cpp:644

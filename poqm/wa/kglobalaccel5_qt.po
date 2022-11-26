@@ -56,7 +56,7 @@ msgstr "Raroyî"
 #, fuzzy, qt-format
 #| msgid "Shortcut '%1' in Application %2 for action %3\n"
 msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "Rascourti '%1' e programe %2 pol faitindje %3\n"
 
 #: kglobalaccel.cpp:644

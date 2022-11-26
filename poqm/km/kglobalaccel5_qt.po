@@ -51,7 +51,7 @@ msgstr "ផ្ដល់ឡើង​វិញ"
 #| msgid ""
 #| "The '%1' key combination is registered by application %2 for action %3:"
 msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "បន្សំ​គ្រាប់ចុច '%1' ត្រូវ​បាន​ចុះឈ្មោះ​ដោយ​កម្មវិធី %2 សម្រាប់​សកម្មភាព %3 ៖"
 
 #: kglobalaccel.cpp:644

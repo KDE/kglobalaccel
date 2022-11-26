@@ -47,9 +47,12 @@ msgid "Reassign"
 msgstr "ਮੁੜ-ਜਾਰੀ"
 
 #: kglobalaccel.cpp:640
-#, qt-format
+#, fuzzy, qt-format
+#| msgctxt "KGlobalAccel|"
+#| msgid ""
+#| "The '%1' key combination is registered by application %2 for action %3:"
 msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "'%1' ਸਵਿੱਚ ਕੰਬੀਨੇਸ਼ਨ ਐਪਲੀਕੇਸ਼ਨ %2 ਵਲੋਂ ਐਕਸ਼ਨ %3 ਲਈ ਰਜਿਸਟਰ ਕੀਤਾ ਗਿਆ ਹੈ।"
 
 #: kglobalaccel.cpp:644

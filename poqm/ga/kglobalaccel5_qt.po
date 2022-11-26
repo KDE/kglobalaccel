@@ -55,7 +55,7 @@ msgstr "Athshann"
 #| msgid ""
 #| "The '%1' key combination is registered by application %2 for action %3:"
 msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
 "Tá teaglaim eochracha '%1' cláraithe leis an ngníomh %3 ag feidhmchlár %2:"
 

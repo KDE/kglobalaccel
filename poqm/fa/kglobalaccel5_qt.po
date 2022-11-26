@@ -54,7 +54,7 @@ msgstr "انتساب مجدد"
 #: kglobalaccel.cpp:640
 #, qt-format
 msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
 
 #: kglobalaccel.cpp:644

@@ -53,7 +53,7 @@ msgstr "પુનઃસોંપણી"
 #| msgid ""
 #| "The '%1' key combination is registered by application %2 for action %3:"
 msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "'%1' કળ જોડાણ એ કાર્યક્રમ %2 વડે ક્રિયા %3 માટે નોંધણી કરેલ છે:"
 
 #: kglobalaccel.cpp:644

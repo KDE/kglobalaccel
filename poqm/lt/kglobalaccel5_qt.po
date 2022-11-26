@@ -47,9 +47,12 @@ msgid "Reassign"
 msgstr "Priskirti iš naujo"
 
 #: kglobalaccel.cpp:640
-#, qt-format
+#, fuzzy, qt-format
+#| msgctxt "KGlobalAccel|"
+#| msgid ""
+#| "The '%1' key combination is registered by application %2 for action %3:"
 msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "Klavišų kombinacija „%1“ yra įregistruota programos %2 veiksmui %3:"
 
 #: kglobalaccel.cpp:644

@@ -47,9 +47,12 @@ msgid "Reassign"
 msgstr "Neu zuordnen"
 
 #: kglobalaccel.cpp:640
-#, qt-format
+#, fuzzy, qt-format
+#| msgctxt "KGlobalAccel|"
+#| msgid ""
+#| "The '%1' key combination is registered by application %2 for action %3:"
 msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
 "Der Kurzbefehl „%1“ wird bereits von der Anwendung „%2“ für die Aktion „%3“ "
 "verwendet:"

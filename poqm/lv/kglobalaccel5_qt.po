@@ -61,7 +61,7 @@ msgstr "Piešķirt"
 #| msgid ""
 #| "The '%1' key combination is registered by application %2 for action %3:"
 msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "Taustiņu kombinācija '%1' ir reģistrēta %2 programmai %3 darbībai:"
 
 #: kglobalaccel.cpp:644

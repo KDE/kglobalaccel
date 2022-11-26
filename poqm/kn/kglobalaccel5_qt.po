@@ -56,7 +56,7 @@ msgstr "ಮರುನಿಗದಿಗೊಳಿಸು"
 #| msgid ""
 #| "The '%1' key combination is registered by application %2 for action %3:"
 msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "'%1' ಕೀಲಿಕೈ ಸಂಯೋಜನೆ %2 ಅನ್ವಯದ %3 ಕ್ರಿಯೆಗೆ ನಮೂದುಗೊಂಡಿದೆ:"
 
 #: kglobalaccel.cpp:644

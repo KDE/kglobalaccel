@@ -56,7 +56,7 @@ msgstr "กำหนดใหม่"
 #| msgid ""
 #| "The '%1' key combination is registered by application %2 for action %3:"
 msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "ปุ่มพิมพ์ลัด '%1' นี้ ถูกจองไว้ใช้งานกับโปรแกรม %2 กับการกระทำ %3 แล้ว:"
 
 #: kglobalaccel.cpp:644

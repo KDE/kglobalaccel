@@ -37,9 +37,12 @@ msgid "Reassign"
 msgstr "重新分配"
 
 #: kglobalaccel.cpp:640
-#, qt-format
+#, fuzzy, qt-format
+#| msgctxt "KGlobalAccel|"
+#| msgid ""
+#| "The '%1' key combination is registered by application %2 for action %3:"
 msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "按键/按键组合“%1”已被应用程序 %2 注册给 %3 操作："
 
 #: kglobalaccel.cpp:644

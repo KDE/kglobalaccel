@@ -56,7 +56,7 @@ msgstr "שייך מחדש"
 #: kglobalaccel.cpp:640
 #, fuzzy, qt-format
 msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "צירוף מקשים \"%1\" כבר רשום ליישום %2 עבור הפעולה %3:"
 
 #: kglobalaccel.cpp:644

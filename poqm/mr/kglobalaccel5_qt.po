@@ -42,9 +42,12 @@ msgid "Reassign"
 msgstr "पुन्हा नेमणे"
 
 #: kglobalaccel.cpp:640
-#, qt-format
+#, fuzzy, qt-format
+#| msgctxt "KGlobalAccel|"
+#| msgid ""
+#| "The '%1' key combination is registered by application %2 for action %3:"
 msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "'%1' ही कळ संयोजना आधीच %2 या अनुप्रयोगास %3 या क्रियेसाठी फाळवलेली आहे."
 
 #: kglobalaccel.cpp:644

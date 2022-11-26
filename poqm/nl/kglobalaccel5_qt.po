@@ -56,9 +56,12 @@ msgid "Reassign"
 msgstr "Opnieuw toewijzen"
 
 #: kglobalaccel.cpp:640
-#, qt-format
+#, fuzzy, qt-format
+#| msgctxt "KGlobalAccel|"
+#| msgid ""
+#| "The '%1' key combination is registered by application %2 for action %3:"
 msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
 "De toetsencombinatie '%1' is geregistreerd door het programma %2 voor de "
 "actie %3:"
