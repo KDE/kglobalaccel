@@ -13,29 +13,29 @@
 # Kristof Bal <kristof.bal@gmail.com>, 2008, 2009.
 # Freek de Kruijf <freekdekruijf@kde.nl>, 2009, 2010.
 # Freek de Kruijf <freekdekruijf@kde.nl>, 2010, 2011, 2012.
-# Freek de Kruijf <freekdekruijf@kde.nl>, 2010, 2011, 2013, 2014, 2015.
+# Freek de Kruijf <freekdekruijf@kde.nl>, 2010, 2011, 2013, 2014, 2015, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: kdelibs4\n"
 "Report-Msgid-Bugs-To: http://bugs.kde.org\n"
 "POT-Creation-Date: 2014-03-23 01:50+0000\n"
-"PO-Revision-Date: 2015-05-07 22:56+0200\n"
+"PO-Revision-Date: 2022-11-26 17:37+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
-"Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
+"Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Files: kfarch.cpp kfdird.cpp kfind.cpp kfindtop.cpp kfoptions.cpp kfsave.cpp "
 "kftabdlg.cpp kftypes.cpp kfwin.cpp main.cpp mkfdird.cpp mkfind.cpp\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 22.08.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Qt-Contexts: true\n"
 
 #: kglobalaccel.cpp:612
 msgctxt "KGlobalAccel|"
 msgid "Conflict with Global Shortcut"
-msgstr "Conflict met algemene sneltoets"
+msgstr "Conflict met globale sneltoets"
 
 #: kglobalaccel.cpp:613
 #, qt-format
@@ -56,15 +56,12 @@ msgid "Reassign"
 msgstr "Opnieuw toewijzen"
 
 #: kglobalaccel.cpp:640
-#, fuzzy, qt-format
-#| msgctxt "KGlobalAccel|"
-#| msgid ""
-#| "The '%1' key combination is registered by application %2 for action %3:"
+#, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
 "De toetsencombinatie '%1' is geregistreerd door het programma %2 voor de "
-"actie %3:"
+"actie %3."
 
 #: kglobalaccel.cpp:644
 #, qt-format
