@@ -44,10 +44,10 @@ msgid "Reassign"
 msgstr "Bija ođđasit"
 
 #: kglobalaccel.cpp:640
-#, fuzzy, qt-format
+#, qt-format
 msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
-msgstr "«%1»-boallokombinašuvdna geavahuvvo %2-prográmmas %3-doaimmas:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
+msgstr ""
 
 #: kglobalaccel.cpp:644
 #, fuzzy, qt-format

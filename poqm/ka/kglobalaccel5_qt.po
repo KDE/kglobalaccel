@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Qt-Contexts: true\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.2\n"
 
 #: kglobalaccel.cpp:612
 msgctxt "KGlobalAccel|"
@@ -35,15 +35,12 @@ msgid "Reassign"
 msgstr "მალსახმობის თავიდან მინიჭება"
 
 #: kglobalaccel.cpp:640
-#, fuzzy, qt-format
-#| msgctxt "KGlobalAccel|"
-#| msgid ""
-#| "The '%1' key combination is registered by application %2 for action %3:"
+#, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
 "ღილაკების მიმდევრობა \"%1\" უკვე რეგისტრირებულია აპლიკაციის (%2) "
-"ქმედებისთვის(%3):"
+"ქმედებისთვის(%3)."
 
 #: kglobalaccel.cpp:644
 #, qt-format
