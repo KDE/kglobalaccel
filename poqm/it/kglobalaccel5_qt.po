@@ -10,21 +10,21 @@
 # Pino Toscano <toscano.pino@tiscali.it>, 2008.
 # Federico Zenith <federico.zenith@member.fsf.org>, 2008, 2012, 2013, 2014, 2015.
 # Innocenzo Ventre <innocenzo.ventre@gmail.com>, 2012.
-# Vincenzo Reale <smart2128vr@gmail.com>, 2014, 2015.
+# Vincenzo Reale <smart2128vr@gmail.com>, 2014, 2015, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: kdelibs4\n"
 "Report-Msgid-Bugs-To: http://bugs.kde.org\n"
 "POT-Creation-Date: 2014-03-23 01:50+0000\n"
-"PO-Revision-Date: 2015-05-12 07:48+0100\n"
-"Last-Translator: Vincenzo Reale <smart2128@baslug.org>\n"
+"PO-Revision-Date: 2022-11-28 00:03+0100\n"
+"Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 22.08.3\n"
 "X-Qt-Contexts: true\n"
 
 #: kglobalaccel.cpp:612
@@ -50,15 +50,12 @@ msgid "Reassign"
 msgstr "Riassegna"
 
 #: kglobalaccel.cpp:640
-#, fuzzy, qt-format
-#| msgctxt "KGlobalAccel|"
-#| msgid ""
-#| "The '%1' key combination is registered by application %2 for action %3:"
+#, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
 "La combinazione di tasti «%1» è registrata dall'applicazione %2 per l'azione "
-"%3:"
+"%3."
 
 #: kglobalaccel.cpp:644
 #, qt-format
