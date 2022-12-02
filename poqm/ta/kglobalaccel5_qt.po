@@ -4,13 +4,13 @@
 # Sivakumar Shanmugasundaram <sshanmu@yahoo.com>, 2000.
 # Thuraiappah Vaseeharan <t_vasee@yahoo.com>, 2000-2001.
 # ம. ஸ்ரீ ராமதாஸ் | Sri Ramadoss M <amachu@yavarkkum.org>, 2007-2012.
-# Kishore G <kishore96@gmail.com>, 2021.
+# Kishore G <kishore96@gmail.com>, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: kdelibs4\n"
 "Report-Msgid-Bugs-To: http://bugs.kde.org\n"
 "POT-Creation-Date: 2014-03-23 01:50+0000\n"
-"PO-Revision-Date: 2021-12-19 11:47+0530\n"
+"PO-Revision-Date: 2022-12-01 19:50+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 21.12.0\n"
+"X-Generator: Lokalize 22.08.3\n"
 "X-Qt-Contexts: true\n"
 
 #: kglobalaccel.cpp:612
@@ -44,15 +44,12 @@ msgid "Reassign"
 msgstr "இதற்கே அமர்த்து"
 
 #: kglobalaccel.cpp:640
-#, fuzzy, qt-format
-#| msgctxt "KGlobalAccel|"
-#| msgid ""
-#| "The '%1' key combination is registered by application %2 for action %3:"
+#, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
 "'%1' எனும் விசைக்கூட்டு, ஏற்கனவே %2 எனும் செயலியால் %3 என்ற செயலுக்காக "
-"பயன்படுத்தப்படுகிறது:"
+"பயன்படுத்தப்படுகிறது."
 
 #: kglobalaccel.cpp:644
 #, qt-format
