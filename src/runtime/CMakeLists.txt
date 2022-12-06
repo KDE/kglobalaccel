@@ -68,7 +68,10 @@ add_subdirectory(plugins)
 # Install application and configuration
 install(TARGETS KF5GlobalAccelPrivate EXPORT KF5GlobalAccelTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
 install( TARGETS kglobalaccel5 ${KF_INSTALL_TARGETS_DEFAULT_ARGS} )
-install( FILES kglobalaccel.desktop  DESTINATION ${KDE_INSTALL_KSERVICESDIR} RENAME kglobalaccel5.desktop)
+
+if(NOT EXCLUDE_DEPRECATED_BEFORE_AND_AT STREQUAL "CURRENT" AND EXCLUDE_DEPRECATED_BEFORE_AND_AT VERSION_LESS 5.102.0)
+    install( FILES kglobalaccel.desktop  DESTINATION ${KDE_INSTALL_KSERVICESDIR} RENAME kglobalaccel5.desktop)
+endif()
 
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kf5globalaccelprivate_export.h
