@@ -24,13 +24,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:612
+#: kglobalaccel.cpp:614
 #, fuzzy
 msgctxt "KGlobalAccel|"
 msgid "Conflict with Global Shortcut"
 msgstr "Ungqubano Neendlela ezimfutshane Zamazwe"
 
-#: kglobalaccel.cpp:613
+#: kglobalaccel.cpp:615
 #, fuzzy, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -41,25 +41,25 @@ msgstr ""
 "Indibaniselwano '%1' yesitshixo sele inikezelwe kwi \"%2\"ntshukumo.\n"
 "Nceda khetha indibaniselwano yesinye isitshixo."
 
-#: kglobalaccel.cpp:621 kglobalaccel.cpp:654
+#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
 #, fuzzy
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Isirashiya"
 
-#: kglobalaccel.cpp:640
+#: kglobalaccel.cpp:642
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
 
-#: kglobalaccel.cpp:644
+#: kglobalaccel.cpp:646
 #, fuzzy, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "Ulwazi lwetyala"
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:648
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -67,7 +67,7 @@ msgid ""
 "%3"
 msgstr ""
 
-#: kglobalaccel.cpp:649
+#: kglobalaccel.cpp:651
 #, fuzzy
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"

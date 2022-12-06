@@ -23,12 +23,12 @@ msgstr ""
 "Plural-Forms: Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:612
+#: kglobalaccel.cpp:614
 msgctxt "KGlobalAccel|"
 msgid "Conflict with Global Shortcut"
 msgstr "Árekstur við víðværa flýtilykla kerfisins"
 
-#: kglobalaccel.cpp:613
+#: kglobalaccel.cpp:615
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -40,12 +40,12 @@ msgstr ""
 "%3.\n"
 "Viltu breyta henni úr þeirri aðgerð í núverandi aðgerð?"
 
-#: kglobalaccel.cpp:621 kglobalaccel.cpp:654
+#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Endurúthluta"
 
-#: kglobalaccel.cpp:640
+#: kglobalaccel.cpp:642
 #, fuzzy, qt-format
 #| msgctxt "KGlobalAccel|"
 #| msgid ""
@@ -54,13 +54,13 @@ msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "Lyklasamsetningin '%1' er skráð af forritinu %2 fyrir aðgerðina %3:"
 
-#: kglobalaccel.cpp:644
+#: kglobalaccel.cpp:646
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "Í samhengi '%1' fyrir aðgerð '%2'\n"
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:648
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -70,7 +70,7 @@ msgstr ""
 "Lyklasamsetningin '%1' er skráð af forritinu %2.\n"
 "%3"
 
-#: kglobalaccel.cpp:649
+#: kglobalaccel.cpp:651
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Árekstur við víðværan flýtilykil kerfisins"

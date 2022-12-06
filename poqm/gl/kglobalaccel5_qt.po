@@ -27,12 +27,12 @@ msgstr ""
 "X-Generator: Lokalize 19.11.70\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:612
+#: kglobalaccel.cpp:614
 msgctxt "KGlobalAccel|"
 msgid "Conflict with Global Shortcut"
 msgstr "Conflito cun atallo global"
 
-#: kglobalaccel.cpp:613
+#: kglobalaccel.cpp:615
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -43,12 +43,12 @@ msgstr ""
 "A combinación de teclas «%1» xa se asignou á acción global «%2» en %3.\n"
 "Quere cambiar a súa asignación á nova acción?"
 
-#: kglobalaccel.cpp:621 kglobalaccel.cpp:654
+#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Reasignar"
 
-#: kglobalaccel.cpp:640
+#: kglobalaccel.cpp:642
 #, fuzzy, qt-format
 #| msgctxt "KGlobalAccel|"
 #| msgid ""
@@ -59,13 +59,13 @@ msgstr ""
 "A combinación de teclas «%1» está rexistrada pola aplicación %2 para a "
 "acción %3:"
 
-#: kglobalaccel.cpp:644
+#: kglobalaccel.cpp:646
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "No contexto «%1» para a acción «%2»\n"
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:648
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -75,7 +75,7 @@ msgstr ""
 "A combinación de teclas «%1» está rexistrada pola aplicación %2.\n"
 "%3"
 
-#: kglobalaccel.cpp:649
+#: kglobalaccel.cpp:651
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Conflito cun atallo global rexistrado"

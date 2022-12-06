@@ -32,12 +32,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:612
+#: kglobalaccel.cpp:614
 msgctxt "KGlobalAccel|"
 msgid "Conflict with Global Shortcut"
 msgstr "Σύγκρουση με καθολική συντόμευση"
 
-#: kglobalaccel.cpp:613
+#: kglobalaccel.cpp:615
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -49,12 +49,12 @@ msgstr ""
 "στο %3.\n"
 "Επιθυμείτε νέα ανάθεση από την ενέργεια αυτή στην τρέχουσα;"
 
-#: kglobalaccel.cpp:621 kglobalaccel.cpp:654
+#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Ανάθεση ξανά"
 
-#: kglobalaccel.cpp:640
+#: kglobalaccel.cpp:642
 #, fuzzy, qt-format
 #| msgctxt "KGlobalAccel|"
 #| msgid ""
@@ -65,13 +65,13 @@ msgstr ""
 "Ο συνδυασμός πλήκτρων '%1' είναι καταχωρημένος από την εφαρμογή %2 για την "
 "ενέργεια %3:"
 
-#: kglobalaccel.cpp:644
+#: kglobalaccel.cpp:646
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "Στο πλαίσιο '%1' για την ενέργεια '%2'\n"
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:648
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -81,7 +81,7 @@ msgstr ""
 "Ο συνδυασμός πλήκτρων '%1' είναι καταχωρημένος από την εφαρμογή %2.\n"
 " %3"
 
-#: kglobalaccel.cpp:649
+#: kglobalaccel.cpp:651
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Σύγκρουση με καταχωρημένη καθολική συντόμευση"

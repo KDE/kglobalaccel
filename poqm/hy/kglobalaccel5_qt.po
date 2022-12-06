@@ -22,14 +22,14 @@ msgstr ""
 "X-Text-Markup: kde4\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:612
+#: kglobalaccel.cpp:614
 #, fuzzy
 #| msgid "Conflict with Global Shortcut"
 msgctxt "KGlobalAccel|"
 msgid "Conflict with Global Shortcut"
 msgstr "Գլոբալ կոմբինացիայի կոնֆլիկտ"
 
-#: kglobalaccel.cpp:613
+#: kglobalaccel.cpp:615
 #, fuzzy, qt-format
 #| msgid ""
 #| "The '%1' key combination has already been allocated to the global action "
@@ -45,14 +45,14 @@ msgstr ""
 "%3.\n"
 "Կապե՞լ համադրությունը տվյալ գործողության հետ"
 
-#: kglobalaccel.cpp:621 kglobalaccel.cpp:654
+#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
 #, fuzzy
 #| msgid "Reassign"
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Կապել նորի հետ"
 
-#: kglobalaccel.cpp:640
+#: kglobalaccel.cpp:642
 #, fuzzy, qt-format
 #| msgid ""
 #| "The '%1' key combination is registered by application %2 for action %3:"
@@ -60,14 +60,14 @@ msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "Կոճակ «%1» արդեն նշված է ծրագրում %2,  %3 գործողության համար:"
 
-#: kglobalaccel.cpp:644
+#: kglobalaccel.cpp:646
 #, fuzzy, qt-format
 #| msgid "In context '%1' for action '%2'\n"
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "Համատեքստ «%1»,  «%2» գործողության համար\n"
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:648
 #, fuzzy, qt-format
 #| msgid ""
 #| "The '%1' key combination is registered by application %2.\n"
@@ -80,7 +80,7 @@ msgstr ""
 "Կոճակ «%1» արդեն նշված է %2 ծրագրում\n"
 "%3"
 
-#: kglobalaccel.cpp:649
+#: kglobalaccel.cpp:651
 #, fuzzy
 #| msgid "Conflict With Registered Global Shortcut"
 msgctxt "KGlobalAccel|"

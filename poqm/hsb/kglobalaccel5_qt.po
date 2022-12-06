@@ -22,14 +22,14 @@ msgstr ""
 "%100==4 ? 2 : 3;\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:612
+#: kglobalaccel.cpp:614
 #, fuzzy
 #| msgid "Conflict with Global Shortcut"
 msgctxt "KGlobalAccel|"
 msgid "Conflict with Global Shortcut"
 msgstr "Konflikt z globalnej skrótšenku"
 
-#: kglobalaccel.cpp:613
+#: kglobalaccel.cpp:615
 #, fuzzy, qt-format
 #| msgid ""
 #| "The '%1' key combination has already been allocated to the global action "
@@ -44,14 +44,14 @@ msgstr ""
 "Tasta '%1' je so hižo z globalnej akciju '%2' we '%3' zwjazała.\n"
 "Chceće ju město toho z aktualnej akciju zwjazać?"
 
-#: kglobalaccel.cpp:621 kglobalaccel.cpp:654
+#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
 #, fuzzy
 #| msgid "Reassign"
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Zwjazanje změnić"
 
-#: kglobalaccel.cpp:640
+#: kglobalaccel.cpp:642
 #, fuzzy, qt-format
 #| msgid ""
 #| "The '%1' key combination is registered by application %2 for action %3:"
@@ -60,14 +60,14 @@ msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
 "Tastowa kombinacija '%1' je wot aplikacije %2 za akciju %3 registrowana:"
 
-#: kglobalaccel.cpp:644
+#: kglobalaccel.cpp:646
 #, fuzzy, qt-format
 #| msgid "In context '%1' for action '%2'\n"
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "W konteksće '%1' za akciju '%2'\n"
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:648
 #, fuzzy, qt-format
 #| msgid ""
 #| "The '%1' key combination is registered by application %2.\n"
@@ -80,7 +80,7 @@ msgstr ""
 "Kombinacija '%1' je registrowana pola aplikacije %2.\n"
 "%3"
 
-#: kglobalaccel.cpp:649
+#: kglobalaccel.cpp:651
 #, fuzzy
 #| msgid "Conflict With Registered Global Shortcut"
 msgctxt "KGlobalAccel|"

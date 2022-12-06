@@ -34,12 +34,12 @@ msgstr ""
 "X-Generator: Lokalize 22.08.3\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:612
+#: kglobalaccel.cpp:614
 msgctxt "KGlobalAccel|"
 msgid "Conflict with Global Shortcut"
 msgstr "Genel Kısayollarla Çakışma"
 
-#: kglobalaccel.cpp:613
+#: kglobalaccel.cpp:615
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -50,25 +50,25 @@ msgstr ""
 "'%1' kısayolu \"%3\" içerisindeki %2 eylemi için ayrılmış.\n"
 "Bu kısayolu yeni eylem için yeniden atamak ister misiniz?"
 
-#: kglobalaccel.cpp:621 kglobalaccel.cpp:654
+#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Yeniden Ata"
 
-#: kglobalaccel.cpp:640
+#: kglobalaccel.cpp:642
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
 "'%1' düğme kombinasyonu, %2 uygulaması tarafından %3 eylemi için kaydedildi."
 
-#: kglobalaccel.cpp:644
+#: kglobalaccel.cpp:646
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "'%2' eylemi için '%1' içeriği\n"
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:648
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -78,7 +78,7 @@ msgstr ""
 "'%1' düğme kombinasyonu %2 uygulaması tarafından kaydedildi.\n"
 "%3"
 
-#: kglobalaccel.cpp:649
+#: kglobalaccel.cpp:651
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Kaydedilmiş Genel Kısayollarda Çakışma"
