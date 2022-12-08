@@ -26,12 +26,12 @@ msgstr ""
 "X-Text-Markup: qtrich\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:612
+#: kglobalaccel.cpp:614
 msgctxt "KGlobalAccel|"
 msgid "Conflict with Global Shortcut"
 msgstr "Konflikt med global snarvei"
 
-#: kglobalaccel.cpp:613
+#: kglobalaccel.cpp:615
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -43,24 +43,24 @@ msgstr ""
 "i %3.\n"
 "Vil du bruke kombinasjonen til den nye handlinga i stedet?"
 
-#: kglobalaccel.cpp:621 kglobalaccel.cpp:654
+#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Tilordne på nytt"
 
-#: kglobalaccel.cpp:640
+#: kglobalaccel.cpp:642
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
 
-#: kglobalaccel.cpp:644
+#: kglobalaccel.cpp:646
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "I konteksten «%1» for handling «%2»\n"
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:648
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -70,7 +70,7 @@ msgstr ""
 "Tastekombinasjonen «%1» er registrert av programmet %2.\n"
 "%3"
 
-#: kglobalaccel.cpp:649
+#: kglobalaccel.cpp:651
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Konflikt med registrert global snarvei"
