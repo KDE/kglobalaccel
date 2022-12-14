@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
-"PO-Revision-Date: 2022-12-01 06:52\n"
+"PO-Revision-Date: 2022-12-13 12:21\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
@@ -40,7 +40,7 @@ msgstr "重新分配"
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
-msgstr ""
+msgstr "按键/按键组合“%1”已被应用程序 %2 注册给 %3 操作。"
 
 #: kglobalaccel.cpp:646
 #, qt-format
