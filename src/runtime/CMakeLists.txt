@@ -16,10 +16,10 @@ ecm_create_qm_loader(kglobalaccelprivate_SRCS kglobalaccel5_qt)
 
 configure_file(config-kglobalaccel.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kglobalaccel.h )
 
-add_library(KF5GlobalAccelPrivate ${kglobalaccelprivate_SRCS})
-add_library(KF5::GlobalAccelPrivate ALIAS KF5GlobalAccelPrivate)
-ecm_generate_export_header(KF5GlobalAccelPrivate
-    EXPORT_FILE_NAME kf5globalaccelprivate_export.h
+add_library(KF6GlobalAccelPrivate ${kglobalaccelprivate_SRCS})
+add_library(KF6::GlobalAccelPrivate ALIAS KF6GlobalAccelPrivate)
+ecm_generate_export_header(KF6GlobalAccelPrivate
+    EXPORT_FILE_NAME kf6globalaccelprivate_export.h
     BASE_NAME KGlobalAccelPrivate
     GROUP_BASE_NAME KF
     VERSION ${KF_VERSION}
@@ -28,27 +28,27 @@ ecm_generate_export_header(KF5GlobalAccelPrivate
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
 
-target_include_directories(KF5GlobalAccelPrivate INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KGlobalAccel>")
+target_include_directories(KF6GlobalAccelPrivate INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KGlobalAccel>")
 
-target_link_libraries(KF5GlobalAccelPrivate
+target_link_libraries(KF6GlobalAccelPrivate
     PUBLIC
         Qt${QT_MAJOR_VERSION}::DBus
-        KF5::GlobalAccel
-        KF5::WindowSystem # KKeyServer
-        KF5::CoreAddons   # KAboutData
-        KF5::ConfigCore
+        KF6::GlobalAccel
+        KF6::WindowSystem # KKeyServer
+        KF6::CoreAddons   # KAboutData
+        KF6::ConfigCore
 )
 
-set_target_properties(KF5GlobalAccelPrivate PROPERTIES VERSION ${KGLOBALACCEL_VERSION}
+set_target_properties(KF6GlobalAccelPrivate PROPERTIES VERSION ${KGLOBALACCEL_VERSION}
                                                 SOVERSION ${KGLOBALACCEL_SOVERSION}
                                                 EXPORT_NAME "GlobalAccelPrivate"
 )
 
 if(XCB_XCB_FOUND)
     if (TARGET Qt5::X11Extras)
-        target_link_libraries(KF5GlobalAccelPrivate PUBLIC Qt5::X11Extras)
+        target_link_libraries(KF6GlobalAccelPrivate PUBLIC Qt5::X11Extras)
     elseif (TARGET Qt6::Gui)
-        target_link_libraries(KF5GlobalAccelPrivate PUBLIC Qt6::GuiPrivate) # qtx11extras_p.h
+        target_link_libraries(KF6GlobalAccelPrivate PUBLIC Qt6::GuiPrivate) # qtx11extras_p.h
     endif()
 endif()
 
@@ -58,15 +58,15 @@ ecm_mark_nongui_executable(kglobalaccel5)
 target_include_directories(kglobalaccel5 PRIVATE ${CMAKE_BINARY_DIR})
 
 target_link_libraries(kglobalaccel5
-    KF5GlobalAccelPrivate
-    KF5::DBusAddons   # KDBusService
-    KF5::Crash
+    KF6GlobalAccelPrivate
+    KF6::DBusAddons   # KDBusService
+    KF6::Crash
     )
 
 add_subdirectory(plugins)
 
 # Install application and configuration
-install(TARGETS KF5GlobalAccelPrivate EXPORT KF5GlobalAccelTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
+install(TARGETS KF6GlobalAccelPrivate EXPORT KF6GlobalAccelTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
 install( TARGETS kglobalaccel5 ${KF_INSTALL_TARGETS_DEFAULT_ARGS} )
 
 if(NOT EXCLUDE_DEPRECATED_BEFORE_AND_AT STREQUAL "CURRENT" AND EXCLUDE_DEPRECATED_BEFORE_AND_AT VERSION_LESS 5.102.0)
@@ -74,7 +74,7 @@ if(NOT EXCLUDE_DEPRECATED_BEFORE_AND_AT STREQUAL "CURRENT" AND EXCLUDE_DEPRECATE
 endif()
 
 install(FILES
-  ${CMAKE_CURRENT_BINARY_DIR}/kf5globalaccelprivate_export.h
+  ${CMAKE_CURRENT_BINARY_DIR}/kf6globalaccelprivate_export.h
   kglobalacceld.h
   kglobalaccel_interface.h
   DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KGlobalAccel/private COMPONENT Devel

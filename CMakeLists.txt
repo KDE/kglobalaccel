@@ -37,8 +37,8 @@ add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt 
 
 ecm_setup_version(PROJECT VARIABLE_PREFIX KGLOBALACCEL
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kglobalaccel_version.h"
-                        PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5GlobalAccelConfigVersion.cmake"
-                        SOVERSION 5)
+                        PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF6GlobalAccelConfigVersion.cmake"
+                        SOVERSION 6)
 
 # Dependencies
 set(REQUIRED_QT_VERSION 6.4.0)
@@ -46,11 +46,11 @@ find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus W
 
 # Dependencies of runtime component
 if (BUILD_RUNTIME)
-    find_package(KF5Config ${KF_DEP_VERSION} REQUIRED)
-    find_package(KF5CoreAddons ${KF_DEP_VERSION} REQUIRED)
-    find_package(KF5Crash ${KF_DEP_VERSION} REQUIRED)
-    find_package(KF5DBusAddons ${KF_DEP_VERSION} REQUIRED)
-    find_package(KF5WindowSystem ${KF_DEP_VERSION} REQUIRED)
+    find_package(KF6Config ${KF_DEP_VERSION} REQUIRED)
+    find_package(KF6CoreAddons ${KF_DEP_VERSION} REQUIRED)
+    find_package(KF6Crash ${KF_DEP_VERSION} REQUIRED)
+    find_package(KF6DBusAddons ${KF_DEP_VERSION} REQUIRED)
+    find_package(KF6WindowSystem ${KF_DEP_VERSION} REQUIRED)
 endif()
 
 # no X11 stuff on mac
@@ -91,31 +91,31 @@ if (BUILD_TESTING)
 endif()
 
 # create a Config.cmake and a ConfigVersion.cmake file and install them
-set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5GlobalAccel")
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF6GlobalAccel")
 
 if (BUILD_QCH)
     ecm_install_qch_export(
-        TARGETS KF5GlobalAccel_QCH
-        FILE KF5GlobalAccelQchTargets.cmake
+        TARGETS KF6GlobalAccel_QCH
+        FILE KF6GlobalAccelQchTargets.cmake
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel
     )
-    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF5GlobalAccelQchTargets.cmake\")")
+    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF6GlobalAccelQchTargets.cmake\")")
 endif()
 
 configure_package_config_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/KF5GlobalAccelConfig.cmake.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/KF5GlobalAccelConfig.cmake"
+    "${CMAKE_CURRENT_SOURCE_DIR}/KF6GlobalAccelConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/KF6GlobalAccelConfig.cmake"
     PATH_VARS KDE_INSTALL_DBUSINTERFACEDIR
     INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
 )
 
-install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KF5GlobalAccelConfig.cmake"
-               "${CMAKE_CURRENT_BINARY_DIR}/KF5GlobalAccelConfigVersion.cmake"
+install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KF6GlobalAccelConfig.cmake"
+               "${CMAKE_CURRENT_BINARY_DIR}/KF6GlobalAccelConfigVersion.cmake"
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel )
 
-install(EXPORT KF5GlobalAccelTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF5GlobalAccelTargets.cmake NAMESPACE KF5:: )
+install(EXPORT KF6GlobalAccelTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF6GlobalAccelTargets.cmake NAMESPACE KF6:: )
 
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kglobalaccel_version.h

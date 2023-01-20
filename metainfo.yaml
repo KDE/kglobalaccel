@@ -13,8 +13,8 @@ deprecated: false
 release: true
 libraries:
  - qmake: KGlobalAccel
-   cmake: "KF5::GlobalAccel"
-cmakename: KF5GlobalAccel
+   cmake: "KF6::GlobalAccel"
+cmakename: KF6GlobalAccel
 
 public_lib: true
 group: Frameworks

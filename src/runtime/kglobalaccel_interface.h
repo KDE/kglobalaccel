@@ -11,7 +11,7 @@
 
 #include <QObject>
 
-#include "kf5globalaccelprivate_export.h"
+#include "kf6globalaccelprivate_export.h"
 
 class GlobalShortcutsRegistry;
 

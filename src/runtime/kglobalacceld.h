@@ -9,7 +9,7 @@
 #ifndef KGLOBALACCELD_H
 #define KGLOBALACCELD_H
 
-#include "kf5globalaccelprivate_export.h"
+#include "kf6globalaccelprivate_export.h"
 
 #include <kglobalshortcutinfo.h>
 
