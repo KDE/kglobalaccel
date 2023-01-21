@@ -138,21 +138,6 @@ public:
      */
     static bool isComponentActive(const QString &componentName);
 
-#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(5, 90)
-    /**
-     * Returns a list of global shortcuts registered for the shortcut @p seq.
-     *
-     * If the list contains more that one entry it means the component
-     * that registered the shortcuts uses global shortcut contexts. All
-     * returned shortcuts belong to the same component.
-     *
-     * @since 4.2
-     * @deprecated Since 5.90, use globalShortcutsByKey(const QKeySequence&, int) instead.
-     */
-    KGLOBALACCEL_DEPRECATED_VERSION(5, 90, "Use globalShortcutsByKey(const QKeySequence&, int) instead.")
-    static QList<KGlobalShortcutInfo> getGlobalShortcutsByKey(const QKeySequence &seq);
-#endif
-
     /**
      * Returns a list of global shortcuts registered for the shortcut @p seq.
      *
@@ -308,71 +293,6 @@ public:
      * @since 5.0
      */
     bool hasShortcut(const QAction *action) const;
-
-#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(4, 4)
-    /**
-     * No effect.
-     *
-     * @deprecated Since 4.4.
-     */
-    KGLOBALACCEL_DEPRECATED_VERSION(4, 4, "Property no longer used")
-    bool isEnabled() const;
-#endif
-
-#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(4, 4)
-    /**
-     * No effect.
-     *
-     * @deprecated Since 4.4.
-     */
-    KGLOBALACCEL_DEPRECATED_VERSION(4, 4, "Property no longer used")
-    void setEnabled(bool enabled);
-#endif
-
-#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(4, 2)
-    /**
-     * Return the unique and common names of all main components that have global shortcuts.
-     * The action strings of the returned actionId stringlists will be empty.
-     *
-     * @deprecated Since 4.2. Do not use.
-     */
-    KGLOBALACCEL_DEPRECATED_VERSION(4, 2, "Do not use")
-    QList<QStringList> allMainComponents();
-#endif
-
-#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(4, 2)
-    /**
-     * @deprecated Since 4.2. Do not use
-     */
-    KGLOBALACCEL_DEPRECATED_VERSION(4, 2, "Do not use")
-    QList<QStringList> allActionsForComponent(const QStringList &actionId);
-#endif
-
-#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(4, 2)
-    /**
-     * @deprecated Since 4.2, use KGlobalAccel::getGlobalShortcutsByKey(const QKeySequence &)
-     */
-    KGLOBALACCEL_DEPRECATED_VERSION(4, 2, "Use KGlobalAccel::getGlobalShortcutsByKey(const QKeySequence &)")
-    static QStringList findActionNameSystemwide(const QKeySequence &seq);
-#endif
-
-#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(4, 2)
-    /**
-     * @deprecated Since 4.2, use KGlobalAccel::promptStealShortcutSystemwide(QWidget *, const QList<KGlobalShortcutInfo> &, const QKeySequence &)
-     */
-    KGLOBALACCEL_DEPRECATED_VERSION(4,
-                                    2,
-                                    "Use KGlobalAccel::promptStealShortcutSystemwide(QWidget *, const QList<KGlobalShortcutInfo> &, const QKeySequence &)")
-    static bool promptStealShortcutSystemwide(QWidget *parent, const QStringList &actionIdentifier, const QKeySequence &seq);
-#endif
-
-#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(5, 9)
-    /**
-     * @internal
-     * Override no longer needed, left for BIC
-     */
-    bool eventFilter(QObject *watched, QEvent *event) override;
-#endif
 
 Q_SIGNALS:
     /**

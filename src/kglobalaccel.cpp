@@ -125,12 +125,6 @@ org::kde::KGlobalAccel *KGlobalAccelPrivate::iface()
             }
         }
 
-#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(5, 90)
-        q->connect(m_iface, &org::kde::KGlobalAccel::yourShortcutGotChanged, q, [this](const QStringList &actionId, const QList<int> &newKeys) {
-            shortcutGotChanged(actionId, newKeys);
-        });
-#endif
-
         q->connect(m_iface, &org::kde::KGlobalAccel::yourShortcutsChanged, q, [this](const QStringList &actionId, const QList<QKeySequence> &newKeys) {
             shortcutsChanged(actionId, newKeys);
         });
@@ -155,15 +149,6 @@ KGlobalAccel::~KGlobalAccel()
     delete d;
 }
 
-#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(5, 102)
-void KGlobalAccel::activateGlobalShortcutContext(const QString &contextUnique, const QString &contextFriendly, const QString &programName)
-{
-    Q_UNUSED(contextFriendly);
-    // TODO: provide contextFriendly
-    self()->d->iface()->activateGlobalShortcutContext(programName, contextUnique);
-}
-#endif
-
 // static
 bool KGlobalAccel::cleanComponent(const QString &componentUnique)
 {
@@ -186,24 +171,10 @@ bool KGlobalAccel::isComponentActive(const QString &componentUnique)
     return component->isActive();
 }
 
-#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(4, 4)
-bool KGlobalAccel::isEnabled() const
-{
-    return d->enabled;
-}
-#endif
-
 org::kde::kglobalaccel::Component *KGlobalAccel::getComponent(const QString &componentUnique)
 {
     return d->getComponent(componentUnique);
 }
-
-#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(4, 4)
-void KGlobalAccel::setEnabled(bool enabled)
-{
-    d->enabled = enabled;
-}
-#endif
 
 class KGlobalAccelSingleton
 {
@@ -511,20 +482,6 @@ void KGlobalAccelPrivate::invokeDeactivate(const QString &componentUnique, const
     Q_EMIT q->globalShortcutActiveChanged(action, false);
 }
 
-#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(5, 90)
-void KGlobalAccelPrivate::shortcutGotChanged(const QStringList &actionId, const QList<int> &keys)
-{
-    QAction *action = nameToAction.value(actionId.at(KGlobalAccel::ActionUnique));
-    if (!action) {
-        return;
-    }
-
-    const QList<QKeySequence> shortcuts = shortcutFromIntList(keys);
-    actionShortcuts.insert(action, shortcuts);
-    Q_EMIT q->globalShortcutChanged(action, keys.isEmpty() ? QKeySequence() : shortcuts.first());
-}
-#endif
-
 void KGlobalAccelPrivate::shortcutsChanged(const QStringList &actionId, const QList<QKeySequence> &keys)
 {
     QAction *action = nameToAction.value(actionId.at(KGlobalAccel::ActionUnique));
@@ -565,35 +522,6 @@ void KGlobalAccelPrivate::reRegisterAll()
     }
 }
 
-#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(4, 2)
-QList<QStringList> KGlobalAccel::allMainComponents()
-{
-    return d->iface()->allMainComponents();
-}
-#endif
-
-#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(4, 2)
-QList<QStringList> KGlobalAccel::allActionsForComponent(const QStringList &actionId)
-{
-    return d->iface()->allActionsForComponent(actionId);
-}
-#endif
-
-// static
-#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(4, 2)
-QStringList KGlobalAccel::findActionNameSystemwide(const QKeySequence &seq)
-{
-    return self()->d->iface()->actionList(seq);
-}
-#endif
-
-#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(5, 90)
-QList<KGlobalShortcutInfo> KGlobalAccel::getGlobalShortcutsByKey(const QKeySequence &seq)
-{
-    return globalShortcutsByKey(seq);
-}
-#endif
-
 QList<KGlobalShortcutInfo> KGlobalAccel::globalShortcutsByKey(const QKeySequence &seq, MatchType type)
 {
     return self()->d->iface()->globalShortcutsByKey(seq, type);
@@ -603,29 +531,6 @@ bool KGlobalAccel::isGlobalShortcutAvailable(const QKeySequence &seq, const QStr
 {
     return self()->d->iface()->globalShortcutAvailable(seq, comp);
 }
-
-// static
-#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(4, 2)
-bool KGlobalAccel::promptStealShortcutSystemwide(QWidget *parent, const QStringList &actionIdentifier, const QKeySequence &seq)
-{
-    if (actionIdentifier.size() < 4) {
-        return false;
-    }
-    QString title = tr("Conflict with Global Shortcut");
-    QString message = tr("The '%1' key combination has already been allocated "
-                         "to the global action \"%2\" in %3.\n"
-                         "Do you want to reassign it from that action to the current one?")
-                          .arg(seq.toString(), actionIdentifier.at(KGlobalAccel::ActionFriendly), actionIdentifier.at(KGlobalAccel::ComponentFriendly));
-
-    QMessageBox box(parent);
-    box.setWindowTitle(title);
-    box.setText(message);
-    box.addButton(QMessageBox::Ok)->setText(tr("Reassign"));
-    box.addButton(QMessageBox::Cancel);
-
-    return box.exec() == QMessageBox::Ok;
-}
-#endif
 
 // static
 bool KGlobalAccel::promptStealShortcutSystemwide(QWidget *parent, const QList<KGlobalShortcutInfo> &shortcuts, const QKeySequence &seq)
@@ -758,13 +663,6 @@ bool KGlobalAccel::hasShortcut(const QAction *action) const
 {
     return d->actionShortcuts.contains(action) || d->actionDefaultShortcuts.contains(action);
 }
-
-#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(5, 9)
-bool KGlobalAccel::eventFilter(QObject *watched, QEvent *event)
-{
-    return QObject::eventFilter(watched, event);
-}
-#endif
 
 bool KGlobalAccel::setGlobalShortcut(QAction *action, const QList<QKeySequence> &shortcut)
 {

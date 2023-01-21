@@ -77,10 +77,6 @@ public:
     QMultiHash<QString, QAction *> nameToAction;
     QSet<QAction *> actions;
 
-#if KGLOBALACCEL_BUILD_DEPRECATED_SINCE(4, 4)
-    bool enabled = true;
-#endif
-
     org::kde::KGlobalAccel *iface();
 
     //! Get the component @p componentUnique. If @p remember is true the instance is cached and we

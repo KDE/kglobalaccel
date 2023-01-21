@@ -96,13 +96,6 @@ void KGlobalShortcutTest::setupTest(const QString &id)
     }
 
     // Ensure that the previous test did cleanup correctly
-#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(4, 2)
-    KGlobalAccel *kga = KGlobalAccel::self();
-    QList<QStringList> components = kga->allMainComponents();
-    QStringList componentId;
-    componentId << componentName << QString() << "KDE Test Program" << QString();
-    // QVERIFY(!components.contains(componentId));
-#endif
 
     m_actionA = new QAction("Text For Action A", this);
     m_actionA->setObjectName("Action A:" + id);
@@ -201,11 +194,7 @@ void KGlobalShortcutTest::testFindActionByKey()
         QSKIP("kglobalaccel not installed");
     }
 
-#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(5, 90)
-    QList<KGlobalShortcutInfo> actionId = KGlobalAccel::self()->getGlobalShortcutsByKey(sequenceB);
-#else
     QList<KGlobalShortcutInfo> actionId = KGlobalAccel::self()->globalShortcutsByKey(sequenceB);
-#endif
 
     QCOMPARE(actionId.size(), 1);
 
@@ -219,11 +208,7 @@ void KGlobalShortcutTest::testFindActionByKey()
     QCOMPARE(actionId.first().componentFriendlyName(), actionIdAComponentFriendlyName);
     QCOMPARE(actionId.first().friendlyName(), actionIdAFriendlyName);
 
-#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(5, 90)
-    actionId = KGlobalAccel::self()->getGlobalShortcutsByKey(sequenceA);
-#else
     actionId = KGlobalAccel::self()->globalShortcutsByKey(sequenceA);
-#endif
 
     QCOMPARE(actionId.size(), 1);
 
@@ -378,34 +363,6 @@ void KGlobalShortcutTest::testListActions()
     if (!m_daemonInstalled) {
         QSKIP("kglobalaccel not installed");
     }
-
-    // As in kdebase/workspace/kcontrol/keys/globalshortcuts.cpp
-#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(4, 2)
-    KGlobalAccel *kga = KGlobalAccel::self();
-    QList<QStringList> components = kga->allMainComponents();
-    // qDebug() << components;
-    QStringList componentId;
-    componentId << "qttest" << QString() << "KDE Test Program" << QString();
-    QVERIFY(components.contains(componentId));
-#endif
-
-#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(4, 2)
-    QList<QStringList> actions = kga->allActionsForComponent(componentId);
-    QVERIFY(!actions.isEmpty());
-    QStringList actionIdA;
-    actionIdA << "qttest"
-              << "Action A:testListActions"
-              << "KDE Test Program"
-              << "Text For Action A";
-    QStringList actionIdB;
-    actionIdB << "qttest"
-              << "Action B:testListActions"
-              << "KDE Test Program"
-              << "Text For Action B";
-    // qDebug() << actions;
-    QVERIFY(actions.contains(actionIdA));
-    QVERIFY(actions.contains(actionIdB));
-#endif
 }
 
 void KGlobalShortcutTest::testComponentAssignment()
@@ -639,12 +596,4 @@ void KGlobalShortcutTest::testForgetGlobalShortcut()
     KGlobalAccel::self()->removeAllShortcuts(m_actionA);
     // kglobalaccel writes asynchronous.
     QThread::sleep(1);
-
-#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(4, 2)
-    KGlobalAccel *kga = KGlobalAccel::self();
-    QList<QStringList> components = kga->allMainComponents();
-    QStringList componentId;
-    componentId << "qttest" << QString() << "KDE Test Program" << QString();
-    QVERIFY(!components.contains(componentId));
-#endif
 }
