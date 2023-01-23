@@ -93,8 +93,8 @@ if(BUILD_QCH)
             ${KGlobalAccel_HEADERS}
         MD_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md"
         LINK_QCHS
-            Qt5Widgets_QCH
-            Qt5DBus_QCH
+            Qt6Widgets_QCH
+            Qt6DBus_QCH
         INCLUDE_DIRS
             ${CMAKE_CURRENT_BINARY_DIR}
         BLANK_MACROS
