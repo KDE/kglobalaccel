@@ -75,8 +75,8 @@ if(X11_FOUND AND XCB_XCB_FOUND)
 endif()
 
 ecm_set_disabled_deprecation_versions(
-    QT 5.15.2
-    KF 5.95.0
+    QT 6.4.0
+    KF 5.102.0
 )
 
 # Subdirectories
