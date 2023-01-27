@@ -19,11 +19,7 @@
 #include "config-kglobalaccel.h"
 #if HAVE_X11
 #include <KStartupInfo>
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <private/qtx11extras_p.h>
-#else
-#include <QX11Info>
-#endif
 #endif
 
 KServiceActionComponent::KServiceActionComponent(const QString &serviceStorageId, const QString &friendlyName)

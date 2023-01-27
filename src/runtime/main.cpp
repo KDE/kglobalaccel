@@ -79,15 +79,6 @@ extern "C" Q_DECL_EXPORT int main(int argc, char **argv)
 
     app.setQuitOnLastWindowClosed(false);
 
-    // Not needed in Qt6, the feature and the workaround (i.e. setFallbackSessionManagementEnabled)
-    // are both gone. See:
-    // https://code.qt.io/cgit/qt/qtbase.git/commit/?id=7f878c6217754dd2b63401bf1c006476e5dc27eb
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-#ifndef QT_NO_SESSIONMANAGER
-    QGuiApplication::setFallbackSessionManagementEnabled(false);
-#endif
-#endif
-
     // Restart on a crash
     KCrash::setFlags(KCrash::AutoRestart);
 

@@ -49,16 +49,12 @@ target_include_directories(KF6GlobalAccel INTERFACE "$<INSTALL_INTERFACE:${KDE_I
 
 target_link_libraries(KF6GlobalAccel
 PUBLIC
-    Qt${QT_MAJOR_VERSION}::DBus
-    Qt${QT_MAJOR_VERSION}::Widgets
+    Qt6::DBus
+    Qt6::Widgets
 )
 
 if(HAVE_X11)
-    if (TARGET Qt5::X11Extras)
-        target_link_libraries(KF6GlobalAccel PRIVATE Qt5::X11Extras)
-    elseif (TARGET Qt6::Gui)
-        target_link_libraries(KF6GlobalAccel PRIVATE Qt6::GuiPrivate) # qtx11extras_p.h
-    endif()
+    target_link_libraries(KF6GlobalAccel PRIVATE Qt6::GuiPrivate) # qtx11extras_p.h
 endif()
 
 set_target_properties(KF6GlobalAccel PROPERTIES VERSION   ${KGLOBALACCEL_VERSION}

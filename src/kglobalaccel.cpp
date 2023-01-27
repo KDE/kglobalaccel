@@ -23,11 +23,7 @@
 #include <config-kglobalaccel.h>
 
 #if HAVE_X11
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <private/qtx11extras_p.h>
-#else
-#include <QX11Info>
-#endif
 #endif
 
 org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QString &componentUnique, bool remember = false)
@@ -365,11 +361,7 @@ QList<int> KGlobalAccelPrivate::intListFromShortcut(const QList<QKeySequence> &c
 {
     QList<int> ret;
     for (const QKeySequence &sequence : cut) {
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
         ret.append(sequence[0].toCombined());
-#else
-        ret.append(sequence[0]);
-#endif
     }
     while (!ret.isEmpty() && ret.last() == 0) {
         ret.removeLast();
@@ -589,11 +581,7 @@ bool checkGarbageKeycode(const QList<QKeySequence> &shortcut)
     // at the moment (~mid 2008) Multimedia PlayPause is one of those keys.
     for (const QKeySequence &sequence : shortcut) {
         for (int i = 0; i < 4; i++) {
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
             if (sequence[i].toCombined() == -1) {
-#else
-            if (sequence[i] == -1) {
-#endif
                 qWarning() << "Encountered garbage keycode (keycode = -1) in input, not doing anything.";
                 return true;
             }

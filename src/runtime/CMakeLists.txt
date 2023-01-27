@@ -32,7 +32,7 @@ target_include_directories(KF6GlobalAccelPrivate INTERFACE "$<INSTALL_INTERFACE:
 
 target_link_libraries(KF6GlobalAccelPrivate
     PUBLIC
-        Qt${QT_MAJOR_VERSION}::DBus
+        Qt6::DBus
         KF6::GlobalAccel
         KF6::WindowSystem # KKeyServer
         KF6::CoreAddons   # KAboutData
@@ -45,11 +45,7 @@ set_target_properties(KF6GlobalAccelPrivate PROPERTIES VERSION ${KGLOBALACCEL_VE
 )
 
 if(XCB_XCB_FOUND)
-    if (TARGET Qt5::X11Extras)
-        target_link_libraries(KF6GlobalAccelPrivate PUBLIC Qt5::X11Extras)
-    elseif (TARGET Qt6::Gui)
-        target_link_libraries(KF6GlobalAccelPrivate PUBLIC Qt6::GuiPrivate) # qtx11extras_p.h
-    endif()
+    target_link_libraries(KF6GlobalAccelPrivate PUBLIC Qt6::GuiPrivate) # qtx11extras_p.h
 endif()
 
 add_executable(kglobalaccel5 main.cpp logging.cpp)

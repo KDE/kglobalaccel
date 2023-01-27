@@ -17,11 +17,7 @@
 
 #include <QApplication>
 #include <QWidget>
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <private/qtx11extras_p.h>
-#else
-#include <QX11Info>
-#endif
 
 #include <X11/keysym.h>
 
@@ -257,11 +253,7 @@ bool KGlobalAccelImpl::grabKey(int keyQt, bool grab)
     return success;
 }
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 bool KGlobalAccelImpl::nativeEventFilter(const QByteArray &eventType, void *message, qintptr *)
-#else
-bool KGlobalAccelImpl::nativeEventFilter(const QByteArray &eventType, void *message, long *)
-#endif
 {
     if (eventType != "xcb_generic_event_t") {
         return false;

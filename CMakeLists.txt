@@ -42,7 +42,7 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX KGLOBALACCEL
 
 # Dependencies
 set(REQUIRED_QT_VERSION 6.4.0)
-find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus Widgets)
+find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus Gui Widgets)
 
 # Dependencies of runtime component
 if (BUILD_RUNTIME)
@@ -67,11 +67,6 @@ set(HAVE_X11 0)
 
 if(X11_FOUND AND XCB_XCB_FOUND)
     set(HAVE_X11 1)
-    if (QT_MAJOR_VERSION STREQUAL "5")
-        find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED X11Extras)
-    elseif (QT_MAJOR_VERSION STREQUAL "6")
-        find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED Gui) # qtx11extras_p.h
-    endif()
 endif()
 
 ecm_set_disabled_deprecation_versions(
@@ -84,7 +79,7 @@ ecm_install_po_files_as_qm(poqm)
 
 add_subdirectory(src)
 if (BUILD_TESTING)
-    find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED Test)
+    find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Test)
 
     add_subdirectory(tests)
     add_subdirectory(autotests)
