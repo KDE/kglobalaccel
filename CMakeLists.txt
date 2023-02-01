@@ -53,8 +53,7 @@ if (BUILD_RUNTIME)
     find_package(KF6WindowSystem ${KF_DEP_VERSION} REQUIRED)
 endif()
 
-# no X11 stuff on mac
-if (BUILD_RUNTIME AND NOT APPLE)
+if (BUILD_RUNTIME)
     find_package(XCB MODULE COMPONENTS XCB KEYSYMS XKB RECORD OPTIONAL_COMPONENTS XTEST)
     set_package_properties(XCB PROPERTIES DESCRIPTION "X protocol C-language Binding"
                        TYPE OPTIONAL
