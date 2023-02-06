@@ -287,7 +287,7 @@ QList<int> KGlobalAccelD::shortcut(const QStringList &action) const
     if (shortcut) {
         QList<int> ret;
         for (auto i : shortcut->keys()) {
-            ret << i[0];
+            ret << i[0].toCombined();
         }
         return ret;
     }
@@ -311,7 +311,7 @@ QList<int> KGlobalAccelD::defaultShortcut(const QStringList &action) const
     if (shortcut) {
         QList<int> ret;
         for (auto i : shortcut->keys()) {
-            ret << i[0];
+            ret << i[0].toCombined();
         }
         return ret;
     }
@@ -459,7 +459,7 @@ QList<int> KGlobalAccelD::setShortcut(const QStringList &actionId, const QList<i
     QList<int> ret;
     ret.reserve(list.size());
     for (auto i : list) {
-        ret << i[0];
+        ret << i[0].toCombined();
     }
     return ret;
 }
