@@ -88,24 +88,6 @@ public:
      */
     static void stealShortcutSystemwide(const QKeySequence &seq);
 
-#if KGLOBALACCEL_ENABLE_DEPRECATED_SINCE(5, 102)
-    /**
-     * Set global shortcut context.
-     *
-     * A global shortcut context allows an application to have different sets
-     * of global shortcuts and to switch between them. This is used by
-     * plasma to switch the active global shortcuts when switching between
-     * activities.
-     *
-     * @param context the name of the context.
-     *
-     * @since 4.2
-     * @deprecated since 5.102. Shortcut contexts are deprecated. No known users.
-     */
-    KGLOBALACCEL_DEPRECATED_VERSION(5, 102, "Shortcut contexts are deprecated.")
-    static void activateGlobalShortcutContext(const QString &contextUnique, const QString &contextFriendly, const QString &programName);
-#endif
-
     /**
      * Clean the shortcuts for component @a componentUnique.
      *
