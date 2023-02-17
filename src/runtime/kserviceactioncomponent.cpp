@@ -162,13 +162,16 @@ void KServiceActionComponent::emitGlobalShortcutPressed(const GlobalShortcut &sh
     if (KWindowSystem::isPlatformWayland()) {
         const QString serviceName = m_serviceStorageId.chopped(strlen(".desktop"));
         KWindowSystem::requestXdgActivationToken(nullptr, 0, serviceName);
-        connect(KWindowSystem::self(), &KWindowSystem::xdgActivationTokenArrived, this, [this, launchWithToken](int tokenSerial, const QString &token) {
-            if (tokenSerial == 0) {
-                launchWithToken(token);
-                bool b = disconnect(KWindowSystem::self(), &KWindowSystem::xdgActivationTokenArrived, this, nullptr);
-                Q_ASSERT(b);
-            }
-        });
+        connect(
+            KWindowSystem::self(),
+            &KWindowSystem::xdgActivationTokenArrived,
+            this,
+            [launchWithToken](int tokenSerial, const QString &token) {
+                if (tokenSerial == 0) {
+                    launchWithToken(token);
+                }
+            },
+            Qt::SingleShotConnection);
     } else {
 #if HAVE_X11
         launchWithToken(QString::fromUtf8(KStartupInfo::createNewStartupIdForTimestamp(QX11Info::appTime())));
