@@ -361,6 +361,11 @@ KServiceActionComponent *GlobalShortcutsRegistry::createServiceActionComponent(c
 
 void GlobalShortcutsRegistry::loadSettings()
 {
+    if (!m_components.empty()) {
+        qCDebug(KGLOBALACCELD) << "Registry settings already loaded. Skipped loading again.";
+        return;
+    }
+
     const auto groupList = _config.groupList();
     for (const QString &groupName : groupList) {
         qCDebug(KGLOBALACCELD) << "Loading group " << groupName;
