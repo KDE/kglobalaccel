@@ -19,36 +19,13 @@ msgstr ""
 "X-Generator: Lokalize 0.2\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:614
-#, fuzzy
-#| msgid "Conflict with Global Shortcut"
-msgctxt "KGlobalAccel|"
-msgid "Conflict with Global Shortcut"
-msgstr "সাৰ্বজনীন চমু পথৰ সৈতে দ্বন্দ্ব"
-
-#: kglobalaccel.cpp:615
-#, qt-format
-msgctxt "KGlobalAccel|"
-msgid ""
-"The '%1' key combination has already been allocated to the global action "
-"\"%2\" in %3.\n"
-"Do you want to reassign it from that action to the current one?"
-msgstr ""
-
-#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
-#, fuzzy
-#| msgid "Reassign"
-msgctxt "KGlobalAccel|"
-msgid "Reassign"
-msgstr "পুনঃ নিৰ্ধাৰণ"
-
-#: kglobalaccel.cpp:642
+#: kglobalaccel.cpp:539
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:543
 #, fuzzy, qt-format
 #| msgid ""
 #| "Could not find 'kdemain' in '%1'.\n"
@@ -59,7 +36,7 @@ msgstr ""
 "'%1'-ত 'kdemain' পোৱা নাযায় ।\n"
 "%2"
 
-#: kglobalaccel.cpp:648
+#: kglobalaccel.cpp:545
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -67,12 +44,19 @@ msgid ""
 "%3"
 msgstr ""
 
-#: kglobalaccel.cpp:651
+#: kglobalaccel.cpp:548
 #, fuzzy
 #| msgid "Conflict With Registered Global Shortcut"
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "নিবন্ধিত সাৰ্বজনীন চমু পথৰ সৈতে দ্বন্দ্ব"
+
+#: kglobalaccel.cpp:553
+#, fuzzy
+#| msgid "Reassign"
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "পুনঃ নিৰ্ধাৰণ"
 
 #: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
@@ -84,6 +68,12 @@ msgstr ""
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "মূখ্য সংযোগক্ষেত্ৰ"
+
+#, fuzzy
+#~| msgid "Conflict with Global Shortcut"
+#~ msgctxt "KGlobalAccel|"
+#~ msgid "Conflict with Global Shortcut"
+#~ msgstr "সাৰ্বজনীন চমু পথৰ সৈতে দ্বন্দ্ব"
 
 #~ msgctxt "NAME OF TRANSLATORS"
 #~ msgid "Your names"

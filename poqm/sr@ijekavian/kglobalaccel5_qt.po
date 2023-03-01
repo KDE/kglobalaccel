@@ -22,42 +22,24 @@ msgstr ""
 "X-Environment: kde\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:554
+#: kglobalaccel.cpp:539
+#, fuzzy, qt-format
+#| msgctxt "KGlobalAccel|"
+#| msgid ""
+#| "The '%1' key combination is registered by application %2 for action %3:"
 msgctxt "KGlobalAccel|"
-msgid "Conflict with Global Shortcut"
-msgstr "Сукоб са глобалном пречицом"
-
-#: kglobalaccel.cpp:555
-#, qt-format
-msgctxt "KGlobalAccel|"
-msgid ""
-"The '%1' key combination has already been allocated to the global action "
-"\"%2\" in %3.\n"
-"Do you want to reassign it from that action to the current one?"
-msgstr ""
-"Комбинација тастера %1 већ је додијељена глобалној радњи „%2“ у %3.\n"
-"Желите ли ипак да додијелите ову комбинацију текућој радњи?"
-
-#: kglobalaccel.cpp:565 kglobalaccel.cpp:604
-msgctxt "KGlobalAccel|"
-msgid "Reassign"
-msgstr "Поново додијели"
-
-#: kglobalaccel.cpp:587
-#, qt-format
-msgctxt "KGlobalAccel|"
-msgid "The '%1' key combination is registered by application %2 for action %3:"
+msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "Комбинацију тастера %1 региструје програм %2 за радњу „%3“:"
 
 # >> Appended as list items to the following message.
-#: kglobalaccel.cpp:592
+#: kglobalaccel.cpp:543
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "у контексту „%1“ за радњу „%2“\n"
 
 # >> %3 is an assembly of list items for the previous message
-#: kglobalaccel.cpp:595
+#: kglobalaccel.cpp:545
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -67,17 +49,35 @@ msgstr ""
 "Комбинацију тастера %1 региструје програм %2:\n"
 "%3"
 
-#: kglobalaccel.cpp:599
+#: kglobalaccel.cpp:548
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Сукоб са регистрованом глобалном пречицом"
 
-#: runtime/main.cpp:50 runtime/main.cpp:52
+#: kglobalaccel.cpp:553
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "Поново додијели"
+
+#: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
 msgid "KDE Global Shortcuts Service"
 msgstr "КДЕ сервис глобалних пречица"
 
-#: runtime/main.cpp:55 runtime/main.cpp:56
+#: runtime/main.cpp:48 runtime/main.cpp:49
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "Одржавалац"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid "Conflict with Global Shortcut"
+#~ msgstr "Сукоб са глобалном пречицом"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid ""
+#~ "The '%1' key combination has already been allocated to the global action "
+#~ "\"%2\" in %3.\n"
+#~ "Do you want to reassign it from that action to the current one?"
+#~ msgstr ""
+#~ "Комбинација тастера %1 већ је додијељена глобалној радњи „%2“ у %3.\n"
+#~ "Желите ли ипак да додијелите ову комбинацију текућој радњи?"

@@ -24,29 +24,7 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:614
-msgctxt "KGlobalAccel|"
-msgid "Conflict with Global Shortcut"
-msgstr "Konfliktas su visuotiniais sparčiaisiais klavišais"
-
-#: kglobalaccel.cpp:615
-#, qt-format
-msgctxt "KGlobalAccel|"
-msgid ""
-"The '%1' key combination has already been allocated to the global action "
-"\"%2\" in %3.\n"
-"Do you want to reassign it from that action to the current one?"
-msgstr ""
-"Klavišų kombinacija „%1“ jau yra priskirta visuotiniam veiksmui „%2“, kuris "
-"yra %3.\n"
-"Ar norite iš naujo priskirti šią klavišų kombinaciją pasirinktam veiksmui?"
-
-#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
-msgctxt "KGlobalAccel|"
-msgid "Reassign"
-msgstr "Priskirti iš naujo"
-
-#: kglobalaccel.cpp:642
+#: kglobalaccel.cpp:539
 #, fuzzy, qt-format
 #| msgctxt "KGlobalAccel|"
 #| msgid ""
@@ -55,13 +33,13 @@ msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "Klavišų kombinacija „%1“ yra įregistruota programos %2 veiksmui %3:"
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:543
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "„%1“ kontekste, veiksmui „%2“\n"
 
-#: kglobalaccel.cpp:648
+#: kglobalaccel.cpp:545
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -71,10 +49,15 @@ msgstr ""
 "Klavišų kombinacija „%1“ yra įregistruota programos %2.\n"
 "%3"
 
-#: kglobalaccel.cpp:651
+#: kglobalaccel.cpp:548
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Konfliktas su įregistruotu visuotiniu sparčiuoju klavišu"
+
+#: kglobalaccel.cpp:553
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "Priskirti iš naujo"
 
 #: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
@@ -85,3 +68,17 @@ msgstr "KDE visuotinių sparčiųjų klavišų tarnyba"
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "Prižiūrėtojas"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid "Conflict with Global Shortcut"
+#~ msgstr "Konfliktas su visuotiniais sparčiaisiais klavišais"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid ""
+#~ "The '%1' key combination has already been allocated to the global action "
+#~ "\"%2\" in %3.\n"
+#~ "Do you want to reassign it from that action to the current one?"
+#~ msgstr ""
+#~ "Klavišų kombinacija „%1“ jau yra priskirta visuotiniam veiksmui „%2“, "
+#~ "kuris yra %3.\n"
+#~ "Ar norite iš naujo priskirti šią klavišų kombinaciją pasirinktam veiksmui?"

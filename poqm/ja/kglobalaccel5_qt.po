@@ -27,36 +27,7 @@ msgstr ""
 "X-Generator: Lokalize 1.1\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:614
-msgctxt "KGlobalAccel|"
-msgid "Conflict with Global Shortcut"
-msgstr "グローバルショートカットと競合します"
-
-#: kglobalaccel.cpp:615
-#, fuzzy, qt-format
-#| msgid ""
-#| "The '%1' key combination has already been allocated to the global action "
-#| "\"%2\" in %3.\n"
-#| "Do you want to reassign it from that action to the current one?"
-msgctxt "KGlobalAccel|"
-msgid ""
-"The '%1' key combination has already been allocated to the global action "
-"\"%2\" in %3.\n"
-"Do you want to reassign it from that action to the current one?"
-msgstr ""
-"キーの組み合わせ <shortcut>%1</shortcut> は <application>%3</application> の"
-"グローバルアクション<interface>%2</interface>に割り当て済みです。\n"
-"現在のアクションに割り当て直しますか？|/|キーの組み合わせ <shortcut>%1</"
-"shortcut> は <application>%3</application> のグローバルアクション<interface>"
-"$[~stripAccel $[~getForm %2 ~full]]</interface>に割り当て済みです。\n"
-"現在のアクションに割り当て直しますか？"
-
-#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
-msgctxt "KGlobalAccel|"
-msgid "Reassign"
-msgstr "割り当て直す"
-
-#: kglobalaccel.cpp:642
+#: kglobalaccel.cpp:539
 #, fuzzy, qt-format
 #| msgid ""
 #| "The '%1' key combination is registered by application %2 for action %3:"
@@ -69,7 +40,7 @@ msgstr ""
 "<application>%2</application> によってアクション<interface>$[~stripAccel "
 "$[~getForm %3 ~full]]</interface>のために登録されています:"
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:543
 #, fuzzy, qt-format
 #| msgid "In context '%1' for action '%2'\n"
 msgctxt "KGlobalAccel|"
@@ -80,7 +51,7 @@ msgstr ""
 "|/|コンテキスト<interface>%1</interface>でのアクション<interface>"
 "$[~stripAccel $[~getForm %2 ~full]]</interface>\n"
 
-#: kglobalaccel.cpp:648
+#: kglobalaccel.cpp:545
 #, fuzzy, qt-format
 #| msgid ""
 #| "The '%1' key combination is registered by application %2.\n"
@@ -94,10 +65,15 @@ msgstr ""
 "application> によって登録されています。\n"
 "%3"
 
-#: kglobalaccel.cpp:651
+#: kglobalaccel.cpp:548
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "登録済みのグローバルショートカットと競合します"
+
+#: kglobalaccel.cpp:553
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "割り当て直す"
 
 #: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
@@ -108,3 +84,26 @@ msgstr ""
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr ""
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid "Conflict with Global Shortcut"
+#~ msgstr "グローバルショートカットと競合します"
+
+#, fuzzy
+#~| msgid ""
+#~| "The '%1' key combination has already been allocated to the global action "
+#~| "\"%2\" in %3.\n"
+#~| "Do you want to reassign it from that action to the current one?"
+#~ msgctxt "KGlobalAccel|"
+#~ msgid ""
+#~ "The '%1' key combination has already been allocated to the global action "
+#~ "\"%2\" in %3.\n"
+#~ "Do you want to reassign it from that action to the current one?"
+#~ msgstr ""
+#~ "キーの組み合わせ <shortcut>%1</shortcut> は <application>%3</application> "
+#~ "のグローバルアクション<interface>%2</interface>に割り当て済みです。\n"
+#~ "現在のアクションに割り当て直しますか？|/|キーの組み合わせ <shortcut>%1</"
+#~ "shortcut> は <application>%3</application> のグローバルアクション"
+#~ "<interface>$[~stripAccel $[~getForm %2 ~full]]</interface>に割り当て済みで"
+#~ "す。\n"
+#~ "現在のアクションに割り当て直しますか？"

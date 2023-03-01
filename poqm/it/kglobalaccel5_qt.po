@@ -27,29 +27,7 @@ msgstr ""
 "X-Generator: Lokalize 22.08.3\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:614
-msgctxt "KGlobalAccel|"
-msgid "Conflict with Global Shortcut"
-msgstr "Conflitto con una scorciatoia globale"
-
-#: kglobalaccel.cpp:615
-#, qt-format
-msgctxt "KGlobalAccel|"
-msgid ""
-"The '%1' key combination has already been allocated to the global action "
-"\"%2\" in %3.\n"
-"Do you want to reassign it from that action to the current one?"
-msgstr ""
-"La combinazione di tasti «%1» è già stata assegnata all'azione globale «%2» "
-"in %3.\n"
-"Vuoi riassegnarla da quell'azione all'azione corrente?"
-
-#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
-msgctxt "KGlobalAccel|"
-msgid "Reassign"
-msgstr "Riassegna"
-
-#: kglobalaccel.cpp:642
+#: kglobalaccel.cpp:539
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
@@ -57,13 +35,13 @@ msgstr ""
 "La combinazione di tasti «%1» è registrata dall'applicazione %2 per l'azione "
 "%3."
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:543
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "Nel contesto «%1» per l'azione «%2»\n"
 
-#: kglobalaccel.cpp:648
+#: kglobalaccel.cpp:545
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -73,10 +51,15 @@ msgstr ""
 "La combinazione di tasti «%1» è registrata dall'applicazione %2.\n"
 "%3"
 
-#: kglobalaccel.cpp:651
+#: kglobalaccel.cpp:548
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Conflitto con una scorciatoia globale registrata"
+
+#: kglobalaccel.cpp:553
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "Riassegna"
 
 #: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
@@ -87,6 +70,20 @@ msgstr "Servizio delle scorciatoie globali di KDE"
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "Responsabile"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid "Conflict with Global Shortcut"
+#~ msgstr "Conflitto con una scorciatoia globale"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid ""
+#~ "The '%1' key combination has already been allocated to the global action "
+#~ "\"%2\" in %3.\n"
+#~ "Do you want to reassign it from that action to the current one?"
+#~ msgstr ""
+#~ "La combinazione di tasti «%1» è già stata assegnata all'azione globale "
+#~ "«%2» in %3.\n"
+#~ "Vuoi riassegnarla da quell'azione all'azione corrente?"
 
 #~ msgctxt "NAME OF TRANSLATORS"
 #~ msgid "Your names"

@@ -32,29 +32,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:614
-msgctxt "KGlobalAccel|"
-msgid "Conflict with Global Shortcut"
-msgstr "Σύγκρουση με καθολική συντόμευση"
-
-#: kglobalaccel.cpp:615
-#, qt-format
-msgctxt "KGlobalAccel|"
-msgid ""
-"The '%1' key combination has already been allocated to the global action "
-"\"%2\" in %3.\n"
-"Do you want to reassign it from that action to the current one?"
-msgstr ""
-"Ο συνδυασμός πλήκτρων '%1' έχει ήδη ανατεθεί στην καθολική ενέργεια \"%2\" "
-"στο %3.\n"
-"Επιθυμείτε νέα ανάθεση από την ενέργεια αυτή στην τρέχουσα;"
-
-#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
-msgctxt "KGlobalAccel|"
-msgid "Reassign"
-msgstr "Ανάθεση ξανά"
-
-#: kglobalaccel.cpp:642
+#: kglobalaccel.cpp:539
 #, fuzzy, qt-format
 #| msgctxt "KGlobalAccel|"
 #| msgid ""
@@ -65,13 +43,13 @@ msgstr ""
 "Ο συνδυασμός πλήκτρων '%1' είναι καταχωρημένος από την εφαρμογή %2 για την "
 "ενέργεια %3:"
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:543
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "Στο πλαίσιο '%1' για την ενέργεια '%2'\n"
 
-#: kglobalaccel.cpp:648
+#: kglobalaccel.cpp:545
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -81,10 +59,15 @@ msgstr ""
 "Ο συνδυασμός πλήκτρων '%1' είναι καταχωρημένος από την εφαρμογή %2.\n"
 " %3"
 
-#: kglobalaccel.cpp:651
+#: kglobalaccel.cpp:548
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Σύγκρουση με καταχωρημένη καθολική συντόμευση"
+
+#: kglobalaccel.cpp:553
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "Ανάθεση ξανά"
 
 #: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
@@ -95,6 +78,20 @@ msgstr "Υπηρεσία καθολικών συντομεύσεων του KDE"
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "Συντηρητής"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid "Conflict with Global Shortcut"
+#~ msgstr "Σύγκρουση με καθολική συντόμευση"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid ""
+#~ "The '%1' key combination has already been allocated to the global action "
+#~ "\"%2\" in %3.\n"
+#~ "Do you want to reassign it from that action to the current one?"
+#~ msgstr ""
+#~ "Ο συνδυασμός πλήκτρων '%1' έχει ήδη ανατεθεί στην καθολική ενέργεια "
+#~ "\"%2\" στο %3.\n"
+#~ "Επιθυμείτε νέα ανάθεση από την ενέργεια αυτή στην τρέχουσα;"
 
 #~ msgctxt "NAME OF TRANSLATORS"
 #~ msgid "Your names"

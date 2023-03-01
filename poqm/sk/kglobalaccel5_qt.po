@@ -23,29 +23,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:614
-msgctxt "KGlobalAccel|"
-msgid "Conflict with Global Shortcut"
-msgstr "Konflikt s globálnymi skratkami"
-
-#: kglobalaccel.cpp:615
-#, qt-format
-msgctxt "KGlobalAccel|"
-msgid ""
-"The '%1' key combination has already been allocated to the global action "
-"\"%2\" in %3.\n"
-"Do you want to reassign it from that action to the current one?"
-msgstr ""
-"Klávesová kombinácia '%1' už bola pridelená pre globálnu akciu \"%2\" in "
-"%3.\n"
-"Chcete ju priradiť aktuálnej akcii?"
-
-#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
-msgctxt "KGlobalAccel|"
-msgid "Reassign"
-msgstr "Znovu priradiť"
-
-#: kglobalaccel.cpp:642
+#: kglobalaccel.cpp:539
 #, fuzzy, qt-format
 #| msgctxt "KGlobalAccel|"
 #| msgid ""
@@ -54,13 +32,13 @@ msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "Klávesová kombinácia '%1' je použitá v aplikácii %2 pre akciu %3:"
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:543
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "V kontexte '%1' pre akciu '%2'\n"
 
-#: kglobalaccel.cpp:648
+#: kglobalaccel.cpp:545
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -70,10 +48,15 @@ msgstr ""
 "Klávesová kombinácia '%1' je použitá v aplikácii %2.\n"
 "%3"
 
-#: kglobalaccel.cpp:651
+#: kglobalaccel.cpp:548
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Konflikt s použitou globálnou skratkou"
+
+#: kglobalaccel.cpp:553
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "Znovu priradiť"
 
 #: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
@@ -84,6 +67,20 @@ msgstr "KDE služba - globálne skratky"
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "Správca"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid "Conflict with Global Shortcut"
+#~ msgstr "Konflikt s globálnymi skratkami"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid ""
+#~ "The '%1' key combination has already been allocated to the global action "
+#~ "\"%2\" in %3.\n"
+#~ "Do you want to reassign it from that action to the current one?"
+#~ msgstr ""
+#~ "Klávesová kombinácia '%1' už bola pridelená pre globálnu akciu \"%2\" in "
+#~ "%3.\n"
+#~ "Chcete ju priradiť aktuálnej akcii?"
 
 #~ msgctxt "NAME OF TRANSLATORS"
 #~ msgid "Your names"

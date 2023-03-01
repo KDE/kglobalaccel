@@ -38,29 +38,7 @@ msgstr ""
 "X-POT-Import-Date: 2013-01-13 20:43:21+0000\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:614
-msgctxt "KGlobalAccel|"
-msgid "Conflict with Global Shortcut"
-msgstr "Ristiriita työpöydänlaajuisen pikanäppäimen kanssa"
-
-#: kglobalaccel.cpp:615
-#, qt-format
-msgctxt "KGlobalAccel|"
-msgid ""
-"The '%1' key combination has already been allocated to the global action "
-"\"%2\" in %3.\n"
-"Do you want to reassign it from that action to the current one?"
-msgstr ""
-"Näppäinyhdistelmä %1 on jo käytössä yleiselle toiminnolle ”%2” sovelluksessa "
-"%3.\n"
-"Haluatko korvata näppäinyhdistelmän tällä toiminnolla?"
-
-#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
-msgctxt "KGlobalAccel|"
-msgid "Reassign"
-msgstr "Sijoita uudelleen"
-
-#: kglobalaccel.cpp:642
+#: kglobalaccel.cpp:539
 #, fuzzy, qt-format
 #| msgctxt "KGlobalAccel|"
 #| msgid ""
@@ -69,13 +47,13 @@ msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "Näppäinyhdistelmä ”%1” on rekisteröity sovelluksen %2 toiminnolle %3:"
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:543
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "Käyttöyhteydessä ”%1” toiminnolle ”%2”\n"
 
-#: kglobalaccel.cpp:648
+#: kglobalaccel.cpp:545
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -85,10 +63,15 @@ msgstr ""
 "Näppäinyhdistelmän ”%1” on rekisteröinyt sovellus %2.\n"
 "%3"
 
-#: kglobalaccel.cpp:651
+#: kglobalaccel.cpp:548
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Ristiriita työpöydänlaajuisen näppäinyhdistelmän kanssa"
+
+#: kglobalaccel.cpp:553
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "Sijoita uudelleen"
 
 #: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
@@ -99,6 +82,20 @@ msgstr "KDE:n työpöydänlaajuisten pikanäppäinten palvelu"
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "Ylläpitäjä"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid "Conflict with Global Shortcut"
+#~ msgstr "Ristiriita työpöydänlaajuisen pikanäppäimen kanssa"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid ""
+#~ "The '%1' key combination has already been allocated to the global action "
+#~ "\"%2\" in %3.\n"
+#~ "Do you want to reassign it from that action to the current one?"
+#~ msgstr ""
+#~ "Näppäinyhdistelmä %1 on jo käytössä yleiselle toiminnolle ”%2” "
+#~ "sovelluksessa %3.\n"
+#~ "Haluatko korvata näppäinyhdistelmän tällä toiminnolla?"
 
 #~ msgctxt "NAME OF TRANSLATORS"
 #~ msgid "Your names"

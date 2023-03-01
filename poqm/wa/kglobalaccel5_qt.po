@@ -23,49 +23,20 @@ msgstr ""
 "X-Poedit-Language: Walloon\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:614
-#, fuzzy
-#| msgid "Conflict with Global Shortcut"
-msgctxt "KGlobalAccel|"
-msgid "Conflict with Global Shortcut"
-msgstr "Gn a fortcherwaedje avou les rascourtis po tot costé"
-
-#: kglobalaccel.cpp:615
-#, fuzzy, qt-format
-#| msgid ""
-#| "The '%1' key combination has already been allocated to the global action "
-#| "\"%2\" in %3.\n"
-#| "Do you want to reassign it from that action to the current one?"
-msgctxt "KGlobalAccel|"
-msgid ""
-"The '%1' key combination has already been allocated to the global action "
-"\"%2\" in %3.\n"
-"Do you want to reassign it from that action to the current one?"
-msgstr ""
-"L' atelêye di tapes «%1» sieve dedja po l' accion globåle «%2» dins %3.\n"
-"El voloz vs risaetchî a l' accion do moumint pol diner a cisse accion ci?"
-
-#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
-#, fuzzy
-#| msgid "Reassign"
-msgctxt "KGlobalAccel|"
-msgid "Reassign"
-msgstr "Raroyî"
-
-#: kglobalaccel.cpp:642
+#: kglobalaccel.cpp:539
 #, fuzzy, qt-format
 #| msgid "Shortcut '%1' in Application %2 for action %3\n"
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "Rascourti '%1' e programe %2 pol faitindje %3\n"
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:543
 #, fuzzy, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "Rascourtis po %1"
 
-#: kglobalaccel.cpp:648
+#: kglobalaccel.cpp:545
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -73,12 +44,19 @@ msgid ""
 "%3"
 msgstr ""
 
-#: kglobalaccel.cpp:651
+#: kglobalaccel.cpp:548
 #, fuzzy
 #| msgid "Conflict With Registered Global Shortcut"
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Gn a fortcherwaedje avou les rascourtis globås"
+
+#: kglobalaccel.cpp:553
+#, fuzzy
+#| msgid "Reassign"
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "Raroyî"
 
 #: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
@@ -91,6 +69,26 @@ msgstr ""
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "Mintneu"
+
+#, fuzzy
+#~| msgid "Conflict with Global Shortcut"
+#~ msgctxt "KGlobalAccel|"
+#~ msgid "Conflict with Global Shortcut"
+#~ msgstr "Gn a fortcherwaedje avou les rascourtis po tot costé"
+
+#, fuzzy
+#~| msgid ""
+#~| "The '%1' key combination has already been allocated to the global action "
+#~| "\"%2\" in %3.\n"
+#~| "Do you want to reassign it from that action to the current one?"
+#~ msgctxt "KGlobalAccel|"
+#~ msgid ""
+#~ "The '%1' key combination has already been allocated to the global action "
+#~ "\"%2\" in %3.\n"
+#~ "Do you want to reassign it from that action to the current one?"
+#~ msgstr ""
+#~ "L' atelêye di tapes «%1» sieve dedja po l' accion globåle «%2» dins %3.\n"
+#~ "El voloz vs risaetchî a l' accion do moumint pol diner a cisse accion ci?"
 
 #~ msgctxt "NAME OF TRANSLATORS"
 #~ msgid "Your names"

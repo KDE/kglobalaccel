@@ -15,29 +15,7 @@ msgstr ""
 "X-Generator: Virtaal 0.7.1\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:614
-msgctxt "KGlobalAccel|"
-msgid "Conflict with Global Shortcut"
-msgstr "Còmhstri le ath-ghoirid uile-choitcheann"
-
-#: kglobalaccel.cpp:615
-#, qt-format
-msgctxt "KGlobalAccel|"
-msgid ""
-"The '%1' key combination has already been allocated to the global action "
-"\"%2\" in %3.\n"
-"Do you want to reassign it from that action to the current one?"
-msgstr ""
-"Chaidh na co-iuchraichean \"%1\" a riarachadh dhan gnìomh uile-choitcheann "
-"\"%2\" ann an \"%3\" mar-thà.\n"
-"A bheil thu airson an riarachadh atharrachadh on ghnìomh ud dhan ghnìomh seo?"
-
-#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
-msgctxt "KGlobalAccel|"
-msgid "Reassign"
-msgstr "Sònraich às ùr"
-
-#: kglobalaccel.cpp:642
+#: kglobalaccel.cpp:539
 #, fuzzy, qt-format
 #| msgctxt "KGlobalAccel|"
 #| msgid ""
@@ -48,13 +26,13 @@ msgstr ""
 "Chaidh na co-iuchraichean \"%1 a chlàradh leis an aplacaid %2 airson a' "
 "ghnìomha \"%3\":"
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:543
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "Sa cho-theacsa \"%1\" airson a' ghnìomh \"%2\"\n"
 
-#: kglobalaccel.cpp:648
+#: kglobalaccel.cpp:545
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -64,10 +42,15 @@ msgstr ""
 "Chaidh na co-iuchraichean \"%1\" a chlàradh leis an aplacaid \"%2\".\n"
 "%3"
 
-#: kglobalaccel.cpp:651
+#: kglobalaccel.cpp:548
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Còmhstri le ath-ghoirid chlàraichte"
+
+#: kglobalaccel.cpp:553
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "Sònraich às ùr"
 
 #: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
@@ -78,3 +61,18 @@ msgstr "Seirbheis nan ath-ghoiridean uile-choitcheann KDE"
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "Neach-glèidhidh"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid "Conflict with Global Shortcut"
+#~ msgstr "Còmhstri le ath-ghoirid uile-choitcheann"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid ""
+#~ "The '%1' key combination has already been allocated to the global action "
+#~ "\"%2\" in %3.\n"
+#~ "Do you want to reassign it from that action to the current one?"
+#~ msgstr ""
+#~ "Chaidh na co-iuchraichean \"%1\" a riarachadh dhan gnìomh uile-"
+#~ "choitcheann \"%2\" ann an \"%3\" mar-thà.\n"
+#~ "A bheil thu airson an riarachadh atharrachadh on ghnìomh ud dhan ghnìomh "
+#~ "seo?"

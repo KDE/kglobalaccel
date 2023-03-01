@@ -24,42 +24,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:614
-#, fuzzy
-msgctxt "KGlobalAccel|"
-msgid "Conflict with Global Shortcut"
-msgstr "Ungqubano Neendlela ezimfutshane Zamazwe"
-
-#: kglobalaccel.cpp:615
-#, fuzzy, qt-format
-msgctxt "KGlobalAccel|"
-msgid ""
-"The '%1' key combination has already been allocated to the global action "
-"\"%2\" in %3.\n"
-"Do you want to reassign it from that action to the current one?"
-msgstr ""
-"Indibaniselwano '%1' yesitshixo sele inikezelwe kwi \"%2\"ntshukumo.\n"
-"Nceda khetha indibaniselwano yesinye isitshixo."
-
-#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
-#, fuzzy
-msgctxt "KGlobalAccel|"
-msgid "Reassign"
-msgstr "Isirashiya"
-
-#: kglobalaccel.cpp:642
+#: kglobalaccel.cpp:539
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:543
 #, fuzzy, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "Ulwazi lwetyala"
 
-#: kglobalaccel.cpp:648
+#: kglobalaccel.cpp:545
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -67,11 +44,17 @@ msgid ""
 "%3"
 msgstr ""
 
-#: kglobalaccel.cpp:651
+#: kglobalaccel.cpp:548
 #, fuzzy
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Ungqubano Neendlela ezimfutshane Zamazwe"
+
+#: kglobalaccel.cpp:553
+#, fuzzy
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "Isirashiya"
 
 #: runtime/main.cpp:43 runtime/main.cpp:45
 #, fuzzy
@@ -84,6 +67,21 @@ msgstr "Ezimfutshane"
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "&Window Entsha"
+
+#, fuzzy
+#~ msgctxt "KGlobalAccel|"
+#~ msgid "Conflict with Global Shortcut"
+#~ msgstr "Ungqubano Neendlela ezimfutshane Zamazwe"
+
+#, fuzzy
+#~ msgctxt "KGlobalAccel|"
+#~ msgid ""
+#~ "The '%1' key combination has already been allocated to the global action "
+#~ "\"%2\" in %3.\n"
+#~ "Do you want to reassign it from that action to the current one?"
+#~ msgstr ""
+#~ "Indibaniselwano '%1' yesitshixo sele inikezelwe kwi \"%2\"ntshukumo.\n"
+#~ "Nceda khetha indibaniselwano yesinye isitshixo."
 
 #, fuzzy
 #~ msgctxt "NAME OF TRANSLATORS"

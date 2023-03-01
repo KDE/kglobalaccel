@@ -32,30 +32,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:614
-msgctxt "KGlobalAccel|"
-msgid "Conflict with Global Shortcut"
-msgstr "Conflict met globale sneltoets"
-
-#: kglobalaccel.cpp:615
-#, qt-format
-msgctxt "KGlobalAccel|"
-msgid ""
-"The '%1' key combination has already been allocated to the global action "
-"\"%2\" in %3.\n"
-"Do you want to reassign it from that action to the current one?"
-msgstr ""
-"De toetscombinatie '%1' is reeds toegewezen aan de algemene actie \"%2\" in "
-"\"%3\".\n"
-"Wilt u deze toetscombinatie daar verwijderen en toewijzen aan de huidige "
-"actie?"
-
-#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
-msgctxt "KGlobalAccel|"
-msgid "Reassign"
-msgstr "Opnieuw toewijzen"
-
-#: kglobalaccel.cpp:642
+#: kglobalaccel.cpp:539
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
@@ -63,13 +40,13 @@ msgstr ""
 "De toetsencombinatie '%1' is geregistreerd door het programma %2 voor de "
 "actie %3."
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:543
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "In context '%1' voor actie '%2'\n"
 
-#: kglobalaccel.cpp:648
+#: kglobalaccel.cpp:545
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -79,10 +56,15 @@ msgstr ""
 "De toetscombinatie '%1' is geregistreerd door applicatie %2.\n"
 "%3"
 
-#: kglobalaccel.cpp:651
+#: kglobalaccel.cpp:548
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Conflict met geregistreerde algemene sneltoets"
+
+#: kglobalaccel.cpp:553
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "Opnieuw toewijzen"
 
 #: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
@@ -93,6 +75,21 @@ msgstr "Service voor KDE algemene sneltoetsen"
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "Onderhouder"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid "Conflict with Global Shortcut"
+#~ msgstr "Conflict met globale sneltoets"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid ""
+#~ "The '%1' key combination has already been allocated to the global action "
+#~ "\"%2\" in %3.\n"
+#~ "Do you want to reassign it from that action to the current one?"
+#~ msgstr ""
+#~ "De toetscombinatie '%1' is reeds toegewezen aan de algemene actie \"%2\" "
+#~ "in \"%3\".\n"
+#~ "Wilt u deze toetscombinatie daar verwijderen en toewijzen aan de huidige "
+#~ "actie?"
 
 #~ msgctxt "NAME OF TRANSLATORS"
 #~ msgid "Your names"

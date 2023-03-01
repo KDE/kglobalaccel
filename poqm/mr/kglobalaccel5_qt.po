@@ -20,28 +20,7 @@ msgstr ""
 "X-Generator: Lokalize 1.5\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:614
-msgctxt "KGlobalAccel|"
-msgid "Conflict with Global Shortcut"
-msgstr "जागतिक शॉर्टकट सह मतभेद"
-
-#: kglobalaccel.cpp:615
-#, qt-format
-msgctxt "KGlobalAccel|"
-msgid ""
-"The '%1' key combination has already been allocated to the global action "
-"\"%2\" in %3.\n"
-"Do you want to reassign it from that action to the current one?"
-msgstr ""
-"'%1' ही कळ संयोजना आधीच \"%2\" या जागतिक क्रियेसाठी %3 मध्ये नेमलेली आहे.\n"
-"तुम्हाला ती आताच्या क्रियेसाठी वापरायची आहे का?"
-
-#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
-msgctxt "KGlobalAccel|"
-msgid "Reassign"
-msgstr "पुन्हा नेमणे"
-
-#: kglobalaccel.cpp:642
+#: kglobalaccel.cpp:539
 #, fuzzy, qt-format
 #| msgctxt "KGlobalAccel|"
 #| msgid ""
@@ -50,13 +29,13 @@ msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "'%1' ही कळ संयोजना आधीच %2 या अनुप्रयोगास %3 या क्रियेसाठी फाळवलेली आहे."
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:543
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "'%1' या संदर्भात '%2' या क्रियासाठी \n"
 
-#: kglobalaccel.cpp:648
+#: kglobalaccel.cpp:545
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -64,10 +43,15 @@ msgid ""
 "%3"
 msgstr "'%1' ही कळ संयोजना आधीच %2 या अनुप्रयोगास %3 या क्रियेसाठी फाळवलेली आहे."
 
-#: kglobalaccel.cpp:651
+#: kglobalaccel.cpp:548
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "पंजीकृत जागतिक शॉर्टकटसह मतभेद"
+
+#: kglobalaccel.cpp:553
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "पुन्हा नेमणे"
 
 #: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
@@ -80,6 +64,19 @@ msgstr ""
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "व्यवस्थापक"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid "Conflict with Global Shortcut"
+#~ msgstr "जागतिक शॉर्टकट सह मतभेद"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid ""
+#~ "The '%1' key combination has already been allocated to the global action "
+#~ "\"%2\" in %3.\n"
+#~ "Do you want to reassign it from that action to the current one?"
+#~ msgstr ""
+#~ "'%1' ही कळ संयोजना आधीच \"%2\" या जागतिक क्रियेसाठी %3 मध्ये नेमलेली आहे.\n"
+#~ "तुम्हाला ती आताच्या क्रियेसाठी वापरायची आहे का?"
 
 #~ msgctxt "NAME OF TRANSLATORS"
 #~ msgid "Your names"

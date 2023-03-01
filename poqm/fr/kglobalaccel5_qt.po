@@ -37,30 +37,7 @@ msgstr ""
 "X-Text-Markup: qtrich\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:614
-msgctxt "KGlobalAccel|"
-msgid "Conflict with Global Shortcut"
-msgstr "Conflit avec les raccourcis globaux"
-
-#: kglobalaccel.cpp:615
-#, qt-format
-msgctxt "KGlobalAccel|"
-msgid ""
-"The '%1' key combination has already been allocated to the global action "
-"\"%2\" in %3.\n"
-"Do you want to reassign it from that action to the current one?"
-msgstr ""
-"La combinaison de touches « %1 » a déjà été allouée à l'action globale "
-"« %2 » dans « %3 ».\n"
-"Voulez-vous réaffecter cette combinaison depuis cette action vers l'action "
-"actuelle ?"
-
-#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
-msgctxt "KGlobalAccel|"
-msgid "Reassign"
-msgstr "Réaffecter"
-
-#: kglobalaccel.cpp:642
+#: kglobalaccel.cpp:539
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
@@ -68,13 +45,13 @@ msgstr ""
 "La combinaison de touches « %1 » est enregistrée par l'application %2 pour "
 "l'action %3."
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:543
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "Dans le contexte « %1 » pour l'action « %2 »\n"
 
-#: kglobalaccel.cpp:648
+#: kglobalaccel.cpp:545
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -84,10 +61,15 @@ msgstr ""
 "La combinaison de touches « %1 » est enregistrée par l'application %2.\n"
 "%3"
 
-#: kglobalaccel.cpp:651
+#: kglobalaccel.cpp:548
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Conflit avec le raccourci global enregistré"
+
+#: kglobalaccel.cpp:553
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "Réaffecter"
 
 #: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
@@ -98,6 +80,21 @@ msgstr "Service de raccourcis globaux KDE"
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "Mainteneur"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid "Conflict with Global Shortcut"
+#~ msgstr "Conflit avec les raccourcis globaux"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid ""
+#~ "The '%1' key combination has already been allocated to the global action "
+#~ "\"%2\" in %3.\n"
+#~ "Do you want to reassign it from that action to the current one?"
+#~ msgstr ""
+#~ "La combinaison de touches « %1 » a déjà été allouée à l'action globale "
+#~ "« %2 » dans « %3 ».\n"
+#~ "Voulez-vous réaffecter cette combinaison depuis cette action vers "
+#~ "l'action actuelle ?"
 
 #~ msgctxt "NAME OF TRANSLATORS"
 #~ msgid "Your names"

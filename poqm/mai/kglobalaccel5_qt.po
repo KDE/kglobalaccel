@@ -21,42 +21,13 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:614
-#, fuzzy
-#| msgid "Conflict with Global Shortcut"
-msgctxt "KGlobalAccel|"
-msgid "Conflict with Global Shortcut"
-msgstr "ग्लोबल शार्टकट केर परस्पर विरोध मे अछि"
-
-#: kglobalaccel.cpp:615
-#, fuzzy, qt-format
-#| msgid ""
-#| "The '%1' key combination has already been allocated to the global action "
-#| "\"%2\" in %3.\n"
-#| "Do you want to reassign it from that action to the current one?"
-msgctxt "KGlobalAccel|"
-msgid ""
-"The '%1' key combination has already been allocated to the global action "
-"\"%2\" in %3.\n"
-"Do you want to reassign it from that action to the current one?"
-msgstr ""
-"कुंजी '%1' संयोजन पहिने सँ \"%2\" वैश्विक काज क' लेल %3 मे सम्बद्ध अछि.\n"
-"की अहाँ एकरा मोजुदा काज सँ फिनु सँ  सम्बद्ध कएनाइ चाहैत छी?"
-
-#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
-#, fuzzy
-#| msgid "Reassign"
-msgctxt "KGlobalAccel|"
-msgid "Reassign"
-msgstr "फिनु सँ आबंटित करू"
-
-#: kglobalaccel.cpp:642
+#: kglobalaccel.cpp:539
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:543
 #, fuzzy, qt-format
 #| msgid ""
 #| "Could not find 'kdemain' in '%1'.\n"
@@ -67,7 +38,7 @@ msgstr ""
 " 'केडीइ-मेन'  '%1' पर नहि भेटल.\n"
 "%2"
 
-#: kglobalaccel.cpp:648
+#: kglobalaccel.cpp:545
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -75,12 +46,19 @@ msgid ""
 "%3"
 msgstr ""
 
-#: kglobalaccel.cpp:651
+#: kglobalaccel.cpp:548
 #, fuzzy
 #| msgid "Conflict with Global Shortcut"
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "ग्लोबल शार्टकट केर परस्पर विरोध मे अछि"
+
+#: kglobalaccel.cpp:553
+#, fuzzy
+#| msgid "Reassign"
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "फिनु सँ आबंटित करू"
 
 #: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
@@ -93,6 +71,26 @@ msgstr ""
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "अनुरक्षक"
+
+#, fuzzy
+#~| msgid "Conflict with Global Shortcut"
+#~ msgctxt "KGlobalAccel|"
+#~ msgid "Conflict with Global Shortcut"
+#~ msgstr "ग्लोबल शार्टकट केर परस्पर विरोध मे अछि"
+
+#, fuzzy
+#~| msgid ""
+#~| "The '%1' key combination has already been allocated to the global action "
+#~| "\"%2\" in %3.\n"
+#~| "Do you want to reassign it from that action to the current one?"
+#~ msgctxt "KGlobalAccel|"
+#~ msgid ""
+#~ "The '%1' key combination has already been allocated to the global action "
+#~ "\"%2\" in %3.\n"
+#~ "Do you want to reassign it from that action to the current one?"
+#~ msgstr ""
+#~ "कुंजी '%1' संयोजन पहिने सँ \"%2\" वैश्विक काज क' लेल %3 मे सम्बद्ध अछि.\n"
+#~ "की अहाँ एकरा मोजुदा काज सँ फिनु सँ  सम्बद्ध कएनाइ चाहैत छी?"
 
 #~ msgctxt "NAME OF TRANSLATORS"
 #~ msgid "Your names"

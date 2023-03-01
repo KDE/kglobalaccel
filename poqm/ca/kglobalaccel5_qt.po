@@ -26,28 +26,7 @@ msgstr ""
 "X-Accelerator-Marker: &\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:614
-msgctxt "KGlobalAccel|"
-msgid "Conflict with Global Shortcut"
-msgstr "Conflicte amb una drecera global"
-
-#: kglobalaccel.cpp:615
-#, qt-format
-msgctxt "KGlobalAccel|"
-msgid ""
-"The '%1' key combination has already been allocated to the global action "
-"\"%2\" in %3.\n"
-"Do you want to reassign it from that action to the current one?"
-msgstr ""
-"La combinació de tecles «%1» ja s'ha assignat a l'acció global «%2» en %3.\n"
-"Voleu reassignar-la des d'aquesta acció a l'acció actual?"
-
-#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
-msgctxt "KGlobalAccel|"
-msgid "Reassign"
-msgstr "Reassigna"
-
-#: kglobalaccel.cpp:642
+#: kglobalaccel.cpp:539
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
@@ -55,13 +34,13 @@ msgstr ""
 "La combinació de tecles «%1» està registrada per l'aplicació %2 per a "
 "l'acció %3."
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:543
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "En el context «%1» per a l'acció «%2»\n"
 
-#: kglobalaccel.cpp:648
+#: kglobalaccel.cpp:545
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -71,10 +50,15 @@ msgstr ""
 "La combinació de tecles «%1» està registrada per l'aplicació %2.\n"
 "%3"
 
-#: kglobalaccel.cpp:651
+#: kglobalaccel.cpp:548
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Conflicte amb una drecera global registrada"
+
+#: kglobalaccel.cpp:553
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "Reassigna"
 
 #: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
@@ -85,3 +69,17 @@ msgstr "Servei de dreceres globals del KDE"
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "Mantenidor"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid "Conflict with Global Shortcut"
+#~ msgstr "Conflicte amb una drecera global"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid ""
+#~ "The '%1' key combination has already been allocated to the global action "
+#~ "\"%2\" in %3.\n"
+#~ "Do you want to reassign it from that action to the current one?"
+#~ msgstr ""
+#~ "La combinació de tecles «%1» ja s'ha assignat a l'acció global «%2» en "
+#~ "%3.\n"
+#~ "Voleu reassignar-la des d'aquesta acció a l'acció actual?"

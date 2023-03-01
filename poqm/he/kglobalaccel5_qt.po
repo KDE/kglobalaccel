@@ -30,42 +30,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:614
-#, fuzzy
-msgctxt "KGlobalAccel|"
-msgid "Conflict with Global Shortcut"
-msgstr "התנגשות עם קיצורים גלובליים"
-
-#: kglobalaccel.cpp:615
-#, fuzzy, qt-format
-msgctxt "KGlobalAccel|"
-msgid ""
-"The '%1' key combination has already been allocated to the global action "
-"\"%2\" in %3.\n"
-"Do you want to reassign it from that action to the current one?"
-msgstr ""
-"שילוב המקשים \"%1\" כבר הוקצה לפעולה הגלובלית \"%2\" ב־%3.\n"
-"האם ברצונך לשנות את השיוך שלו מהפעולה הזו לפעולה לחדשה?"
-
-#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
-#, fuzzy
-msgctxt "KGlobalAccel|"
-msgid "Reassign"
-msgstr "שייך מחדש"
-
-#: kglobalaccel.cpp:642
+#: kglobalaccel.cpp:539
 #, fuzzy, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "צירוף מקשים \"%1\" כבר רשום ליישום %2 עבור הפעולה %3:"
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:543
 #, fuzzy, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "בהקשר \"%1\" עבור פעולה \"%2\"\n"
 
-#: kglobalaccel.cpp:648
+#: kglobalaccel.cpp:545
 #, fuzzy, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -75,11 +52,17 @@ msgstr ""
 "צירוף המקשים \"%1\" עבר רשום עבור יישום %2.\n"
 "%3"
 
-#: kglobalaccel.cpp:651
+#: kglobalaccel.cpp:548
 #, fuzzy
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "התנגשות עם קיצורים גלובליים"
+
+#: kglobalaccel.cpp:553
+#, fuzzy
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "שייך מחדש"
 
 #: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
@@ -91,3 +74,18 @@ msgstr ""
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "מתחזק"
+
+#, fuzzy
+#~ msgctxt "KGlobalAccel|"
+#~ msgid "Conflict with Global Shortcut"
+#~ msgstr "התנגשות עם קיצורים גלובליים"
+
+#, fuzzy
+#~ msgctxt "KGlobalAccel|"
+#~ msgid ""
+#~ "The '%1' key combination has already been allocated to the global action "
+#~ "\"%2\" in %3.\n"
+#~ "Do you want to reassign it from that action to the current one?"
+#~ msgstr ""
+#~ "שילוב המקשים \"%1\" כבר הוקצה לפעולה הגלובלית \"%2\" ב־%3.\n"
+#~ "האם ברצונך לשנות את השיוך שלו מהפעולה הזו לפעולה לחדשה?"

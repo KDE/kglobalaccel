@@ -23,28 +23,7 @@ msgstr ""
 "X-Generator: Lokalize 21.08.0\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:614
-msgctxt "KGlobalAccel|"
-msgid "Conflict with Global Shortcut"
-msgstr "वैश्विक शॉर्टकट के परस्पर विरोध में है"
-
-#: kglobalaccel.cpp:615
-#, qt-format
-msgctxt "KGlobalAccel|"
-msgid ""
-"The '%1' key combination has already been allocated to the global action "
-"\"%2\" in %3.\n"
-"Do you want to reassign it from that action to the current one?"
-msgstr ""
-"कुंजी '%1' संयोजन पहले से ही \"%2\" वैश्विक क्रिया के लिए %3 में सम्बद्ध है।\n"
-"क्या आप इसे वर्तमान क्रिया से फिर से सम्बद्ध करना चाहते हैं?"
-
-#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
-msgctxt "KGlobalAccel|"
-msgid "Reassign"
-msgstr "फिर से आबंटित करें"
-
-#: kglobalaccel.cpp:642
+#: kglobalaccel.cpp:539
 #, fuzzy, qt-format
 #| msgctxt "KGlobalAccel|"
 #| msgid ""
@@ -53,13 +32,13 @@ msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "'%1' कुंजी संयोजन %2 अनुप्रयोग द्वारा %3 के लिए दर्ज है:"
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:543
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "क्रिया '%2' के लिए सन्दर्भ '%1'\n"
 
-#: kglobalaccel.cpp:648
+#: kglobalaccel.cpp:545
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -69,10 +48,15 @@ msgstr ""
 "'%1' कुंजी संयोजन %2 अनुप्रयोग द्वारा दर्ज है।\n"
 "%3"
 
-#: kglobalaccel.cpp:651
+#: kglobalaccel.cpp:548
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "पंजीकृत वैश्विक शॉर्टकट से विरोध है"
+
+#: kglobalaccel.cpp:553
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "फिर से आबंटित करें"
 
 #: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
@@ -83,6 +67,19 @@ msgstr "केडीई वैश्विक शॉर्टकट्स से
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "अनुरक्षक"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid "Conflict with Global Shortcut"
+#~ msgstr "वैश्विक शॉर्टकट के परस्पर विरोध में है"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid ""
+#~ "The '%1' key combination has already been allocated to the global action "
+#~ "\"%2\" in %3.\n"
+#~ "Do you want to reassign it from that action to the current one?"
+#~ msgstr ""
+#~ "कुंजी '%1' संयोजन पहले से ही \"%2\" वैश्विक क्रिया के लिए %3 में सम्बद्ध है।\n"
+#~ "क्या आप इसे वर्तमान क्रिया से फिर से सम्बद्ध करना चाहते हैं?"
 
 #~ msgctxt "NAME OF TRANSLATORS"
 #~ msgid "Your names"

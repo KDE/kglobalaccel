@@ -18,43 +18,20 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:614
-#, fuzzy
-#| msgid "Conflict with Global Shortcut"
-msgctxt "KGlobalAccel|"
-msgid "Conflict with Global Shortcut"
-msgstr "Umumiy tugmalar birikmasi bilan muammo"
-
-#: kglobalaccel.cpp:615
-#, fuzzy, qt-format
-msgctxt "KGlobalAccel|"
-msgid ""
-"The '%1' key combination has already been allocated to the global action "
-"\"%2\" in %3.\n"
-"Do you want to reassign it from that action to the current one?"
-msgstr ""
-"\"%1\" tugma birikmasi allaqachon \"%2\" umumiy amal bilan bogʻlangan.\n"
-"Uni joriy amal bilan bogʻlashni istaysizmi?"
-
-#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
-msgctxt "KGlobalAccel|"
-msgid "Reassign"
-msgstr ""
-
-#: kglobalaccel.cpp:642
+#: kglobalaccel.cpp:539
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:543
 #, fuzzy, qt-format
 #| msgid "Content information: %1\n"
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "Maʼlumot: %1\n"
 
-#: kglobalaccel.cpp:648
+#: kglobalaccel.cpp:545
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -62,12 +39,17 @@ msgid ""
 "%3"
 msgstr ""
 
-#: kglobalaccel.cpp:651
+#: kglobalaccel.cpp:548
 #, fuzzy
 #| msgid "Conflict with Global Shortcut"
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Umumiy tugmalar birikmasi bilan muammo"
+
+#: kglobalaccel.cpp:553
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr ""
 
 #: runtime/main.cpp:43 runtime/main.cpp:45
 #, fuzzy
@@ -80,6 +62,22 @@ msgstr "Tugmalar birikmasi"
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "Oyna"
+
+#, fuzzy
+#~| msgid "Conflict with Global Shortcut"
+#~ msgctxt "KGlobalAccel|"
+#~ msgid "Conflict with Global Shortcut"
+#~ msgstr "Umumiy tugmalar birikmasi bilan muammo"
+
+#, fuzzy
+#~ msgctxt "KGlobalAccel|"
+#~ msgid ""
+#~ "The '%1' key combination has already been allocated to the global action "
+#~ "\"%2\" in %3.\n"
+#~ "Do you want to reassign it from that action to the current one?"
+#~ msgstr ""
+#~ "\"%1\" tugma birikmasi allaqachon \"%2\" umumiy amal bilan bogʻlangan.\n"
+#~ "Uni joriy amal bilan bogʻlashni istaysizmi?"
 
 #~ msgctxt "NAME OF TRANSLATORS"
 #~ msgid "Your names"

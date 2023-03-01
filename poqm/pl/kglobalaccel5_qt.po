@@ -29,28 +29,7 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:614
-msgctxt "KGlobalAccel|"
-msgid "Conflict with Global Shortcut"
-msgstr "Konflikt ze skrótem globalnym"
-
-#: kglobalaccel.cpp:615
-#, qt-format
-msgctxt "KGlobalAccel|"
-msgid ""
-"The '%1' key combination has already been allocated to the global action "
-"\"%2\" in %3.\n"
-"Do you want to reassign it from that action to the current one?"
-msgstr ""
-"Kombinacja klawiszy %1 została przypisana globalnemu działaniu \"%2\" w %3.\n"
-"Czy przypisać ją zamiast tego aktualnemu działaniu?"
-
-#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
-msgctxt "KGlobalAccel|"
-msgid "Reassign"
-msgstr "Przypisz ponownie"
-
-#: kglobalaccel.cpp:642
+#: kglobalaccel.cpp:539
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
@@ -58,13 +37,13 @@ msgstr ""
 "Kombinacja klawiszy '%1' jest zarejestrowana przez program %2 dla działania "
 "%3."
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:543
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "W kontekście '%1' dla działania '%2'\n"
 
-#: kglobalaccel.cpp:648
+#: kglobalaccel.cpp:545
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -74,10 +53,15 @@ msgstr ""
 "Kombinacja klawiszy '%1' jest zarejestrowana przez program %2.\n"
 "%3"
 
-#: kglobalaccel.cpp:651
+#: kglobalaccel.cpp:548
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Konflikt z zarejestrowanym skrótem globalnym"
+
+#: kglobalaccel.cpp:553
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "Przypisz ponownie"
 
 #: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
@@ -88,6 +72,20 @@ msgstr "Usługa globalnych skrótów KDE"
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "Opiekun"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid "Conflict with Global Shortcut"
+#~ msgstr "Konflikt ze skrótem globalnym"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid ""
+#~ "The '%1' key combination has already been allocated to the global action "
+#~ "\"%2\" in %3.\n"
+#~ "Do you want to reassign it from that action to the current one?"
+#~ msgstr ""
+#~ "Kombinacja klawiszy %1 została przypisana globalnemu działaniu \"%2\" w "
+#~ "%3.\n"
+#~ "Czy przypisać ją zamiast tego aktualnemu działaniu?"
 
 #~ msgctxt "NAME OF TRANSLATORS"
 #~ msgid "Your names"

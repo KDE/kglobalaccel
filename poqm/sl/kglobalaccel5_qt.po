@@ -30,40 +30,19 @@ msgstr ""
 "%100<=4 ? 2 : 3);\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:614
-msgctxt "KGlobalAccel|"
-msgid "Conflict with Global Shortcut"
-msgstr "Spor s splošnimi bližnjicami"
-
-#: kglobalaccel.cpp:615
-#, qt-format
-msgctxt "KGlobalAccel|"
-msgid ""
-"The '%1' key combination has already been allocated to the global action "
-"\"%2\" in %3.\n"
-"Do you want to reassign it from that action to the current one?"
-msgstr ""
-"Zaporedje tipk »%1« je že dodeljeno splošnemu dejanju »%2«, v »%3«.\n"
-"Ali želite dodelitev prestaviti iz tega dejanja k trenutnemu?"
-
-#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
-msgctxt "KGlobalAccel|"
-msgid "Reassign"
-msgstr "Prestavi"
-
-#: kglobalaccel.cpp:642
+#: kglobalaccel.cpp:539
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "Kombinacijo tipk '%1' je program %2 registriral za dejanje %3."
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:543
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "V kontekstu »%1« za dejanje »%2«\n"
 
-#: kglobalaccel.cpp:648
+#: kglobalaccel.cpp:545
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -73,10 +52,15 @@ msgstr ""
 "Kombinacijo tipk »%1« je registriral program %2.\n"
 "%3"
 
-#: kglobalaccel.cpp:651
+#: kglobalaccel.cpp:548
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Spor z registriranimi splošnimi bližnjicami"
+
+#: kglobalaccel.cpp:553
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "Prestavi"
 
 #: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
@@ -87,6 +71,19 @@ msgstr "Storitev za splošne bližnjice"
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "Vzdrževalec"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid "Conflict with Global Shortcut"
+#~ msgstr "Spor s splošnimi bližnjicami"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid ""
+#~ "The '%1' key combination has already been allocated to the global action "
+#~ "\"%2\" in %3.\n"
+#~ "Do you want to reassign it from that action to the current one?"
+#~ msgstr ""
+#~ "Zaporedje tipk »%1« je že dodeljeno splošnemu dejanju »%2«, v »%3«.\n"
+#~ "Ali želite dodelitev prestaviti iz tega dejanja k trenutnemu?"
 
 #~ msgctxt "NAME OF TRANSLATORS"
 #~ msgid "Your names"

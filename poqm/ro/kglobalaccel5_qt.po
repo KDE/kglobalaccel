@@ -20,28 +20,7 @@ msgstr ""
 "X-Generator: Lokalize 19.12.3\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:614
-msgctxt "KGlobalAccel|"
-msgid "Conflict with Global Shortcut"
-msgstr "Conflict cu un accelerator global"
-
-#: kglobalaccel.cpp:615
-#, qt-format
-msgctxt "KGlobalAccel|"
-msgid ""
-"The '%1' key combination has already been allocated to the global action "
-"\"%2\" in %3.\n"
-"Do you want to reassign it from that action to the current one?"
-msgstr ""
-"Combinația de taste „%1” a fost deja alocată acțiunii globale „%2” în %3.\n"
-"Doriți să o reatribuiți de la acea acțiune la cea actuală?"
-
-#: kglobalaccel.cpp:623 kglobalaccel.cpp:656
-msgctxt "KGlobalAccel|"
-msgid "Reassign"
-msgstr "Reatribuie"
-
-#: kglobalaccel.cpp:642
+#: kglobalaccel.cpp:539
 #, fuzzy, qt-format
 #| msgctxt "KGlobalAccel|"
 #| msgid ""
@@ -51,13 +30,13 @@ msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
 "Combinația de taste „%1” e înregistrată de aplicația %2 pentru acțiunea %3:"
 
-#: kglobalaccel.cpp:646
+#: kglobalaccel.cpp:543
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "În contextul „%1” pentru acțiunea „%2”\n"
 
-#: kglobalaccel.cpp:648
+#: kglobalaccel.cpp:545
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -67,10 +46,15 @@ msgstr ""
 "Combinația de taste „%1” e înregistrată de aplicația %2.\n"
 "%3"
 
-#: kglobalaccel.cpp:651
+#: kglobalaccel.cpp:548
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Conflict cu o scurtătură globală înregistrată"
+
+#: kglobalaccel.cpp:553
+msgctxt "KGlobalAccel|"
+msgid "Reassign"
+msgstr "Reatribuie"
 
 #: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
@@ -81,6 +65,20 @@ msgstr "Serviciu KDE de scurtături globale"
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "Responsabil"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid "Conflict with Global Shortcut"
+#~ msgstr "Conflict cu un accelerator global"
+
+#~ msgctxt "KGlobalAccel|"
+#~ msgid ""
+#~ "The '%1' key combination has already been allocated to the global action "
+#~ "\"%2\" in %3.\n"
+#~ "Do you want to reassign it from that action to the current one?"
+#~ msgstr ""
+#~ "Combinația de taste „%1” a fost deja alocată acțiunii globale „%2” în "
+#~ "%3.\n"
+#~ "Doriți să o reatribuiți de la acea acțiune la cea actuală?"
 
 #~ msgctxt "NAME OF TRANSLATORS"
 #~ msgid "Your names"
