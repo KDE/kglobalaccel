@@ -63,18 +63,3 @@ msgstr ""
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr ""
-
-#, fuzzy
-#~ msgctxt "KGlobalAccel|"
-#~ msgid "Conflict with Global Shortcut"
-#~ msgstr "Gávdno juo globála njuolggobálggisin"
-
-#, fuzzy
-#~ msgctxt "KGlobalAccel|"
-#~ msgid ""
-#~ "The '%1' key combination has already been allocated to the global action "
-#~ "\"%2\" in %3.\n"
-#~ "Do you want to reassign it from that action to the current one?"
-#~ msgstr ""
-#~ "«%1» boallokombinašuvdna geavahuvvo juo almmolaš «%2» doibmii «%3:s».\n"
-#~ "Háliidatgo liikká bidjat dan kombinašuvnna dan ođđa doibmii?"
