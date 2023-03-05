@@ -68,7 +68,7 @@ msgstr "تضارب مع اختصار عمومي مسجّل"
 #: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
 msgid "KDE Global Shortcuts Service"
-msgstr "خدمة «كدي» للاختصارات العمومية"
+msgstr "خدمة «كِيدِي» للاختصارات العمومية"
 
 #: runtime/main.cpp:48 runtime/main.cpp:49
 msgctxt "QObject|"
