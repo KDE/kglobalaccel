@@ -12,7 +12,7 @@ set(kglobalaccelprivate_SRCS
     globalshortcutcontext.cpp
     ../sequencehelpers_p.cpp
 )
-ecm_create_qm_loader(kglobalaccelprivate_SRCS kglobalaccel5_qt)
+ecm_create_qm_loader(kglobalaccelprivate_SRCS kglobalaccel6_qt)
 
 configure_file(config-kglobalaccel.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kglobalaccel.h )
 

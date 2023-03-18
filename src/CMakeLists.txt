@@ -22,7 +22,7 @@ ecm_qt_export_logging_category(
     EXPORT KGLOBALACCEL
 )
 
-ecm_create_qm_loader(kglobalaccel_SRCS kglobalaccel5_qt)
+ecm_create_qm_loader(kglobalaccel_SRCS kglobalaccel6_qt)
 
 set(kglobalaccel_xml ${CMAKE_CURRENT_SOURCE_DIR}/org.kde.KGlobalAccel.xml)
 set_source_files_properties(${kglobalaccel_xml} PROPERTIES INCLUDE "kglobalshortcutinfo_p.h")
