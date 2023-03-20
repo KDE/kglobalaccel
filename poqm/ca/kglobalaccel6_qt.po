@@ -1,4 +1,4 @@
-# Translation of kglobalaccel5_qt.po to Catalan
+# Translation of kglobalaccel6_qt.po to Catalan
 # Copyright (C) 1998-2022 This_file_is_part_of_KDE
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
@@ -69,17 +69,3 @@ msgstr "Servei de dreceres globals del KDE"
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "Mantenidor"
-
-#~ msgctxt "KGlobalAccel|"
-#~ msgid "Conflict with Global Shortcut"
-#~ msgstr "Conflicte amb una drecera global"
-
-#~ msgctxt "KGlobalAccel|"
-#~ msgid ""
-#~ "The '%1' key combination has already been allocated to the global action "
-#~ "\"%2\" in %3.\n"
-#~ "Do you want to reassign it from that action to the current one?"
-#~ msgstr ""
-#~ "La combinació de tecles «%1» ja s'ha assignat a l'acció global «%2» en "
-#~ "%3.\n"
-#~ "Voleu reassignar-la des d'aquesta acció a l'acció actual?"
