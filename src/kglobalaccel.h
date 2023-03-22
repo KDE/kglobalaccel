@@ -391,10 +391,10 @@ Q_SIGNALS:
 
 private:
     /// Creates a new KGlobalAccel object
-    KGlobalAccel();
+    KGLOBALACCEL_NO_EXPORT KGlobalAccel();
 
     /// Destructor
-    ~KGlobalAccel() override;
+    KGLOBALACCEL_NO_EXPORT ~KGlobalAccel() override;
 
     //! get component @p componentUnique
     OrgKdeKglobalaccelComponentInterface *getComponent(const QString &componentUnique);
