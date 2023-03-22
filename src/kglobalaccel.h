@@ -397,7 +397,7 @@ private:
     KGLOBALACCEL_NO_EXPORT ~KGlobalAccel() override;
 
     //! get component @p componentUnique
-    OrgKdeKglobalaccelComponentInterface *getComponent(const QString &componentUnique);
+    KGLOBALACCEL_NO_EXPORT OrgKdeKglobalaccelComponentInterface *getComponent(const QString &componentUnique);
 
     class KGlobalAccelPrivate *const d;
 
