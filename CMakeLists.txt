@@ -35,8 +35,9 @@ add_feature_info(BUILD_RUNTIME ${BUILD_RUNTIME} "The kglobalacceld runtime")
 option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)" OFF)
 add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
 
+set(kglobalaccel_version_header "${CMAKE_CURRENT_BINARY_DIR}/src/kglobalaccel_version.h")
 ecm_setup_version(PROJECT VARIABLE_PREFIX KGLOBALACCEL
-                        VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kglobalaccel_version.h"
+                        VERSION_HEADER "${kglobalaccel_version_header}"
                         PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF6GlobalAccelConfigVersion.cmake"
                         SOVERSION 6)
 
@@ -112,7 +113,7 @@ install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KF6GlobalAccelConfig.cmake"
 install(EXPORT KF6GlobalAccelTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF6GlobalAccelTargets.cmake NAMESPACE KF6:: )
 
 
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kglobalaccel_version.h
+install(FILES ${kglobalaccel_version_header}
         DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KGlobalAccel COMPONENT Devel)
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
