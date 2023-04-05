@@ -36,10 +36,12 @@ install(FILES ${kglobalaccel_component_xml} DESTINATION ${KDE_INSTALL_DBUSINTERF
 
 add_library(KF6GlobalAccel ${kglobalaccel_SRCS})
 add_library(KF6::GlobalAccel ALIAS KF6GlobalAccel)
+
 ecm_generate_export_header(KF6GlobalAccel
     BASE_NAME KGlobalAccel
     GROUP_BASE_NAME KF
     VERSION ${KF_VERSION}
+    USE_VERSION_HEADER
     DEPRECATED_BASE_VERSION 0
     DEPRECATION_VERSIONS 5.102
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}

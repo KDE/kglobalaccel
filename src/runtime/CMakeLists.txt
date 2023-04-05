@@ -18,11 +18,14 @@ configure_file(config-kglobalaccel.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kg
 
 add_library(KF6GlobalAccelPrivate ${kglobalaccelprivate_SRCS})
 add_library(KF6::GlobalAccelPrivate ALIAS KF6GlobalAccelPrivate)
+
 ecm_generate_export_header(KF6GlobalAccelPrivate
     EXPORT_FILE_NAME kf6globalaccelprivate_export.h
     BASE_NAME KGlobalAccelPrivate
     GROUP_BASE_NAME KF
     VERSION ${KF_VERSION}
+    USE_VERSION_HEADER
+    VERSION_BASE_NAME KGlobalAccel
     DEPRECATED_BASE_VERSION 0
     DEPRECATION_VERSIONS 4.3 5.90
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
