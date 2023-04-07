@@ -1,4 +1,4 @@
-# translation of kglobalaccel5_qt.pot to Esperanto
+# translation of kglobalaccel6_qt.pot to Esperanto
 # Copyright (C) 1998,2002, 2003, 2004, 2005, 2007, 2008 Free Software Foundation, Inc.
 # Wolfram Diestel <wolfram@steloj.de>, 1998.
 # Heiko Evermann <heiko@evermann.de>, 2002, 2003.
@@ -12,10 +12,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: kdelibs4\n"
+"Project-Id-Version: kglobalaccel\n"
 "Report-Msgid-Bugs-To: http://bugs.kde.org\n"
 "POT-Creation-Date: 2014-03-23 01:50+0000\n"
-"PO-Revision-Date: 2023-01-05 05:00+0100\n"
+"PO-Revision-Date: 2023-04-07 00:35+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
 "Language: eo\n"
@@ -30,7 +30,7 @@ msgstr ""
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
-msgstr ""
+msgstr "La klavokombino '%1' estas registrita de aplikaĵo %2 por ago %3."
 
 #: kglobalaccel.cpp:543
 #, qt-format
@@ -44,7 +44,7 @@ msgctxt "KGlobalAccel|"
 msgid ""
 "The '%1' key combination is registered by application %2.\n"
 "%3"
-msgstr ""
+msgstr "La klavokombino '%1' estas registrita de aplikaĵo %2.\n"
 
 #: kglobalaccel.cpp:548
 msgctxt "KGlobalAccel|"
@@ -59,22 +59,9 @@ msgstr "Reatribui"
 #: runtime/main.cpp:43 runtime/main.cpp:45
 msgctxt "QObject|"
 msgid "KDE Global Shortcuts Service"
-msgstr ""
+msgstr "KDE-Servo por Ĉieaj Ŝparvojoj"
 
 #: runtime/main.cpp:48 runtime/main.cpp:49
 msgctxt "QObject|"
 msgid "Maintainer"
 msgstr "Prizorganto"
-
-#~ msgctxt "KGlobalAccel|"
-#~ msgid "Conflict with Global Shortcut"
-#~ msgstr "Konflikto kun ĉiea klavokombino"
-
-#~ msgctxt "KGlobalAccel|"
-#~ msgid ""
-#~ "The '%1' key combination has already been allocated to the global action "
-#~ "\"%2\" in %3.\n"
-#~ "Do you want to reassign it from that action to the current one?"
-#~ msgstr ""
-#~ "La klavkombino '%1' jam estas ligita al la KDE-vasta ago \"%2\" en %3.\n"
-#~ "Ĉu vi pliŝatas religi ĝin al la nuna ago?"
