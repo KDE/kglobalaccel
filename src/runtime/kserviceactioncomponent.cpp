@@ -163,7 +163,8 @@ void KServiceActionComponent::emitGlobalShortcutPressed(const GlobalShortcut &sh
             }
         }
     };
-    if (KWindowSystem::isPlatformWayland()) {
+    if (KWindowSystem::isPlatformWayland() && m_desktopFile->desktopGroup().readEntry<bool>("StartupNotify", true)
+        && m_desktopFile->desktopGroup().readEntry<bool>("X-KDE-StartupNotify", true)) {
         const QString serviceName = m_serviceStorageId.chopped(strlen(".desktop"));
         KWindowSystem::requestXdgActivationToken(nullptr, 0, serviceName);
         connect(KWindowSystem::self(), &KWindowSystem::xdgActivationTokenArrived, this, [this, launchWithToken](int tokenSerial, const QString &token) {
