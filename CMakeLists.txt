@@ -29,9 +29,6 @@ include(ECMDeprecationSettings)
 
 set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprecated API excluded from the build [default=0].")
 
-option(BUILD_RUNTIME "Build the kglobalacceld runtime" ON)
-add_feature_info(BUILD_RUNTIME ${BUILD_RUNTIME} "The kglobalacceld runtime")
-
 option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)" OFF)
 add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
 
@@ -44,24 +41,6 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX KGLOBALACCEL
 # Dependencies
 set(REQUIRED_QT_VERSION 6.4.0)
 find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus Gui Widgets)
-
-# Dependencies of runtime component
-if (BUILD_RUNTIME)
-    find_package(KF6Config ${KF_DEP_VERSION} REQUIRED)
-    find_package(KF6CoreAddons ${KF_DEP_VERSION} REQUIRED)
-    find_package(KF6Crash ${KF_DEP_VERSION} REQUIRED)
-    find_package(KF6DBusAddons ${KF_DEP_VERSION} REQUIRED)
-    find_package(KF6WindowSystem ${KF_DEP_VERSION} REQUIRED)
-endif()
-
-if (BUILD_RUNTIME)
-    find_package(XCB MODULE COMPONENTS XCB KEYSYMS XKB RECORD OPTIONAL_COMPONENTS XTEST)
-    set_package_properties(XCB PROPERTIES DESCRIPTION "X protocol C-language Binding"
-                       TYPE OPTIONAL
-                      )
-
-    find_package(X11)
-endif()
 
 set(HAVE_X11 0)
 
@@ -82,7 +61,6 @@ if (BUILD_TESTING)
     find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Test)
 
     add_subdirectory(tests)
-    add_subdirectory(autotests)
 endif()
 
 # create a Config.cmake and a ConfigVersion.cmake file and install them

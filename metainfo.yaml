@@ -17,4 +17,4 @@ cmakename: KF6GlobalAccel
 
 public_lib: true
 group: Frameworks
-subgroup: Tier 3
+subgroup: Tier 1

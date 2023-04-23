@@ -14,14 +14,6 @@ ecm_qt_declare_logging_category(kglobalaccel_SRCS
     EXPORT KGLOBALACCEL
 )
 
-ecm_qt_export_logging_category(
-    IDENTIFIER KGLOBALACCELD
-    CATEGORY_NAME kf.globalaccel.kglobalacceld
-    OLD_CATEGORY_NAMES kglobalaccel-runtime
-    DESCRIPTION "KGlobalAccel demon"
-    EXPORT KGLOBALACCEL
-)
-
 ecm_create_qm_loader(kglobalaccel_SRCS kglobalaccel6_qt)
 
 set(kglobalaccel_xml ${CMAKE_CURRENT_SOURCE_DIR}/org.kde.KGlobalAccel.xml)
@@ -109,10 +101,6 @@ endif()
 include(ECMGeneratePriFile)
 ecm_generate_pri_file(BASE_NAME KGlobalAccel LIB_NAME KF6GlobalAccel DEPS "dbus widgets" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/KGlobalAccel)
 install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
-
-if (BUILD_RUNTIME)
-    add_subdirectory(runtime)
-endif()
 
 ecm_qt_install_logging_categories(
     EXPORT KGLOBALACCEL
