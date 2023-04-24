@@ -58,12 +58,10 @@ msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Tilordne på nytt"
 
-#: runtime/main.cpp:43 runtime/main.cpp:45
-msgctxt "QObject|"
-msgid "KDE Global Shortcuts Service"
-msgstr "KDE-tjeneste forr globale hurtigtaster"
+#~ msgctxt "QObject|"
+#~ msgid "KDE Global Shortcuts Service"
+#~ msgstr "KDE-tjeneste forr globale hurtigtaster"
 
-#: runtime/main.cpp:48 runtime/main.cpp:49
-msgctxt "QObject|"
-msgid "Maintainer"
-msgstr "Vedlikeholder:"
+#~ msgctxt "QObject|"
+#~ msgid "Maintainer"
+#~ msgstr "Vedlikeholder:"

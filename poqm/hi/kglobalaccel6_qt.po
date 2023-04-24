@@ -58,15 +58,13 @@ msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "फिर से आबंटित करें"
 
-#: runtime/main.cpp:43 runtime/main.cpp:45
-msgctxt "QObject|"
-msgid "KDE Global Shortcuts Service"
-msgstr "केडीई वैश्विक शॉर्टकट्स सेवा"
+#~ msgctxt "QObject|"
+#~ msgid "KDE Global Shortcuts Service"
+#~ msgstr "केडीई वैश्विक शॉर्टकट्स सेवा"
 
-#: runtime/main.cpp:48 runtime/main.cpp:49
-msgctxt "QObject|"
-msgid "Maintainer"
-msgstr "अनुरक्षक"
+#~ msgctxt "QObject|"
+#~ msgid "Maintainer"
+#~ msgstr "अनुरक्षक"
 
 #~ msgctxt "KGlobalAccel|"
 #~ msgid "Conflict with Global Shortcut"

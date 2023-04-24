@@ -56,17 +56,15 @@ msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Isirashiya"
 
-#: runtime/main.cpp:43 runtime/main.cpp:45
 #, fuzzy
-msgctxt "QObject|"
-msgid "KDE Global Shortcuts Service"
-msgstr "Ezimfutshane"
+#~ msgctxt "QObject|"
+#~ msgid "KDE Global Shortcuts Service"
+#~ msgstr "Ezimfutshane"
 
-#: runtime/main.cpp:48 runtime/main.cpp:49
 #, fuzzy
-msgctxt "QObject|"
-msgid "Maintainer"
-msgstr "&Window Entsha"
+#~ msgctxt "QObject|"
+#~ msgid "Maintainer"
+#~ msgstr "&Window Entsha"
 
 #, fuzzy
 #~ msgctxt "KGlobalAccel|"

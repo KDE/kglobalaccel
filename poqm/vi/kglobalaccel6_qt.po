@@ -53,15 +53,13 @@ msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Gán lại"
 
-#: runtime/main.cpp:43 runtime/main.cpp:45
-msgctxt "QObject|"
-msgid "KDE Global Shortcuts Service"
-msgstr "Dịch vụ phím tắt toàn cục KDE"
+#~ msgctxt "QObject|"
+#~ msgid "KDE Global Shortcuts Service"
+#~ msgstr "Dịch vụ phím tắt toàn cục KDE"
 
-#: runtime/main.cpp:48 runtime/main.cpp:49
-msgctxt "QObject|"
-msgid "Maintainer"
-msgstr "Bảo trì viên"
+#~ msgctxt "QObject|"
+#~ msgid "Maintainer"
+#~ msgstr "Bảo trì viên"
 
 #~ msgctxt "KGlobalAccel|"
 #~ msgid "Conflict with Global Shortcut"

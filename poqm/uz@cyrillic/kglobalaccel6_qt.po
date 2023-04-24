@@ -51,17 +51,15 @@ msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr ""
 
-#: runtime/main.cpp:43 runtime/main.cpp:45
 #, fuzzy
-msgctxt "QObject|"
-msgid "KDE Global Shortcuts Service"
-msgstr "Тугмалар бирикмаси"
+#~ msgctxt "QObject|"
+#~ msgid "KDE Global Shortcuts Service"
+#~ msgstr "Тугмалар бирикмаси"
 
-#: runtime/main.cpp:48 runtime/main.cpp:49
 #, fuzzy
-msgctxt "QObject|"
-msgid "Maintainer"
-msgstr "Oйна"
+#~ msgctxt "QObject|"
+#~ msgid "Maintainer"
+#~ msgstr "Oйна"
 
 #, fuzzy
 #~| msgid "Conflict with Global Shortcut"

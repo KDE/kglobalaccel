@@ -52,15 +52,13 @@ msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Sònraich às ùr"
 
-#: runtime/main.cpp:43 runtime/main.cpp:45
-msgctxt "QObject|"
-msgid "KDE Global Shortcuts Service"
-msgstr "Seirbheis nan ath-ghoiridean uile-choitcheann KDE"
+#~ msgctxt "QObject|"
+#~ msgid "KDE Global Shortcuts Service"
+#~ msgstr "Seirbheis nan ath-ghoiridean uile-choitcheann KDE"
 
-#: runtime/main.cpp:48 runtime/main.cpp:49
-msgctxt "QObject|"
-msgid "Maintainer"
-msgstr "Neach-glèidhidh"
+#~ msgctxt "QObject|"
+#~ msgid "Maintainer"
+#~ msgstr "Neach-glèidhidh"
 
 #~ msgctxt "KGlobalAccel|"
 #~ msgid "Conflict with Global Shortcut"

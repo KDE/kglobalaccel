@@ -51,15 +51,13 @@ msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "재할당"
 
-#: runtime/main.cpp:43 runtime/main.cpp:45
-msgctxt "QObject|"
-msgid "KDE Global Shortcuts Service"
-msgstr "KDE 전역 단축키 서비스"
+#~ msgctxt "QObject|"
+#~ msgid "KDE Global Shortcuts Service"
+#~ msgstr "KDE 전역 단축키 서비스"
 
-#: runtime/main.cpp:48 runtime/main.cpp:49
-msgctxt "QObject|"
-msgid "Maintainer"
-msgstr "관리자"
+#~ msgctxt "QObject|"
+#~ msgid "Maintainer"
+#~ msgstr "관리자"
 
 #~ msgctxt "KGlobalAccel|"
 #~ msgid "Conflict with Global Shortcut"

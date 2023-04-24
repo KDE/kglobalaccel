@@ -53,12 +53,10 @@ msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Преназначаване"
 
-#: runtime/main.cpp:43 runtime/main.cpp:45
-msgctxt "QObject|"
-msgid "KDE Global Shortcuts Service"
-msgstr "Услуга за клавишни комбинации на KDE"
+#~ msgctxt "QObject|"
+#~ msgid "KDE Global Shortcuts Service"
+#~ msgstr "Услуга за клавишни комбинации на KDE"
 
-#: runtime/main.cpp:48 runtime/main.cpp:49
-msgctxt "QObject|"
-msgid "Maintainer"
-msgstr "Поддръжка"
+#~ msgctxt "QObject|"
+#~ msgid "Maintainer"
+#~ msgstr "Поддръжка"

@@ -63,17 +63,11 @@ msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "ಮರುನಿಗದಿಗೊಳಿಸು"
 
-#: runtime/main.cpp:43 runtime/main.cpp:45
-msgctxt "QObject|"
-msgid "KDE Global Shortcuts Service"
-msgstr ""
-
-#: runtime/main.cpp:48 runtime/main.cpp:49
 #, fuzzy
-#| msgid "Maintainer"
-msgctxt "QObject|"
-msgid "Maintainer"
-msgstr "ಪಾಲಕ"
+#~| msgid "Maintainer"
+#~ msgctxt "QObject|"
+#~ msgid "Maintainer"
+#~ msgstr "ಪಾಲಕ"
 
 #, fuzzy
 #~| msgid "Conflict with Global Shortcut"

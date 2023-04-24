@@ -55,15 +55,13 @@ msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "இதற்கே அமர்த்து"
 
-#: runtime/main.cpp:43 runtime/main.cpp:45
-msgctxt "QObject|"
-msgid "KDE Global Shortcuts Service"
-msgstr "கே.டீ.யீ. பொது சுருக்குவழி சேவை"
+#~ msgctxt "QObject|"
+#~ msgid "KDE Global Shortcuts Service"
+#~ msgstr "கே.டீ.யீ. பொது சுருக்குவழி சேவை"
 
-#: runtime/main.cpp:48 runtime/main.cpp:49
-msgctxt "QObject|"
-msgid "Maintainer"
-msgstr "பராமரிப்பாளர்"
+#~ msgctxt "QObject|"
+#~ msgid "Maintainer"
+#~ msgstr "பராமரிப்பாளர்"
 
 #~ msgctxt "KGlobalAccel|"
 #~ msgid "Conflict with Global Shortcut"

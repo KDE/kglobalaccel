@@ -61,15 +61,13 @@ msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Reasignar"
 
-#: runtime/main.cpp:43 runtime/main.cpp:45
-msgctxt "QObject|"
-msgid "KDE Global Shortcuts Service"
-msgstr "Servicio de accesos rápidos globales de KDE"
+#~ msgctxt "QObject|"
+#~ msgid "KDE Global Shortcuts Service"
+#~ msgstr "Servicio de accesos rápidos globales de KDE"
 
-#: runtime/main.cpp:48 runtime/main.cpp:49
-msgctxt "QObject|"
-msgid "Maintainer"
-msgstr "Responsable"
+#~ msgctxt "QObject|"
+#~ msgid "Maintainer"
+#~ msgstr "Responsable"
 
 #~ msgctxt "KGlobalAccel|"
 #~ msgid "Conflict with Global Shortcut"

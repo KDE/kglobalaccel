@@ -58,12 +58,10 @@ msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Reatribui"
 
-#: runtime/main.cpp:43 runtime/main.cpp:45
-msgctxt "QObject|"
-msgid "KDE Global Shortcuts Service"
-msgstr "KDE-Servo por Ĉieaj Ŝparvojoj"
+#~ msgctxt "QObject|"
+#~ msgid "KDE Global Shortcuts Service"
+#~ msgstr "KDE-Servo por Ĉieaj Ŝparvojoj"
 
-#: runtime/main.cpp:48 runtime/main.cpp:49
-msgctxt "QObject|"
-msgid "Maintainer"
-msgstr "Prizorganto"
+#~ msgctxt "QObject|"
+#~ msgid "Maintainer"
+#~ msgstr "Prizorganto"

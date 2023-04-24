@@ -67,15 +67,13 @@ msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Yeniden Ata"
 
-#: runtime/main.cpp:43 runtime/main.cpp:45
-msgctxt "QObject|"
-msgid "KDE Global Shortcuts Service"
-msgstr "KDE Genel Kısayol Servisi"
+#~ msgctxt "QObject|"
+#~ msgid "KDE Global Shortcuts Service"
+#~ msgstr "KDE Genel Kısayol Servisi"
 
-#: runtime/main.cpp:48 runtime/main.cpp:49
-msgctxt "QObject|"
-msgid "Maintainer"
-msgstr "Projeyi Sürdüren"
+#~ msgctxt "QObject|"
+#~ msgid "Maintainer"
+#~ msgstr "Projeyi Sürdüren"
 
 #~ msgctxt "KGlobalAccel|"
 #~ msgid "Conflict with Global Shortcut"

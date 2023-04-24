@@ -60,17 +60,11 @@ msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "फिनु सँ आबंटित करू"
 
-#: runtime/main.cpp:43 runtime/main.cpp:45
-msgctxt "QObject|"
-msgid "KDE Global Shortcuts Service"
-msgstr ""
-
-#: runtime/main.cpp:48 runtime/main.cpp:49
 #, fuzzy
-#| msgid "Maintainer"
-msgctxt "QObject|"
-msgid "Maintainer"
-msgstr "अनुरक्षक"
+#~| msgid "Maintainer"
+#~ msgctxt "QObject|"
+#~ msgid "Maintainer"
+#~ msgstr "अनुरक्षक"
 
 #, fuzzy
 #~| msgid "Conflict with Global Shortcut"

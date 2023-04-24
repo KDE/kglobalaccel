@@ -55,15 +55,13 @@ msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Tugaskan Ulang"
 
-#: runtime/main.cpp:43 runtime/main.cpp:45
-msgctxt "QObject|"
-msgid "KDE Global Shortcuts Service"
-msgstr "Layanan Pintasan Global KDE"
+#~ msgctxt "QObject|"
+#~ msgid "KDE Global Shortcuts Service"
+#~ msgstr "Layanan Pintasan Global KDE"
 
-#: runtime/main.cpp:48 runtime/main.cpp:49
-msgctxt "QObject|"
-msgid "Maintainer"
-msgstr "Pemelihara"
+#~ msgctxt "QObject|"
+#~ msgid "Maintainer"
+#~ msgstr "Pemelihara"
 
 #~ msgctxt "KGlobalAccel|"
 #~ msgid "Conflict with Global Shortcut"

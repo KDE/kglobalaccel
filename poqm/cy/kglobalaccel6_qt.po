@@ -64,17 +64,15 @@ msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Rwsieg"
 
-#: runtime/main.cpp:43 runtime/main.cpp:45
 #, fuzzy
-msgctxt "QObject|"
-msgid "KDE Global Shortcuts Service"
-msgstr "Byrlwybrau"
+#~ msgctxt "QObject|"
+#~ msgid "KDE Global Shortcuts Service"
+#~ msgstr "Byrlwybrau"
 
-#: runtime/main.cpp:48 runtime/main.cpp:49
 #, fuzzy
-msgctxt "QObject|"
-msgid "Maintainer"
-msgstr "Ffenest"
+#~ msgctxt "QObject|"
+#~ msgid "Maintainer"
+#~ msgstr "Ffenest"
 
 #, fuzzy
 #~| msgid "Conflict with Global Shortcut"

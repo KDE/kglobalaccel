@@ -49,15 +49,13 @@ msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "أعد التعيين"
 
-#: runtime/main.cpp:43 runtime/main.cpp:45
-msgctxt "QObject|"
-msgid "KDE Global Shortcuts Service"
-msgstr "خدمة «كِيدِي» للاختصارات العمومية"
+#~ msgctxt "QObject|"
+#~ msgid "KDE Global Shortcuts Service"
+#~ msgstr "خدمة «كِيدِي» للاختصارات العمومية"
 
-#: runtime/main.cpp:48 runtime/main.cpp:49
-msgctxt "QObject|"
-msgid "Maintainer"
-msgstr "المصين"
+#~ msgctxt "QObject|"
+#~ msgid "Maintainer"
+#~ msgstr "المصين"
 
 #~ msgctxt "KGlobalAccel|"
 #~ msgid "Conflict with Global Shortcut"

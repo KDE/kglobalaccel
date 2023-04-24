@@ -70,15 +70,13 @@ msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Sijoita uudelleen"
 
-#: runtime/main.cpp:43 runtime/main.cpp:45
-msgctxt "QObject|"
-msgid "KDE Global Shortcuts Service"
-msgstr "KDE:n työpöydänlaajuisten pikanäppäinten palvelu"
+#~ msgctxt "QObject|"
+#~ msgid "KDE Global Shortcuts Service"
+#~ msgstr "KDE:n työpöydänlaajuisten pikanäppäinten palvelu"
 
-#: runtime/main.cpp:48 runtime/main.cpp:49
-msgctxt "QObject|"
-msgid "Maintainer"
-msgstr "Ylläpitäjä"
+#~ msgctxt "QObject|"
+#~ msgid "Maintainer"
+#~ msgstr "Ylläpitäjä"
 
 #~ msgctxt "KGlobalAccel|"
 #~ msgid "Conflict with Global Shortcut"

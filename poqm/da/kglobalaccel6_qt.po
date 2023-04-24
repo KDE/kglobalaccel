@@ -56,15 +56,13 @@ msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Tilknyt igen"
 
-#: runtime/main.cpp:43 runtime/main.cpp:45
-msgctxt "QObject|"
-msgid "KDE Global Shortcuts Service"
-msgstr "KDE's globale genvejstjeneste"
+#~ msgctxt "QObject|"
+#~ msgid "KDE Global Shortcuts Service"
+#~ msgstr "KDE's globale genvejstjeneste"
 
-#: runtime/main.cpp:48 runtime/main.cpp:49
-msgctxt "QObject|"
-msgid "Maintainer"
-msgstr "Vedligeholder"
+#~ msgctxt "QObject|"
+#~ msgid "Maintainer"
+#~ msgstr "Vedligeholder"
 
 #~ msgctxt "KGlobalAccel|"
 #~ msgid "Conflict with Global Shortcut"

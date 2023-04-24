@@ -58,15 +58,13 @@ msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Znovu priradiť"
 
-#: runtime/main.cpp:43 runtime/main.cpp:45
-msgctxt "QObject|"
-msgid "KDE Global Shortcuts Service"
-msgstr "KDE služba - globálne skratky"
+#~ msgctxt "QObject|"
+#~ msgid "KDE Global Shortcuts Service"
+#~ msgstr "KDE služba - globálne skratky"
 
-#: runtime/main.cpp:48 runtime/main.cpp:49
-msgctxt "QObject|"
-msgid "Maintainer"
-msgstr "Správca"
+#~ msgctxt "QObject|"
+#~ msgid "Maintainer"
+#~ msgstr "Správca"
 
 #~ msgctxt "KGlobalAccel|"
 #~ msgid "Conflict with Global Shortcut"

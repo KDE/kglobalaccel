@@ -55,15 +55,13 @@ msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Endurúthluta"
 
-#: runtime/main.cpp:43 runtime/main.cpp:45
-msgctxt "QObject|"
-msgid "KDE Global Shortcuts Service"
-msgstr "KDE-víðtæk flýtilyklaþjónusta"
+#~ msgctxt "QObject|"
+#~ msgid "KDE Global Shortcuts Service"
+#~ msgstr "KDE-víðtæk flýtilyklaþjónusta"
 
-#: runtime/main.cpp:48 runtime/main.cpp:49
-msgctxt "QObject|"
-msgid "Maintainer"
-msgstr "Umsjónarmaður"
+#~ msgctxt "QObject|"
+#~ msgid "Maintainer"
+#~ msgstr "Umsjónarmaður"
 
 #~ msgctxt "KGlobalAccel|"
 #~ msgid "Conflict with Global Shortcut"

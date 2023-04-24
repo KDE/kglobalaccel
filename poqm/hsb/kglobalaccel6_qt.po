@@ -65,16 +65,10 @@ msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Zwjazanje změnić"
 
-#: runtime/main.cpp:43 runtime/main.cpp:45
-msgctxt "QObject|"
-msgid "KDE Global Shortcuts Service"
-msgstr ""
-
-#: runtime/main.cpp:48 runtime/main.cpp:49
 #, fuzzy
-msgctxt "QObject|"
-msgid "Maintainer"
-msgstr "Hłownewokno"
+#~ msgctxt "QObject|"
+#~ msgid "Maintainer"
+#~ msgstr "Hłownewokno"
 
 #, fuzzy
 #~| msgid "Conflict with Global Shortcut"
