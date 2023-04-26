@@ -1,17 +1,17 @@
-# Xəyyam <xxmn77@gmail.com>, 2020.
+# Xəyyam <xxmn77@gmail.com>, 2020, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2020-04-14 18:47+0400\n"
-"Last-Translator: Xəyyam <xxmn77@gmail.com>\n"
-"Language-Team: Azerbaijani\n"
+"PO-Revision-Date: 2023-04-24 17:32+0400\n"
+"Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
+"Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
 "Language: az\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Qt-Contexts: true\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 19.12.3\n"
+"X-Generator: Lokalize 23.04.0\n"
 
 #: kglobalaccel.cpp:614
 msgctxt "KGlobalAccel|"
@@ -36,14 +36,11 @@ msgid "Reassign"
 msgstr "Yeni təyinat"
 
 #: kglobalaccel.cpp:642
-#, fuzzy, qt-format
-#| msgctxt "KGlobalAccel|"
-#| msgid ""
-#| "The '%1' key combination is registered by application %2 for action %3:"
+#, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
-"'%1' düymə kombinasiyası %2 tətbiqi tərəfindən %3 əməli üçün təyin edilib:"
+"'%1' düymə kombinasiyası %2 tətbiqi tərəfindən %3 əməli üçün təyin edilib."
 
 #: kglobalaccel.cpp:646
 #, qt-format
