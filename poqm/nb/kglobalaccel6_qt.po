@@ -57,11 +57,3 @@ msgstr "Konflikt med registrert global snarvei"
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Tilordne på nytt"
-
-#~ msgctxt "QObject|"
-#~ msgid "KDE Global Shortcuts Service"
-#~ msgstr "KDE-tjeneste forr globale hurtigtaster"
-
-#~ msgctxt "QObject|"
-#~ msgid "Maintainer"
-#~ msgstr "Vedlikeholder:"
