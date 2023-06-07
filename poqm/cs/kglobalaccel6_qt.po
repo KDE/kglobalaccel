@@ -53,11 +53,3 @@ msgstr "Konflikt s registrovanou globální zkratkou"
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Změna přiřazení"
-
-#~ msgctxt "QObject|"
-#~ msgid "KDE Global Shortcuts Service"
-#~ msgstr "Služba globálních zkratek KDE"
-
-#~ msgctxt "QObject|"
-#~ msgid "Maintainer"
-#~ msgstr "Správce"
