@@ -59,11 +59,3 @@ msgstr "Conflicte amb una drecera global registrada"
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Reassigna"
-
-#~ msgctxt "QObject|"
-#~ msgid "KDE Global Shortcuts Service"
-#~ msgstr "Servei de dreceres globals de KDE"
-
-#~ msgctxt "QObject|"
-#~ msgid "Maintainer"
-#~ msgstr "Mantenidor"
