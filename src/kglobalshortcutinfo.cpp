@@ -80,3 +80,5 @@ QString KGlobalShortcutInfo::uniqueName() const
 {
     return d->uniqueName;
 }
+
+#include "moc_kglobalshortcutinfo.cpp"

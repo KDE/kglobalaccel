@@ -147,4 +147,6 @@ void KGlobalAccelImpl::keyboardLayoutChanged()
     }
 }
 
+#include "moc_kglobalaccel_mac.cpp"
+
 #endif // !Q_OS_OSX

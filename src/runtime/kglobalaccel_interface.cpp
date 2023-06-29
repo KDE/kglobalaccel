@@ -60,3 +60,5 @@ bool KGlobalAccelInterfaceV2::keyReleased(int keyQt)
 {
     return d->owner->keyReleased(keyQt);
 }
+
+#include "moc_kglobalaccel_interface.cpp"

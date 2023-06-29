@@ -410,3 +410,5 @@ void Component::writeSettings(KConfigGroup &configGroup) const
         }
     }
 }
+
+#include "moc_component.cpp"

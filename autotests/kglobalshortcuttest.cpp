@@ -648,3 +648,5 @@ void KGlobalShortcutTest::testForgetGlobalShortcut()
     QVERIFY(!components.contains(componentId));
 #endif
 }
+
+#include "moc_kglobalshortcuttest.cpp"
