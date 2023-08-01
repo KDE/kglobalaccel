@@ -1,8 +1,8 @@
-# Stefan Asserhäll <stefan.asserhall@bredband.net>, 2014, 2015.
+# Stefan Asserhäll <stefan.asserhall@bredband.net>, 2014, 2015, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2015-05-07 17:58+0200\n"
+"PO-Revision-Date: 2023-07-31 08:52+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Qt-Contexts: true\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 20.08.1\n"
 
 #: kglobalaccel.cpp:614
 msgctxt "KGlobalAccel|"
@@ -36,14 +36,11 @@ msgid "Reassign"
 msgstr "Ändra tilldelning"
 
 #: kglobalaccel.cpp:642
-#, fuzzy, qt-format
-#| msgctxt "KGlobalAccel|"
-#| msgid ""
-#| "The '%1' key combination is registered by application %2 for action %3:"
+#, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
-"Tangentkombinationen '%1' är registrerad av programmet %2 för åtgärd %3:"
+"Tangentkombinationen '%1' är registrerad av programmet %2 för åtgärd %3."
 
 #: kglobalaccel.cpp:646
 #, qt-format
