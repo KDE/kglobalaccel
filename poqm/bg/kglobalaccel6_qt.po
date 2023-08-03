@@ -52,11 +52,3 @@ msgstr "Конфликт с глобална клавишна комбинаци
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Преназначаване"
-
-#~ msgctxt "QObject|"
-#~ msgid "KDE Global Shortcuts Service"
-#~ msgstr "Услуга за клавишни комбинации на KDE"
-
-#~ msgctxt "QObject|"
-#~ msgid "Maintainer"
-#~ msgstr "Поддръжка"
