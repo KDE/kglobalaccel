@@ -39,7 +39,7 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX KGLOBALACCEL
                         SOVERSION 6)
 
 # Dependencies
-set(REQUIRED_QT_VERSION 6.4.0)
+set(REQUIRED_QT_VERSION 6.5.0)
 find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus Gui Widgets)
 
 set(HAVE_X11 0)
