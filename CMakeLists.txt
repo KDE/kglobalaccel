@@ -32,6 +32,8 @@ set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprec
 option(BUILD_RUNTIME "Build the kglobalacceld runtime" ON)
 add_feature_info(BUILD_RUNTIME ${BUILD_RUNTIME} "The kglobalacceld runtime")
 
+option(KF6_COMPAT_BUILD "Don't build runtime components that conflict with KF6" OFF)
+
 option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)" OFF)
 add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
 

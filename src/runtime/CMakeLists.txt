@@ -52,45 +52,49 @@ if(XCB_XCB_FOUND)
     endif()
 endif()
 
-add_executable(kglobalaccel5 main.cpp logging.cpp)
-ecm_mark_nongui_executable(kglobalaccel5)
+if (NOT KF6_COMPAT_BUILD)
+    add_executable(kglobalaccel5 main.cpp logging.cpp)
+    ecm_mark_nongui_executable(kglobalaccel5)
 
-target_include_directories(kglobalaccel5 PRIVATE ${CMAKE_BINARY_DIR})
+    target_include_directories(kglobalaccel5 PRIVATE ${CMAKE_BINARY_DIR})
 
-target_link_libraries(kglobalaccel5
-    KF5GlobalAccelPrivate
-    KF5::DBusAddons   # KDBusService
-    KF5::Crash
+    target_link_libraries(kglobalaccel5
+        KF5GlobalAccelPrivate
+        KF5::DBusAddons   # KDBusService
+        KF5::Crash
+        )
+
+    add_subdirectory(plugins)
+
+    if(NOT EXCLUDE_DEPRECATED_BEFORE_AND_AT STREQUAL "CURRENT" AND EXCLUDE_DEPRECATED_BEFORE_AND_AT VERSION_LESS 5.102.0)
+        install( FILES kglobalaccel.desktop  DESTINATION ${KDE_INSTALL_KSERVICESDIR} RENAME kglobalaccel5.desktop)
+    endif()
+
+    install( TARGETS kglobalaccel5 ${KF_INSTALL_TARGETS_DEFAULT_ARGS} )
+
+
+    # D-Bus activation service file, and associated systemd service
+    include (ECMGenerateDBusServiceFile)
+    include (ECMConfiguredInstall)
+    ecm_generate_dbus_service_file(
+        NAME org.kde.kglobalaccel
+        EXECUTABLE "${KDE_INSTALL_FULL_BINDIR}/kglobalaccel5"
+        SYSTEMD_SERVICE plasma-kglobalaccel.service
+        DESTINATION ${KDE_INSTALL_DBUSSERVICEDIR}
     )
 
-add_subdirectory(plugins)
+    ecm_install_configured_files(
+        INPUT plasma-kglobalaccel.service.in
+        DESTINATION ${KDE_INSTALL_SYSTEMDUSERUNITDIR}
+    )
+endif()
 
 # Install application and configuration
 install(TARGETS KF5GlobalAccelPrivate EXPORT KF5GlobalAccelTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
-install( TARGETS kglobalaccel5 ${KF_INSTALL_TARGETS_DEFAULT_ARGS} )
-
-if(NOT EXCLUDE_DEPRECATED_BEFORE_AND_AT STREQUAL "CURRENT" AND EXCLUDE_DEPRECATED_BEFORE_AND_AT VERSION_LESS 5.102.0)
-    install( FILES kglobalaccel.desktop  DESTINATION ${KDE_INSTALL_KSERVICESDIR} RENAME kglobalaccel5.desktop)
-endif()
 
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kf5globalaccelprivate_export.h
   kglobalacceld.h
   kglobalaccel_interface.h
   DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KGlobalAccel/private COMPONENT Devel
-)
-
-# D-Bus activation service file, and associated systemd service
-include (ECMGenerateDBusServiceFile)
-include (ECMConfiguredInstall)
-ecm_generate_dbus_service_file(
-   NAME org.kde.kglobalaccel
-   EXECUTABLE "${KDE_INSTALL_FULL_BINDIR}/kglobalaccel5"
-   SYSTEMD_SERVICE plasma-kglobalaccel.service
-   DESTINATION ${KDE_INSTALL_DBUSSERVICEDIR}
-)
-
-ecm_install_configured_files(
-   INPUT plasma-kglobalaccel.service.in
-   DESTINATION ${KDE_INSTALL_SYSTEMDUSERUNITDIR}
 )
