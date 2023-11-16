@@ -40,12 +40,12 @@ msgid ""
 "Do you want to reassign it from that action to the current one?"
 msgstr ""
 "La combinació de tecles «%1» ja s'ha assignat a l'acció global «%2» en %3.\n"
-"Voleu reassignar-la des d'esta acció a l'acció actual?"
+"Voleu tornar a assignar-la des d'esta acció a l'acció actual?"
 
 #: kglobalaccel.cpp:623 kglobalaccel.cpp:656
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
-msgstr "Reassigna"
+msgstr "Torna a assignar"
 
 #: kglobalaccel.cpp:642
 #, qt-format
