@@ -58,4 +58,4 @@ msgstr "Conflicte amb una drecera global registrada"
 #: kglobalaccel.cpp:553
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
-msgstr "Reassigna"
+msgstr "Torna a assignar"
