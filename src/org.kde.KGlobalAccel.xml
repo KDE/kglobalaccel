@@ -85,48 +85,48 @@
     <!-- v2 interface -->
     <signal name="yourShortcutsChanged">
       <arg name="actionId" type="as" direction="out"/>
-      <arg name="newKeys" type="ai" direction="out"/>
+      <arg name="newKeys" type="a(ai)" direction="out"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.Out1" value="QList&lt;QKeySequence&gt;"/>
     </signal>
     <method name="shortcutKeys">
-      <arg type="ai" direction="out"/>
+      <arg type="a(ai)" direction="out"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QList&lt;QKeySequence&gt;"/>
       <arg name="actionId" type="as" direction="in"/>
     </method>
     <method name="defaultShortcutKeys">
-      <arg type="ai" direction="out"/>
+      <arg type="a(ai)" direction="out"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QList&lt;QKeySequence&gt;"/>
       <arg name="actionId" type="as" direction="in"/>
     </method>
     <method name="actionList">
       <arg type="as" direction="out"/>
-      <arg name="key" type="ai" direction="in"/>
+      <arg name="key" type="(ai)" direction="in"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="QKeySequence"/>
     </method>
     <method name="setShortcutKeys">
-      <arg type="ai" direction="out"/>
+      <arg type="a(ai)" direction="out"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QList&lt;QKeySequence&gt;"/>
       <arg name="actionId" type="as" direction="in"/>
-      <arg name="keys" type="ai" direction="in"/>
+      <arg name="keys" type="a(ai)" direction="in"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="QList&lt;QKeySequence&gt;"/>
       <arg name="flags" type="u" direction="in"/>
     </method>
     <method name="setForeignShortcutKeys">
       <arg name="actionId" type="as" direction="in"/>
-      <arg name="keys" type="ai" direction="in"/>
+      <arg name="keys" type="a(ai)" direction="in"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="QList&lt;QKeySequence&gt;"/>
     </method>
     <method name="globalShortcutsByKey">
       <arg type="a(ssssssaiai)" direction="out"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QList&lt;KGlobalShortcutInfo&gt;"/>
-      <arg name="key" type="ai" direction="in"/>
+      <arg name="key" type="(ai)" direction="in"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="QKeySequence"/>
       <arg name="matchType" type="(i)" direction="in"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="KGlobalAccel::MatchType"/>
     </method>
     <method name="globalShortcutAvailable">
       <arg type="b" direction="out"/>
-      <arg name="key" type="ai" direction="in"/>
+      <arg name="key" type="(ai)" direction="in"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="QKeySequence"/>
       <arg name="component" type="s" direction="in"/>
     </method>
