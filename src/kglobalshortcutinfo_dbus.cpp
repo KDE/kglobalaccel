@@ -36,6 +36,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, QKeySequence &seq
 
 QDBusArgument &operator<<(QDBusArgument &argument, const KGlobalShortcutInfo &shortcut)
 {
+    qDebug() << "New marshalling";
     argument.beginStructure();
     /* clang-format off */
     argument << shortcut.uniqueName()
@@ -45,20 +46,8 @@ QDBusArgument &operator<<(QDBusArgument &argument, const KGlobalShortcutInfo &sh
              << shortcut.contextUniqueName()
              << shortcut.contextFriendlyName();
     /* clang-format on */
-    argument.beginArray(qMetaTypeId<int>());
-
-    const QList<QKeySequence> keys = shortcut.keys();
-    for (const QKeySequence &key : keys) {
-        argument << key[0].toCombined();
-    }
-    argument.endArray();
-    argument.beginArray(qMetaTypeId<int>());
-
-    const QList<QKeySequence> defaultKeys = shortcut.defaultKeys();
-    for (const QKeySequence &key : defaultKeys) {
-        argument << key[0].toCombined();
-    }
-    argument.endArray();
+    argument << shortcut.keys();
+    argument << shortcut.defaultKeys();
     argument.endStructure();
     return argument;
 }
@@ -76,17 +65,35 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, KGlobalShortcutIn
     /* clang-format on */
 
     argument.beginArray();
+    qDebug() << argument.currentType();
+    // In the past KGlobalShortcutInfo QKeySequences were only marshalled as a single int, for backwards
+    // compat and ease of code we make the demarshalling dynamic because the deprecated methods also need
+    // to be kept around
+    const bool usesOldMarshalling = argument.currentType() == QDBusArgument::BasicType;
+    qDebug() << "using old marshalling" << usesOldMarshalling;
     while (!argument.atEnd()) {
-        int key;
-        argument >> key;
-        shortcut.d->keys.append(QKeySequence(key));
+        if (usesOldMarshalling) {
+            int key;
+            argument >> key;
+            shortcut.d->keys.append(QKeySequence(key));
+        } else {
+            QKeySequence key;
+            argument >> key;
+            shortcut.d->keys.append(key);
+        }
     }
     argument.endArray();
     argument.beginArray();
     while (!argument.atEnd()) {
-        int key;
-        argument >> key;
-        shortcut.d->defaultKeys.append(QKeySequence(key));
+        if (usesOldMarshalling) {
+            int key;
+            argument >> key;
+            shortcut.d->defaultKeys.append(QKeySequence(key));
+        } else {
+            QKeySequence key;
+            argument >> key;
+            shortcut.d->defaultKeys.append(key);
+        }
     }
     argument.endArray();
     argument.endStructure();
