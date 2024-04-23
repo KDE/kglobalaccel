@@ -213,7 +213,7 @@ bool KGlobalAccelPrivate::doRegister(QAction *action)
     actions.insert(action);
     iface()->doRegister(actionId);
 
-    QObject::connect(action, &QObject::destroyed, [this, action](QObject *) {
+    q->connect(action, &QObject::destroyed, q, [this, action](QObject *) {
         if (actions.contains(action) && (actionShortcuts.contains(action) || actionDefaultShortcuts.contains(action))) {
             remove(action, KGlobalAccelPrivate::SetInactive);
         }
