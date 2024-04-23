@@ -62,19 +62,19 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
 
     if (remember) {
         // Connect to the signals we are interested in.
-        q->connect(component,
-                   &org::kde::kglobalaccel::Component::globalShortcutPressed,
-                   q,
-                   [this](const QString &componentUnique, const QString &shortcutUnique, qlonglong timestamp) {
-                       invokeAction(componentUnique, shortcutUnique, timestamp);
-                   });
+        QObject::connect(component,
+                         &org::kde::kglobalaccel::Component::globalShortcutPressed,
+                         q,
+                         [this](const QString &componentUnique, const QString &shortcutUnique, qlonglong timestamp) {
+                             invokeAction(componentUnique, shortcutUnique, timestamp);
+                         });
 
-        q->connect(component,
-                   &org::kde::kglobalaccel::Component::globalShortcutReleased,
-                   q,
-                   [this](const QString &componentUnique, const QString &shortcutUnique, qlonglong) {
-                       invokeDeactivate(componentUnique, shortcutUnique);
-                   });
+        QObject::connect(component,
+                         &org::kde::kglobalaccel::Component::globalShortcutReleased,
+                         q,
+                         [this](const QString &componentUnique, const QString &shortcutUnique, qlonglong) {
+                             invokeDeactivate(componentUnique, shortcutUnique);
+                         });
 
         components[componentUnique] = component;
     }
@@ -103,9 +103,12 @@ KGlobalAccelPrivate::KGlobalAccelPrivate(KGlobalAccel *qq)
     : q(qq)
 {
     m_watcher = new QDBusServiceWatcher(serviceName(), QDBusConnection::sessionBus(), QDBusServiceWatcher::WatchForOwnerChange, q);
-    q->connect(m_watcher, &QDBusServiceWatcher::serviceOwnerChanged, q, [this](const QString &serviceName, const QString &oldOwner, const QString &newOwner) {
-        serviceOwnerChanged(serviceName, oldOwner, newOwner);
-    });
+    QObject::connect(m_watcher,
+                     &QDBusServiceWatcher::serviceOwnerChanged,
+                     q,
+                     [this](const QString &serviceName, const QString &oldOwner, const QString &newOwner) {
+                         serviceOwnerChanged(serviceName, oldOwner, newOwner);
+                     });
 }
 
 org::kde::KGlobalAccel *KGlobalAccelPrivate::iface()
@@ -121,7 +124,7 @@ org::kde::KGlobalAccel *KGlobalAccelPrivate::iface()
             }
         }
 
-        q->connect(m_iface, &org::kde::KGlobalAccel::yourShortcutsChanged, q, [this](const QStringList &actionId, const QList<QKeySequence> &newKeys) {
+        QObject::connect(m_iface, &org::kde::KGlobalAccel::yourShortcutsChanged, q, [this](const QStringList &actionId, const QList<QKeySequence> &newKeys) {
             shortcutsChanged(actionId, newKeys);
         });
     }
@@ -213,7 +216,7 @@ bool KGlobalAccelPrivate::doRegister(QAction *action)
     actions.insert(action);
     iface()->doRegister(actionId);
 
-    q->connect(action, &QObject::destroyed, q, [this, action](QObject *) {
+    QObject::connect(action, &QObject::destroyed, q, [this, action](QObject *) {
         if (actions.contains(action) && (actionShortcuts.contains(action) || actionDefaultShortcuts.contains(action))) {
             remove(action, KGlobalAccelPrivate::SetInactive);
         }
