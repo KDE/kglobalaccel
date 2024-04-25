@@ -27,7 +27,7 @@ msgstr ""
 "X-Generator: Lokalize 22.08.3\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:539
+#: kglobalaccel.cpp:542
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
@@ -35,13 +35,13 @@ msgstr ""
 "La combinazione di tasti «%1» è registrata dall'applicazione %2 per l'azione "
 "%3."
 
-#: kglobalaccel.cpp:543
+#: kglobalaccel.cpp:546
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "Nel contesto «%1» per l'azione «%2»\n"
 
-#: kglobalaccel.cpp:545
+#: kglobalaccel.cpp:548
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -51,12 +51,12 @@ msgstr ""
 "La combinazione di tasti «%1» è registrata dall'applicazione %2.\n"
 "%3"
 
-#: kglobalaccel.cpp:548
+#: kglobalaccel.cpp:551
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Conflitto con una scorciatoia globale registrata"
 
-#: kglobalaccel.cpp:553
+#: kglobalaccel.cpp:556
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Riassegna"

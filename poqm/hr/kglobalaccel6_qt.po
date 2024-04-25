@@ -30,7 +30,7 @@ msgstr ""
 "X-Text-Markup: kde4\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:539
+#: kglobalaccel.cpp:542
 #, fuzzy, qt-format
 #| msgid ""
 #| "The '%1' key combination is registered by application %2 for action %3:"
@@ -38,14 +38,14 @@ msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "Kombinacija '%1' je registrirana za aplikaciju %2 za radnju %3."
 
-#: kglobalaccel.cpp:543
+#: kglobalaccel.cpp:546
 #, fuzzy, qt-format
 #| msgid "In context '%1' for action '%2'\n"
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "U kontekstu '%1' za akciju '%2'\n"
 
-#: kglobalaccel.cpp:545
+#: kglobalaccel.cpp:548
 #, fuzzy, qt-format
 #| msgid ""
 #| "The '%1' key combination is registered by application %2.\n"
@@ -58,14 +58,14 @@ msgstr ""
 "Aplikacija %2 je registrirala kombinaciju tipaka '%1'.\n"
 "%3"
 
-#: kglobalaccel.cpp:548
+#: kglobalaccel.cpp:551
 #, fuzzy
 #| msgid "Conflict With Registered Global Shortcut"
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Sukob s registriranim općim prečacem"
 
-#: kglobalaccel.cpp:553
+#: kglobalaccel.cpp:556
 #, fuzzy
 #| msgid "Reassign"
 msgctxt "KGlobalAccel|"

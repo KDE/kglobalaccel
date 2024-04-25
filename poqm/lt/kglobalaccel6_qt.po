@@ -24,19 +24,19 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:539
+#: kglobalaccel.cpp:542
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "Klavišų kombinacija „%1“ yra įregistruota programos %2 veiksmui %3."
 
-#: kglobalaccel.cpp:543
+#: kglobalaccel.cpp:546
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "„%1“ kontekste, veiksmui „%2“\n"
 
-#: kglobalaccel.cpp:545
+#: kglobalaccel.cpp:548
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -46,12 +46,12 @@ msgstr ""
 "Klavišų kombinacija „%1“ yra įregistruota programos %2.\n"
 "%3"
 
-#: kglobalaccel.cpp:548
+#: kglobalaccel.cpp:551
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Konfliktas su įregistruotu visuotiniu sparčiuoju klavišu"
 
-#: kglobalaccel.cpp:553
+#: kglobalaccel.cpp:556
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Priskirti iš naujo"

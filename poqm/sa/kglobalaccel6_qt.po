@@ -13,19 +13,19 @@ msgstr ""
 "X-Generator: Poedit 3.3.2\n"
 "Plural-Forms: nplurals=2; plural=(n>1);\n"
 
-#: kglobalaccel.cpp:539
+#: kglobalaccel.cpp:542
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "'%1' कुञ्जीसंयोजनं %3 क्रियायाः कृते अनुप्रयोगेन %2 पञ्जीकृतम् अस्ति ।."
 
-#: kglobalaccel.cpp:543
+#: kglobalaccel.cpp:546
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "'%2' क्रियायाः कृते '%1' सन्दर्भे।.\n"
 
-#: kglobalaccel.cpp:545
+#: kglobalaccel.cpp:548
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -35,12 +35,12 @@ msgstr ""
 "'%1' कीलसंयोजनं %2 अनुप्रयोगेन पञ्जीकृतम् अस्ति ।\n"
 "%3"
 
-#: kglobalaccel.cpp:548
+#: kglobalaccel.cpp:551
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "पञ्जीकृतवैश्विकसंक्षिप्तमार्ग इत्यनेन सह द्वन्द्वः"
 
-#: kglobalaccel.cpp:553
+#: kglobalaccel.cpp:556
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "पुनः नियुक्तं कुरुत"

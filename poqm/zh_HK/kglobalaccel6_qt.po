@@ -36,20 +36,20 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:539
+#: kglobalaccel.cpp:542
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
 
-#: kglobalaccel.cpp:543
+#: kglobalaccel.cpp:546
 #, fuzzy, qt-format
 #| msgid "Content information: %1\n"
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "內容資訊:：%1\n"
 
-#: kglobalaccel.cpp:545
+#: kglobalaccel.cpp:548
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -57,14 +57,14 @@ msgid ""
 "%3"
 msgstr ""
 
-#: kglobalaccel.cpp:548
+#: kglobalaccel.cpp:551
 #, fuzzy
 #| msgid "Conflict with Global Shortcut"
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "與系統的全域快速鍵定義衝突"
 
-#: kglobalaccel.cpp:553
+#: kglobalaccel.cpp:556
 #, fuzzy
 #| msgid "Reassign"
 msgctxt "KGlobalAccel|"

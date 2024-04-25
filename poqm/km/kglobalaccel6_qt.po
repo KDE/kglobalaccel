@@ -17,7 +17,7 @@ msgstr ""
 "X-Language: km-KH\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:539
+#: kglobalaccel.cpp:542
 #, fuzzy, qt-format
 #| msgid ""
 #| "The '%1' key combination is registered by application %2 for action %3:"
@@ -25,14 +25,14 @@ msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "បន្សំ​គ្រាប់ចុច '%1' ត្រូវ​បាន​ចុះឈ្មោះ​ដោយ​កម្មវិធី %2 សម្រាប់​សកម្មភាព %3 ៖"
 
-#: kglobalaccel.cpp:543
+#: kglobalaccel.cpp:546
 #, fuzzy, qt-format
 #| msgid "In context '%1' for action '%2'\n"
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "នៅ​ក្នុង​បិរបទ '%1' សម្រាប់​សកម្មភាព '%2'\n"
 
-#: kglobalaccel.cpp:545
+#: kglobalaccel.cpp:548
 #, fuzzy, qt-format
 #| msgid ""
 #| "The '%1' key combination is registered by application %2.\n"
@@ -45,14 +45,14 @@ msgstr ""
 "បន្សំ​គ្រាប់ចុច '%1' ត្រូវ​បាន​ចុះឈ្មោះ​ដោយ​កម្មវិធី %2 ។\n"
 "%3"
 
-#: kglobalaccel.cpp:548
+#: kglobalaccel.cpp:551
 #, fuzzy
 #| msgid "Conflict With Registered Global Shortcut"
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "ប៉ះទង្គិច​ជាមួយ​ផ្លូវកាត់​សកល"
 
-#: kglobalaccel.cpp:553
+#: kglobalaccel.cpp:556
 #, fuzzy
 #| msgid "Reassign"
 msgctxt "KGlobalAccel|"

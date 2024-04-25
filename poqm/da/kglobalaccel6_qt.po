@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Lokalize 1.5\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:539
+#: kglobalaccel.cpp:542
 #, fuzzy, qt-format
 #| msgctxt "KGlobalAccel|"
 #| msgid ""
@@ -30,13 +30,13 @@ msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
 "Tastekombinationen \"%1\" er registreret af programmet %2 til handlingen %3:"
 
-#: kglobalaccel.cpp:543
+#: kglobalaccel.cpp:546
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "I sammenhæng med \"%1\" til handlingen \"%2\"\n"
 
-#: kglobalaccel.cpp:545
+#: kglobalaccel.cpp:548
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -46,12 +46,12 @@ msgstr ""
 "Tastekombinationen \"%1\" er registreret af programmet %2.\n"
 "%3"
 
-#: kglobalaccel.cpp:548
+#: kglobalaccel.cpp:551
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Konflikt med registreret global genvej"
 
-#: kglobalaccel.cpp:553
+#: kglobalaccel.cpp:556
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Tilknyt igen"

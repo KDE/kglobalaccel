@@ -21,7 +21,7 @@ msgstr ""
 "X-Generator: Lokalize 22.08.3\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:539
+#: kglobalaccel.cpp:542
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
@@ -29,13 +29,13 @@ msgstr ""
 "'%1' எனும் விசைக்கூட்டு, ஏற்கனவே %2 எனும் செயலியால் %3 என்ற செயலுக்காக "
 "பயன்படுத்தப்படுகிறது."
 
-#: kglobalaccel.cpp:543
+#: kglobalaccel.cpp:546
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "'%1' எனும் சூழலில் '%2' எனும் செயலுக்கு\n"
 
-#: kglobalaccel.cpp:545
+#: kglobalaccel.cpp:548
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -45,12 +45,12 @@ msgstr ""
 "'%1' எனும் விசைக்கூட்டு, ஏற்கனவே %2 எனும் செயலியால் பயன்படுத்தப்படுகிறது.\n"
 "%3"
 
-#: kglobalaccel.cpp:548
+#: kglobalaccel.cpp:551
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "பயனிலுள்ள பொது சுருக்குவழியுடன் முரண்பாடு"
 
-#: kglobalaccel.cpp:553
+#: kglobalaccel.cpp:556
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "இதற்கே அமர்த்து"

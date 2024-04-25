@@ -20,19 +20,19 @@ msgstr ""
 "X-Text-Markup: qtrich\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:539
+#: kglobalaccel.cpp:542
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
 
-#: kglobalaccel.cpp:543
+#: kglobalaccel.cpp:546
 #, fuzzy, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "«%1»-oktavuođas «%2»-doibmii\n"
 
-#: kglobalaccel.cpp:545
+#: kglobalaccel.cpp:548
 #, fuzzy, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -42,13 +42,13 @@ msgstr ""
 "«%1»-boallokombinašuvdna geavahuvvo %2-prográmmas.\n"
 "%3"
 
-#: kglobalaccel.cpp:548
+#: kglobalaccel.cpp:551
 #, fuzzy
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Gávdno juo globála njuolggobálggisin"
 
-#: kglobalaccel.cpp:553
+#: kglobalaccel.cpp:556
 #, fuzzy
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
