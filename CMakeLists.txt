@@ -57,7 +57,7 @@ ecm_set_disabled_deprecation_versions(
 ecm_install_po_files_as_qm(poqm)
 
 add_subdirectory(src)
-if (BUILD_TESTING)
+if(BUILD_TESTING)
     find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Test)
 
     add_subdirectory(tests)
@@ -66,7 +66,7 @@ endif()
 # create a Config.cmake and a ConfigVersion.cmake file and install them
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF6GlobalAccel")
 
-if (BUILD_QCH)
+if(BUILD_QCH)
     ecm_install_qch_export(
         TARGETS KF6GlobalAccel_QCH
         FILE KF6GlobalAccelQchTargets.cmake
@@ -83,12 +83,12 @@ configure_package_config_file(
     INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
 )
 
-install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KF6GlobalAccelConfig.cmake"
-               "${CMAKE_CURRENT_BINARY_DIR}/KF6GlobalAccelConfigVersion.cmake"
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/KF6GlobalAccelConfig.cmake"
+                "${CMAKE_CURRENT_BINARY_DIR}/KF6GlobalAccelConfigVersion.cmake"
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
-        COMPONENT Devel )
+        COMPONENT Devel)
 
-install(EXPORT KF6GlobalAccelTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF6GlobalAccelTargets.cmake NAMESPACE KF6:: )
+install(EXPORT KF6GlobalAccelTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF6GlobalAccelTargets.cmake NAMESPACE KF6::)
 
 
 install(FILES ${kglobalaccel_version_header}
