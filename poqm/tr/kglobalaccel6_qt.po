@@ -17,13 +17,13 @@
 # Serdar SOYTETİR <tulliana@gmail.com>, 2010, 2012.
 # Volkan Gezer <volkangezer@gmail.com>, 2013, 2014.
 # Kaan Ozdincer <kaanozdincer@gmail.com>, 2014.
-# Emir SARI <emir_sari@icloud.com>, 2022.
+# SPDX-FileCopyrightText: 2022, 2024 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kdelibs4\n"
 "Report-Msgid-Bugs-To: http://bugs.kde.org\n"
 "POT-Creation-Date: 2014-03-23 01:50+0000\n"
-"PO-Revision-Date: 2022-11-26 18:46+0300\n"
+"PO-Revision-Date: 2024-09-23 15:11+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -31,7 +31,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.08.3\n"
+"X-Generator: Lokalize 24.11.70\n"
 "X-Qt-Contexts: true\n"
 
 #: kglobalaccel.cpp:542
@@ -39,13 +39,13 @@ msgstr ""
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
-"'%1' düğme kombinasyonu, %2 uygulaması tarafından %3 eylemi için kaydedildi."
+"“%1” düğme kombinasyonu, %2 uygulaması tarafından %3 eylemi için kaydedildi."
 
 #: kglobalaccel.cpp:546
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
-msgstr "'%2' eylemi için '%1' içeriği\n"
+msgstr "“%2” eylemi için olan “%1” içeriği\n"
 
 #: kglobalaccel.cpp:548
 #, qt-format
@@ -54,7 +54,7 @@ msgid ""
 "The '%1' key combination is registered by application %2.\n"
 "%3"
 msgstr ""
-"'%1' düğme kombinasyonu %2 uygulaması tarafından kaydedildi.\n"
+"“%1” düğme kombinasyonu %2 uygulaması tarafından kaydedildi.\n"
 "%3"
 
 #: kglobalaccel.cpp:551
