@@ -1,5 +1,3 @@
-configure_file(config-kglobalaccel.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kglobalaccel.h)
-
 set(kglobalaccel_SRCS
   kglobalaccel.cpp
   kglobalshortcutinfo.cpp
@@ -46,10 +44,6 @@ PUBLIC
     Qt6::DBus
     Qt6::Widgets
 )
-
-if(HAVE_X11)
-    target_link_libraries(KF6GlobalAccel PRIVATE Qt6::GuiPrivate) # qtx11extras_p.h
-endif()
 
 set_target_properties(KF6GlobalAccel PROPERTIES VERSION   ${KGLOBALACCEL_VERSION}
                                                 SOVERSION ${KGLOBALACCEL_SOVERSION}

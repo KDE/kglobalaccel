@@ -20,11 +20,6 @@
 #include <QGuiApplication>
 #include <QMessageBox>
 #include <QPushButton>
-#include <config-kglobalaccel.h>
-
-#if HAVE_X11
-#include <private/qtx11extras_p.h>
-#endif
 
 org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QString &componentUnique, bool remember = false)
 {
@@ -403,18 +398,6 @@ QString KGlobalAccelPrivate::componentFriendlyForAction(const QAction *action)
     return QCoreApplication::applicationName();
 }
 
-#if HAVE_X11
-int timestampCompare(unsigned long time1_, unsigned long time2_) // like strcmp()
-{
-    quint32 time1 = time1_;
-    quint32 time2 = time2_;
-    if (time1 == time2) {
-        return 0;
-    }
-    return quint32(time1 - time2) < 0x7fffffffU ? 1 : -1; // time1 > time2 -> 1, handle wrapping
-}
-#endif
-
 QAction *KGlobalAccelPrivate::findAction(const QString &componentUnique, const QString &actionUnique)
 {
     QAction *action = nullptr;
@@ -442,20 +425,6 @@ void KGlobalAccelPrivate::invokeAction(const QString &componentUnique, const QSt
         return;
     }
 
-#if HAVE_X11
-    // Update this application's X timestamp if needed.
-    // TODO The 100%-correct solution should probably be handling this action
-    // in the proper place in relation to the X events queue in order to avoid
-    // the possibility of wrong ordering of user events.
-    if (QX11Info::isPlatformX11()) {
-        if (timestampCompare(timestamp, QX11Info::appTime()) > 0) {
-            QX11Info::setAppTime(timestamp);
-        }
-        if (timestampCompare(timestamp, QX11Info::appUserTime()) > 0) {
-            QX11Info::setAppUserTime(timestamp);
-        }
-    }
-#endif
     action->setProperty("org.kde.kglobalaccel.activationTimestamp", timestamp);
 
     if (m_lastActivatedAction != action) {
