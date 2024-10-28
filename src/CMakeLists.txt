@@ -47,7 +47,7 @@ PUBLIC
     Qt6::Widgets
 )
 
-if(HAVE_X11)
+if(WITH_X11)
     target_link_libraries(KF6GlobalAccel PRIVATE Qt6::GuiPrivate) # qtx11extras_p.h
 endif()
 

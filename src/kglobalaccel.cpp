@@ -22,7 +22,7 @@
 #include <QPushButton>
 #include <config-kglobalaccel.h>
 
-#if HAVE_X11
+#if WITH_X11
 #include <private/qtx11extras_p.h>
 #endif
 
@@ -403,7 +403,7 @@ QString KGlobalAccelPrivate::componentFriendlyForAction(const QAction *action)
     return QCoreApplication::applicationName();
 }
 
-#if HAVE_X11
+#if WITH_X11
 int timestampCompare(unsigned long time1_, unsigned long time2_) // like strcmp()
 {
     quint32 time1 = time1_;
@@ -442,7 +442,7 @@ void KGlobalAccelPrivate::invokeAction(const QString &componentUnique, const QSt
         return;
     }
 
-#if HAVE_X11
+#if WITH_X11
     // Update this application's X timestamp if needed.
     // TODO The 100%-correct solution should probably be handling this action
     // in the proper place in relation to the X events queue in order to avoid
