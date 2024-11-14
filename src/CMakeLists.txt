@@ -56,6 +56,8 @@ set_target_properties(KF6GlobalAccel PROPERTIES VERSION   ${KGLOBALACCEL_VERSION
                                                 EXPORT_NAME "GlobalAccel"
 )
 
+ecm_generate_qdoc(KF6GlobalAccel kglobalaccel.qdocconf)
+
 ecm_generate_headers(KGlobalAccel_HEADERS
   HEADER_NAMES
   KGlobalAccel
@@ -71,32 +73,6 @@ install(FILES
   ${KGlobalAccel_HEADERS}
   DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KGlobalAccel COMPONENT Devel
 )
-
-if(BUILD_QCH)
-    ecm_add_qch(
-        KF6GlobalAccel_QCH
-        NAME KGlobalAccel
-        BASE_NAME KF6GlobalAccel
-        VERSION ${KF_VERSION}
-        ORG_DOMAIN org.kde
-        SOURCES # using only public headers, to cover only public API
-            ${KGlobalAccel_HEADERS}
-        MD_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md"
-        LINK_QCHS
-            Qt6Widgets_QCH
-            Qt6DBus_QCH
-        INCLUDE_DIRS
-            ${CMAKE_CURRENT_BINARY_DIR}
-        BLANK_MACROS
-            KGLOBALACCEL_EXPORT
-            KGLOBALACCEL_DEPRECATED
-            KGLOBALACCEL_DEPRECATED_EXPORT
-            "KGLOBALACCEL_DEPRECATED_VERSION(x, y, t)"
-        TAGFILE_INSTALL_DESTINATION ${KDE_INSTALL_QTQCHDIR}
-        QCH_INSTALL_DESTINATION ${KDE_INSTALL_QTQCHDIR}
-        COMPONENT Devel
-    )
-endif()
 
 ecm_qt_install_logging_categories(
     EXPORT KGLOBALACCEL
