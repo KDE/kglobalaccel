@@ -1,0 +1,9 @@
+/*!
+    \module KGlobalAccel
+    \title KGlobalAccel C++ Classes
+    \ingroup modules
+    \cmakepackage KF6
+    \cmakecomponent GlobalAccel
+
+    \brief KGlobalAccel provides a convenient way to handle global shortcuts.
+*/

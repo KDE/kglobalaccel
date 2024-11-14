@@ -19,6 +19,7 @@ include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 
 include(ECMGenerateExportHeader)
 include(CMakePackageConfigHelpers)
+include(ECMGenerateQDoc)
 include(ECMSetupVersion)
 include(ECMGenerateHeaders)
 include(ECMAddQch)

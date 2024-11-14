@@ -56,6 +56,8 @@ set_target_properties(KF6GlobalAccel PROPERTIES VERSION   ${KGLOBALACCEL_VERSION
                                                 EXPORT_NAME "GlobalAccel"
 )
 
+ecm_generate_qdoc(KF6GlobalAccel kglobalaccel.qdocconf)
+
 ecm_generate_headers(KGlobalAccel_HEADERS
   HEADER_NAMES
   KGlobalAccel
