@@ -1,0 +1,27 @@
+include($KDE_DOCS/global/qt-module-defaults.qdocconf)
+
+project = KGlobalAccel
+description = Add support for global workspace shortcuts
+
+documentationinheaders = true
+
+headerdirs += .
+sourcedirs += .
+
+outputformats = HTML
+
+depends += kde qtcore qtgui qtwidgets kde kguiaddons
+
+qhp.projects            = KGlobalAccel
+
+qhp.KGlobalAccel.file                = kglobalaccel.qhp
+qhp.KGlobalAccel.namespace           = org.kde.kglobalaccel.$QT_VERSION_TAG
+qhp.KGlobalAccel.virtualFolder       = kglobalaccel
+qhp.KGlobalAccel.indexTitle          = KGlobalAccel
+qhp.KGlobalAccel.indexRoot           =
+
+qhp.KGlobalAccel.subprojects         = classes
+qhp.KGlobalAccel.subprojects.classes.title = C++ Classes
+qhp.KGlobalAccel.subprojects.classes.indexTitle = KGlobalAccel C++ Classes
+qhp.KGlobalAccel.subprojects.classes.selectors = class fake:headerfile
+qhp.KGlobalAccel.subprojects.classes.sortPages = true

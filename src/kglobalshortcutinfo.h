@@ -16,9 +16,6 @@
 
 class KGlobalShortcutInfoPrivate;
 
-/**
- * @author Michael Jansen <kde@michael-jansen.biz>
- */
 class KGLOBALACCEL_EXPORT KGlobalShortcutInfo : public QObject
 {
     Q_OBJECT

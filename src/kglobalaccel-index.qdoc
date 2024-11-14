@@ -1,0 +1,20 @@
+/*!
+    \page kglobalaccel-index.html
+    \title KGlobalAccel
+
+    The KGlobalAccel API provides a convenient way to register global shortcuts.
+
+    \section1 Using the Module
+
+    \include {module-use.qdocinc} {using the c++ api}
+
+    \section2 Building with CMake
+
+    \include {module-use.qdocinc} {building with cmake} {KF6} {GlobalAccel} {KF6::GlobalAccel}
+
+    \section1 API Reference
+
+    \list
+        \li \l{KGlobalAccel C++ Classes}
+    \endlist
+*/
