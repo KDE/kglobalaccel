@@ -45,8 +45,8 @@ find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus Gui Widgets)
 option(WITH_X11 "Build with X11 support" ON)
 
 ecm_set_disabled_deprecation_versions(
-    QT 6.5.0
-    KF 5.102.0
+    QT 6.8.0
+    KF 6.8.0
 )
 
 # Subdirectories
