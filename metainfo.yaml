@@ -11,7 +11,7 @@ portingAid: false
 deprecated: false
 release: true
 libraries:
- - cmake: "KF6::GlobalAccel"
+    - cmake: "KF6::GlobalAccel"
 cmakename: KF6GlobalAccel
 
 public_lib: true
