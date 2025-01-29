@@ -42,6 +42,10 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX KGLOBALACCEL
 set(REQUIRED_QT_VERSION 6.6.0)
 find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus Gui Widgets)
 
+if (Qt6Gui_VERSION VERSION_GREATER_EQUAL "6.10.0")
+    find_package(Qt6GuiPrivate ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE)
+endif()
+
 option(WITH_X11 "Build with X11 support" ON)
 
 ecm_set_disabled_deprecation_versions(
