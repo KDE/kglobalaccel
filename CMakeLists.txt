@@ -47,7 +47,7 @@ option(WITH_X11 "Build with X11 support" ON)
 
 ecm_set_disabled_deprecation_versions(
     QT 6.9.0
-    KF 6.12.0
+    KF 6.13.0
 )
 
 # Subdirectories
