@@ -10,6 +10,8 @@ sourcedirs += .
 
 outputformats = HTML
 
+navigation.landingpage = "KGlobalAccel"
+
 depends += kde qtcore qtgui qtwidgets kde kguiaddons
 
 qhp.projects            = KGlobalAccel
