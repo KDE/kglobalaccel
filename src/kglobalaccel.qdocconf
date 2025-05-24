@@ -27,3 +27,5 @@ qhp.KGlobalAccel.subprojects.classes.title = C++ Classes
 qhp.KGlobalAccel.subprojects.classes.indexTitle = KGlobalAccel C++ Classes
 qhp.KGlobalAccel.subprojects.classes.selectors = class fake:headerfile
 qhp.KGlobalAccel.subprojects.classes.sortPages = true
+
+tagfile = kglobalaccel.tags
