@@ -66,7 +66,14 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
                          &org::kde::kglobalaccel::Component::globalShortcutPressed,
                          q,
                          [this](const QString &componentUnique, const QString &shortcutUnique, qlonglong timestamp) {
-                             invokeAction(componentUnique, shortcutUnique, timestamp);
+                             invokeAction(componentUnique, shortcutUnique, timestamp, false);
+                         });
+
+        QObject::connect(component,
+                          &org::kde::kglobalaccel::Component::globalShortcutHeld,
+                         q,
+                          [this](const QString &componentUnique, const QString &shortcutUnique, qlonglong timestamp) {
+                             invokeAction(componentUnique, shortcutUnique, timestamp, true);
                          });
 
         QObject::connect(component,
@@ -435,7 +442,7 @@ QAction *KGlobalAccelPrivate::findAction(const QString &componentUnique, const Q
     return action;
 }
 
-void KGlobalAccelPrivate::invokeAction(const QString &componentUnique, const QString &actionUnique, qlonglong timestamp)
+void KGlobalAccelPrivate::invokeAction(const QString &componentUnique, const QString &actionUnique, qlonglong timestamp, bool wasHeld)
 {
     QAction *action = findAction(componentUnique, actionUnique);
     if (!action) {
@@ -461,6 +468,9 @@ void KGlobalAccelPrivate::invokeAction(const QString &componentUnique, const QSt
     if (m_lastActivatedAction != action) {
         Q_EMIT q->globalShortcutActiveChanged(action, true);
         m_lastActivatedAction = action;
+    }
+    if (!action->autoRepeat() && wasHeld) {
+        return;
     }
     action->trigger();
 }
