@@ -9,7 +9,7 @@
       <arg name="actionUnique" type="s" direction="out"/>
       <arg name="timestamp" type="x" direction="out"/>
     </signal>
-    <signal name="globalShortcutHeld">
+    <signal name="globalShortcutRepeated">
       <arg name="componentUnique" type="s" direction="out"/>
       <arg name="actionUnique" type="s" direction="out"/>
       <arg name="timestamp" type="x" direction="out"/>

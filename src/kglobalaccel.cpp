@@ -70,7 +70,7 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
                          });
 
         QObject::connect(component,
-                          &org::kde::kglobalaccel::Component::globalShortcutHeld,
+                          &org::kde::kglobalaccel::Component::globalShortcutRepeated,
                          q,
                           [this](const QString &componentUnique, const QString &shortcutUnique, qlonglong timestamp) {
                              invokeAction(componentUnique, shortcutUnique, timestamp, true);
