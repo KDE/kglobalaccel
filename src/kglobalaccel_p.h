@@ -28,6 +28,11 @@ enum SetShortcutFlag {
 class KGlobalAccelPrivate
 {
 public:
+    enum ShortcutState {
+        Pressed,
+        Repeated,
+        Released
+    };
     enum ShortcutType {
         /// The shortcut will immediately become active but may be reset to "default".
         ActiveShortcut = 0x1,
@@ -66,7 +71,7 @@ public:
 
     // private slot implementations
     QAction *findAction(const QString &, const QString &);
-    void invokeAction(const QString &, const QString &, qlonglong);
+    void invokeAction(const QString &, const QString &, qlonglong, ShortcutState wasHeld);
     void invokeDeactivate(const QString &, const QString &);
     void shortcutGotChanged(const QStringList &, const QList<int> &);
     void shortcutsChanged(const QStringList &, const QList<QKeySequence> &);
