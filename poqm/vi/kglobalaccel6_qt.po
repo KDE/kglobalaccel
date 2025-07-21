@@ -21,19 +21,19 @@ msgstr ""
 "X-Generator: Lokalize 22.12.0\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:542
+#: kglobalaccel.cpp:552
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "Tổ hợp phím '%1' được đăng kí bởi ứng dụng %2 cho hành động %3."
 
-#: kglobalaccel.cpp:546
+#: kglobalaccel.cpp:556
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "Trong ngữ cảnh '%1' cho hành động '%2'\n"
 
-#: kglobalaccel.cpp:548
+#: kglobalaccel.cpp:558
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -43,12 +43,12 @@ msgstr ""
 "Tổ hợp phím '%1' được đăng kí bởi ứng dụng %2.\n"
 "%3"
 
-#: kglobalaccel.cpp:551
+#: kglobalaccel.cpp:561
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Xung đột với phím tắt toàn cục đã đăng kí"
 
-#: kglobalaccel.cpp:556
+#: kglobalaccel.cpp:566
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Gán lại"

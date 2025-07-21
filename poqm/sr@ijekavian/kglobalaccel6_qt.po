@@ -22,7 +22,7 @@ msgstr ""
 "X-Environment: kde\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:542
+#: kglobalaccel.cpp:552
 #, fuzzy, qt-format
 #| msgctxt "KGlobalAccel|"
 #| msgid ""
@@ -32,14 +32,14 @@ msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "Комбинацију тастера %1 региструје програм %2 за радњу „%3“:"
 
 # >> Appended as list items to the following message.
-#: kglobalaccel.cpp:546
+#: kglobalaccel.cpp:556
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "у контексту „%1“ за радњу „%2“\n"
 
 # >> %3 is an assembly of list items for the previous message
-#: kglobalaccel.cpp:548
+#: kglobalaccel.cpp:558
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -49,12 +49,12 @@ msgstr ""
 "Комбинацију тастера %1 региструје програм %2:\n"
 "%3"
 
-#: kglobalaccel.cpp:551
+#: kglobalaccel.cpp:561
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Сукоб са регистрованом глобалном пречицом"
 
-#: kglobalaccel.cpp:556
+#: kglobalaccel.cpp:566
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Поново додијели"

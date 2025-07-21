@@ -16,19 +16,19 @@ msgstr ""
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:542
+#: kglobalaccel.cpp:552
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "تجميعة المفاتيح ”%1“ مسجّلة للتطبيق %2 للإجراء ”%3“."
 
-#: kglobalaccel.cpp:546
+#: kglobalaccel.cpp:556
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "في سياق ”%1“ للإجراء ”%2“\n"
 
-#: kglobalaccel.cpp:548
+#: kglobalaccel.cpp:558
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -38,12 +38,12 @@ msgstr ""
 "تجميعة المفاتيح ”%1“ مسجّلة للتطبيق %2.\n"
 "%3"
 
-#: kglobalaccel.cpp:551
+#: kglobalaccel.cpp:561
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "تضارب مع اختصار عمومي مسجّل"
 
-#: kglobalaccel.cpp:556
+#: kglobalaccel.cpp:566
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "أعد التعيين"

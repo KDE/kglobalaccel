@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Lokalize 0.2\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:542
+#: kglobalaccel.cpp:552
 #, fuzzy, qt-format
 #| msgid ""
 #| "The '%1' key combination is registered by application %2 for action %3:"
@@ -28,14 +28,14 @@ msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "कुंजी '%1' काम्बीनेसन ह अनुपरयोग %2 के द्वारा काम %3 बर रजिस्टर हे:"
 
-#: kglobalaccel.cpp:546
+#: kglobalaccel.cpp:556
 #, fuzzy, qt-format
 #| msgid "In context '%1' for action '%2'\n"
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "काम '%2' बर '%1' से संदर्भित \n"
 
-#: kglobalaccel.cpp:548
+#: kglobalaccel.cpp:558
 #, fuzzy, qt-format
 #| msgid ""
 #| "The '%1' key combination is registered by application %2.\n"
@@ -48,14 +48,14 @@ msgstr ""
 "कुंजी '%1' काम्बीनेसन ह %2 अनुपरयोग से रजिस्टर हे.\n"
 "%3"
 
-#: kglobalaccel.cpp:551
+#: kglobalaccel.cpp:561
 #, fuzzy
 #| msgid "Conflict With Registered Global Shortcut"
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "ग्लोबल सार्टकट के आपसी विरोध मं हे"
 
-#: kglobalaccel.cpp:556
+#: kglobalaccel.cpp:566
 #, fuzzy
 #| msgid "Reassign"
 msgctxt "KGlobalAccel|"

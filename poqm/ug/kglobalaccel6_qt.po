@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Poedit 1.5.5\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:542
+#: kglobalaccel.cpp:552
 #, fuzzy, qt-format
 #| msgid ""
 #| "The '%1' key combination is registered by application %2 for action %3:"
@@ -29,14 +29,14 @@ msgstr ""
 "بىرىكمە كۇنۇپكا '%1' ئاللىقاچان پروگرامما %2 نىڭدا ھەرىكەت %3 ئۈچۈن "
 "خەتلىتىلگەن:"
 
-#: kglobalaccel.cpp:546
+#: kglobalaccel.cpp:556
 #, fuzzy, qt-format
 #| msgid "In context '%1' for action '%2'\n"
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "'%2' مەشغۇلاتنىڭ ئىچكى مەزمۇنى '%1'\n"
 
-#: kglobalaccel.cpp:548
+#: kglobalaccel.cpp:558
 #, fuzzy, qt-format
 #| msgid ""
 #| "The '%1' key combination is registered by application %2.\n"
@@ -49,14 +49,14 @@ msgstr ""
 "بىرىكمە كۇنۇپكا '%1' ئاللىقاچان پروگرامما %2 نىڭدا خەتلىتىلگەن.\n"
 "%3"
 
-#: kglobalaccel.cpp:551
+#: kglobalaccel.cpp:561
 #, fuzzy
 #| msgid "Conflict With Registered Global Shortcut"
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "خەتلىتىلگەن ئومۇمىي تېزلەتمە بىلەن توقۇنۇشۇپ قالدى"
 
-#: kglobalaccel.cpp:556
+#: kglobalaccel.cpp:566
 #, fuzzy
 #| msgid "Reassign"
 msgctxt "KGlobalAccel|"

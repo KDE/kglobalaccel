@@ -15,19 +15,19 @@ msgstr ""
 "X-Crowdin-File: /kf6-trunk/messages/kglobalaccel/kglobalaccel6_qt.pot\n"
 "X-Crowdin-File-ID: 43073\n"
 
-#: kglobalaccel.cpp:542
+#: kglobalaccel.cpp:552
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "按键/按键组合“%1”已被应用程序 %2 注册给 %3 操作。"
 
-#: kglobalaccel.cpp:546
+#: kglobalaccel.cpp:556
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "在操作“%2”的“%1”条件下\n"
 
-#: kglobalaccel.cpp:548
+#: kglobalaccel.cpp:558
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -37,12 +37,12 @@ msgstr ""
 "按键/按键组合“%1”已被应用程序 %2 注册。\n"
 "%3"
 
-#: kglobalaccel.cpp:551
+#: kglobalaccel.cpp:561
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "与已注册的全局快捷键冲突"
 
-#: kglobalaccel.cpp:556
+#: kglobalaccel.cpp:566
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "重新分配"

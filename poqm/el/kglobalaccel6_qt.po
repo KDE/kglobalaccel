@@ -32,7 +32,7 @@ msgstr ""
 "X-Generator: Lokalize 2.0\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:542
+#: kglobalaccel.cpp:552
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
@@ -40,13 +40,13 @@ msgstr ""
 "Ο συνδυασμός πλήκτρων '%1' είναι καταχωρημένος από την εφαρμογή %2 για την "
 "ενέργεια %3."
 
-#: kglobalaccel.cpp:546
+#: kglobalaccel.cpp:556
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "Στο πλαίσιο '%1' για την ενέργεια '%2'\n"
 
-#: kglobalaccel.cpp:548
+#: kglobalaccel.cpp:558
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -56,12 +56,12 @@ msgstr ""
 "Ο συνδυασμός πλήκτρων '%1' είναι καταχωρημένος από την εφαρμογή %2.\n"
 " %3"
 
-#: kglobalaccel.cpp:551
+#: kglobalaccel.cpp:561
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Σύγκρουση με καταχωρημένη καθολική συντόμευση"
 
-#: kglobalaccel.cpp:556
+#: kglobalaccel.cpp:566
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Ανάθεση ξανά"

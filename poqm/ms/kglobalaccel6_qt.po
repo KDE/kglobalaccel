@@ -22,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=1;\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:542
+#: kglobalaccel.cpp:552
 #, fuzzy, qt-format
 #| msgid ""
 #| "The '%1' key combination is registered by application %2 for action %3:"
@@ -30,14 +30,14 @@ msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "Kekunci kombinasi '%1' didaftarkan oleh aplikasi %2 untuk tindakan %3:"
 
-#: kglobalaccel.cpp:546
+#: kglobalaccel.cpp:556
 #, fuzzy, qt-format
 #| msgid "In context '%1' for action '%2'\n"
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "Dalam konteks '%1' untuk tindakan '%2'\n"
 
-#: kglobalaccel.cpp:548
+#: kglobalaccel.cpp:558
 #, fuzzy, qt-format
 #| msgid ""
 #| "The '%1' key combination is registered by application %2.\n"
@@ -50,14 +50,14 @@ msgstr ""
 "Kekunci kombinasi '%1' didaftarkan oleh aplikasi %2.\n"
 "%3"
 
-#: kglobalaccel.cpp:551
+#: kglobalaccel.cpp:561
 #, fuzzy
 #| msgid "Conflict With Registered Global Shortcut"
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Konflik dengan Pintasan Global Berdaftar"
 
-#: kglobalaccel.cpp:556
+#: kglobalaccel.cpp:566
 #, fuzzy
 #| msgid "Reassign"
 msgctxt "KGlobalAccel|"

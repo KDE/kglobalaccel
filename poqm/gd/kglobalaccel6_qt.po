@@ -15,7 +15,7 @@ msgstr ""
 "X-Generator: Virtaal 0.7.1\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:542
+#: kglobalaccel.cpp:552
 #, fuzzy, qt-format
 #| msgctxt "KGlobalAccel|"
 #| msgid ""
@@ -26,13 +26,13 @@ msgstr ""
 "Chaidh na co-iuchraichean \"%1 a chlàradh leis an aplacaid %2 airson a' "
 "ghnìomha \"%3\":"
 
-#: kglobalaccel.cpp:546
+#: kglobalaccel.cpp:556
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "Sa cho-theacsa \"%1\" airson a' ghnìomh \"%2\"\n"
 
-#: kglobalaccel.cpp:548
+#: kglobalaccel.cpp:558
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -42,12 +42,12 @@ msgstr ""
 "Chaidh na co-iuchraichean \"%1\" a chlàradh leis an aplacaid \"%2\".\n"
 "%3"
 
-#: kglobalaccel.cpp:551
+#: kglobalaccel.cpp:561
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Còmhstri le ath-ghoirid chlàraichte"
 
-#: kglobalaccel.cpp:556
+#: kglobalaccel.cpp:566
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Sònraich às ùr"
