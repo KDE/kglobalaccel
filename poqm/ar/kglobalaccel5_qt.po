@@ -72,4 +72,4 @@ msgstr "خدمة «كِيدِي» للاختصارات العمومية"
 #: runtime/main.cpp:48 runtime/main.cpp:49
 msgctxt "QObject|"
 msgid "Maintainer"
-msgstr "المصين"
+msgstr "الصائن"
