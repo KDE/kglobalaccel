@@ -305,7 +305,7 @@ void KGlobalAccelPrivate::updateGlobalShortcut(/*const would be better*/ QAction
     QStringList actionId = makeActionId(action);
 
     uint setterFlags = 0;
-    if (globalFlags & NoAutoloading) {
+    if (globalFlags & KGlobalAccel::GlobalShortcutLoading::NoAutoloading) {
         setterFlags |= NoAutoloading;
     }
 
@@ -328,7 +328,7 @@ void KGlobalAccelPrivate::updateGlobalShortcut(/*const would be better*/ QAction
         // Create a shortcut from the result
         const QList<QKeySequence> scResult(result);
 
-        if (isConfigurationAction && (globalFlags & NoAutoloading)) {
+        if (isConfigurationAction && (globalFlags & KGlobalAccel::GlobalShortcutLoading::NoAutoloading)) {
             // If this is a configuration action and we have set the shortcut,
             // inform the real owner of the change.
             // Note that setForeignShortcut will cause a signal to be sent to applications
