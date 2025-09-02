@@ -4,21 +4,91 @@
   <interface name="org.kde.kglobalaccel.Component">
     <property name="friendlyName" type="s" access="read"/>
     <property name="uniqueName" type="s" access="read"/>
+
+    <!--
+      Deprecated: use the pressed event instead.
+    -->
     <signal name="globalShortcutPressed">
       <arg name="componentUnique" type="s" direction="out"/>
       <arg name="actionUnique" type="s" direction="out"/>
       <arg name="timestamp" type="x" direction="out"/>
     </signal>
+
+    <!--
+      Deprecated: use the repeated event instead.
+    -->
     <signal name="globalShortcutRepeated">
       <arg name="componentUnique" type="s" direction="out"/>
       <arg name="actionUnique" type="s" direction="out"/>
       <arg name="timestamp" type="x" direction="out"/>
     </signal>
+
+    <!--
+      Deprecated: use the released event instead.
+    -->
     <signal name="globalShortcutReleased">
       <arg name="componentUnique" type="s" direction="out"/>
       <arg name="actionUnique" type="s" direction="out"/>
       <arg name="timestamp" type="x" direction="out"/>
     </signal>
+
+    <!--
+      pressed:
+      @info: Vardict with information about the global shortcut.
+
+      Supported keys in the @info vardict include:
+
+      * ``componentId`` (``s``)
+
+      * ``actionId`` (``s``)
+
+      * ``x11Timestamp`` (``u``)
+
+      The pressed signal is sent before the globalShortcutPressed signal.
+    -->
+    <signal name="pressed">
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QVariantMap"/>
+      <arg name="info" type="a{sv}" direction="out"/>
+    </signal>
+
+    <!--
+      repeated:
+      @info: Vardict with information about the global shortcut.
+
+      Supported keys in the @info vardict include:
+
+      * ``componentId`` (``s``)
+
+      * ``actionId`` (``s``)
+
+      * ``x11Timestamp`` (``u``)
+
+      The repeated signal is sent before the globalShortcutRepeated signal.
+    -->
+    <signal name="repeated">
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QVariantMap"/>
+      <arg name="info" type="a{sv}" direction="out"/>
+    </signal>
+
+    <!--
+      released:
+      @info: Vardict with information about the global shortcut.
+
+      Supported keys in the @info vardict include:
+
+      * ``componentId`` (``s``)
+
+      * ``actionId`` (``s``)
+
+      * ``x11Timestamp`` (``u``)
+
+      The released signal is sent before the globalShortcutReleased signal.
+    -->
+    <signal name="released">
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QVariantMap"/>
+      <arg name="info" type="a{sv}" direction="out"/>
+    </signal>
+
     <method name="cleanUp">
       <arg type="b" direction="out"/>
     </method>

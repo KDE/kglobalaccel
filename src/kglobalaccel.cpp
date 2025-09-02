@@ -26,6 +26,8 @@
 #include <private/qtx11extras_p.h>
 #endif
 
+static bool s_supportsNewEvents = false;
+
 org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QString &componentUnique, bool remember = false)
 {
     // Check if we already have this component
@@ -61,18 +63,42 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
     }
 
     if (remember) {
-        // Connect to the signals we are interested in.
+        QObject::connect(component, &org::kde::kglobalaccel::Component::pressed, q, [this](const QVariantMap &info) {
+            s_supportsNewEvents = true;
+            invokeAction(info.value(QStringLiteral("componentId")).toString(),
+                         info.value(QStringLiteral("actionId")).toString(),
+                         info.value(QStringLiteral("x11Timestamp")).toUInt(),
+                         ShortcutState::Pressed);
+        });
+        QObject::connect(component, &org::kde::kglobalaccel::Component::repeated, q, [this](const QVariantMap &info) {
+            s_supportsNewEvents = true;
+            invokeAction(info.value(QStringLiteral("componentId")).toString(),
+                         info.value(QStringLiteral("actionId")).toString(),
+                         info.value(QStringLiteral("x11Timestamp")).toUInt(),
+                         ShortcutState::Repeated);
+        });
+        QObject::connect(component, &org::kde::kglobalaccel::Component::released, q, [this](const QVariantMap &info) {
+            s_supportsNewEvents = true;
+            invokeDeactivate(info.value(QStringLiteral("componentId")).toString(), info.value(QStringLiteral("actionId")).toString());
+        });
+
         QObject::connect(component,
                          &org::kde::kglobalaccel::Component::globalShortcutPressed,
                          q,
                          [this](const QString &componentUnique, const QString &shortcutUnique, qlonglong timestamp) {
+                             if (s_supportsNewEvents) {
+                                 return;
+                             }
                              invokeAction(componentUnique, shortcutUnique, timestamp, ShortcutState::Pressed);
                          });
 
         QObject::connect(component,
-                          &org::kde::kglobalaccel::Component::globalShortcutRepeated,
+                         &org::kde::kglobalaccel::Component::globalShortcutRepeated,
                          q,
-                          [this](const QString &componentUnique, const QString &shortcutUnique, qlonglong timestamp) {
+                         [this](const QString &componentUnique, const QString &shortcutUnique, qlonglong timestamp) {
+                             if (s_supportsNewEvents) {
+                                 return;
+                             }
                              invokeAction(componentUnique, shortcutUnique, timestamp, ShortcutState::Repeated);
                          });
 
@@ -80,6 +106,9 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
                          &org::kde::kglobalaccel::Component::globalShortcutReleased,
                          q,
                          [this](const QString &componentUnique, const QString &shortcutUnique, qlonglong) {
+                             if (s_supportsNewEvents) {
+                                 return;
+                             }
                              invokeDeactivate(componentUnique, shortcutUnique);
                          });
 
