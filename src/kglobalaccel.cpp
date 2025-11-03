@@ -282,7 +282,7 @@ void KGlobalAccelPrivate::unregister(const QStringList &actionId)
     auto message = QDBusMessage::createMethodCall(iface()->service(), iface()->path(), iface()->interface(), QStringLiteral("unregister"));
     message.setArguments({component, action});
     message.setAutoStartService(false);
-    QDBusConnection::sessionBus().call(message);
+    QDBusConnection::sessionBus().asyncCall(message);
 }
 
 void KGlobalAccelPrivate::setInactive(const QStringList &actionId)
@@ -290,7 +290,7 @@ void KGlobalAccelPrivate::setInactive(const QStringList &actionId)
     auto message = QDBusMessage::createMethodCall(iface()->service(), iface()->path(), iface()->interface(), QStringLiteral("setInactive"));
     message.setArguments({actionId});
     message.setAutoStartService(false);
-    QDBusConnection::sessionBus().call(message);
+    QDBusConnection::sessionBus().asyncCall(message);
 }
 
 void KGlobalAccelPrivate::updateGlobalShortcut(/*const would be better*/ QAction *action,
