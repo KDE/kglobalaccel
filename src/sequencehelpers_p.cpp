@@ -80,7 +80,25 @@ bool matchSequences(const QKeySequence &key, const QList<QKeySequence> &keys)
     return false;
 }
 
-QKeySequence mangleKey(const QKeySequence &key)
+static int normalizeKey(int keyQt)
+{
+    int key = keyQt & ~Qt::KeyboardModifierMask;
+    int mod = keyQt & Qt::KeyboardModifierMask;
+    switch (key) {
+    case Qt::Key_Shift:
+        return mod | Qt::ShiftModifier;
+    case Qt::Key_Control:
+        return mod | Qt::ControlModifier;
+    case Qt::Key_Alt:
+        return mod | Qt::AltModifier;
+    case Qt::Key_Meta:
+        return mod | Qt::MetaModifier;
+    default:
+        return keyQt;
+    }
+}
+
+QKeySequence normalizeSequence(const QKeySequence &key)
 {
     // Qt triggers both shortcuts that include Shift+Backtab and Shift+Tab
     // when user presses Shift+Tab. Make no difference here.
@@ -93,7 +111,7 @@ QKeySequence mangleKey(const QKeySequence &key)
         if ((keyMod & Qt::SHIFT) && (keySym == Qt::Key_Backtab || keySym == Qt::Key_Tab)) {
             k[i] = keyMod | Qt::Key_Tab;
         } else {
-            k[i] = key[i].toCombined();
+            k[i] = normalizeKey(key[i].toCombined());
         }
     }
 

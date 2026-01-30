@@ -17,7 +17,7 @@ bool contains(const QKeySequence &key, const QKeySequence &other);
 
 KGLOBALACCEL_EXPORT bool matchSequences(const QKeySequence &key, const QList<QKeySequence> &keys);
 
-KGLOBALACCEL_EXPORT QKeySequence mangleKey(const QKeySequence &key);
+KGLOBALACCEL_EXPORT QKeySequence normalizeSequence(const QKeySequence &key);
 }
 
 #endif // SEQUENCEHELPERS_H
