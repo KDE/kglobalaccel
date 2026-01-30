@@ -24,6 +24,8 @@ KGlobalShortcutInfo::KGlobalShortcutInfo(const KGlobalShortcutInfo &rhs)
     d->uniqueName = rhs.d->uniqueName;
     d->keys = rhs.d->keys;
     d->defaultKeys = rhs.d->defaultKeys;
+    d->triggers = rhs.d->triggers;
+    d->defaultTriggers = rhs.d->defaultTriggers;
 }
 
 KGlobalShortcutInfo::~KGlobalShortcutInfo()
@@ -74,6 +76,16 @@ QString KGlobalShortcutInfo::friendlyName() const
 QList<QKeySequence> KGlobalShortcutInfo::keys() const
 {
     return d->keys;
+}
+
+QList<KGlobalShortcutTrigger> KGlobalShortcutInfo::triggers() const
+{
+    return d->triggers;
+}
+
+QList<KGlobalShortcutTrigger> KGlobalShortcutInfo::defaultTriggers() const
+{
+    return d->defaultTriggers;
 }
 
 QString KGlobalShortcutInfo::uniqueName() const

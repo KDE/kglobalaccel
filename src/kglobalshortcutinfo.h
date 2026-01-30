@@ -7,6 +7,8 @@
 #ifndef KGLOBALSHORTCUTINFO_H
 #define KGLOBALSHORTCUTINFO_H
 
+#include "kglobalshortcuttrigger.h"
+
 #include <kglobalaccel_export.h>
 
 #include <QDBusArgument>
@@ -35,6 +37,9 @@ class KGLOBALACCEL_EXPORT KGlobalShortcutInfo : public QObject
     Q_SCRIPTABLE Q_PROPERTY(QList<QKeySequence> keys READ keys)
     Q_SCRIPTABLE Q_PROPERTY(QList<QKeySequence> defaultKeys READ keys)
 
+    // Q_SCRIPTABLE Q_PROPERTY(QList<KGlobalShortcutTrigger> triggers READ triggers)
+    // Q_SCRIPTABLE Q_PROPERTY(QList<KGlobalShortcutTrigger> defaultTriggers READ defaultTriggers)
+
 public:
     KGlobalShortcutInfo();
     /* clang-format on */
@@ -58,6 +63,10 @@ public:
     QString friendlyName() const;
 
     QList<QKeySequence> keys() const;
+
+    QList<KGlobalShortcutTrigger> triggers() const;
+
+    QList<KGlobalShortcutTrigger> defaultTriggers() const;
 
     QString uniqueName() const;
 
