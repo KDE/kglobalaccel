@@ -4,6 +4,8 @@ set(kglobalaccel_SRCS
   kglobalaccel.cpp
   kglobalshortcutinfo.cpp
   kglobalshortcutinfo_dbus.cpp
+  kglobalshortcuttrigger.cpp
+  sequencehelpers_p.cpp
 )
 ecm_qt_declare_logging_category(kglobalaccel_SRCS
     HEADER kglobalaccel_debug.h
@@ -62,6 +64,7 @@ ecm_generate_headers(KGlobalAccel_HEADERS
   HEADER_NAMES
   KGlobalAccel
   KGlobalShortcutInfo
+  KGlobalShortcutTrigger
 
   REQUIRED_HEADERS KGlobalAccel_HEADERS
 )
