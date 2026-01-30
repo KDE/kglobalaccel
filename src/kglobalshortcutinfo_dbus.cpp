@@ -6,6 +6,25 @@
 
 #include "kglobalshortcutinfo.h"
 #include "kglobalshortcutinfo_p.h"
+#include "kglobalshortcuttrigger.h"
+
+QDBusArgument &operator<<(QDBusArgument &argument, const KGlobalShortcutTrigger &trigger)
+{
+    argument.beginStructure();
+    argument << trigger.toString();
+    argument.endStructure();
+    return argument;
+}
+
+const QDBusArgument &operator>>(const QDBusArgument &argument, KGlobalShortcutTrigger &trigger)
+{
+    QString s;
+    argument.beginStructure();
+    argument >> s;
+    trigger = KGlobalShortcutTrigger::fromString(s);
+    argument.endStructure();
+    return argument;
+}
 
 QDBusArgument &operator<<(QDBusArgument &argument, const QKeySequence &sequence)
 {

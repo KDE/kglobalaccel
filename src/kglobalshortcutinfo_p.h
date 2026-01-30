@@ -15,6 +15,7 @@ static const int maxSequenceLength = 4;
 
 #include "kglobalaccel.h"
 #include "kglobalshortcutinfo.h"
+#include "kglobalshortcuttrigger.h"
 
 class KGlobalShortcutInfoPrivate
 {
@@ -27,6 +28,8 @@ public:
     QString friendlyName;
     QList<QKeySequence> keys;
     QList<QKeySequence> defaultKeys;
+    QList<KGlobalShortcutTrigger> triggers;
+    QList<KGlobalShortcutTrigger> defaultTriggers;
 };
 
 #endif /* #ifndef KGLOBALSHORTCUTINFO_P_H */
