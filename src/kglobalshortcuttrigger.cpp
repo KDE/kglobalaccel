@@ -9,8 +9,28 @@
 
 #include "sequencehelpers_p.h"
 
+#include <QLatin1StringView>
+#include <QMetaEnum>
+#include <variant>
+
+using namespace Qt::StringLiterals;
+
+constexpr QLatin1StringView TouchpadSwipePrefix = "TouchpadSwipe:"_L1;
+constexpr QLatin1StringView TouchpadSwipe2DPrefix = "TouchpadSwipe2D:"_L1;
+constexpr QLatin1StringView TouchpadPinchPrefix = "TouchpadPinch:"_L1;
+constexpr QLatin1StringView TouchpadRotatePrefix = "TouchpadRotate:"_L1;
+constexpr QLatin1StringView TouchpadHoldPrefix = "TouchpadHold:"_L1;
+constexpr QLatin1StringView ApproachScreenBorderPrefix = "ApproachScreenBorder:"_L1;
+constexpr QLatin1StringView TouchscreenSwipePrefix = "TouchscreenSwipe:"_L1;
+constexpr QLatin1StringView TouchscreenSwipe2DPrefix = "TouchscreenSwipe2D:"_L1;
+constexpr QLatin1StringView TouchscreenSwipeFromEdgePrefix = "TouchscreenSwipeFromEdge:"_L1;
+constexpr QLatin1StringView TouchscreenPinchPrefix = "TouchscreenPinch:"_L1;
+constexpr QLatin1StringView TouchscreenRotatePrefix = "TouchscreenRotate:"_L1;
+constexpr QLatin1StringView LineShapePrefix = "LineShape:"_L1;
+constexpr QLatin1StringView ScrollAxisPrefix = "ScrollAxis:"_L1;
+
 KGlobalShortcutTrigger::KGlobalShortcutTrigger()
-    : d(new KGlobalShortcutTriggerPrivate)
+    : d(new KGlobalShortcutTriggerPrivate(KGlobalShortcutTriggerPrivate::Unparseable{}))
 {
 }
 
@@ -20,9 +40,8 @@ KGlobalShortcutTrigger::~KGlobalShortcutTrigger()
 }
 
 KGlobalShortcutTrigger::KGlobalShortcutTrigger(const KGlobalShortcutTrigger &rhs)
-    : d(new KGlobalShortcutTriggerPrivate)
+    : d(new KGlobalShortcutTriggerPrivate(rhs.d->variant))
 {
-    d->variant = rhs.d->variant;
     d->serialized = rhs.d->serialized;
 }
 
@@ -39,20 +58,12 @@ KGlobalShortcutTrigger &KGlobalShortcutTrigger::operator=(const KGlobalShortcutT
 // static
 KGlobalShortcutTrigger KGlobalShortcutTrigger::fromString(const QString &serialized)
 {
-    KGlobalShortcutTrigger trigger;
-
     if (serialized.isEmpty()) {
         return KGlobalShortcutTrigger();
     }
-
+    KGlobalShortcutTrigger trigger;
     trigger.d->serialized = serialized;
-
-    if (QKeySequence key = QKeySequence::fromString(serialized, QKeySequence::PortableText); !key.isEmpty()) {
-        KeyboardShortcut sc;
-        sc.keySequence = key;
-        sc.normalizedKeySequence = Utils::normalizeSequence(key);
-        trigger.d->variant = sc;
-    }
+    // variant parsing will happen later in deserialize()
     return trigger;
 }
 
@@ -94,79 +105,204 @@ bool KGlobalShortcutTrigger::canShadow(const KGlobalShortcutTrigger &other) cons
     return false;
 }
 
+bool KGlobalShortcutTrigger::conflictsWith(const KGlobalShortcutTrigger &other) const
+{
+    if (isEmpty() || other.isEmpty()) {
+        return false;
+    }
+    if (auto kbsc = asKeyboardShortcut(); kbsc != nullptr) {
+        if (auto otherKbsc = other.asKeyboardShortcut(); otherKbsc != nullptr) {
+            if (kbsc->keySequence.matches(otherKbsc->keySequence) == QKeySequence::ExactMatch //
+                || Utils::contains(kbsc->keySequence, otherKbsc->keySequence) //
+                || Utils::contains(otherKbsc->keySequence, kbsc->keySequence)) {
+                return true;
+            }
+        }
+    } else if (d->serialized == other.d->serialized) {
+        return true;
+    }
+    return false;
+}
+
 const KeyboardShortcut *KGlobalShortcutTrigger::asKeyboardShortcut() const
 {
+    d->deserialize();
     return std::get_if<KeyboardShortcut>(&d->variant);
 }
 
-const TouchpadSwipeGesture *KGlobalShortcutTrigger::asTouchpadSwipe() const
+const TouchpadSwipeGesture *KGlobalShortcutTrigger::asTouchpadSwipeGesture() const
 {
-    return nullptr;
+    d->deserialize();
+    return std::get_if<TouchpadSwipeGesture>(&d->variant);
 }
 
-const TouchpadSwipe2DGesture *KGlobalShortcutTrigger::asTouchpadSwipe2D() const
+const TouchpadSwipe2DGesture *KGlobalShortcutTrigger::asTouchpadSwipe2DGesture() const
 {
-    return nullptr;
+    d->deserialize();
+    return std::get_if<TouchpadSwipe2DGesture>(&d->variant);
 }
 
-const TouchpadPinchGesture *KGlobalShortcutTrigger::asTouchpadPinch() const
+const TouchpadPinchGesture *KGlobalShortcutTrigger::asTouchpadPinchGesture() const
 {
-    return nullptr;
+    d->deserialize();
+    return std::get_if<TouchpadPinchGesture>(&d->variant);
 }
 
-const TouchpadRotateGesture *KGlobalShortcutTrigger::asTouchpadRotate() const
+const TouchpadRotateGesture *KGlobalShortcutTrigger::asTouchpadRotateGesture() const
 {
-    return nullptr;
+    d->deserialize();
+    return std::get_if<TouchpadRotateGesture>(&d->variant);
 }
 
-const TouchpadHoldGesture *KGlobalShortcutTrigger::asTouchpadHold() const
+const TouchpadHoldGesture *KGlobalShortcutTrigger::asTouchpadHoldGesture() const
 {
-    return nullptr;
+    d->deserialize();
+    return std::get_if<TouchpadHoldGesture>(&d->variant);
 }
 
-const ApproachScreenBorderGesture *KGlobalShortcutTrigger::asApproachScreenBorder() const
+const ApproachScreenBorderGesture *KGlobalShortcutTrigger::asApproachScreenBorderGesture() const
 {
-    return nullptr;
+    d->deserialize();
+    return std::get_if<ApproachScreenBorderGesture>(&d->variant);
 }
 
-const TouchscreenSwipeGesture *KGlobalShortcutTrigger::asTouchscreenSwipe() const
+const TouchscreenSwipeGesture *KGlobalShortcutTrigger::asTouchscreenSwipeGesture() const
 {
-    return nullptr;
+    d->deserialize();
+    return std::get_if<TouchscreenSwipeGesture>(&d->variant);
 }
 
-const TouchscreenSwipe2DGesture *KGlobalShortcutTrigger::asTouchscreenSwipe2D() const
+const TouchscreenSwipe2DGesture *KGlobalShortcutTrigger::asTouchscreenSwipe2DGesture() const
 {
-    return nullptr;
+    d->deserialize();
+    return std::get_if<TouchscreenSwipe2DGesture>(&d->variant);
 }
 
-const TouchscreenSwipeFromEdgeGesture *KGlobalShortcutTrigger::asTouchscreenSwipeFromEdge() const
+const TouchscreenSwipeFromEdgeGesture *KGlobalShortcutTrigger::asTouchscreenSwipeFromEdgeGesture() const
 {
-    return nullptr;
+    d->deserialize();
+    return std::get_if<TouchscreenSwipeFromEdgeGesture>(&d->variant);
 }
 
-const TouchscreenPinchGesture *KGlobalShortcutTrigger::asTouchscreenPinch() const
+const TouchscreenPinchGesture *KGlobalShortcutTrigger::asTouchscreenPinchGesture() const
 {
-    return nullptr;
+    d->deserialize();
+    return std::get_if<TouchscreenPinchGesture>(&d->variant);
 }
 
-const TouchscreenRotateGesture *KGlobalShortcutTrigger::asTouchscreenRotate() const
+const TouchscreenRotateGesture *KGlobalShortcutTrigger::asTouchscreenRotateGesture() const
 {
-    return nullptr;
+    d->deserialize();
+    return std::get_if<TouchscreenRotateGesture>(&d->variant);
 }
 
-const TouchscreenHoldGesture *KGlobalShortcutTrigger::asTouchscreenHold() const
+const TouchscreenHoldGesture *KGlobalShortcutTrigger::asTouchscreenHoldGesture() const
 {
-    return nullptr;
+    d->deserialize();
+    return std::get_if<TouchscreenHoldGesture>(&d->variant);
 }
 
-const AxisGesture *KGlobalShortcutTrigger::asAxisGesture() const
+const ScrollAxisGesture *KGlobalShortcutTrigger::asScrollAxisGesture() const
 {
-    return nullptr;
+    d->deserialize();
+    return std::get_if<ScrollAxisGesture>(&d->variant);
 }
 
-const StrokeGesture *KGlobalShortcutTrigger::asStrokeGesture() const
+const LineShapeGesture *KGlobalShortcutTrigger::asLineShapeGesture() const
 {
-    return nullptr;
+    d->deserialize();
+    return std::get_if<LineShapeGesture>(&d->variant);
+}
+
+static std::optional<KGlobalShortcutTriggerPrivate::TriggerVariant> parseSwipeGesture(QStringView serialized)
+{
+    enum Type {
+        Touchpad,
+        Touchscreen
+    } type;
+
+    if (serialized.startsWith(TouchpadSwipePrefix)) {
+        type = Touchpad;
+        serialized.slice(TouchpadSwipePrefix.size());
+    } else if (serialized.startsWith(TouchscreenSwipePrefix)) {
+        type = Touchscreen;
+        serialized.slice(TouchscreenSwipePrefix.size());
+    } else {
+        return std::nullopt;
+    }
+
+    QList<QStringView> params = serialized.tokenize(u':').toContainer();
+    if (serialized.length() < 2) {
+        return std::nullopt;
+    }
+
+    bool ok = false;
+    int fingerCount = params[0].toInt(&ok);
+    if (!ok) {
+        return std::nullopt;
+    }
+
+    QMetaEnum metaEnum =
+        (type == Touchpad) ? QMetaEnum::fromType<TouchpadSwipeGesture::Direction>() : QMetaEnum::fromType<TouchscreenSwipeGesture::Direction>();
+    ok = false;
+    int direction = metaEnum.keyToValue(params[1].toLatin1().data(), &ok);
+    if (!ok) {
+        return std::nullopt;
+    }
+
+    // TODO: parse activation requirements
+
+    if (type == Touchpad) {
+        return {TouchpadSwipeGesture{
+            .fingerCount = fingerCount,
+            .direction = static_cast<TouchpadSwipeGesture::Direction>(direction),
+        }};
+    } else {
+        return {TouchscreenSwipeGesture{
+            .fingerCount = fingerCount,
+            .direction = static_cast<TouchscreenSwipeGesture::Direction>(direction),
+        }};
+    }
+}
+
+void KGlobalShortcutTriggerPrivate::deserialize()
+{
+    if (!std::holds_alternative<KGlobalShortcutTriggerPrivate::Uninitialized>(variant)) {
+        return;
+    }
+
+    if (QKeySequence key = QKeySequence::fromString(serialized, QKeySequence::PortableText); !key.isEmpty()) {
+        KeyboardShortcut sc;
+        sc.keySequence = key;
+        sc.normalizedKeySequence = Utils::normalizeSequence(key);
+        variant = sc;
+    } else if (auto optVariant = parseSwipeGesture(serialized); optVariant.has_value()) {
+        variant = *optVariant;
+    } // TODO: parse more variants (and figure out activation requirements parsing)
+    else {
+        variant = KGlobalShortcutTriggerPrivate::Unparseable{};
+    }
+}
+
+// static
+QList<KGlobalShortcutTrigger> KGlobalShortcutTrigger::fromKeyboardShortcuts(const QList<QKeySequence> &keys)
+{
+    QList<KGlobalShortcutTrigger> result;
+    std::ranges::transform(keys, std::back_inserter(result), &KGlobalShortcutTrigger::fromKeyboardShortcut);
+    return result;
+}
+
+// static
+QList<QKeySequence> KGlobalShortcutTrigger::onlyKeyboardShortcuts(const QList<KGlobalShortcutTrigger> &triggers)
+{
+    QList<QKeySequence> result;
+
+    for (const KGlobalShortcutTrigger &trigger : triggers) {
+        if (auto kbsc = trigger.asKeyboardShortcut(); kbsc != nullptr) {
+            result.append(kbsc->keySequence);
+        }
+    };
+    return result;
 }
 
 #include "moc_kglobalshortcuttrigger.cpp"
