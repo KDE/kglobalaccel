@@ -26,6 +26,7 @@ public:
     QString componentFriendlyName;
     QString uniqueName;
     QString friendlyName;
+    // TODO KF7: get rid of d->keys and d->defaultKeys, just keep triggers (must sync plasma/kglobalacceld)
     QList<QKeySequence> keys;
     QList<QKeySequence> defaultKeys;
     QList<KGlobalShortcutTrigger> triggers;

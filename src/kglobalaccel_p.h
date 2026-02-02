@@ -18,6 +18,7 @@
 #include "kglobalaccel.h"
 #include "kglobalaccel_component_interface.h"
 #include "kglobalaccel_interface.h"
+#include "kglobalshortcuttrigger.h"
 
 enum SetShortcutFlag {
     SetPresent = 2,
@@ -48,6 +49,8 @@ public:
     };
     KGlobalAccelPrivate(KGlobalAccel *);
 
+    int ifaceVersion();
+
     /// Propagate any shortcut changes to the KDED module that does the bookkeeping
     /// and the key grabbing.
     ///@todo KF6
@@ -64,7 +67,6 @@ public:
     QString componentUniqueForAction(const QAction *action);
     QString componentFriendlyForAction(const QAction *action);
     QStringList makeActionId(const QAction *action);
-    QList<int> intListFromShortcut(const QList<QKeySequence> &cut);
     QList<QKeySequence> shortcutFromIntList(const QList<int> &list);
 
     void cleanup();
@@ -73,8 +75,7 @@ public:
     QAction *findAction(const QString &, const QString &);
     void invokeAction(const QString &, const QString &, qlonglong, ShortcutState wasHeld);
     void invokeDeactivate(const QString &, const QString &);
-    void shortcutGotChanged(const QStringList &, const QList<int> &);
-    void shortcutsChanged(const QStringList &, const QList<QKeySequence> &);
+    void shortcutTriggersChanged(const QStringList &, const QList<KGlobalShortcutTrigger> &);
     void serviceOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner);
     void reRegisterAll();
 
@@ -93,16 +94,20 @@ public:
 
     //! The components the application is using
     QHash<QString, org::kde::kglobalaccel::Component *> components;
-    QMap<const QAction *, QList<QKeySequence>> actionDefaultShortcuts;
-    QMap<const QAction *, QList<QKeySequence>> actionShortcuts;
+    QMap<const QAction *, QList<KGlobalShortcutTrigger>> actionDefaultTriggers;
+    QMap<const QAction *, QList<KGlobalShortcutTrigger>> actionTriggers;
 
-    bool setShortcutWithDefault(QAction *action, const QList<QKeySequence> &shortcut, KGlobalAccel::GlobalShortcutLoading loadFlag);
+    bool setShortcutWithDefault(QAction *action,
+                                const QList<QKeySequence> &keys,
+                                const QList<KGlobalShortcutTrigger> &extraTriggers,
+                                KGlobalAccel::GlobalShortcutLoading loadFlag);
 
     void unregister(const QStringList &actionId);
     void setInactive(const QStringList &actionId);
 
 private:
     org::kde::KGlobalAccel *m_iface = nullptr;
+    std::optional<int> m_iface_version;
     QPointer<QAction> m_lastActivatedAction;
     QDBusServiceWatcher *m_watcher;
 };

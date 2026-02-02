@@ -82,6 +82,36 @@ QDBusArgument &operator<<(QDBusArgument &argument, const KGlobalShortcutInfo &sh
     return argument;
 }
 
+QDBusArgument &operator<<(QDBusArgument &argument, const KGlobalShortcutInfoWrapperV3 &shortcutWrapper)
+{
+    const KGlobalShortcutInfo &shortcut = shortcutWrapper.value();
+    argument.beginStructure();
+    /* clang-format off */
+    argument << shortcut.uniqueName()
+             << shortcut.friendlyName()
+             << shortcut.componentUniqueName()
+             << shortcut.componentFriendlyName()
+             << shortcut.contextUniqueName()
+             << shortcut.contextFriendlyName();
+    /* clang-format on */
+    argument.beginArray(qMetaTypeId<KGlobalShortcutTrigger>());
+
+    const QList<KGlobalShortcutTrigger> triggers = shortcut.triggers();
+    for (const KGlobalShortcutTrigger &trigger : triggers) {
+        argument << trigger.toString();
+    }
+    argument.endArray();
+    argument.beginArray(qMetaTypeId<int>());
+
+    const QList<KGlobalShortcutTrigger> defaultTriggers = shortcut.defaultTriggers();
+    for (const KGlobalShortcutTrigger &trigger : defaultTriggers) {
+        argument << trigger.toString();
+    }
+    argument.endArray();
+    argument.endStructure();
+    return argument;
+}
+
 const QDBusArgument &operator>>(const QDBusArgument &argument, KGlobalShortcutInfo &shortcut)
 {
     argument.beginStructure();
@@ -106,6 +136,37 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, KGlobalShortcutIn
         int key;
         argument >> key;
         shortcut.d->defaultKeys.append(QKeySequence(key));
+    }
+    argument.endArray();
+    argument.endStructure();
+    return argument;
+}
+
+const QDBusArgument &operator>>(const QDBusArgument &argument, KGlobalShortcutInfoWrapperV3 &shortcutWrapper)
+{
+    KGlobalShortcutInfo &shortcut = shortcutWrapper.value();
+    argument.beginStructure();
+    /* clang-format off */
+    argument >> shortcut.d->uniqueName
+             >> shortcut.d->friendlyName
+             >> shortcut.d->componentUniqueName
+             >> shortcut.d->componentFriendlyName
+             >> shortcut.d->contextUniqueName
+             >> shortcut.d->contextFriendlyName;
+    /* clang-format on */
+
+    argument.beginArray();
+    while (!argument.atEnd()) {
+        QString str;
+        argument >> str;
+        shortcut.d->triggers.append(KGlobalShortcutTrigger::fromString(str));
+    }
+    argument.endArray();
+    argument.beginArray();
+    while (!argument.atEnd()) {
+        QString str;
+        argument >> str;
+        shortcut.d->triggers.append(KGlobalShortcutTrigger::fromString(str));
     }
     argument.endArray();
     argument.endStructure();

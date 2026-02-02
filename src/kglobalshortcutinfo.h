@@ -17,6 +17,7 @@
 #include <QObject>
 
 class KGlobalShortcutInfoPrivate;
+class KGlobalShortcutInfoWrapperV3;
 
 class KGLOBALACCEL_EXPORT KGlobalShortcutInfo : public QObject
 {
@@ -45,10 +46,12 @@ public:
     /* clang-format on */
 
     KGlobalShortcutInfo(const KGlobalShortcutInfo &rhs);
+    KGlobalShortcutInfo(KGlobalShortcutInfo &&rhs);
 
     ~KGlobalShortcutInfo() override;
 
     KGlobalShortcutInfo &operator=(const KGlobalShortcutInfo &rhs);
+    KGlobalShortcutInfo &operator=(KGlobalShortcutInfo &&rhs);
 
     QString contextFriendlyName() const;
 
@@ -74,18 +77,42 @@ private:
     friend class GlobalShortcut;
 
     friend KGLOBALACCEL_EXPORT const QDBusArgument &operator>>(const QDBusArgument &argument, KGlobalShortcutInfo &shortcut);
+    friend KGLOBALACCEL_EXPORT const QDBusArgument &operator>>(const QDBusArgument &argument, KGlobalShortcutInfoWrapperV3 &shortcut);
     friend KGLOBALACCEL_EXPORT const QDBusArgument &operator>>(const QDBusArgument &argument, QKeySequence &sequence);
 
     //! Implementation details
     KGlobalShortcutInfoPrivate *d;
 };
 
+/*!
+ * \class KGlobalShortcutInfoWrapperV3
+ * \inmodule KGlobalAccel
+ * \brief A wrapper around KGlobalShortcutInfo, with different D-Bus marshalling that includes triggers.
+ */
+class KGLOBALACCEL_EXPORT KGlobalShortcutInfoWrapperV3
+{
+public:
+    KGlobalShortcutInfoWrapperV3();
+    KGlobalShortcutInfoWrapperV3(KGlobalShortcutInfo wrapped);
+
+    const KGlobalShortcutInfo &value() const;
+    KGlobalShortcutInfo &value();
+
+    static QList<KGlobalShortcutInfo> unwrap(QList<KGlobalShortcutInfoWrapperV3> &&listOfWrappers);
+
+private:
+    KGlobalShortcutInfo m_wrapped;
+};
+
 KGLOBALACCEL_EXPORT QDBusArgument &operator<<(QDBusArgument &argument, const KGlobalShortcutInfo &shortcut);
+KGLOBALACCEL_EXPORT QDBusArgument &operator<<(QDBusArgument &argument, const KGlobalShortcutInfoWrapperV3 &shortcut);
 KGLOBALACCEL_EXPORT QDBusArgument &operator<<(QDBusArgument &argument, const QKeySequence &sequence);
 
 KGLOBALACCEL_EXPORT const QDBusArgument &operator>>(const QDBusArgument &argument, KGlobalShortcutInfo &shortcut);
+KGLOBALACCEL_EXPORT const QDBusArgument &operator>>(const QDBusArgument &argument, KGlobalShortcutInfoWrapperV3 &shortcut);
 KGLOBALACCEL_EXPORT const QDBusArgument &operator>>(const QDBusArgument &argument, QKeySequence &sequence);
 
 Q_DECLARE_METATYPE(KGlobalShortcutInfo)
+Q_DECLARE_METATYPE(KGlobalShortcutInfoWrapperV3)
 
 #endif /* #ifndef KGLOBALSHORTCUTINFO_H */
