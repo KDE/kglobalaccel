@@ -11,6 +11,7 @@
 #define _KGLOBALACCEL_H_
 
 #include "kglobalshortcutinfo.h"
+#include "kglobalshortcuttrigger.h"
 #include <kglobalaccel_export.h>
 
 #include <QKeySequence>
@@ -122,6 +123,14 @@ public:
     static void stealShortcutSystemwide(const QKeySequence &seq);
 
     /*!
+     * Take away the given shortcut \a trigger from the named action it belongs to.
+     * This applies to all actions with global shortcuts in any KDE application.
+     *
+     * \sa promptStealShortcutSystemwide()
+     */
+    static void stealShortcutSystemwide(const KGlobalShortcutTrigger &trigger);
+
+    /*!
      * Clean the shortcuts for component \a componentUnique.
      *
      * If the component is not active all global shortcut registrations are
@@ -163,6 +172,18 @@ public:
     static QList<KGlobalShortcutInfo> globalShortcutsByKey(const QKeySequence &seq, MatchType type = Equal);
 
     /*!
+     * Returns a list of global shortcuts registered for the shortcut \a trigger
+     * using the given match \a type.
+     *
+     * If the list contains more that one entry it means the component
+     * that registered the shortcuts uses global shortcut contexts.
+     * All returned shortcuts belong to the same component.
+     *
+     * \since 6.24 // TODO: update once approved for merging
+     */
+    static QList<KGlobalShortcutInfo> globalShortcutsByTrigger(const KGlobalShortcutTrigger &trigger, MatchType type = Equal);
+
+    /*!
      * Returns \c true if the shortcut \a seq is available for the \a component; otherwise returns
      * \c false.
      *
@@ -175,11 +196,23 @@ public:
     static bool isGlobalShortcutAvailable(const QKeySequence &seq, const QString &component = QString());
 
     /*!
+     * Returns \c true if the shortcut \a trigger is available for the \a component;
+     * otherwise returns \c false.
+     *
+     * The component is only of interest if the current application uses global shortcut
+     * contexts. In that case a global shortcut by \a component in an inactive
+     * global shortcut contexts does not block the \a trigger for us.
+     *
+     * \since 6.24 // TODO: update version once approved
+     */
+    static bool isGlobalShortcutTriggerAvailable(const KGlobalShortcutTrigger &trigger, const QString &comp);
+
+    /*!
      * Show a messagebox to inform the user that a global shortcut is already occupied,
      * and ask to take it away from its current action(s). This is GUI only, so nothing will
      * be actually changed.
      *
-     * Returns \c true if user confirms that it is okay to re-assign the global shorcut;
+     * Returns \c true if user confirms that it is okay to re-assign the global shortcut;
      * otherwise returns \c false.
      *
      * \sa stealShortcutSystemwide()
@@ -204,10 +237,30 @@ public:
     bool setDefaultShortcut(QAction *action, const QList<QKeySequence> &shortcut, GlobalShortcutLoading loadFlag = Autoloading);
 
     /*!
+     * Assign default global shortcut \a keys and \a triggers for a given \a action.
+     *
+     * For more information about global shortcuts and \a loadFlag, see setShortcut().
+     *
+     * Upon shortcut change the globalShortcutChanged() and globalShortcutTriggersChanged() signals
+     * will be triggered so other applications get notified.
+     *
+     * Returns \c true if the shortcut has been set successfully; otherwise returns \c false.
+     *
+     * \sa globalShortcutChanged()
+     * \sa globalShortcutTriggersChanged()
+     *
+     * \since 6.24 // TODO: update version once approved
+     */
+    bool setDefaultShortcut(QAction *action,
+                            const QList<QKeySequence> &keys,
+                            const QList<KGlobalShortcutTrigger> &triggers,
+                            GlobalShortcutLoading loadFlag = Autoloading);
+
+    /*!
      * Assign a global shortcut for the given action.
      *
      * Global shortcuts allow an action to respond to key shortcuts independently of the focused window,
-     * i.e. the action will trigger if the keys were pressed no matter where in the X session.
+     * i.e. the action will trigger if the keys were pressed no matter where in the session.
      *
      * The action must have a per main component unique
      * action->objectName() to enable cross-application bookkeeping. If the action->objectName() is
@@ -246,7 +299,60 @@ public:
     bool setShortcut(QAction *action, const QList<QKeySequence> &shortcut, GlobalShortcutLoading loadFlag = Autoloading);
 
     /*!
-     * Sets both active and default \a shortcuts for the given \a action.
+     * Assign global shortcut \a keys and \a extraTriggers for the given action.
+     *
+     * Most applications should limit themselves to keyboard shortcuts, and should use the
+     * other overload without the \a extraTriggers parameter.
+     *
+     * Global shortcuts allow an action to respond to key and gesture shortcuts independently of
+     * the focused window, i.e. the action will trigger if the keys were pressed no matter where
+     * in the session.
+     *
+     * The action must have a per main component unique
+     * action->objectName() to enable cross-application bookkeeping. If the action->objectName() is
+     * empty this method will do nothing and will return false.
+     *
+     * It is mandatory that the action->objectName() doesn't change once the shortcut has been
+     * successfully registered.
+     *
+     * \note KActionCollection::insert(name, action) will set action's objectName to name so you often
+     * don't have to set an objectName explicitly.
+     *
+     * When an action, identified by main component name and objectName(), is assigned
+     * a global shortcut for the first time on a KDE installation the assignment will
+     * be saved. The shortcut will then be restored every time setGlobalShortcut() is
+     * called with \a loadFlag == Autoloading.
+     *
+     * If you actually want to change the global shortcut you have to set
+     * \a loadFlag to NoAutoloading. The new shortcut will be automatically saved again.
+     *
+     * \a action specifies the action for which the shortcut will be assigned.
+     *
+     * \a keys specifies the global shortcut(s) to assign. Will be ignored unless \a loadFlag is
+     * set to NoAutoloading or this is the first time ever you call this method (see above).
+     *
+     * \a extraTriggers specifies additional global shortcut triggers to assign. Will be ignored
+     * unless \a loadFlag is set to NoAutoloading or this is the first time ever you call
+     * this method (see above).
+     *
+     * If \a loadFlag is KGlobalAccel::Autoloading, assign the global shortcut this action has
+     * previously had if any. That way user preferences and changes made to avoid clashes will be
+     * conserved. If KGlobalAccel::NoAutoloading the given shortcut will be assigned without
+     * looking up old values. You should only do this if the user wants to change the shortcut or
+     * if you have another very good reason. Key combinations that clash with other shortcuts will be
+     * dropped.
+     *
+     * \note the default shortcut will never be influenced by autoloading - it will be set as given.
+     * \sa shortcut(), globalShortcutChanged(), globalShortcutTriggersChanged()
+     * \since 6.24 // TODO: update version once approved
+     */
+    bool setShortcut(QAction *action,
+                     const QList<QKeySequence> &keys,
+                     const QList<KGlobalShortcutTrigger> &extraTriggers,
+                     GlobalShortcutLoading loadFlag = Autoloading);
+
+    /*!
+     * Sets both active and default shortcut \a shortcuts for the given \a action.
      *
      * If more control for loading the shortcuts is needed use the variants offering more control.
      *
@@ -272,7 +378,19 @@ public:
     static bool setGlobalShortcut(QAction *action, const QKeySequence &shortcut);
 
     /*!
-     * Get the global default shortcut for this \a action, if one exists. Global shortcuts
+     * Sets both active and default shortcut \a keys and \a extraTriggers for the given \a action.
+     *
+     * If more control for loading the shortcuts is needed use the variants offering more control.
+     *
+     * Returns \c true if the shortcut has been set successfully; otherwise returns \c false.
+     *
+     * \sa setShortcut(), setDefaultShortcut()
+     * \since 6.24 // TODO: update version once approved
+     */
+    static bool setGlobalShortcut(QAction *action, const QList<QKeySequence> &keys, const QList<KGlobalShortcutTrigger> &extraTriggers);
+
+    /*!
+     * Get the global default keyboard shortcut for this \a action, if one exists. Global shortcuts
      * allow your actions to respond to accellerators independently of the focused window.
      * Unlike regular shortcuts, the application's window does not need focus
      * for them to be activated.
@@ -283,8 +401,8 @@ public:
     QList<QKeySequence> defaultShortcut(const QAction *action) const;
 
     /*!
-     * Get the global shortcut for this \a action, if one exists. Global shortcuts
-     * allow your actions to respond to accellerators independently of the focused window.
+     * Get the global keyboard shortcut for this \a action, if one exists. Global shortcuts
+     * allow your actions to respond to accelerators independently of the focused window.
      * Unlike regular shortcuts, the application's window does not need focus
      * for them to be activated.
      *
@@ -298,7 +416,7 @@ public:
     QList<QKeySequence> shortcut(const QAction *action) const;
 
     /*!
-     * Retrieves the shortcut as defined in global settings by
+     * Retrieves the keyboard shortcut as defined in global settings by
      * \a componentName (e.g. "kwin") and \a actionId (e.g. "Kill Window").
      *
      * \since 5.10
@@ -332,11 +450,27 @@ Q_SIGNALS:
      * \since 5.0
      */
     void globalShortcutChanged(QAction *action, const QKeySequence &seq);
+
+    /*!
+     * Emitted when a global shortcut is changed. A global shortcut is subject to be
+     * changed by a System Settings KCM such as Shortcuts, Mouse & Touchpad, or Screen Edges.
+     *
+     * \a action specifies the action for which the changed shortcut was registered.
+     *
+     * \a trigger indicates the key sequence that corresponds to the changed shortcut.
+     *
+     * \sa setGlobalShortcut(), setDefaultShortcut() // TODO: should there be trigger versions of these as well? I guess so
+     * \since 6.24 // TODO: set this correctly before merging
+     */
+    void globalShortcutTriggersChanged(QAction *action, const QList<KGlobalShortcutTrigger> &trigger);
+
     /*!
      * Emitted when a global shortcut for the given \a action is activated or deactivated.
      *
-     * The global shorcut will be activated when the keys are pressed and deactivated when the
-     * keys are released. \a active indicates whether the global shortcut is active.
+     * The global shortcut will be activated when the keys are pressed and deactivated when the
+     * keys are released. For gesture triggers, the global shortcut will be activated when the
+     * gesture starts and deactivated when it is triggered or cancelled. \a active indicates
+     * whether the global shortcut is active.
      *
      * \since 5.94
      */

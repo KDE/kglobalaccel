@@ -18,7 +18,13 @@
 class KGlobalShortcutTriggerPrivate
 {
 public:
-    using TriggerVariant = std::variant<KeyboardShortcut,
+    struct Uninitialized {
+    };
+    struct Unparseable {
+    };
+    using TriggerVariant = std::variant<Uninitialized,
+                                        Unparseable,
+                                        KeyboardShortcut,
                                         TouchpadSwipeGesture,
                                         TouchpadSwipe2DGesture,
                                         TouchpadPinchGesture,
@@ -31,10 +37,19 @@ public:
                                         TouchscreenPinchGesture,
                                         TouchscreenRotateGesture,
                                         TouchscreenHoldGesture,
-                                        AxisGesture,
-                                        StrokeGesture>;
+                                        ScrollAxisGesture,
+                                        LineShapeGesture>;
     TriggerVariant variant;
     QString serialized;
+
+public:
+    template<class Variant = Uninitialized>
+    KGlobalShortcutTriggerPrivate(Variant &&trigger)
+        : variant(trigger)
+    {
+    }
+
+    void deserialize();
 };
 
 #endif /* #ifndef KGLOBALSHORTCUTTRIGGER_P_H */

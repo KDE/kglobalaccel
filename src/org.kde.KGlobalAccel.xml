@@ -1,5 +1,5 @@
-<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
-"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<?xml version="1.0"?>
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
 <node>
   <interface name="org.kde.KGlobalAccel">
     <signal name="yourShortcutGotChanged">
@@ -84,6 +84,7 @@
     </method>
     <!-- v2 interface -->
     <signal name="yourShortcutsChanged">
+      <!-- Deprecated, kglobalacceld v3 emits yourShortcutTriggersChanged instead -->
       <arg name="actionId" type="as" direction="out"/>
       <arg name="newKeys" type="a(ai)" direction="out"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.Out1" value="QList&lt;QKeySequence&gt;"/>
@@ -130,6 +131,56 @@
       <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="QKeySequence"/>
       <arg name="component" type="s" direction="in"/>
     </method>
+    <!-- v3 interface -->
+    <method name="version">
+      <arg type="i" direction="out"/>
+    </method>
+    <signal name="yourShortcutTriggersChanged">
+      <arg name="actionId" type="as" direction="out"/>
+      <arg name="newTriggers" type="a(s)" direction="out"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out1" value="QList&lt;KGlobalShortcutTrigger&gt;"/>
+    </signal>
+    <method name="shortcutTriggers">
+      <arg type="a(s)" direction="out"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QList&lt;KGlobalShortcutTrigger&gt;"/>
+      <arg name="actionId" type="as" direction="in"/>
+    </method>
+    <method name="defaultShortcutTriggers">
+      <arg type="a(s)" direction="out"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QList&lt;KGlobalShortcutTrigger&gt;"/>
+      <arg name="actionId" type="as" direction="in"/>
+    </method>
+    <method name="actionListForTrigger">
+      <arg type="as" direction="out"/>
+      <arg name="trigger" type="(s)" direction="in"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="KGlobalShortcutTrigger"/>
+    </method>
+    <method name="setShortcutTriggers">
+      <arg type="a(s)" direction="out"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QList&lt;KGlobalShortcutTrigger&gt;"/>
+      <arg name="actionId" type="as" direction="in"/>
+      <arg name="triggers" type="a(s)" direction="in"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="QList&lt;KGlobalShortcutTrigger&gt;"/>
+      <arg name="flags" type="u" direction="in"/>
+    </method>
+    <method name="setForeignShortcutTriggers">
+      <arg name="actionId" type="as" direction="in"/>
+      <arg name="triggers" type="a(s)" direction="in"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="QList&lt;KGlobalShortcutTrigger&gt;"/>
+    </method>
+    <method name="globalShortcutsByTrigger">
+      <arg type="a(ssssssasas)" direction="out"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QList&lt;KGlobalShortcutInfoWrapperV3&gt;"/>
+      <arg name="key" type="(s)" direction="in"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="KGlobalShortcutTrigger"/>
+      <arg name="matchType" type="(i)" direction="in"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="KGlobalAccel::MatchType"/>
+    </method>
+    <method name="isGlobalShortcutTriggerAvailable">
+      <arg type="b" direction="out"/>
+      <arg name="trigger" type="(s)" direction="in"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="KGlobalShortcutTrigger"/>
+      <arg name="component" type="s" direction="in"/>
+    </method>
   </interface>
 </node>
-

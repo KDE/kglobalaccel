@@ -28,6 +28,13 @@ KGlobalShortcutInfo::KGlobalShortcutInfo(const KGlobalShortcutInfo &rhs)
     d->defaultTriggers = rhs.d->defaultTriggers;
 }
 
+KGlobalShortcutInfo::KGlobalShortcutInfo(KGlobalShortcutInfo &&rhs)
+    : QObject()
+    , d(rhs.d)
+{
+    rhs.d = nullptr;
+}
+
 KGlobalShortcutInfo::~KGlobalShortcutInfo()
 {
     delete d;
@@ -40,6 +47,14 @@ KGlobalShortcutInfo &KGlobalShortcutInfo::operator=(const KGlobalShortcutInfo &r
     swap = d;
     d = tmp.d;
     tmp.d = swap;
+    return *this;
+}
+
+KGlobalShortcutInfo &KGlobalShortcutInfo::operator=(KGlobalShortcutInfo &&rhs)
+{
+    delete d;
+    d = rhs.d;
+    rhs.d = nullptr;
     return *this;
 }
 
@@ -63,9 +78,21 @@ QString KGlobalShortcutInfo::componentUniqueName() const
     return d->componentUniqueName;
 }
 
+static QList<QKeySequence> withKeysFromTriggers(QList<QKeySequence> keys, const QList<KGlobalShortcutTrigger> &triggers)
+{
+    for (const KGlobalShortcutTrigger &trigger : triggers) {
+        if (const KeyboardShortcut *kbsc = trigger.asKeyboardShortcut(); kbsc != nullptr) {
+            keys.append(kbsc->keySequence);
+        }
+    }
+    return keys;
+}
+
 QList<QKeySequence> KGlobalShortcutInfo::defaultKeys() const
 {
-    return d->defaultKeys;
+    // For forward-compatibility with a plasma/kglobalacceld that will set triggers instead of keys,
+    // return the union of old d->defaultKeys and new d->defaultTriggers that are keyboard shortcuts.
+    return withKeysFromTriggers(d->defaultKeys, d->defaultTriggers);
 }
 
 QString KGlobalShortcutInfo::friendlyName() const
@@ -75,7 +102,9 @@ QString KGlobalShortcutInfo::friendlyName() const
 
 QList<QKeySequence> KGlobalShortcutInfo::keys() const
 {
-    return d->keys;
+    // For forward-compatibility with a plasma/kglobalacceld that will set triggers instead of keys,
+    // return the union of old d->keys and new d->triggers that are keyboard shortcuts.
+    return withKeysFromTriggers(d->keys, d->triggers);
 }
 
 QList<KGlobalShortcutTrigger> KGlobalShortcutInfo::triggers() const
@@ -91,6 +120,38 @@ QList<KGlobalShortcutTrigger> KGlobalShortcutInfo::defaultTriggers() const
 QString KGlobalShortcutInfo::uniqueName() const
 {
     return d->uniqueName;
+}
+
+KGlobalShortcutInfoWrapperV3::KGlobalShortcutInfoWrapperV3()
+{
+}
+
+KGlobalShortcutInfoWrapperV3::KGlobalShortcutInfoWrapperV3(KGlobalShortcutInfo wrapped)
+    : m_wrapped(std::move(wrapped))
+{
+}
+
+const KGlobalShortcutInfo &KGlobalShortcutInfoWrapperV3::value() const
+{
+    return m_wrapped;
+}
+
+KGlobalShortcutInfo &KGlobalShortcutInfoWrapperV3::value()
+{
+    return m_wrapped;
+}
+
+// static
+QList<KGlobalShortcutInfo> KGlobalShortcutInfoWrapperV3::unwrap(QList<KGlobalShortcutInfoWrapperV3> &&listOfWrappers)
+{
+    QList<KGlobalShortcutInfo> result;
+    result.reserve(listOfWrappers.size());
+
+    for (KGlobalShortcutInfoWrapperV3 &wrapper : listOfWrappers) {
+        result.emplaceBack(std::move(wrapper.m_wrapped));
+    }
+    listOfWrappers.clear();
+    return result;
 }
 
 #include "moc_kglobalshortcutinfo.cpp"
