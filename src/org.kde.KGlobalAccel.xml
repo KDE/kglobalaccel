@@ -163,13 +163,20 @@
       <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="QList&lt;KGlobalShortcutTrigger&gt;"/>
       <arg name="flags" type="u" direction="in"/>
     </method>
+    <method name="setInverseShortcutActions">
+      <arg type="b" direction="out"/>
+      <arg name="componentUnique" type="s" direction="in"/>
+      <arg name="forwardActionUnique" type="s" direction="in"/>
+      <arg name="backwardActionUnique" type="s" direction="in"/>
+      <arg name="flags" type="u" direction="in"/>
+    </method>
     <method name="setForeignShortcutTriggers">
       <arg name="actionId" type="as" direction="in"/>
       <arg name="triggers" type="a(s)" direction="in"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="QList&lt;KGlobalShortcutTrigger&gt;"/>
     </method>
     <method name="globalShortcutsByTrigger">
-      <arg type="a(ssssssasas)" direction="out"/>
+      <arg type="a(sssssssuasas)" direction="out"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QList&lt;KGlobalShortcutInfoWrapperV3&gt;"/>
       <arg name="key" type="(s)" direction="in"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="KGlobalShortcutTrigger"/>

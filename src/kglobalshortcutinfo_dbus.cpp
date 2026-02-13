@@ -85,6 +85,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const KGlobalShortcutInfo &sh
 QDBusArgument &operator<<(QDBusArgument &argument, const KGlobalShortcutInfoWrapperV3 &shortcutWrapper)
 {
     const KGlobalShortcutInfo &shortcut = shortcutWrapper.value();
+
     argument.beginStructure();
     /* clang-format off */
     argument << shortcut.uniqueName()
@@ -92,7 +93,9 @@ QDBusArgument &operator<<(QDBusArgument &argument, const KGlobalShortcutInfoWrap
              << shortcut.componentUniqueName()
              << shortcut.componentFriendlyName()
              << shortcut.contextUniqueName()
-             << shortcut.contextFriendlyName();
+             << shortcut.contextFriendlyName()
+             << shortcut.inverseActionUniqueName()
+             << shortcut.featureFlags();
     /* clang-format on */
     argument.beginArray(qMetaTypeId<KGlobalShortcutTrigger>());
 
@@ -145,6 +148,8 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, KGlobalShortcutIn
 const QDBusArgument &operator>>(const QDBusArgument &argument, KGlobalShortcutInfoWrapperV3 &shortcutWrapper)
 {
     KGlobalShortcutInfo &shortcut = shortcutWrapper.value();
+    uint featureFlags = 0;
+
     argument.beginStructure();
     /* clang-format off */
     argument >> shortcut.d->uniqueName
@@ -152,8 +157,11 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, KGlobalShortcutIn
              >> shortcut.d->componentUniqueName
              >> shortcut.d->componentFriendlyName
              >> shortcut.d->contextUniqueName
-             >> shortcut.d->contextFriendlyName;
+             >> shortcut.d->contextFriendlyName
+             >> shortcut.d->inverseActionUniqueName
+             >> featureFlags;
     /* clang-format on */
+    shortcut.d->featureFlags = KGlobalShortcutInfo::FeatureFlags::fromInt(static_cast<int>(featureFlags));
 
     argument.beginArray();
     while (!argument.atEnd()) {

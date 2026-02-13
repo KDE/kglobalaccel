@@ -17,6 +17,8 @@
 #include <QKeySequence>
 #include <QList>
 #include <QObject>
+#include <qflags.h>
+#include <qtmetamacros.h>
 
 class QAction;
 class OrgKdeKglobalaccelComponentInterface;
@@ -108,6 +110,65 @@ public:
         Shadowed,
     };
     Q_ENUM(MatchType)
+
+    /*!
+     * \enum KGlobalAccel::InverseActionCoupling
+     *
+     * An enum about the relationship of two inverse actions
+     *
+     * \value OptionalCoupling
+     *        When the user (re)assigns or unassigns a shortcut trigger for one of the two actions,
+     *        a settings application may prompt the user if the trigger (of the same trigger type)
+     *        for its inverse action should likewise be (re)assigned or unassigned.
+     *        This is merely a convenience; either action is sufficient by itself.
+     * \value MandatoryCoupling
+     *        When the user (re)assigns a shortcut trigger for one of the two actions, a settings
+     *        application should ensure that the trigger (of the same trigger type) for its
+     *        inverse action is also (re)assigned. Likewise, if the user unassigns a trigger,
+     *        the equivalent trigger for the inverse action should also be unassigned.
+     *        KGlobalAccel may enforce this by activating either both or none of the shortcuts.
+     *
+     * \sa setInverseShortcutActions()
+     */
+    enum InverseActionCoupling {
+        OptionalCoupling = 0,
+        MandatoryCoupling = KGlobalShortcutInfo::Feature::InverseActionCouplingIsMandatory,
+    };
+    Q_ENUM(InverseActionCoupling)
+
+    /*!
+     * \enum KGlobalAccel::GestureSupport
+     *
+     * An enum about custom gesture integration behaviors that are supported for a shortcut action
+     *
+     * \value SupportsOneShotTriggerOnly
+     *        Completing an assigned gesture will trigger the action just like a keyboard shortcut
+     *        would. There are no custom behaviors for in-progress gestures. This is the default
+     *        and supported for every action.
+     * \value SupportsOneToOneGesture
+     *        The component that provides the action is able to recognize in-progress gestures
+     *        and provide visual feedback before the action is triggered. Progress in this case
+     *        is measured on a linear scale from 0% to 100%. Opting into such gesture APIs may
+     *        only be available to components with access to compositor internals.
+     * \value SupportsFreeform2DGesture
+     *        The component that provides the action is able to recognize free-form gestures that
+     *        cannot be mapped to a simple on/off or 0%-to-100% linear scale. Starting the gesture
+     *        will enter a dedicated mode, for example to select items in a 2D arrangement.
+     *        (If free-form gestures are supported, it should usually be for an action that would
+     *        otherwise simply open the dedicated mode.)
+     *        A settings UI that assigns a free-form gesture should take care to unassign other
+     *        potentially conflicting gestures. Primarily, this means that a free-form 2D swipe
+     *        gesture is incompatible with any one-dimensional swipe gestures.
+     *
+     * \sa setShortcut(), setDefaultShortcut(), setGlobalShortcut()
+     */
+    enum GestureSupport {
+        SupportsOneShotTriggerOnly = 0,
+        SupportsOneToOneGesture = KGlobalShortcutInfo::Feature::SupportsOneToOneGesture,
+        SupportsFreeform2DGesture = KGlobalShortcutInfo::Feature::SupportsFreeform2DGesture,
+    };
+    Q_DECLARE_FLAGS(GestureSupportFlags, GestureSupport)
+    Q_FLAG(GestureSupportFlags)
 
     /*!
      * Returns (and creates if necessary) the singleton instance
@@ -241,6 +302,12 @@ public:
      *
      * For more information about global shortcuts and \a loadFlag, see setShortcut().
      *
+     * \a supportFlags specifies which interaction behaviors are supported for this shortcut.
+     * Most shortcuts will simply execute a one-shot action when triggered. Some shortcuts will
+     * also support deeper integration with in-progress gestures. A settings UI can use this
+     * information to determine shortcut assignment behaviors; apart from that, KGlobalAccel does
+     * not provide an API for tracking in-progress gestures.
+     *
      * Upon shortcut change the globalShortcutChanged() and globalShortcutTriggersChanged() signals
      * will be triggered so other applications get notified.
      *
@@ -254,6 +321,7 @@ public:
     bool setDefaultShortcut(QAction *action,
                             const QList<QKeySequence> &keys,
                             const QList<KGlobalShortcutTrigger> &triggers,
+                            GestureSupportFlags gestureSupport = SupportsOneShotTriggerOnly,
                             GlobalShortcutLoading loadFlag = Autoloading);
 
     /*!
@@ -275,19 +343,20 @@ public:
      * When an action, identified by main component name and objectName(), is assigned
      * a global shortcut for the first time on a KDE installation the assignment will
      * be saved. The shortcut will then be restored every time setGlobalShortcut() is
-     * called with \a loadFlag == Autoloading.
+     * called with \a loadFlag == \c KGlobalAccel::Autoloading.
      *
      * If you actually want to change the global shortcut you have to set
      * \a loadFlag to NoAutoloading. The new shortcut will be automatically saved again.
      *
      * \a action specifies the action for which the shortcut will be assigned.
      *
-     * \a shortcut specifies the global shortcut(s) to assign. Will be ignored unless \a loadFlag is
-     * set to NoAutoloading or this is the first time ever you call this method (see above).
+     * \a shortcut specifies the global shortcut(s) to assign. Will be ignored unless \a loadFlag
+     * is set to \c KGlobalAccel::NoAutoloading or this is the first time ever you call this method
+     * (see above).
      *
-     * If \a loadFlag is KGlobalAccel::Autoloading, assign the global shortcut this action has
+     * If \a loadFlag is \c KGlobalAccel::Autoloading, assign the global shortcut this action has
      * previously had if any. That way user preferences and changes made to avoid clashes will be
-     * conserved. If KGlobalAccel::NoAutoloading the given shortcut will be assigned without
+     * conserved. If \c KGlobalAccel::NoAutoloading the given shortcut will be assigned without
      * looking up old values. You should only do this if the user wants to change the shortcut or
      * if you have another very good reason. Key combinations that clash with other shortcuts will be
      * dropped.
@@ -321,7 +390,7 @@ public:
      * When an action, identified by main component name and objectName(), is assigned
      * a global shortcut for the first time on a KDE installation the assignment will
      * be saved. The shortcut will then be restored every time setGlobalShortcut() is
-     * called with \a loadFlag == Autoloading.
+     * called with \a loadFlag == \c KGlobalAccel::Autoloading.
      *
      * If you actually want to change the global shortcut you have to set
      * \a loadFlag to NoAutoloading. The new shortcut will be automatically saved again.
@@ -329,11 +398,12 @@ public:
      * \a action specifies the action for which the shortcut will be assigned.
      *
      * \a keys specifies the global shortcut(s) to assign. Will be ignored unless \a loadFlag is
-     * set to NoAutoloading or this is the first time ever you call this method (see above).
+     * set to \c KGlobalAccel::NoAutoloading or this is the first time ever you call this method
+     * (see above).
      *
-     * \a extraTriggers specifies additional global shortcut triggers to assign. Will be ignored
-     * unless \a loadFlag is set to NoAutoloading or this is the first time ever you call
-     * this method (see above).
+     * \a extraTriggers specifies additional global shortcut triggers to assign. A compositor may
+     * or may support various types of extra triggers. Will be ignored unless \a loadFlag is set to
+     * \c NoAutoloading or this is the first time ever you call this method (see above).
      *
      * If \a loadFlag is KGlobalAccel::Autoloading, assign the global shortcut this action has
      * previously had if any. That way user preferences and changes made to avoid clashes will be
@@ -368,7 +438,7 @@ public:
      *
      * This method is suited for the case that only one shortcut is to be configured.
      *
-     * If more control for loading the shortcuts is needed use the variants offering more control.
+     * If more control for loading the shortcuts is needed, use the variants offering more control.
      *
      * Returns \c true if the shortcut has been set successfully; otherwise returns \c false.
      *
@@ -380,14 +450,38 @@ public:
     /*!
      * Sets both active and default shortcut \a keys and \a extraTriggers for the given \a action.
      *
-     * If more control for loading the shortcuts is needed use the variants offering more control.
+     * If more control for loading the shortcuts is needed, use the variants offering more control.
      *
      * Returns \c true if the shortcut has been set successfully; otherwise returns \c false.
      *
      * \sa setShortcut(), setDefaultShortcut()
      * \since 6.24 // TODO: update version once approved
      */
-    static bool setGlobalShortcut(QAction *action, const QList<QKeySequence> &keys, const QList<KGlobalShortcutTrigger> &extraTriggers);
+    static bool setGlobalShortcut(QAction *action,
+                                  const QList<QKeySequence> &keys,
+                                  const QList<KGlobalShortcutTrigger> &extraTriggers,
+                                  GestureSupportFlags gestureSupport = SupportsOneShotTriggerOnly);
+
+    /*!
+     * Designates \a forwardAction and \a backwardAction as inverse actions of each other.
+     *
+     * Both actions must have been set with \c setDefaultShortcut() or \a setGlobalShortcut()
+     * before calling this function. Their component name (e.g. "kwin") must be the same.
+     *
+     * When configuring a trigger for one of these two actions, the settings application should
+     * prompt the user to also (re)assign or modify a trigger of the same kind for its
+     * inverse action.
+     *
+     * Both actions may be shown next to each other in trigger lists.
+     *
+     * \a coupling specifies if one shortcut requires the its counterpart to be available as well.
+     *
+     * Returns \c true if the shortcut has been set successfully; otherwise returns \c false.
+     *
+     * \sa setShortcut(), setDefaultShortcut(), setGlobalShortcut(), InverseActionCoupling
+     * \since 6.24 // TODO: update version once approved
+     */
+    static bool setInverseShortcutActions(QAction *forwardAction, QAction *backwardAction, InverseActionCoupling coupling = MandatoryCoupling);
 
     /*!
      * Get the global default keyboard shortcut for this \a action, if one exists. Global shortcuts
@@ -438,6 +532,9 @@ public:
     bool hasShortcut(const QAction *action) const;
 
 Q_SIGNALS:
+    // KF7 TODO: change "QAction *" to "const QAction *" in all the signals below,
+    //           and any remaining functions above
+
     /*!
      * Emitted when the global shortcut is changed. A global shortcut is subject to be changed by
      * the global shortcuts kcm.

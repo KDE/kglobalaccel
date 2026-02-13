@@ -26,6 +26,8 @@ KGlobalShortcutInfo::KGlobalShortcutInfo(const KGlobalShortcutInfo &rhs)
     d->defaultKeys = rhs.d->defaultKeys;
     d->triggers = rhs.d->triggers;
     d->defaultTriggers = rhs.d->defaultTriggers;
+    d->inverseActionUniqueName = rhs.d->inverseActionUniqueName;
+    d->featureFlags = rhs.d->featureFlags;
 }
 
 KGlobalShortcutInfo::KGlobalShortcutInfo(KGlobalShortcutInfo &&rhs)
@@ -120,6 +122,36 @@ QList<KGlobalShortcutTrigger> KGlobalShortcutInfo::defaultTriggers() const
 QString KGlobalShortcutInfo::uniqueName() const
 {
     return d->uniqueName;
+}
+
+bool KGlobalShortcutInfo::hasInverseAction() const
+{
+    return !d->inverseActionUniqueName.isEmpty();
+}
+
+QString KGlobalShortcutInfo::inverseActionUniqueName() const
+{
+    return d->inverseActionUniqueName;
+}
+
+bool KGlobalShortcutInfo::inverseActionCouplingIsMandatory() const
+{
+    return d->featureFlags & Feature::InverseActionCouplingIsMandatory;
+}
+
+bool KGlobalShortcutInfo::supportsOneToOneGesture() const
+{
+    return d->featureFlags & Feature::SupportsOneToOneGesture;
+}
+
+bool KGlobalShortcutInfo::supportsFreeform2DGesture() const
+{
+    return d->featureFlags & Feature::SupportsFreeform2DGesture;
+}
+
+uint KGlobalShortcutInfo::featureFlags() const
+{
+    return d->featureFlags;
 }
 
 KGlobalShortcutInfoWrapperV3::KGlobalShortcutInfoWrapperV3()
