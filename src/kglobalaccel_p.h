@@ -18,12 +18,18 @@
 #include "kglobalaccel.h"
 #include "kglobalaccel_component_interface.h"
 #include "kglobalaccel_interface.h"
+#include "kglobalshortcutinfo.h"
 #include "kglobalshortcuttrigger.h"
 
 enum SetShortcutFlag {
     SetPresent = 2,
     NoAutoloading = 4,
     IsDefault = 8,
+    SupportsOneToOneGesture = KGlobalShortcutInfo::Feature::SupportsOneToOneGesture,
+    SupportsFreeform2DGesture = KGlobalShortcutInfo::Feature::SupportsFreeform2DGesture,
+};
+enum SetInverseActionFlag {
+    InverseActionCouplingIsMandatory = KGlobalShortcutInfo::Feature::InverseActionCouplingIsMandatory,
 };
 
 class KGlobalAccelPrivate
@@ -56,6 +62,7 @@ public:
     ///@todo KF6
     void updateGlobalShortcut(/*const would be better*/ QAction *action,
                               KGlobalAccelPrivate::ShortcutTypes actionFlags,
+                              KGlobalAccel::GestureSupportFlags gestureSupport,
                               KGlobalAccel::GlobalShortcutLoading globalFlags);
 
     /// Register the action in this class and in the KDED module
@@ -67,6 +74,7 @@ public:
     QString componentUniqueForAction(const QAction *action);
     QString componentFriendlyForAction(const QAction *action);
     QStringList makeActionId(const QAction *action);
+    QStringList makeActionReference(const QAction *action);
     QList<QKeySequence> shortcutFromIntList(const QList<int> &list);
 
     void cleanup();
@@ -100,6 +108,7 @@ public:
     bool setShortcutWithDefault(QAction *action,
                                 const QList<QKeySequence> &keys,
                                 const QList<KGlobalShortcutTrigger> &extraTriggers,
+                                KGlobalAccel::GestureSupportFlags gestureSupport,
                                 KGlobalAccel::GlobalShortcutLoading loadFlag);
 
     void unregister(const QStringList &actionId);

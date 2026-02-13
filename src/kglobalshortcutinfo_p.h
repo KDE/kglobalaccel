@@ -31,6 +31,8 @@ public:
     QList<QKeySequence> defaultKeys;
     QList<KGlobalShortcutTrigger> triggers;
     QList<KGlobalShortcutTrigger> defaultTriggers;
+    QString inverseActionUniqueName;
+    uint featureFlags;
 };
 
 #endif /* #ifndef KGLOBALSHORTCUTINFO_P_H */

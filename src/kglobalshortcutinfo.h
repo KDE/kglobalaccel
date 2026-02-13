@@ -73,6 +73,23 @@ public:
 
     QString uniqueName() const;
 
+    bool hasInverseAction() const;
+    QString inverseActionUniqueName() const;
+    bool inverseActionCouplingIsMandatory() const;
+
+    bool supportsOneToOneGesture() const;
+    bool supportsFreeform2DGesture() const;
+
+    enum Feature {
+        InverseActionCouplingIsMandatory = 16,
+        SupportsOneToOneGesture = 32,
+        SupportsFreeform2DGesture = 64,
+    };
+    Q_DECLARE_FLAGS(FeatureFlags, Feature)
+    Q_FLAG(FeatureFlags)
+
+    uint featureFlags() const;
+
 private:
     friend class GlobalShortcut;
 

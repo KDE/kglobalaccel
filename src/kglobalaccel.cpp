@@ -322,6 +322,7 @@ int KGlobalAccelPrivate::ifaceVersion()
 
 void KGlobalAccelPrivate::updateGlobalShortcut(/*TODO KF7: const would be better*/ QAction *action,
                                                ShortcutTypes actionFlags,
+                                               KGlobalAccel::GestureSupportFlags gestureSupport,
                                                KGlobalAccel::GlobalShortcutLoading globalFlags)
 {
     // No action or no objectname -> Do nothing
@@ -334,6 +335,12 @@ void KGlobalAccelPrivate::updateGlobalShortcut(/*TODO KF7: const would be better
     uint setterFlags = 0;
     if (globalFlags & KGlobalAccel::GlobalShortcutLoading::NoAutoloading) {
         setterFlags |= NoAutoloading;
+    }
+    if (gestureSupport & KGlobalAccel::GestureSupport::SupportsOneToOneGesture) {
+        setterFlags |= SupportsOneToOneGesture;
+    }
+    if (gestureSupport & KGlobalAccel::GestureSupport::SupportsFreeform2DGesture) {
+        setterFlags |= SupportsFreeform2DGesture;
     }
 
     if (actionFlags & ActiveShortcut) {
@@ -557,7 +564,7 @@ void KGlobalAccelPrivate::reRegisterAll()
     actions.clear();
     for (QAction *const action : allActions) {
         if (doRegister(action)) {
-            updateGlobalShortcut(action, ActiveShortcut, KGlobalAccel::Autoloading);
+            updateGlobalShortcut(action, ActiveShortcut, KGlobalAccel::SupportsOneShotTriggerOnly, KGlobalAccel::Autoloading);
         }
     }
 }
@@ -694,12 +701,13 @@ bool checkGarbageKeycode(const QList<QKeySequence> &shortcut)
 
 bool KGlobalAccel::setDefaultShortcut(QAction *action, const QList<QKeySequence> &shortcut, GlobalShortcutLoading loadFlag)
 {
-    return setDefaultShortcut(action, shortcut, {}, loadFlag);
+    return setDefaultShortcut(action, shortcut, {}, KGlobalAccel::SupportsOneShotTriggerOnly, loadFlag);
 }
 
 bool KGlobalAccel::setDefaultShortcut(QAction *action,
                                       const QList<QKeySequence> &keys,
                                       const QList<KGlobalShortcutTrigger> &extraTriggers,
+                                      GestureSupportFlags gestureSupport,
                                       GlobalShortcutLoading loadFlag)
 {
     if (checkGarbageKeycode(keys) || checkGarbageKeycode(KGlobalShortcutTrigger::onlyKeyboardShortcuts(extraTriggers))) {
@@ -714,7 +722,7 @@ bool KGlobalAccel::setDefaultShortcut(QAction *action,
     triggers.append(extraTriggers);
 
     d->actionDefaultTriggers.insert(action, triggers);
-    d->updateGlobalShortcut(action, KGlobalAccelPrivate::DefaultShortcut, loadFlag);
+    d->updateGlobalShortcut(action, KGlobalAccelPrivate::DefaultShortcut, gestureSupport, loadFlag);
     return true;
 }
 
@@ -736,11 +744,13 @@ bool KGlobalAccel::setShortcut(QAction *action,
         return false;
     }
 
+    auto irrelevantExceptForDefaultShortcuts = KGlobalAccel::SupportsOneShotTriggerOnly;
+
     auto triggers = KGlobalShortcutTrigger::fromKeyboardShortcuts(keys);
     triggers.append(extraTriggers);
 
     d->actionTriggers.insert(action, triggers);
-    d->updateGlobalShortcut(action, KGlobalAccelPrivate::ActiveShortcut, loadFlag);
+    d->updateGlobalShortcut(action, KGlobalAccelPrivate::ActiveShortcut, irrelevantExceptForDefaultShortcuts, loadFlag);
     return true;
 }
 
@@ -786,14 +796,18 @@ bool KGlobalAccel::setGlobalShortcut(QAction *action, const QKeySequence &shortc
     return setGlobalShortcut(action, {}, {KGlobalShortcutTrigger::fromKeyboardShortcut(shortcut)});
 }
 
-bool KGlobalAccel::setGlobalShortcut(QAction *action, const QList<QKeySequence> &keys, const QList<KGlobalShortcutTrigger> &triggers)
+bool KGlobalAccel::setGlobalShortcut(QAction *action,
+                                     const QList<QKeySequence> &keys,
+                                     const QList<KGlobalShortcutTrigger> &triggers,
+                                     GestureSupportFlags gestureSupport)
 {
-    return self()->d->setShortcutWithDefault(action, keys, triggers, Autoloading);
+    return self()->d->setShortcutWithDefault(action, keys, triggers, gestureSupport, Autoloading);
 }
 
 bool KGlobalAccelPrivate::setShortcutWithDefault(QAction *action,
                                                  const QList<QKeySequence> &keys,
                                                  const QList<KGlobalShortcutTrigger> &extraTriggers,
+                                                 KGlobalAccel::GestureSupportFlags gestureSupport,
                                                  KGlobalAccel::GlobalShortcutLoading loadFlag)
 {
     if (checkGarbageKeycode(keys) || checkGarbageKeycode(KGlobalShortcutTrigger::onlyKeyboardShortcuts(extraTriggers))) {
@@ -809,8 +823,35 @@ bool KGlobalAccelPrivate::setShortcutWithDefault(QAction *action,
 
     actionDefaultTriggers.insert(action, triggers);
     actionTriggers.insert(action, triggers);
-    updateGlobalShortcut(action, KGlobalAccelPrivate::DefaultShortcut | KGlobalAccelPrivate::ActiveShortcut, loadFlag);
+    updateGlobalShortcut(action, KGlobalAccelPrivate::DefaultShortcut | KGlobalAccelPrivate::ActiveShortcut, gestureSupport, loadFlag);
     return true;
+}
+
+// static
+bool KGlobalAccel::setInverseShortcutActions(QAction *forwardAction, QAction *backwardAction, InverseActionCoupling coupling)
+{
+    KGlobalAccelPrivate *d = self()->d;
+
+    const bool bothRegistered = d->actions.contains(forwardAction) && d->actions.contains(backwardAction);
+    if (!bothRegistered) {
+        return false;
+    }
+    const QStringList forwardActionId = d->makeActionId(forwardAction);
+    const QStringList backwardActionId = d->makeActionId(backwardAction);
+
+    if (forwardActionId.at(KGlobalAccel::ComponentUnique) != backwardActionId.at(KGlobalAccel::ComponentUnique)) {
+        return false;
+    }
+
+    uint inverseSetterFlags = 0;
+    if (coupling & InverseActionCoupling::MandatoryCoupling) {
+        inverseSetterFlags |= InverseActionCouplingIsMandatory;
+    }
+
+    return d->iface()->setInverseShortcutActions(forwardActionId.at(KGlobalAccel::ComponentUnique),
+                                                 forwardActionId.at(KGlobalAccel::ActionUnique),
+                                                 backwardActionId.at(KGlobalAccel::ActionUnique),
+                                                 inverseSetterFlags);
 }
 
 QDBusArgument &operator<<(QDBusArgument &argument, const KGlobalAccel::MatchType &type)
