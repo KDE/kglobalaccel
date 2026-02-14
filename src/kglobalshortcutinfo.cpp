@@ -82,6 +82,8 @@ QString KGlobalShortcutInfo::componentUniqueName() const
 
 static QList<QKeySequence> withKeysFromTriggers(QList<QKeySequence> keys, const QList<KGlobalShortcutTrigger> &triggers)
 {
+    using namespace KGlobalShortcutTriggerTypes;
+
     for (const KGlobalShortcutTrigger &trigger : triggers) {
         if (const KeyboardShortcut *kbsc = trigger.asKeyboardShortcut(); kbsc != nullptr) {
             keys.append(kbsc->keySequence);

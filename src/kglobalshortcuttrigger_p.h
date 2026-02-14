@@ -24,21 +24,21 @@ public:
     };
     using TriggerVariant = std::variant<Uninitialized,
                                         Unparseable,
-                                        KeyboardShortcut,
-                                        TouchpadSwipeGesture,
-                                        TouchpadSwipe2DGesture,
-                                        TouchpadPinchGesture,
-                                        TouchpadRotateGesture,
-                                        TouchpadHoldGesture,
-                                        ApproachScreenBorderGesture,
-                                        TouchscreenSwipeGesture,
-                                        TouchscreenSwipe2DGesture,
-                                        TouchscreenSwipeFromEdgeGesture,
-                                        TouchscreenPinchGesture,
-                                        TouchscreenRotateGesture,
-                                        TouchscreenHoldGesture,
-                                        ScrollAxisGesture,
-                                        LineShapeGesture>;
+                                        KGlobalShortcutTriggerTypes::KeyboardShortcut,
+                                        KGlobalShortcutTriggerTypes::TouchpadSwipeGesture,
+                                        KGlobalShortcutTriggerTypes::TouchpadSwipe2DGesture,
+                                        KGlobalShortcutTriggerTypes::TouchpadPinchGesture,
+                                        KGlobalShortcutTriggerTypes::TouchpadRotateGesture,
+                                        KGlobalShortcutTriggerTypes::TouchpadHoldGesture,
+                                        KGlobalShortcutTriggerTypes::ApproachScreenBorderGesture,
+                                        KGlobalShortcutTriggerTypes::TouchscreenSwipeGesture,
+                                        KGlobalShortcutTriggerTypes::TouchscreenSwipe2DGesture,
+                                        KGlobalShortcutTriggerTypes::TouchscreenSwipeFromEdgeGesture,
+                                        KGlobalShortcutTriggerTypes::TouchscreenPinchGesture,
+                                        KGlobalShortcutTriggerTypes::TouchscreenRotateGesture,
+                                        KGlobalShortcutTriggerTypes::TouchscreenHoldGesture,
+                                        KGlobalShortcutTriggerTypes::PointerAxisGesture,
+                                        KGlobalShortcutTriggerTypes::LineShapeGesture>;
     TriggerVariant variant;
     QString serialized;
 
