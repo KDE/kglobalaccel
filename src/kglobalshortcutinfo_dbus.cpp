@@ -21,7 +21,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, KGlobalShortcutTr
     QString s;
     argument.beginStructure();
     argument >> s;
-    trigger = KGlobalShortcutTrigger::fromString(s);
+    trigger = KGlobalShortcutTrigger(s);
     argument.endStructure();
     return argument;
 }
@@ -167,14 +167,14 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, KGlobalShortcutIn
     while (!argument.atEnd()) {
         QString str;
         argument >> str;
-        shortcut.d->triggers.append(KGlobalShortcutTrigger::fromString(str));
+        shortcut.d->triggers.append(KGlobalShortcutTrigger(str));
     }
     argument.endArray();
     argument.beginArray();
     while (!argument.atEnd()) {
         QString str;
         argument >> str;
-        shortcut.d->triggers.append(KGlobalShortcutTrigger::fromString(str));
+        shortcut.d->triggers.append(KGlobalShortcutTrigger(str));
     }
     argument.endArray();
     argument.endStructure();
