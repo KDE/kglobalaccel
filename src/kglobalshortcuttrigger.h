@@ -18,7 +18,65 @@
 #include <chrono>
 #include <optional>
 
-class KGlobalShortcutTriggerPrivate;
+namespace KGlobalShortcutTriggerTypes
+{
+Q_NAMESPACE_EXPORT(KGLOBALACCEL_EXPORT)
+
+enum class SwipeDirection : unsigned int {
+    Left = 0,
+    UpLeft,
+    Up,
+    UpRight,
+    Right,
+    DownRight,
+    Down,
+    DownLeft,
+};
+Q_ENUM_NS(SwipeDirection)
+
+enum class EdgeSwipeDirection : unsigned int {
+    FromLeft = 0,
+    FromTopLeft,
+    FromTop,
+    FromTopRight,
+    FromRight,
+    FromBottomRight,
+    FromBottom,
+    FromBottomLeft,
+};
+Q_ENUM_NS(EdgeSwipeDirection)
+
+enum class PinchDirection : unsigned int {
+    Expanding = 0,
+    Contracting,
+};
+Q_ENUM_NS(PinchDirection)
+
+enum class RotateDirection : unsigned int {
+    Clockwise = 0,
+    CounterClockwise,
+};
+Q_ENUM_NS(RotateDirection)
+
+enum class ScreenBorder : unsigned int {
+    Left = 0,
+    TopLeft,
+    Top,
+    TopRight,
+    Right,
+    BottomRight,
+    Bottom,
+    BottomLeft,
+};
+Q_ENUM_NS(ScreenBorder)
+
+enum class PointerAxisDirection : unsigned int {
+    Down = 0,
+    Left,
+    Up,
+    Right,
+};
+Q_ENUM_NS(PointerAxisDirection)
 
 class KGLOBALACCEL_EXPORT KeyboardShortcut
 {
@@ -26,26 +84,20 @@ class KGLOBALACCEL_EXPORT KeyboardShortcut
 public:
     QKeySequence keySequence;
     QKeySequence normalizedKeySequence;
+
+    explicit KeyboardShortcut(QKeySequence);
+    KeyboardShortcut(const KeyboardShortcut &other) = default;
+    KeyboardShortcut &operator=(const KeyboardShortcut &other) = default;
 };
 
 class KGLOBALACCEL_EXPORT TouchpadSwipeGesture
 {
     Q_GADGET
 public:
-    enum class Direction {
-        Left = 0,
-        UpLeft,
-        Up,
-        UpRight,
-        Right,
-        DownRight,
-        Down,
-        DownLeft,
-    };
-    Q_ENUM(Direction)
-
     int fingerCount;
-    Direction direction;
+    SwipeDirection direction;
+
+    // explicit TouchpadSwipeGesture(int fingerCount, SwipeDirection);
 };
 
 class KGLOBALACCEL_EXPORT TouchpadSwipe2DGesture
@@ -53,34 +105,28 @@ class KGLOBALACCEL_EXPORT TouchpadSwipe2DGesture
     Q_GADGET
 public:
     int fingerCount;
+
+    // explicit TouchpadSwipe2DGesture(int fingerCount);
 };
 
 class KGLOBALACCEL_EXPORT TouchpadPinchGesture
 {
     Q_GADGET
 public:
-    enum class Direction {
-        Expanding = 0,
-        Contracting,
-    };
-    Q_ENUM(Direction)
-
     int fingerCount;
-    Direction direction;
+    PinchDirection direction;
+
+    // explicit TouchpadPinchGesture(int fingerCount, PinchDirection);
 };
 
 class KGLOBALACCEL_EXPORT TouchpadRotateGesture
 {
     Q_GADGET
 public:
-    enum class Direction {
-        Clockwise = 0,
-        CounterClockwise,
-    };
-    Q_ENUM(Direction)
-
     int fingerCount;
-    Direction direction;
+    RotateDirection direction;
+
+    // explicit TouchpadRotateGesture(int fingerCount, RotateDirection);
 };
 
 class KGLOBALACCEL_EXPORT TouchpadHoldGesture
@@ -89,45 +135,27 @@ class KGLOBALACCEL_EXPORT TouchpadHoldGesture
 public:
     int fingerCount;
     std::chrono::milliseconds duration;
+
+    // explicit TouchpadHoldGesture(int fingerCount, std::chrono::milliseconds duration);
 };
 
 class KGLOBALACCEL_EXPORT ApproachScreenBorderGesture
 {
     Q_GADGET
 public:
-    enum class Border {
-        Left = 0,
-        TopLeft,
-        Top,
-        TopRight,
-        Right,
-        BottomRight,
-        Bottom,
-        BottomLeft,
-    };
-    Q_ENUM(Border)
+    ScreenBorder border;
 
-    Border border;
+    // explicit ApproachScreenBorderGesture(ScreenBorder);
 };
 
 class KGLOBALACCEL_EXPORT TouchscreenSwipeGesture
 {
     Q_GADGET
 public:
-    enum class Direction {
-        Left = 0,
-        UpLeft,
-        Up,
-        UpRight,
-        Right,
-        DownRight,
-        Down,
-        DownLeft,
-    };
-    Q_ENUM(Direction)
-
     int fingerCount;
-    Direction direction;
+    SwipeDirection direction;
+
+    // explicit TouchscreenSwipeGesture(int fingerCount, SwipeDirection);
 };
 
 class KGLOBALACCEL_EXPORT TouchscreenSwipe2DGesture
@@ -135,53 +163,37 @@ class KGLOBALACCEL_EXPORT TouchscreenSwipe2DGesture
     Q_GADGET
 public:
     int fingerCount;
+
+    // explicit TouchscreenSwipe2DGesture(int fingerCount);
 };
 
 class KGLOBALACCEL_EXPORT TouchscreenSwipeFromEdgeGesture
 {
     Q_GADGET
 public:
-    enum class Edge {
-        FromLeft = 0,
-        FromTopLeft,
-        FromTop,
-        FromTopRight,
-        FromRight,
-        FromBottomRight,
-        FromBottom,
-        FromBottomLeft,
-    };
-    Q_ENUM(Edge)
+    EdgeSwipeDirection edge;
 
-    Edge edge;
+    // explicit TouchscreenSwipeFromEdgeGesture(EdgeSwipeDirection);
 };
 
 class KGLOBALACCEL_EXPORT TouchscreenPinchGesture
 {
     Q_GADGET
 public:
-    enum class Direction {
-        Expanding = 0,
-        Contracting,
-    };
-    Q_ENUM(Direction)
-
     int fingerCount;
-    Direction direction;
+    PinchDirection direction;
+
+    // explicit TouchscreenPinchGesture(int fingerCount, PinchDirection);
 };
 
 class KGLOBALACCEL_EXPORT TouchscreenRotateGesture
 {
     Q_GADGET
 public:
-    enum class Direction {
-        Clockwise = 0,
-        Counterclockwise,
-    };
-    Q_ENUM(Direction)
-
     int fingerCount;
-    Direction direction;
+    RotateDirection direction;
+
+    // explicit TouchscreenRotateGesture(int fingerCount, RotateDirection);
 };
 
 class KGLOBALACCEL_EXPORT TouchscreenHoldGesture
@@ -190,28 +202,24 @@ class KGLOBALACCEL_EXPORT TouchscreenHoldGesture
 public:
     int fingerCount;
     std::chrono::milliseconds duration;
+
+    // explicit TouchscreenHoldGesture(int fingerCount, std::chrono::milliseconds duration);
 };
 
-class KGLOBALACCEL_EXPORT ScrollAxisGesture
+class KGLOBALACCEL_EXPORT PointerAxisGesture
 {
     Q_GADGET
 public:
-    enum class Direction {
-        Down = 0,
-        Left,
-        Up,
-        Right,
-    };
-    Q_ENUM(Direction)
-
-    enum class MouseButtonRequirement { // TODO: evaluate if this should go into activationRequirements(), like modifier key requirements
+    enum class MouseButtonRequirement : unsigned int { // TODO: evaluate if this should go into activationRequirements(), like modifier key requirements
         NoButton,
         ActivationButton,
     };
     Q_ENUM(MouseButtonRequirement)
 
-    Direction direction;
+    PointerAxisDirection direction;
     MouseButtonRequirement button;
+
+    // explicit PointerAxisGesture(PointerAxisDirection, MouseButtonRequirement);
 };
 
 class KGLOBALACCEL_EXPORT LineShapeGesture
@@ -219,7 +227,13 @@ class KGLOBALACCEL_EXPORT LineShapeGesture
     Q_GADGET
 public:
     QList<QPointF> points;
+
+    // explicit LineShapeGesture(QList<QPointF> points);
 };
+
+} // namespace KGlobalShortcutTriggerTypes
+
+class KGlobalShortcutTriggerPrivate;
 
 /*!
  * \class KGlobalShortcutTrigger
@@ -238,27 +252,70 @@ public:
     //! Create an empty trigger value, i.e. \c {isEmpty() == true}.
     KGlobalShortcutTrigger();
 
+    ~KGlobalShortcutTrigger();
+
+    KGlobalShortcutTrigger(const KGlobalShortcutTrigger &rhs);
+    KGlobalShortcutTrigger &operator=(const KGlobalShortcutTrigger &rhs);
+
+    //! Create a keyboard shortcut trigger.
+    KGlobalShortcutTrigger(const KGlobalShortcutTriggerTypes::KeyboardShortcut &);
+
+    //! Create a touchpad swipe gesture trigger.
+    KGlobalShortcutTrigger(const KGlobalShortcutTriggerTypes::TouchpadSwipeGesture &);
+
+    //! Create a freeform 2D touchpad swipe gesture trigger.
+    KGlobalShortcutTrigger(const KGlobalShortcutTriggerTypes::TouchpadSwipe2DGesture &);
+
+    //! Create a touchpad pinch gesture trigger.
+    KGlobalShortcutTrigger(const KGlobalShortcutTriggerTypes::TouchpadPinchGesture &);
+
+    //! Create a touchpad rotate gesture trigger.
+    KGlobalShortcutTrigger(const KGlobalShortcutTriggerTypes::TouchpadRotateGesture &);
+
+    //! Create a touchpad hold gesture trigger.
+    KGlobalShortcutTrigger(const KGlobalShortcutTriggerTypes::TouchpadHoldGesture &);
+
+    //! Create a gesture trigger for approaching a screen border with the pointer.
+    KGlobalShortcutTrigger(const KGlobalShortcutTriggerTypes::ApproachScreenBorderGesture &);
+
+    //! Create a touchscreen swipe gesture trigger.
+    KGlobalShortcutTrigger(const KGlobalShortcutTriggerTypes::TouchscreenSwipeGesture &);
+
+    //! Create a freeform 2D touchscreen swipe gesture trigger.
+    KGlobalShortcutTrigger(const KGlobalShortcutTriggerTypes::TouchscreenSwipe2DGesture &);
+
+    //! Create a touchscreen swipe-from-edge gesture trigger.
+    KGlobalShortcutTrigger(const KGlobalShortcutTriggerTypes::TouchscreenSwipeFromEdgeGesture &);
+
+    //! Create a touchscreen pinch gesture trigger.
+    KGlobalShortcutTrigger(const KGlobalShortcutTriggerTypes::TouchscreenPinchGesture &);
+
+    //! Create a touchscreen rotate gesture trigger.
+    KGlobalShortcutTrigger(const KGlobalShortcutTriggerTypes::TouchscreenRotateGesture &);
+
+    //! Create a touchscreen hold gesture trigger.
+    KGlobalShortcutTrigger(const KGlobalShortcutTriggerTypes::TouchscreenHoldGesture &);
+
+    //! Create a pointer axis gesture trigger, most commonly actived using a scroll wheel.
+    KGlobalShortcutTrigger(const KGlobalShortcutTriggerTypes::PointerAxisGesture &);
+
+    //! Create a line shape gesture trigger, also known as mouse gesture.
+    KGlobalShortcutTrigger(const KGlobalShortcutTriggerTypes::LineShapeGesture &);
+
     /*!
      * Create a trigger value from a string that was previously exported via toString().
      *
      * Passing an empty string will produce an empty KGlobalShortcutTrigger value,
      * i.e. \c {isEmpty() == true}.
      *
-     * For a string that cannot be interpreted by this version of KGlobalAccel, the created
-     * KGlobalShortcutTrigger is not considered empty. The string is retained in the value
-     * so it can later be written to a config file again unmodified.
+     * A non-empty string will produce a non-empty KGlobalShortcutTrigger, regardless of whether
+     * the string can be interpreted by this version of KGlobalAccel. The serialized string is
+     * retained verbatim so it be written back unmodified to a config file with toString().
      *
      * \sa toString()
+     * \sa isKnownTriggerType()
      */
     explicit KGlobalShortcutTrigger(const QString &serialized);
-
-    ~KGlobalShortcutTrigger();
-
-    KGlobalShortcutTrigger(const KGlobalShortcutTrigger &rhs);
-    KGlobalShortcutTrigger &operator=(const KGlobalShortcutTrigger &rhs);
-
-    //! Mainly for unit testing in plasma/kglobalacceld
-    static KGlobalShortcutTrigger fromKeyboardShortcut(QKeySequence key);
 
     /*!
      * A serialized string representation of this trigger.
@@ -325,21 +382,21 @@ public:
      */
     std::optional<KGlobalShortcutTrigger> inverse();
 
-    const KeyboardShortcut *asKeyboardShortcut() const;
-    const TouchpadSwipeGesture *asTouchpadSwipeGesture() const;
-    const TouchpadSwipe2DGesture *asTouchpadSwipe2DGesture() const;
-    const TouchpadPinchGesture *asTouchpadPinchGesture() const;
-    const TouchpadRotateGesture *asTouchpadRotateGesture() const;
-    const TouchpadHoldGesture *asTouchpadHoldGesture() const;
-    const ApproachScreenBorderGesture *asApproachScreenBorderGesture() const;
-    const TouchscreenSwipeGesture *asTouchscreenSwipeGesture() const;
-    const TouchscreenSwipe2DGesture *asTouchscreenSwipe2DGesture() const;
-    const TouchscreenSwipeFromEdgeGesture *asTouchscreenSwipeFromEdgeGesture() const;
-    const TouchscreenPinchGesture *asTouchscreenPinchGesture() const;
-    const TouchscreenRotateGesture *asTouchscreenRotateGesture() const;
-    const TouchscreenHoldGesture *asTouchscreenHoldGesture() const;
-    const ScrollAxisGesture *asScrollAxisGesture() const;
-    const LineShapeGesture *asLineShapeGesture() const;
+    const KGlobalShortcutTriggerTypes::KeyboardShortcut *asKeyboardShortcut() const;
+    const KGlobalShortcutTriggerTypes::TouchpadSwipeGesture *asTouchpadSwipeGesture() const;
+    const KGlobalShortcutTriggerTypes::TouchpadSwipe2DGesture *asTouchpadSwipe2DGesture() const;
+    const KGlobalShortcutTriggerTypes::TouchpadPinchGesture *asTouchpadPinchGesture() const;
+    const KGlobalShortcutTriggerTypes::TouchpadRotateGesture *asTouchpadRotateGesture() const;
+    const KGlobalShortcutTriggerTypes::TouchpadHoldGesture *asTouchpadHoldGesture() const;
+    const KGlobalShortcutTriggerTypes::ApproachScreenBorderGesture *asApproachScreenBorderGesture() const;
+    const KGlobalShortcutTriggerTypes::TouchscreenSwipeGesture *asTouchscreenSwipeGesture() const;
+    const KGlobalShortcutTriggerTypes::TouchscreenSwipe2DGesture *asTouchscreenSwipe2DGesture() const;
+    const KGlobalShortcutTriggerTypes::TouchscreenSwipeFromEdgeGesture *asTouchscreenSwipeFromEdgeGesture() const;
+    const KGlobalShortcutTriggerTypes::TouchscreenPinchGesture *asTouchscreenPinchGesture() const;
+    const KGlobalShortcutTriggerTypes::TouchscreenRotateGesture *asTouchscreenRotateGesture() const;
+    const KGlobalShortcutTriggerTypes::TouchscreenHoldGesture *asTouchscreenHoldGesture() const;
+    const KGlobalShortcutTriggerTypes::PointerAxisGesture *asPointerAxisGesture() const;
+    const KGlobalShortcutTriggerTypes::LineShapeGesture *asLineShapeGesture() const;
 
     bool operator==(const KGlobalShortcutTrigger &rhs) const;
 

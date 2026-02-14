@@ -28,6 +28,8 @@
 #include <private/qtx11extras_p.h>
 #endif
 
+using namespace KGlobalShortcutTriggerTypes;
+
 org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QString &componentUnique, bool remember = false)
 {
     // Check if we already have this component
@@ -574,7 +576,7 @@ QList<KGlobalShortcutInfo> KGlobalAccel::globalShortcutsByKey(const QKeySequence
 {
     if (self()->d->ifaceVersion() >= 3) {
         // searching via trigger method also includes triggers in the KGlobalShortcutInfo result
-        return globalShortcutsByTrigger(KGlobalShortcutTrigger::fromKeyboardShortcut(seq), type);
+        return globalShortcutsByTrigger(KeyboardShortcut{seq}, type);
     }
     return self()->d->iface()->globalShortcutsByKey(seq, type);
 }
@@ -594,6 +596,8 @@ bool KGlobalAccel::isGlobalShortcutAvailable(const QKeySequence &seq, const QStr
 // static
 bool KGlobalAccel::isGlobalShortcutTriggerAvailable(const KGlobalShortcutTrigger &trigger, const QString &comp)
 {
+    using namespace KGlobalShortcutTriggerTypes;
+
     if (trigger.isEmpty()) {
         return false;
     } else if (self()->d->ifaceVersion() <= 2) {
@@ -643,7 +647,7 @@ void KGlobalAccel::stealShortcutSystemwide(const QKeySequence &seq)
 
     if (d->ifaceVersion() >= 3) {
         // when setting new foreign triggers, include non-key triggers as well
-        stealShortcutSystemwide(KGlobalShortcutTrigger::fromKeyboardShortcut(seq));
+        stealShortcutSystemwide(KeyboardShortcut{seq});
         return;
     }
 
@@ -793,7 +797,7 @@ bool KGlobalAccel::setGlobalShortcut(QAction *action, const QList<QKeySequence> 
 
 bool KGlobalAccel::setGlobalShortcut(QAction *action, const QKeySequence &shortcut)
 {
-    return setGlobalShortcut(action, {}, {KGlobalShortcutTrigger::fromKeyboardShortcut(shortcut)});
+    return setGlobalShortcut(action, {}, {KeyboardShortcut{shortcut}});
 }
 
 bool KGlobalAccel::setGlobalShortcut(QAction *action,
