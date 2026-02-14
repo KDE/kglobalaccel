@@ -235,11 +235,8 @@ public:
     };
 
 public:
+    //! Create an empty trigger value, i.e. \c {isEmpty() == true}.
     KGlobalShortcutTrigger();
-    ~KGlobalShortcutTrigger();
-
-    KGlobalShortcutTrigger(const KGlobalShortcutTrigger &rhs);
-    KGlobalShortcutTrigger &operator=(const KGlobalShortcutTrigger &rhs);
 
     /*!
      * Create a trigger value from a string that was previously exported via toString().
@@ -253,7 +250,12 @@ public:
      *
      * \sa toString()
      */
-    static KGlobalShortcutTrigger fromString(const QString &serialized);
+    explicit KGlobalShortcutTrigger(const QString &serialized);
+
+    ~KGlobalShortcutTrigger();
+
+    KGlobalShortcutTrigger(const KGlobalShortcutTrigger &rhs);
+    KGlobalShortcutTrigger &operator=(const KGlobalShortcutTrigger &rhs);
 
     //! Mainly for unit testing in plasma/kglobalacceld
     static KGlobalShortcutTrigger fromKeyboardShortcut(QKeySequence key);
@@ -267,6 +269,17 @@ public:
 
     //! Returns true if created with the parameter-less default constructor, or from an empty string.
     bool isEmpty() const;
+
+    /*!
+     * Returns true if this value represents a trigger type known by this version of KGlobalAccel.
+     *
+     * Returns false for an empty trigger value. Also returns false if the object was initialized
+     * from a serialized string that this version of KGlobalAccel cannot parse.
+     *
+     * If the serialized string cannot be parsed, it may still be valid but may have been generated
+     * by a future version of KGlobalAccel.
+     */
+    bool isKnownTriggerType() const;
 
     /*!
      * A list of rules which determine whether this trigger is applicable in the current context.

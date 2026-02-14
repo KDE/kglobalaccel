@@ -15,6 +15,8 @@
 
 using namespace Qt::StringLiterals;
 
+constexpr QLatin1StringView NonKeyTriggerPrefix = "T:"_L1;
+
 constexpr QLatin1StringView TouchpadSwipePrefix = "TouchpadSwipe:"_L1;
 constexpr QLatin1StringView TouchpadSwipe2DPrefix = "TouchpadSwipe2D:"_L1;
 constexpr QLatin1StringView TouchpadPinchPrefix = "TouchpadPinch:"_L1;
@@ -32,6 +34,13 @@ constexpr QLatin1StringView ScrollAxisPrefix = "ScrollAxis:"_L1;
 KGlobalShortcutTrigger::KGlobalShortcutTrigger()
     : d(new KGlobalShortcutTriggerPrivate(KGlobalShortcutTriggerPrivate::Unparseable{}))
 {
+}
+
+KGlobalShortcutTrigger::KGlobalShortcutTrigger(const QString &serialized)
+    : d(new KGlobalShortcutTriggerPrivate(KGlobalShortcutTriggerPrivate::Uninitialized{}))
+{
+    d->serialized = serialized;
+    // variant parsing will happen later in deserialize()
 }
 
 KGlobalShortcutTrigger::~KGlobalShortcutTrigger()
@@ -56,18 +65,6 @@ KGlobalShortcutTrigger &KGlobalShortcutTrigger::operator=(const KGlobalShortcutT
 }
 
 // static
-KGlobalShortcutTrigger KGlobalShortcutTrigger::fromString(const QString &serialized)
-{
-    if (serialized.isEmpty()) {
-        return KGlobalShortcutTrigger();
-    }
-    KGlobalShortcutTrigger trigger;
-    trigger.d->serialized = serialized;
-    // variant parsing will happen later in deserialize()
-    return trigger;
-}
-
-// static
 KGlobalShortcutTrigger KGlobalShortcutTrigger::fromKeyboardShortcut(QKeySequence key)
 {
     // TODO: better, more de-duplicated implementation of this?
@@ -82,12 +79,20 @@ KGlobalShortcutTrigger KGlobalShortcutTrigger::fromKeyboardShortcut(QKeySequence
 
 QString KGlobalShortcutTrigger::toString() const
 {
+    // For keyboard shortcuts, d->serialized is the key sequence.
+    // For gestures/non-key triggers, d->serialized already includes the non-key trigger prefix.
     return d->serialized;
 }
 
 bool KGlobalShortcutTrigger::isEmpty() const
 {
     return d->serialized.isEmpty();
+}
+
+bool KGlobalShortcutTrigger::isKnownTriggerType() const
+{
+    d->deserialize();
+    return !std::holds_alternative<KGlobalShortcutTriggerPrivate::Unparseable>(d->variant);
 }
 
 bool KGlobalShortcutTrigger::operator==(const KGlobalShortcutTrigger &rhs) const
@@ -223,16 +228,16 @@ static std::optional<KGlobalShortcutTriggerPrivate::TriggerVariant> parseSwipeGe
 
     if (serialized.startsWith(TouchpadSwipePrefix)) {
         type = Touchpad;
-        serialized.slice(TouchpadSwipePrefix.size());
+        serialized = serialized.sliced(TouchpadSwipePrefix.size());
     } else if (serialized.startsWith(TouchscreenSwipePrefix)) {
         type = Touchscreen;
-        serialized.slice(TouchscreenSwipePrefix.size());
+        serialized = serialized.sliced(TouchscreenSwipePrefix.size());
     } else {
         return std::nullopt;
     }
 
     QList<QStringView> params = serialized.tokenize(u':').toContainer();
-    if (serialized.length() < 2) {
+    if (params.length() < 2) {
         return std::nullopt;
     }
 
@@ -265,18 +270,63 @@ static std::optional<KGlobalShortcutTriggerPrivate::TriggerVariant> parseSwipeGe
     }
 }
 
+static std::optional<KGlobalShortcutTriggerPrivate::TriggerVariant> parsePinchGesture(QStringView serialized)
+{
+    if (!serialized.startsWith(TouchpadPinchPrefix)) {
+        return std::nullopt;
+    }
+
+    serialized = serialized.sliced(TouchpadPinchPrefix.size());
+
+    QList<QStringView> params = serialized.tokenize(u':').toContainer();
+    if (params.size() < 2) {
+        return std::nullopt;
+    }
+
+    bool ok = false;
+    int fingerCount = params[0].toInt(&ok);
+    if (!ok) {
+        return std::nullopt;
+    }
+
+    QMetaEnum metaEnum = QMetaEnum::fromType<TouchpadPinchGesture::Direction>();
+    ok = false;
+    int direction = metaEnum.keyToValue(params[1].toLatin1().data(), &ok);
+    if (!ok) {
+        return std::nullopt;
+    }
+
+    return {TouchpadPinchGesture{
+        .fingerCount = fingerCount,
+        .direction = static_cast<TouchpadPinchGesture::Direction>(direction),
+    }};
+}
+
 void KGlobalShortcutTriggerPrivate::deserialize()
 {
     if (!std::holds_alternative<KGlobalShortcutTriggerPrivate::Uninitialized>(variant)) {
         return;
     }
 
-    if (QKeySequence key = QKeySequence::fromString(serialized, QKeySequence::PortableText); !key.isEmpty()) {
+    // Empty strings and key sequences are the common case, serialized without a prefix.
+    // Gestures and any other triggers must be explicitly prefixed, e.g. "T:TouchpadSwipe:3:Up"
+    if (serialized.isEmpty()) {
+        variant = KGlobalShortcutTriggerPrivate::Unparseable{};
+        return;
+    } else if (!serialized.startsWith(NonKeyTriggerPrefix)) {
         KeyboardShortcut sc;
-        sc.keySequence = key;
-        sc.normalizedKeySequence = Utils::normalizeSequence(key);
+        // QKeySequence::fromString() will parse basically anything, no point in checking its result
+        sc.keySequence = QKeySequence::fromString(serialized, QKeySequence::PortableText);
+        sc.normalizedKeySequence = Utils::normalizeSequence(sc.keySequence);
         variant = sc;
-    } else if (auto optVariant = parseSwipeGesture(serialized); optVariant.has_value()) {
+        return;
+    }
+
+    const QStringView triggerString = QStringView(serialized).sliced(NonKeyTriggerPrefix.size());
+
+    if (auto optVariant = parseSwipeGesture(triggerString); optVariant.has_value()) {
+        variant = *optVariant;
+    } else if (auto optVariant = parsePinchGesture(triggerString); optVariant.has_value()) {
         variant = *optVariant;
     } // TODO: parse more variants (and figure out activation requirements parsing)
     else {
