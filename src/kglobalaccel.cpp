@@ -324,7 +324,6 @@ int KGlobalAccelPrivate::ifaceVersion()
 
 void KGlobalAccelPrivate::updateGlobalShortcut(/*TODO KF7: const would be better*/ QAction *action,
                                                ShortcutTypes actionFlags,
-                                               KGlobalAccel::GestureSupportFlags gestureSupport,
                                                KGlobalAccel::GlobalShortcutLoading globalFlags)
 {
     // No action or no objectname -> Do nothing
@@ -337,12 +336,6 @@ void KGlobalAccelPrivate::updateGlobalShortcut(/*TODO KF7: const would be better
     uint setterFlags = 0;
     if (globalFlags & KGlobalAccel::GlobalShortcutLoading::NoAutoloading) {
         setterFlags |= NoAutoloading;
-    }
-    if (gestureSupport & KGlobalAccel::GestureSupport::SupportsOneToOneGesture) {
-        setterFlags |= SupportsOneToOneGesture;
-    }
-    if (gestureSupport & KGlobalAccel::GestureSupport::SupportsFreeform2DGesture) {
-        setterFlags |= SupportsFreeform2DGesture;
     }
 
     if (actionFlags & ActiveShortcut) {
@@ -410,14 +403,24 @@ void KGlobalAccelPrivate::updateGlobalShortcut(/*TODO KF7: const would be better
 
 QStringList KGlobalAccelPrivate::makeActionId(const QAction *action)
 {
-    QStringList ret(componentUniqueForAction(action)); // Component Unique Id ( see actionIdFields )
-    Q_ASSERT(!ret.at(KGlobalAccel::ComponentUnique).isEmpty());
-    Q_ASSERT(!action->objectName().isEmpty());
-    ret.append(action->objectName()); // Action Unique Name
-    ret.append(componentFriendlyForAction(action)); // Component Friendly name
-    const QString actionText = action->text().replace(QLatin1Char('&'), QStringLiteral(""));
-    ret.append(actionText); // Action Friendly Name
+    auto shortcutId = q->shortcutId(action);
+    QStringList ret(4); // see KGlobalAccel::actionIdFields
+    ret[KGlobalAccel::ComponentUnique] = shortcutId.componentName;
+    ret[KGlobalAccel::ActionUnique] = shortcutId.actionId;
+    ret[KGlobalAccel::ComponentFriendly] = componentFriendlyForAction(action);
+    ret[KGlobalAccel::ActionFriendly] = action->text().replace(QLatin1Char('&'), QStringLiteral(""));
     return ret;
+}
+
+KGlobalAccel::ShortcutId KGlobalAccel::shortcutId(const QAction *action) const
+{
+    ShortcutId id{
+        .componentName = d->componentUniqueForAction(action),
+        .actionId = action->objectName(),
+    };
+    Q_ASSERT(!id.componentName.isEmpty());
+    Q_ASSERT(!id.actionId.isEmpty());
+    return id;
 }
 
 QList<QKeySequence> KGlobalAccelPrivate::shortcutFromIntList(const QList<int> &list)
@@ -566,7 +569,7 @@ void KGlobalAccelPrivate::reRegisterAll()
     actions.clear();
     for (QAction *const action : allActions) {
         if (doRegister(action)) {
-            updateGlobalShortcut(action, ActiveShortcut, KGlobalAccel::SupportsOneShotTriggerOnly, KGlobalAccel::Autoloading);
+            updateGlobalShortcut(action, ActiveShortcut, KGlobalAccel::Autoloading);
         }
     }
 }
@@ -705,13 +708,12 @@ bool checkGarbageKeycode(const QList<QKeySequence> &shortcut)
 
 bool KGlobalAccel::setDefaultShortcut(QAction *action, const QList<QKeySequence> &shortcut, GlobalShortcutLoading loadFlag)
 {
-    return setDefaultShortcut(action, shortcut, {}, KGlobalAccel::SupportsOneShotTriggerOnly, loadFlag);
+    return setDefaultShortcut(action, shortcut, {}, loadFlag);
 }
 
 bool KGlobalAccel::setDefaultShortcut(QAction *action,
                                       const QList<QKeySequence> &keys,
                                       const QList<KGlobalShortcutTrigger> &extraTriggers,
-                                      GestureSupportFlags gestureSupport,
                                       GlobalShortcutLoading loadFlag)
 {
     if (checkGarbageKeycode(keys) || checkGarbageKeycode(KGlobalShortcutTrigger::onlyKeyboardShortcuts(extraTriggers))) {
@@ -726,7 +728,7 @@ bool KGlobalAccel::setDefaultShortcut(QAction *action,
     triggers.append(extraTriggers);
 
     d->actionDefaultTriggers.insert(action, triggers);
-    d->updateGlobalShortcut(action, KGlobalAccelPrivate::DefaultShortcut, gestureSupport, loadFlag);
+    d->updateGlobalShortcut(action, KGlobalAccelPrivate::DefaultShortcut, loadFlag);
     return true;
 }
 
@@ -748,13 +750,11 @@ bool KGlobalAccel::setShortcut(QAction *action,
         return false;
     }
 
-    auto irrelevantExceptForDefaultShortcuts = KGlobalAccel::SupportsOneShotTriggerOnly;
-
     auto triggers = KGlobalShortcutTrigger::fromKeyboardShortcuts(keys);
     triggers.append(extraTriggers);
 
     d->actionTriggers.insert(action, triggers);
-    d->updateGlobalShortcut(action, KGlobalAccelPrivate::ActiveShortcut, irrelevantExceptForDefaultShortcuts, loadFlag);
+    d->updateGlobalShortcut(action, KGlobalAccelPrivate::ActiveShortcut, loadFlag);
     return true;
 }
 
@@ -800,18 +800,14 @@ bool KGlobalAccel::setGlobalShortcut(QAction *action, const QKeySequence &shortc
     return setGlobalShortcut(action, {}, {KeyboardShortcut{shortcut}});
 }
 
-bool KGlobalAccel::setGlobalShortcut(QAction *action,
-                                     const QList<QKeySequence> &keys,
-                                     const QList<KGlobalShortcutTrigger> &triggers,
-                                     GestureSupportFlags gestureSupport)
+bool KGlobalAccel::setGlobalShortcut(QAction *action, const QList<QKeySequence> &keys, const QList<KGlobalShortcutTrigger> &triggers)
 {
-    return self()->d->setShortcutWithDefault(action, keys, triggers, gestureSupport, Autoloading);
+    return self()->d->setShortcutWithDefault(action, keys, triggers, Autoloading);
 }
 
 bool KGlobalAccelPrivate::setShortcutWithDefault(QAction *action,
                                                  const QList<QKeySequence> &keys,
                                                  const QList<KGlobalShortcutTrigger> &extraTriggers,
-                                                 KGlobalAccel::GestureSupportFlags gestureSupport,
                                                  KGlobalAccel::GlobalShortcutLoading loadFlag)
 {
     if (checkGarbageKeycode(keys) || checkGarbageKeycode(KGlobalShortcutTrigger::onlyKeyboardShortcuts(extraTriggers))) {
@@ -827,7 +823,7 @@ bool KGlobalAccelPrivate::setShortcutWithDefault(QAction *action,
 
     actionDefaultTriggers.insert(action, triggers);
     actionTriggers.insert(action, triggers);
-    updateGlobalShortcut(action, KGlobalAccelPrivate::DefaultShortcut | KGlobalAccelPrivate::ActiveShortcut, gestureSupport, loadFlag);
+    updateGlobalShortcut(action, KGlobalAccelPrivate::DefaultShortcut | KGlobalAccelPrivate::ActiveShortcut, loadFlag);
     return true;
 }
 

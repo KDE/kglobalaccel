@@ -17,6 +17,7 @@
 #include <QKeySequence>
 #include <QList>
 #include <QObject>
+#include <QPair>
 #include <qflags.h>
 #include <qtmetamacros.h>
 
@@ -135,40 +136,6 @@ public:
         MandatoryCoupling = KGlobalShortcutInfo::Feature::InverseActionCouplingIsMandatory,
     };
     Q_ENUM(InverseActionCoupling)
-
-    /*!
-     * \enum KGlobalAccel::GestureSupport
-     *
-     * An enum about custom gesture integration behaviors that are supported for a shortcut action
-     *
-     * \value SupportsOneShotTriggerOnly
-     *        Completing an assigned gesture will trigger the action just like a keyboard shortcut
-     *        would. There are no custom behaviors for in-progress gestures. This is the default
-     *        and supported for every action.
-     * \value SupportsOneToOneGesture
-     *        The component that provides the action is able to recognize in-progress gestures
-     *        and provide visual feedback before the action is triggered. Progress in this case
-     *        is measured on a linear scale from 0% to 100%. Opting into such gesture APIs may
-     *        only be available to components with access to compositor internals.
-     * \value SupportsFreeform2DGesture
-     *        The component that provides the action is able to recognize free-form gestures that
-     *        cannot be mapped to a simple on/off or 0%-to-100% linear scale. Starting the gesture
-     *        will enter a dedicated mode, for example to select items in a 2D arrangement.
-     *        (If free-form gestures are supported, it should usually be for an action that would
-     *        otherwise simply open the dedicated mode.)
-     *        A settings UI that assigns a free-form gesture should take care to unassign other
-     *        potentially conflicting gestures. Primarily, this means that a free-form 2D swipe
-     *        gesture is incompatible with any one-dimensional swipe gestures.
-     *
-     * \sa setShortcut(), setDefaultShortcut(), setGlobalShortcut()
-     */
-    enum GestureSupport {
-        SupportsOneShotTriggerOnly = 0,
-        SupportsOneToOneGesture = KGlobalShortcutInfo::Feature::SupportsOneToOneGesture,
-        SupportsFreeform2DGesture = KGlobalShortcutInfo::Feature::SupportsFreeform2DGesture,
-    };
-    Q_DECLARE_FLAGS(GestureSupportFlags, GestureSupport)
-    Q_FLAG(GestureSupportFlags)
 
     /*!
      * Returns (and creates if necessary) the singleton instance
@@ -321,7 +288,6 @@ public:
     bool setDefaultShortcut(QAction *action,
                             const QList<QKeySequence> &keys,
                             const QList<KGlobalShortcutTrigger> &triggers,
-                            GestureSupportFlags gestureSupport = SupportsOneShotTriggerOnly,
                             GlobalShortcutLoading loadFlag = Autoloading);
 
     /*!
@@ -457,10 +423,7 @@ public:
      * \sa setShortcut(), setDefaultShortcut()
      * \since 6.24 // TODO: update version once approved
      */
-    static bool setGlobalShortcut(QAction *action,
-                                  const QList<QKeySequence> &keys,
-                                  const QList<KGlobalShortcutTrigger> &extraTriggers,
-                                  GestureSupportFlags gestureSupport = SupportsOneShotTriggerOnly);
+    static bool setGlobalShortcut(QAction *action, const QList<QKeySequence> &keys, const QList<KGlobalShortcutTrigger> &extraTriggers);
 
     /*!
      * Designates \a forwardAction and \a backwardAction as inverse actions of each other.
@@ -510,9 +473,31 @@ public:
     QList<QKeySequence> shortcut(const QAction *action) const;
 
     /*!
+     * A structure that holds an action's extracted component name and action id strings.
+     *
+     * \sa shortcutId()
+     * \since 6.24 // TODO: update version once approved
+     */
+    struct ShortcutId {
+        QString componentName;
+        QString actionId;
+    };
+
+    /*!
+     * Extract componentName and actionId from the given \a action.
+     *
+     * These can be passed to globalShortcut(componentName, actionId) or other functions.
+     *
+     * \sa globalShortcut()
+     * \since 6.24 // TODO: update version once approved
+     */
+    ShortcutId shortcutId(const QAction *action) const;
+
+    /*!
      * Retrieves the keyboard shortcut as defined in global settings by
      * \a componentName (e.g. "kwin") and \a actionId (e.g. "Kill Window").
      *
+     * \sa shortcutId()
      * \since 5.10
      */
     QList<QKeySequence> globalShortcut(const QString &componentName, const QString &actionId) const;

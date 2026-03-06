@@ -25,8 +25,6 @@ enum SetShortcutFlag {
     SetPresent = 2,
     NoAutoloading = 4,
     IsDefault = 8,
-    SupportsOneToOneGesture = KGlobalShortcutInfo::Feature::SupportsOneToOneGesture,
-    SupportsFreeform2DGesture = KGlobalShortcutInfo::Feature::SupportsFreeform2DGesture,
 };
 enum SetInverseActionFlag {
     InverseActionCouplingIsMandatory = KGlobalShortcutInfo::Feature::InverseActionCouplingIsMandatory,
@@ -62,7 +60,6 @@ public:
     ///@todo KF6
     void updateGlobalShortcut(/*const would be better*/ QAction *action,
                               KGlobalAccelPrivate::ShortcutTypes actionFlags,
-                              KGlobalAccel::GestureSupportFlags gestureSupport,
                               KGlobalAccel::GlobalShortcutLoading globalFlags);
 
     /// Register the action in this class and in the KDED module
@@ -108,7 +105,6 @@ public:
     bool setShortcutWithDefault(QAction *action,
                                 const QList<QKeySequence> &keys,
                                 const QList<KGlobalShortcutTrigger> &extraTriggers,
-                                KGlobalAccel::GestureSupportFlags gestureSupport,
                                 KGlobalAccel::GlobalShortcutLoading loadFlag);
 
     void unregister(const QStringList &actionId);
