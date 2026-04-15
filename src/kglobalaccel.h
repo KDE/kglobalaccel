@@ -272,6 +272,24 @@ public:
     static bool setGlobalShortcut(QAction *action, const QKeySequence &shortcut);
 
     /*!
+     * Designates \a forwardAction and \a backwardAction as inverse actions of each other.
+     *
+     * Both actions must have been set with \c setDefaultShortcut() or \a setGlobalShortcut()
+     * before calling this function. Their component name (e.g. "kwin") must be the same.
+     *
+     * When configuring a shortcut for one of these two actions, the settings application should
+     * prompt the user to also (re)assign or modify a similar shortcut for its inverse action.
+     *
+     * Both actions may be shown as a pair in shortcut lists.
+     *
+     * Returns \c true if the shortcut has been set successfully; otherwise returns \c false.
+     *
+     * \sa setShortcut(), setDefaultShortcut(), setGlobalShortcut()
+     * \since 6.27
+     */
+    static bool setInverseShortcutActions(QAction *forwardAction, QAction *backwardAction);
+
+    /*!
      * Get the global default shortcut for this \a action, if one exists. Global shortcuts
      * allow your actions to respond to accellerators independently of the focused window.
      * Unlike regular shortcuts, the application's window does not need focus
