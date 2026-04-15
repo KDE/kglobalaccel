@@ -692,6 +692,32 @@ bool KGlobalAccelPrivate::setShortcutWithDefault(QAction *action, const QList<QK
     return true;
 }
 
+bool KGlobalAccel::setInverseShortcutActions(QAction *forwardAction, QAction *backwardAction, InverseActionCoupling coupling)
+{
+    KGlobalAccelPrivate *d = self()->d;
+
+    const bool bothRegistered = d->actions.contains(forwardAction) && d->actions.contains(backwardAction);
+    if (!bothRegistered) {
+        return false;
+    }
+    const QStringList forwardActionId = d->makeActionId(forwardAction);
+    const QStringList backwardActionId = d->makeActionId(backwardAction);
+
+    if (forwardActionId.at(KGlobalAccel::ComponentUnique) != backwardActionId.at(KGlobalAccel::ComponentUnique)) {
+        return false;
+    }
+
+    uint inverseSetterFlags = 0;
+    if (coupling & InverseActionCoupling::MandatoryCoupling) {
+        inverseSetterFlags |= KGlobalAccelPrivate::InverseActionCouplingIsMandatory;
+    }
+
+    return d->iface()->setInverseShortcutActions(forwardActionId.at(KGlobalAccel::ComponentUnique),
+                                                 forwardActionId.at(KGlobalAccel::ActionUnique),
+                                                 backwardActionId.at(KGlobalAccel::ActionUnique),
+                                                 inverseSetterFlags);
+}
+
 QDBusArgument &operator<<(QDBusArgument &argument, const KGlobalAccel::MatchType &type)
 {
     argument.beginStructure();

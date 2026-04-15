@@ -109,6 +109,33 @@ public:
     Q_ENUM(MatchType)
 
     /*!
+     * \enum KGlobalAccel::InverseActionCoupling
+     *
+     * An enum about the relationship of two inverse actions
+     *
+     * \value MandatoryCoupling
+     *        This declares that either both of the actions must have a shortcut assigned, or none.
+     *        A settings application should ensure that when the user changes the shortcut for one
+     *        of the actions, a corresponding shortcut is likewise assigned/unassigned for the
+     *        other one. KGlobalAccel may enforce this by ignoring a shortcut assignment when its
+     *        inverse action does not have a matching assignment.
+     * \value OptionalCoupling
+     *        Like MandatoryCoupling, but the pairing is only a suggestion. There will be no UX
+     *        issue if only one of the two inverse actions is assigned. KGlobalAccel will not make
+     *        shortcut activation conditional on its inverse counterpart. A settings application
+     *        may propose matching shortcut assignments, but might not enforce them.
+     *        You can use this e.g. for actions that cycle through a set of states such that the
+     *        user can return to the original state without using the inverse action.
+     *
+     * \sa setInverseShortcutActions()
+     */
+    enum InverseActionCoupling {
+        OptionalCoupling = 0,
+        MandatoryCoupling = 1,
+    };
+    Q_ENUM(InverseActionCoupling)
+
+    /*!
      * Returns (and creates if necessary) the singleton instance
      */
     static KGlobalAccel *self();
@@ -270,6 +297,26 @@ public:
      * \since 5.0
      */
     static bool setGlobalShortcut(QAction *action, const QKeySequence &shortcut);
+
+    /*!
+     * Designates \a forwardAction and \a backwardAction as inverse actions of each other.
+     *
+     * Both actions must have been set with \c setDefaultShortcut() or \a setGlobalShortcut()
+     * before calling this function. Their component name (e.g. "kwin") must be the same.
+     *
+     * When configuring a shortcut for one of these two actions, the settings application should
+     * prompt the user to also (re)assign or modify a similar shortcut for its inverse action.
+     *
+     * Both actions may be shown as a pair in shortcut lists.
+     *
+     * \a coupling specifies if one shortcut requires the its counterpart to be available as well.
+     *
+     * Returns \c true if the shortcut has been set successfully; otherwise returns \c false.
+     *
+     * \sa setShortcut(), setDefaultShortcut(), setGlobalShortcut(), InverseActionCoupling
+     * \since 6.26
+     */
+    static bool setInverseShortcutActions(QAction *forwardAction, QAction *backwardAction, InverseActionCoupling coupling = MandatoryCoupling);
 
     /*!
      * Get the global default shortcut for this \a action, if one exists. Global shortcuts
