@@ -41,8 +41,8 @@ public:
         /// reset shortcuts to default.
         DefaultShortcut = 0x2,
     };
-
     Q_DECLARE_FLAGS(ShortcutTypes, ShortcutType)
+
     enum Removal {
         SetInactive = 0, ///< Forget the action in this class and mark it as not present in the KDED module
         UnRegister, ///< Remove any trace of the action in this class and in the KDED module

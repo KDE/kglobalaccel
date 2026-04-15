@@ -70,9 +70,9 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
                          });
 
         QObject::connect(component,
-                          &org::kde::kglobalaccel::Component::globalShortcutRepeated,
+                         &org::kde::kglobalaccel::Component::globalShortcutRepeated,
                          q,
-                          [this](const QString &componentUnique, const QString &shortcutUnique, qlonglong timestamp) {
+                         [this](const QString &componentUnique, const QString &shortcutUnique, qlonglong timestamp) {
                              invokeAction(componentUnique, shortcutUnique, timestamp, ShortcutState::Repeated);
                          });
 
@@ -580,7 +580,7 @@ void KGlobalAccel::stealShortcutSystemwide(const QKeySequence &seq)
 {
     const auto globalShortcuts = globalShortcutsByKey(seq);
     for (const KGlobalShortcutInfo &globalShortcut : globalShortcuts) {
-        const QStringList actionId {
+        const QStringList actionId{
             globalShortcut.componentUniqueName(),
             globalShortcut.uniqueName(),
             globalShortcut.componentFriendlyName(),
