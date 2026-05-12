@@ -44,7 +44,7 @@ public:
     Q_DECLARE_FLAGS(ShortcutTypes, ShortcutType)
 
     enum SetInverseActionFlag {
-        InverseActionCouplingIsMandatory = 0x1,
+        RejectModifyExistingInverseActions = 0x1,
     };
     enum Removal {
         SetInactive = 0, ///< Forget the action in this class and mark it as not present in the KDED module

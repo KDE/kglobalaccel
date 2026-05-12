@@ -698,7 +698,7 @@ bool KGlobalAccelPrivate::setShortcutWithDefault(QAction *action, const QList<QK
     return true;
 }
 
-bool KGlobalAccel::setInverseShortcutActions(QAction *forwardAction, QAction *backwardAction, InverseActionCoupling coupling)
+bool KGlobalAccel::setInverseShortcutActions(QAction *forwardAction, QAction *backwardAction)
 {
     KGlobalAccelPrivate *d = self()->d;
 
@@ -713,10 +713,7 @@ bool KGlobalAccel::setInverseShortcutActions(QAction *forwardAction, QAction *ba
         return false;
     }
 
-    uint inverseSetterFlags = 0;
-    if (coupling & InverseActionCoupling::MandatoryCoupling) {
-        inverseSetterFlags |= KGlobalAccelPrivate::InverseActionCouplingIsMandatory;
-    }
+    uint inverseSetterFlags = KGlobalAccelPrivate::RejectModifyExistingInverseActions;
 
     return d->iface()->setInverseShortcutActions(forwardActionId.at(KGlobalAccel::ComponentUnique),
                                                  forwardActionId.at(KGlobalAccel::ActionUnique),
