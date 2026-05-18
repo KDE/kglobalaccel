@@ -6,6 +6,7 @@
       <arg name="actionId" type="as" direction="out"/>
       <arg name="newKeys" type="ai" direction="out"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.Out1" value="QList&lt;int&gt;"/>
+      <annotation name="org.freedesktop.DBus.Deprecated" value="true"/>
     </signal>
     <method name="allComponents">
       <arg type="ao" direction="out"/>
@@ -22,6 +23,7 @@
     <method name="action">
       <arg type="as" direction="out"/>
       <arg name="key" type="i" direction="in"/>
+      <annotation name="org.freedesktop.DBus.Deprecated" value="true"/>
     </method>
     <method name="getComponent">
       <arg type="o" direction="out"/>
@@ -31,11 +33,13 @@
       <arg type="ai" direction="out"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QList&lt;int&gt;"/>
       <arg name="actionId" type="as" direction="in"/>
+      <annotation name="org.freedesktop.DBus.Deprecated" value="true"/>
     </method>
     <method name="defaultShortcut">
       <arg type="ai" direction="out"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QList&lt;int&gt;"/>
       <arg name="actionId" type="as" direction="in"/>
+      <annotation name="org.freedesktop.DBus.Deprecated" value="true"/>
     </method>
     <method name="setShortcut">
       <arg type="ai" direction="out"/>
@@ -44,11 +48,13 @@
       <arg name="keys" type="ai" direction="in"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="QList&lt;int&gt;"/>
       <arg name="flags" type="u" direction="in"/>
+      <annotation name="org.freedesktop.DBus.Deprecated" value="true"/>
     </method>
     <method name="setForeignShortcut">
       <arg name="actionId" type="as" direction="in"/>
       <arg name="keys" type="ai" direction="in"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="QList&lt;int&gt;"/>
+      <annotation name="org.freedesktop.DBus.Deprecated" value="true"/>
     </method>
     <method name="setInactive">
       <arg name="actionId" type="as" direction="in"/>
@@ -56,9 +62,9 @@
     <method name="doRegister">
       <arg name="actionId" type="as" direction="in"/>
     </method>
-    <!-- Deprecated use unregister -->
     <method name="unRegister">
       <arg name="actionId" type="as" direction="in"/>
+      <annotation name="org.freedesktop.DBus.Deprecated" value="true"/>
     </method>
     <method name="activateGlobalShortcutContext">
       <arg name="component" type="s" direction="in"/>
