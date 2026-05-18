@@ -102,6 +102,7 @@
       <arg type="as" direction="out"/>
       <arg name="key" type="(ai)" direction="in"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="QKeySequence"/>
+      <annotation name="org.freedesktop.DBus.Deprecated" value="true"/>
     </method>
     <method name="setShortcutKeys">
       <arg type="a(ai)" direction="out"/>
