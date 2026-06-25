@@ -97,6 +97,8 @@ public:
     QMap<const QAction *, QList<QKeySequence>> actionDefaultShortcuts;
     QMap<const QAction *, QList<QKeySequence>> actionShortcuts;
 
+    bool blockExports = false;
+
     bool setShortcutWithDefault(QAction *action, const QList<QKeySequence> &shortcut, KGlobalAccel::GlobalShortcutLoading loadFlag);
 
     void unregister(const QStringList &actionId);

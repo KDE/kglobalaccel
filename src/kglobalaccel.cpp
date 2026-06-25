@@ -212,6 +212,10 @@ KGlobalAccel *KGlobalAccel::self()
 
 bool KGlobalAccelPrivate::doRegister(QAction *action)
 {
+    if (blockExports) {
+        return true; // We assume it will export fine later
+    }
+
     if (!action || action->objectName().isEmpty() || action->objectName().startsWith(QLatin1String("unnamed-"))) {
         qWarning() << "Attempt to set global shortcut for action without objectName()."
                       " Read the setGlobalShortcut() documentation.";
@@ -669,6 +673,24 @@ void KGlobalAccel::removeAllShortcuts(QAction *action)
 bool KGlobalAccel::hasShortcut(const QAction *action) const
 {
     return d->actionShortcuts.contains(action) || d->actionDefaultShortcuts.contains(action);
+}
+
+[[nodiscard]] bool KGlobalAccel::isBlockExports() const
+{
+    return d->blockExports;
+}
+
+void KGlobalAccel::setBlockExports(bool block)
+{
+    if (d->blockExports == block) {
+        return;
+    }
+
+    d->blockExports = block;
+    if (!block) {
+        d->reRegisterAll();
+    }
+    Q_EMIT blockExportsChanged();
 }
 
 bool KGlobalAccel::setGlobalShortcut(QAction *action, const QList<QKeySequence> &shortcut)

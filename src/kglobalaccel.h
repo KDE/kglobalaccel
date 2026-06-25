@@ -3,6 +3,7 @@
     SPDX-FileCopyrightText: 2001, 2002 Ellis Whitehead <ellis@kde.org>
     SPDX-FileCopyrightText: 2006 Hamish Rodda <rodda@kde.org>
     SPDX-FileCopyrightText: 2007 Andreas Hartmetz <ahartmetz@gmail.com>
+    SPDX-FileCopyrightText: 2026 Harald Sitter <sitter@kde.org>
 
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
@@ -47,7 +48,22 @@ class OrgKdeKglobalaccelComponentInterface;
 class KGLOBALACCEL_EXPORT KGlobalAccel : public QObject
 {
     Q_OBJECT
-
+    /*!
+     * Whether the global shortcuts are getting exported to the KGlobalAccel daemon or not.
+     * Mind that this does not unexport previously exported shortcuts, it only prevents new ones from being exported.
+     * As such, you need to set it to true before the first shortcut is exported. Once you set it to false all pending
+     * shortcuts will be exported.
+     *
+     * \warning Beware that the bool returned by setShortcut and friends will not reflect reality while exports are blocked!
+     *
+     * By default no block is in place.
+     *
+     * This is particularly useful for applications that may be started multiple times but only one instance is considered the "main" instance.
+     * For instance KWin may run nested underneath another KWin but only the main KWin should manage shortcuts.
+     *
+     * \since 6.TBD
+     */
+    Q_PROPERTY(bool blockExports READ isBlockExports WRITE setBlockExports NOTIFY blockExportsChanged)
 public:
     /*!
      * \enum KGlobalAccel::GlobalShortcutLoading
@@ -337,6 +353,20 @@ public:
      */
     bool hasShortcut(const QAction *action) const;
 
+    /*!
+     * Returns whether the export of global shortcuts is currently blocked.
+     *
+     * \since 6.TBD
+     */
+    [[nodiscard]] bool isBlockExports() const;
+
+    /*!
+     * Sets whether the export of global shortcuts is currently blocked.
+     *
+     * \since 6.TBD
+     */
+    void setBlockExports(bool block);
+
 Q_SIGNALS:
     /*!
      * Emitted when the global shortcut is changed. A global shortcut is subject to be changed by
@@ -359,6 +389,13 @@ Q_SIGNALS:
      * \since 5.94
      */
     void globalShortcutActiveChanged(QAction *action, bool active);
+
+    /*!
+     * Emitted when the block state of the global shortcuts export changes.
+     *
+     * \since 6.TBD
+     */
+    void blockExportsChanged();
 
 private:
     KGLOBALACCEL_NO_EXPORT KGlobalAccel();
