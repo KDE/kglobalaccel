@@ -182,10 +182,16 @@ public:
      * Returns \c true if user confirms that it is okay to re-assign the global shorcut;
      * otherwise returns \c false.
      *
+     * The box is drawn by a plugin, so a program which never asks this question loads no widget
+     * toolkit. Without that plugin installed the answer is that the shortcut stays where it is.
+     *
      * \sa stealShortcutSystemwide()
      *
      * \since 4.2
      */
+    // TODO KF7: give this a parent that names no widget class, so that asking the question ties the
+    // caller to no toolkit. A QWindow overload cannot be added beside this one while both exist,
+    // because a call passing a nullptr matches neither of the two better than the other.
     static bool promptStealShortcutSystemwide(QWidget *parent, const QList<KGlobalShortcutInfo> &shortcuts, const QKeySequence &seq);
 
     /*!

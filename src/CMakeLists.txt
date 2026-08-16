@@ -44,6 +44,11 @@ target_include_directories(KF6GlobalAccel INTERFACE "$<INSTALL_INTERFACE:${KDE_I
 target_link_libraries(KF6GlobalAccel
 PUBLIC
     Qt6::DBus
+    Qt6::Gui
+INTERFACE
+    # The prompt is drawn by a plugin, so the library itself needs no widget toolkit. It stays in
+    # the interface for the programs which take one through this library and for the QWidget the
+    # prompt is parented to.
     Qt6::Widgets
 )
 
@@ -73,6 +78,8 @@ install(FILES
   ${KGlobalAccel_HEADERS}
   DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KGlobalAccel COMPONENT Devel
 )
+
+add_subdirectory(widgetsprompt)
 
 ecm_qt_install_logging_categories(
     EXPORT KGLOBALACCEL

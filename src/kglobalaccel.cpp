@@ -11,15 +11,14 @@
 #include "kglobalaccel.h"
 #include "kglobalaccel_debug.h"
 #include "kglobalaccel_p.h"
-
-#include <memory>
+#include "kglobalaccelpromptplugin_p.h"
 
 #include <QAction>
+#include <QCoreApplication>
 #include <QDBusMessage>
 #include <QDBusMetaType>
 #include <QGuiApplication>
-#include <QMessageBox>
-#include <QPushButton>
+#include <QPluginLoader>
 #include <config-kglobalaccel.h>
 
 #if WITH_X11
@@ -543,6 +542,24 @@ bool KGlobalAccel::isGlobalShortcutAvailable(const QKeySequence &seq, const QStr
     return self()->d->iface()->globalShortcutAvailable(seq, comp);
 }
 
+// The plugin which knows how to ask, loaded from the first question on and kept for the ones after
+// it. A nullptr means there is nothing installed that can ask.
+static KGlobalAccelPromptPlugin *promptPlugin()
+{
+    static KGlobalAccelPromptPlugin *plugin = []() -> KGlobalAccelPromptPlugin * {
+        const QStringList libraryPaths = QCoreApplication::libraryPaths();
+        for (const QString &libraryPath : libraryPaths) {
+            QPluginLoader loader(libraryPath + QLatin1String("/kglobalaccel/kglobalaccelwidgetsprompt"));
+            if (auto *prompt = qobject_cast<KGlobalAccelPromptPlugin *>(loader.instance())) {
+                return prompt;
+            }
+        }
+        qCWarning(KGLOBALACCEL_LOG) << "No plugin to ask with, so a shortcut another action holds is left where it is.";
+        return nullptr;
+    }();
+    return plugin;
+}
+
 // static
 bool KGlobalAccel::promptStealShortcutSystemwide(QWidget *parent, const QList<KGlobalShortcutInfo> &shortcuts, const QKeySequence &seq)
 {
@@ -551,28 +568,12 @@ bool KGlobalAccel::promptStealShortcutSystemwide(QWidget *parent, const QList<KG
         return false;
     }
 
-    QString component = shortcuts[0].componentFriendlyName();
-
-    QString message;
-    if (shortcuts.size() == 1) {
-        message = tr("The '%1' key combination is registered by application %2 for action %3.").arg(seq.toString(), component, shortcuts[0].friendlyName());
-    } else {
-        QString actionList;
-        for (const KGlobalShortcutInfo &info : shortcuts) {
-            actionList += tr("In context '%1' for action '%2'\n").arg(info.contextFriendlyName(), info.friendlyName());
-        }
-        message = tr("The '%1' key combination is registered by application %2.\n%3").arg(seq.toString(), component, actionList);
+    KGlobalAccelPromptPlugin *prompt = promptPlugin();
+    if (!prompt) {
+        return false;
     }
 
-    QString title = tr("Conflict With Registered Global Shortcut");
-
-    QMessageBox box(parent);
-    box.setWindowTitle(title);
-    box.setText(message);
-    box.addButton(QMessageBox::Ok)->setText(tr("Reassign"));
-    box.addButton(QMessageBox::Cancel);
-
-    return box.exec() == QMessageBox::Ok;
+    return prompt->promptStealShortcut(parent, shortcuts, seq);
 }
 
 // static
