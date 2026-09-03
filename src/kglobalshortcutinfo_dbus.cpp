@@ -21,14 +21,19 @@ QDBusArgument &operator<<(QDBusArgument &argument, const QKeySequence &sequence)
 
 const QDBusArgument &operator>>(const QDBusArgument &argument, QKeySequence &sequence)
 {
-    int s1;
-    int s2;
-    int s3;
-    int s4;
     argument.beginStructure();
     argument.beginArray();
-    argument >> s1 >> s2 >> s3 >> s4;
-    sequence = QKeySequence(s1, s2, s3, s4);
+
+    int keys[4];
+    for (int i = 0; i < 4; ++i) {
+        if (argument.atEnd()) {
+            keys[i] = 0;
+        } else {
+            argument >> keys[i];
+        }
+    }
+
+    sequence = QKeySequence(keys[0], keys[1], keys[2], keys[3]);
     argument.endArray();
     argument.endStructure();
     return argument;
