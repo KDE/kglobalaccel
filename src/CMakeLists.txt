@@ -58,7 +58,7 @@ set_target_properties(KF6GlobalAccel PROPERTIES VERSION   ${KGLOBALACCEL_VERSION
 
 ecm_generate_qdoc(KF6GlobalAccel kglobalaccel.qdocconf)
 
-ecm_generate_headers(KGlobalAccel_HEADERS
+ecm_generate_headers(KGlobalAccel_CamelCase_HEADERS
   HEADER_NAMES
   KGlobalAccel
   KGlobalShortcutInfo
@@ -71,6 +71,7 @@ install(TARGETS KF6GlobalAccel EXPORT KF6GlobalAccelTargets ${KF_INSTALL_TARGETS
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kglobalaccel_export.h
   ${KGlobalAccel_HEADERS}
+  ${KGlobalAccel_CamelCase_HEADERS}
   DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KGlobalAccel COMPONENT Devel
 )
 
@@ -78,4 +79,17 @@ ecm_qt_install_logging_categories(
     EXPORT KGLOBALACCEL
     FILE kglobalaccel.categories
     DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR}
+)
+
+ecm_add_installed_library_check(KF6GlobalAccel
+    PACKAGE_NAME "KF6GlobalAccel"
+    PACKAGE_TARGET_NAMESPACE "KF6::"
+)
+
+ecm_installed_library_check_include_strings(KF6GlobalAccel
+    HEADERS ${KGlobalAccel_CamelCase_HEADERS}
+)
+
+ecm_installed_library_check_version_preprocessor_macros(KF6GlobalAccel
+    PREFIX KGLOBALACCEL
 )
