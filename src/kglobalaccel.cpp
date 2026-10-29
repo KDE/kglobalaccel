@@ -68,14 +68,14 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
                          q,
                          [this, componentUnique](const QString &actionId, const QVariantMap &options) {
                              s_supportsNewEvents = true;
-                             invokeAction(componentUnique, actionId, options.value(QStringLiteral("x11Timestamp")).toUInt(), ShortcutState::Pressed);
+                             invokeAction(componentUnique, actionId, options, ShortcutState::Pressed);
                          });
         QObject::connect(component,
                          &org::kde::kglobalaccel::Component::repeated,
                          q,
                          [this, componentUnique](const QString &actionId, const QVariantMap &options) {
                              s_supportsNewEvents = true;
-                             invokeAction(componentUnique, actionId, options.value(QStringLiteral("x11Timestamp")).toUInt(), ShortcutState::Repeated);
+                             invokeAction(componentUnique, actionId, options, ShortcutState::Repeated);
                          });
         QObject::connect(component, &org::kde::kglobalaccel::Component::released, q, [this, componentUnique](const QString &actionId) {
             s_supportsNewEvents = true;
@@ -89,7 +89,8 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
                              if (s_supportsNewEvents) {
                                  return;
                              }
-                             invokeAction(componentUnique, shortcutUnique, timestamp, ShortcutState::Pressed);
+                             const QVariantMap options = {{QStringLiteral("x11Timestamp"), timestamp}};
+                             invokeAction(componentUnique, shortcutUnique, options, ShortcutState::Pressed);
                          });
 
         QObject::connect(component,
@@ -99,7 +100,8 @@ org::kde::kglobalaccel::Component *KGlobalAccelPrivate::getComponent(const QStri
                              if (s_supportsNewEvents) {
                                  return;
                              }
-                             invokeAction(componentUnique, shortcutUnique, timestamp, ShortcutState::Repeated);
+                             const QVariantMap options = {{QStringLiteral("x11Timestamp"), timestamp}};
+                             invokeAction(componentUnique, shortcutUnique, options, ShortcutState::Repeated);
                          });
 
         QObject::connect(component,
@@ -477,13 +479,14 @@ QAction *KGlobalAccelPrivate::findAction(const QString &componentUnique, const Q
     return action;
 }
 
-void KGlobalAccelPrivate::invokeAction(const QString &componentUnique, const QString &actionUnique, qlonglong timestamp, ShortcutState state)
+void KGlobalAccelPrivate::invokeAction(const QString &componentUnique, const QString &actionUnique, const QVariantMap &options, ShortcutState state)
 {
     QAction *action = findAction(componentUnique, actionUnique);
     if (!action) {
         return;
     }
 
+    quint32 timestamp = options.value(QStringLiteral("x11Timestamp")).toUInt();
 #if WITH_X11
     // Update this application's X timestamp if needed.
     // TODO The 100%-correct solution should probably be handling this action
@@ -499,6 +502,7 @@ void KGlobalAccelPrivate::invokeAction(const QString &componentUnique, const QSt
     }
 #endif
     action->setProperty("org.kde.kglobalaccel.activationTimestamp", timestamp);
+    action->setProperty("org.kde.kglobalaccel.XDG_ACTIVATION_TOKEN", options[QStringLiteral("XDG_ACTIVATION_TOKEN")]);
 
     if (m_lastActivatedAction != action) {
         Q_EMIT q->globalShortcutActiveChanged(action, true);
