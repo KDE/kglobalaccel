@@ -35,7 +35,7 @@
       Supported keys in the @options vardict include:
 
       * ``x11Timestamp`` (``u``)
-      * ``XDG_ACTIVATION_TOKEN`` (``s``)
+      * ``xdgActivationToken`` (``s``)
 
       The pressed signal is sent before the globalShortcutPressed signal.
     -->
@@ -53,7 +53,7 @@
       Supported keys in the @options vardict include:
 
       * ``x11Timestamp`` (``u``)
-      * ``XDG_ACTIVATION_TOKEN`` (``s``)
+      * ``xdgActivationToken`` (``s``)
 
       The repeated signal is sent before the globalShortcutRepeated signal.
     -->
@@ -71,7 +71,7 @@
       Supported keys in the @info vardict include:
 
       * ``x11Timestamp`` (``u``)
-      * ``XDG_ACTIVATION_TOKEN`` (``s``)
+      * ``xdgActivationToken`` (``s``)
 
       The released signal is sent before the globalShortcutReleased signal.
     -->

@@ -502,7 +502,7 @@ void KGlobalAccelPrivate::invokeAction(const QString &componentUnique, const QSt
     }
 #endif
     action->setProperty("org.kde.kglobalaccel.activationTimestamp", timestamp);
-    action->setProperty("org.kde.kglobalaccel.XDG_ACTIVATION_TOKEN", options[QStringLiteral("XDG_ACTIVATION_TOKEN")]);
+    action->setProperty("org.kde.kglobalaccel.activationToken", options[QStringLiteral("xdgActivationToken")]);
 
     if (m_lastActivatedAction != action) {
         Q_EMIT q->globalShortcutActiveChanged(action, true);
