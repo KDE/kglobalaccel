@@ -27,7 +27,7 @@ msgstr ""
 "X-Generator: Lokalize 1.1\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:558
+#: kglobalaccel.cpp:587
 #, fuzzy, qt-format
 #| msgid ""
 #| "The '%1' key combination is registered by application %2 for action %3:"
@@ -40,7 +40,7 @@ msgstr ""
 "<application>%2</application> によってアクション<interface>$[~stripAccel "
 "$[~getForm %3 ~full]]</interface>のために登録されています:"
 
-#: kglobalaccel.cpp:562
+#: kglobalaccel.cpp:591
 #, fuzzy, qt-format
 #| msgid "In context '%1' for action '%2'\n"
 msgctxt "KGlobalAccel|"
@@ -51,7 +51,7 @@ msgstr ""
 "|/|コンテキスト<interface>%1</interface>でのアクション<interface>"
 "$[~stripAccel $[~getForm %2 ~full]]</interface>\n"
 
-#: kglobalaccel.cpp:564
+#: kglobalaccel.cpp:593
 #, fuzzy, qt-format
 #| msgid ""
 #| "The '%1' key combination is registered by application %2.\n"
@@ -65,12 +65,12 @@ msgstr ""
 "application> によって登録されています。\n"
 "%3"
 
-#: kglobalaccel.cpp:567
+#: kglobalaccel.cpp:596
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "登録済みのグローバルショートカットと競合します"
 
-#: kglobalaccel.cpp:572
+#: kglobalaccel.cpp:601
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "割り当て直す"

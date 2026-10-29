@@ -25,20 +25,20 @@ msgstr ""
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:558
+#: kglobalaccel.cpp:587
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
 "Комбінацію клавіш «%1» зареєстровано програмою %2 для виконання дії %3."
 
-#: kglobalaccel.cpp:562
+#: kglobalaccel.cpp:591
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "У контексті «%1» для дії «%2»\n"
 
-#: kglobalaccel.cpp:564
+#: kglobalaccel.cpp:593
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -48,12 +48,12 @@ msgstr ""
 "Комбінацію клавіш «%1» зареєстровано програмою %2.\n"
 "%3"
 
-#: kglobalaccel.cpp:567
+#: kglobalaccel.cpp:596
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Конфлікт з зареєстрованим загальним скороченням"
 
-#: kglobalaccel.cpp:572
+#: kglobalaccel.cpp:601
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Перепризначити"

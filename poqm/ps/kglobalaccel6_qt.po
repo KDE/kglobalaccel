@@ -20,13 +20,13 @@ msgstr ""
 "X-Poedit-Country: AFGHANISTAN\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:558
+#: kglobalaccel.cpp:587
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr ""
 
-#: kglobalaccel.cpp:562
+#: kglobalaccel.cpp:591
 #, fuzzy, qt-format
 #| msgctxt "header for an applications shortcut list"
 #| msgid "Shortcuts for %1"
@@ -34,7 +34,7 @@ msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "لپاره لنډلار %1 د"
 
-#: kglobalaccel.cpp:564
+#: kglobalaccel.cpp:593
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -42,14 +42,14 @@ msgid ""
 "%3"
 msgstr ""
 
-#: kglobalaccel.cpp:567
+#: kglobalaccel.cpp:596
 #, fuzzy
 #| msgid "Conflict with Global Shortcut"
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "د سراسر لنډلار سره ټکر"
 
-#: kglobalaccel.cpp:572
+#: kglobalaccel.cpp:601
 #, fuzzy
 #| msgid "Reassign"
 msgctxt "KGlobalAccel|"

@@ -30,19 +30,19 @@ msgstr ""
 "%100<=4 ? 2 : 3);\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:558
+#: kglobalaccel.cpp:587
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "Kombinacijo tipk '%1' je program %2 registriral za dejanje %3."
 
-#: kglobalaccel.cpp:562
+#: kglobalaccel.cpp:591
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "V kontekstu »%1« za dejanje »%2«\n"
 
-#: kglobalaccel.cpp:564
+#: kglobalaccel.cpp:593
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -52,12 +52,12 @@ msgstr ""
 "Kombinacijo tipk »%1« je registriral program %2.\n"
 "%3"
 
-#: kglobalaccel.cpp:567
+#: kglobalaccel.cpp:596
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "Spor z registriranimi splošnimi bližnjicami"
 
-#: kglobalaccel.cpp:572
+#: kglobalaccel.cpp:601
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "Prestavi"
