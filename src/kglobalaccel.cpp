@@ -486,7 +486,7 @@ void KGlobalAccelPrivate::invokeAction(const QString &componentUnique, const QSt
         return;
     }
 
-    quint32 timestamp = options.value(QStringLiteral("x11Timestamp")).toUInt();
+    const quint32 timestamp = options.value(QStringLiteral("x11Timestamp")).toUInt();
 #if WITH_X11
     // Update this application's X timestamp if needed.
     // TODO The 100%-correct solution should probably be handling this action
