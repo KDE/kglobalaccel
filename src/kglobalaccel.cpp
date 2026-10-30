@@ -502,7 +502,14 @@ void KGlobalAccelPrivate::invokeAction(const QString &componentUnique, const QSt
     }
 #endif
     action->setProperty("org.kde.kglobalaccel.activationTimestamp", timestamp);
-    action->setProperty("org.kde.kglobalaccel.activationToken", options[QStringLiteral("xdgActivationToken")]);
+
+    const QString activationToken = options.value(QStringLiteral("xdgActivationToken")).toString();
+    if (!activationToken.isEmpty()) {
+        // Same as KWindowSystem::setCurrentXdgActivationToken(), so that the application
+        // can activate its window without having to handle the token explicitly
+        qputenv("XDG_ACTIVATION_TOKEN", activationToken.toUtf8());
+    }
+    action->setProperty("org.kde.kglobalaccel.activationToken", activationToken);
 
     if (m_lastActivatedAction != action) {
         Q_EMIT q->globalShortcutActiveChanged(action, true);
