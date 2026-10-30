@@ -74,7 +74,6 @@ public:
     QAction *findAction(const QString &, const QString &);
     void invokeAction(const QString &, const QString &, qlonglong, ShortcutState wasHeld);
     void invokeDeactivate(const QString &, const QString &);
-    void shortcutGotChanged(const QStringList &, const QList<int> &);
     void shortcutsChanged(const QStringList &, const QList<QKeySequence> &);
     void serviceOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner);
     void reRegisterAll();
