@@ -19,19 +19,19 @@ msgstr ""
 "X-Generator: Poedit 3.9\n"
 "X-Qt-Contexts: true\n"
 
-#: kglobalaccel.cpp:587
+#: kglobalaccel.cpp:598
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "The '%1' key combination is registered by application %2 for action %3."
 msgstr "«%1» بىرىكمە كۇنۇپكا %2 پىروگراممىدىكى %3 مەشغۇلات ئۈچۈن خەتلىتىلگەن."
 
-#: kglobalaccel.cpp:591
+#: kglobalaccel.cpp:602
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid "In context '%1' for action '%2'\n"
 msgstr "«%2» مەشغۇلاتنىڭ ئىچكى مەزمۇنى «%1»\n"
 
-#: kglobalaccel.cpp:593
+#: kglobalaccel.cpp:604
 #, qt-format
 msgctxt "KGlobalAccel|"
 msgid ""
@@ -39,12 +39,12 @@ msgid ""
 "%3"
 msgstr ""
 
-#: kglobalaccel.cpp:596
+#: kglobalaccel.cpp:607
 msgctxt "KGlobalAccel|"
 msgid "Conflict With Registered Global Shortcut"
 msgstr "خەتلىتىلگەن ئومۇمىي تېزلەتمە بىلەن توقۇنۇشۇپ قالدى"
 
-#: kglobalaccel.cpp:601
+#: kglobalaccel.cpp:612
 msgctxt "KGlobalAccel|"
 msgid "Reassign"
 msgstr "قايتا تەقسىملە"
